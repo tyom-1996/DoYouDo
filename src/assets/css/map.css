@@ -103,7 +103,7 @@
 }
 
 .services_search_box {
-    max-width: 642px;
+    max-width: 702px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -142,7 +142,7 @@
 .services_search_box_buttons_wrapper {
     display: flex;
     align-items: center;
-    max-width: 250px;
+    max-width: 320px;
     justify-content: space-between;
     width: 100%;
 }
@@ -150,7 +150,8 @@
 .services_search_box_search_button {
     background: #FF6C00;
     height: 50px;
-    width: 48%;
+    width: 100%;
+    max-width: 120px;
     border: none;
     border-radius: 6px;
     font-family: "Inter", sans-serif;
@@ -158,11 +159,15 @@
     font-size: 15px;
     font-weight: 500;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .services_search_box_map_button {
     height: 50px;
-    width: 48%;
+    width: 100%;
+    max-width: 120px;
     border: 2px solid #FF6C00;
     border-radius: 6px;
     font-family: "Inter", sans-serif;
@@ -172,6 +177,22 @@
     background: none;
     cursor: pointer;
     outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.services_search_box_filter_button {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #FF6C00;
+    border-radius: 6px;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .services_search_input_field_icon {
@@ -199,7 +220,12 @@
     color: #636363;
     font-weight: 400;
     font-size: 14px;
-    margin-bottom: 3px;
+}
+.services_item_address_info {
+    font-family: "Inter", sans-serif;
+    color: #636363;
+    font-weight: 400;
+    font-size: 14px;
 }
 .services_item_info {
     font-family: "Inter", sans-serif;
@@ -266,6 +292,7 @@
     font-weight: 600;
     font-size: 16px;
 }
+
 
 
 /*recommendations*/
@@ -418,7 +445,7 @@
 .service_label .customCheckbox:after {
     position: absolute;
     content: '';
-     background: url("../images/check_icon.png");
+    background: url("../images/check_icon.png");
     background-repeat: no-repeat;
     background-position: center;
     display: flex;
@@ -526,12 +553,7 @@
     margin-top: 18px;
 }
 
-@media (max-width: 1290px) {
-    .general_page_wrapper {
-        max-width: unset!important;
-        width: 95%!important;
-    }
-}
+
 
 @media (min-width: 1000px) and (max-width: 1200px) {
     .top_info_box_title {
@@ -727,19 +749,25 @@
 }
 
 
-@media (min-width: 880px) and (max-width: 980px) {
+@media (min-width: 926px) and (max-width: 980px) {
     .services_search_box_logo_wrapper {
         padding: 30px 20px!important;
     }
     .services_search_box {
-        max-width: 576px!important;
+        max-width: 580px!important;
+    }
+    .services_search_box_search_button {
+        max-width: 100px!important;
+    }
+    .services_search_box_map_button {
+        max-width: 100px!important;
     }
 }
 .mobile_services_search_box {
     display: none;
 }
 
-@media (max-width: 880px) {
+@media (max-width: 926px) {
 
 
     .services_search_box_buttons_wrapper {
@@ -772,13 +800,15 @@
     .services_items_filter_main_wrapper {
         flex-wrap: wrap;
     }
-
+    #job_page .services_filter_items_wrapper {
+        display: none!important;
+    }
     .services_items_wrapper {
         max-width: unset!important;
         width: 100% !important;
 
     }
-    .services_search_input_field_btn {
+    .services_search_box_search_button {
         background: #FF6C00;
         border: none;
         display: flex;
@@ -788,8 +818,23 @@
         height: 38px;
         border-radius: 6px;
         cursor: pointer;
+
     }
-    .services_search_box_search_button {
+    .services_search_box_map_button {
+        height: 38px;
+        width: 48%;
+        border: 2px solid #FF6C00;
+        border-radius: 6px;
+        font-family: "Inter", sans-serif;
+        color:  #333333;
+        font-size: 14px;
+        font-weight: 500;
+        background: none;
+        cursor: pointer;
+        outline: none;
+        max-width: unset!important;
+    }
+    .services_search_box_filter_button {
         height: 38px;
         width: 48%;
         border: 2px solid #FF6C00;
@@ -806,7 +851,7 @@
 
 
 
-@media (max-width: 620px) {
+@media (max-width: 622px) {
     .services_item {
         width: 100% !important;
     }
@@ -1082,4 +1127,17 @@
         height: 651px!important;
         border-radius: 15px!important;
     }
+}
+.services_search_box_filter_button {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #FF6C00;
+    border-radius: 6px;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }

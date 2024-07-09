@@ -1,1 +1,9 @@
-{"/_app":"pages/_app.js","/_error":"pages/_error.js","/Category":"pages/Category.html","/CityComponent":"pages/CityComponent.html","/_document":"pages/_document.js","/Map":"pages/Map.html","/":"pages/index.html","/profile/[id]":"pages/profile/[id].js","/404":"pages/404.html"}
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/": "pages/index.js",
+  "/ForBothUserTypes/Job": "pages/ForBothUserTypes/Job.js",
+  "/ForBothUserTypes/Freelancers": "pages/ForBothUserTypes/Freelancers.js",
+  "/FreelancerPages/OrderPageForFreelancer": "pages/FreelancerPages/OrderPageForFreelancer.js"
+}

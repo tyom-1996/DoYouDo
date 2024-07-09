@@ -6,9 +6,13 @@
 
 .header {
     width: 100%;
-    margin-bottom: 96px;
     padding-top: 30px;
+    margin-bottom: 50px;
 }
+#home_page .header {
+    margin-bottom: 96px;
+}
+
 .header_wrapper {
     width: 100%;
     max-width: 1240px;
@@ -193,11 +197,16 @@
 }
 
 @media (min-width: 425px) and (max-width: 880px) {
-    .header {
+    #home_page .header {
         width: 100%;
         margin-bottom: 76px!important;
         padding-top: 20px!important;
     }
+   .header {
+        width: 100%;
+        padding-top: 20px!important;
+    }
+
 }
 @media (min-width: 375px) and (max-width: 425px) {
     .header {
@@ -205,6 +214,7 @@
         margin-bottom: 56px!important;
         padding-top: 15px!important;
     }
+
 }
 @media (max-width: 375px) {
     .header {
@@ -212,4 +222,5 @@
         margin-bottom: 40px!important;
         padding-top: 15px!important;
     }
+
 }

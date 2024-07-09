@@ -3,440 +3,59 @@ import Image from "next/image";
 import '../assets/css/home.css';
 import Header from '../components/header'
 import Footer from '../components/footer'
-import Category from '../pages/Category'
-import City from '../pages/CityComponent'
+import Category from './includes/Category'
+import City from './includes/CityComponent'
 import Head from 'next/head';
-import {SearchIcon} from "@/components/icons/SearchIcon";
-import {SearchMobileIcon} from "@/components/icons/SearchMobileIcon";
-import {DateIcon} from "@/components/icons/DateIcon";
-import {PaginationLeftIcon} from "@/components/icons/paginationLeftIcon";
-import {PaginationRightIcon} from "@/components/icons/paginationRightIcon";
-import {FilterCloseIcon} from "@/components/icons/FilterCloseIcon";
 import { useRouter } from 'next/router';
 
 export default function Home() {
     const [windowHeight, setWindowHeight] = useState(0);
-    const [servicesList, setServicesList] = useState([
+    const [reviewsOfPerformers, setReviewsOfPerformers] = useState([
         {
             id: 1,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
+            user_name: 'Sarah Williams',
+            user_img: '/user_img.png',
+            review_title: 'Выкупить и доставить заказ из аптеки',
+            review_info: 'Остался доволен, спасибо. Предложил много идей. Приехал в нужное время. Видно что очень любит своё дело. Насчёт фото не заставил ждать.'
         },
         {
             id: 2,
-            service_name: 'Дизайн2',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
+            user_name: 'Sarah Williams',
+            user_img: '/user_img.png',
+            review_title: 'Выкупить и доставить заказ из аптеки',
+            review_info: 'Остался доволен, спасибо. Предложил много идей. Приехал в нужное время. Видно что очень любит своё дело. Насчёт фото не заставил ждать.'
         },
         {
             id: 3,
-            service_name: 'Дизайн3',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
+            user_name: 'Sarah Williams',
+            user_img: '/user_img.png',
+            review_title: 'Выкупить и доставить заказ из аптеки',
+            review_info: 'Остался доволен, спасибо. Предложил много идей. Приехал в нужное время. Видно что очень любит своё дело. Насчёт фото не заставил ждать.'
         },
         {
             id: 4,
-            service_name: 'Дизайн4',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
+            user_name: 'Sarah Williams',
+            user_img: '/user_img.png',
+            review_title: 'Выкупить и доставить заказ из аптеки',
+            review_info: 'Остался доволен, спасибо. Предложил много идей. Приехал в нужное время. Видно что очень любит своё дело. Насчёт фото не заставил ждать.'
         },
         {
             id: 5,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
+            user_name: 'Sarah Williams',
+            user_img: '/user_img.png',
+            review_title: 'Выкупить и доставить заказ из аптеки',
+            review_info: 'Остался доволен, спасибо. Предложил много идей. Приехал в нужное время. Видно что очень любит своё дело. Насчёт фото не заставил ждать.'
         },
         {
             id: 6,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 7,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 8,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 9,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 10,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 11,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 12,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 13,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 14,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 15,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 16,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-    ]);
-    const [recommendationsList, setRecommendationsList] = useState([
-        {
-            id: 1,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 2,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 3,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 4,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
+            user_name: 'Sarah Williams',
+            user_img: '/user_img.png',
+            review_title: 'Выкупить и доставить заказ из аптеки',
+            review_info: 'Остался доволен, спасибо. Предложил много идей. Приехал в нужное время. Видно что очень любит своё дело. Насчёт фото не заставил ждать.'
         },
 
     ]);
-    const [similarWorksList, setSimilarWorksList] = useState([
-        {
-            id: 1,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 2,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 3,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
-        {
-            id: 4,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-        },
 
-    ]);
-    const [isCheckedAllCategories, setIsCheckedAllCategories] = useState(false);
-    const [showFilterMobile, setShowFilterMobile] = useState(false);
-    const [filterCategoryList, setFilterCategoryList] = useState([
-        {
-            id: 1,
-            filter_category_title: 'Дизайн',
-            filter_item_subcategories: [
-                {
-                    id: 2,
-                    subcategory_name: 'Фирменный стиль',
-                },
-                {
-                    id: 3,
-                    subcategory_name: 'Логотипы',
-                },
-                {
-                    id: 4,
-                    subcategory_name: 'Визитки',
-                },
-                {
-                    id: 5,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 6,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 7,
-                    subcategory_name: 'Анимация',
-                },
-            ]
-        },
-        {
-            id: 8,
-            filter_category_title: 'Дизайн',
-            filter_item_subcategories: [
-                {
-                    id: 9,
-                    subcategory_name: 'Фирменный стиль',
-                },
-                {
-                    id: 10,
-                    subcategory_name: 'Логотипы',
-                },
-                {
-                    id: 11,
-                    subcategory_name: 'Визитки',
-                },
-                {
-                    id: 12,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 13,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 14,
-                    subcategory_name: 'Анимация',
-                },
-            ]
-        },
-        {
-            id: 15,
-            filter_category_title: 'Компьютерная помощь',
-            filter_item_subcategories: [
-                {
-                    id: 16,
-                    subcategory_name: 'Ремонт компьютеров',
-                },
-                {
-                    id: 17,
-                    subcategory_name: 'Установка и настройка',
-                },
-                {
-                    id: 18,
-                    subcategory_name: 'Удаление вирусов',
-                },
-                {
-                    id: 19,
-                    subcategory_name: '3d-Настройка интернета',
-                },
-                {
-                    id: 20,
-                    subcategory_name: 'Консультация и обучение',
-                },
-
-            ]
-        },
-        {
-            id: 21,
-            filter_category_title: 'Разработка ПО',
-            filter_item_subcategories: [
-                {
-                    id: 22,
-                    subcategory_name: 'Ремонт компьютеров',
-                },
-                {
-                    id: 23,
-                    subcategory_name: 'Установка и настройка',
-                },
-                {
-                    id: 24,
-                    subcategory_name: 'Удаление вирусов',
-                },
-                {
-                    id: 25,
-                    subcategory_name: '3d-Настройка интернета',
-                },
-                {
-                    id: 26,
-                    subcategory_name: 'Консультация и обучение',
-                },
-
-            ]
-        },
-        {
-            id: 27,
-            filter_category_title: 'Фото, видео и аудио',
-            filter_item_subcategories: [
-                {
-                    id: 28,
-                    subcategory_name: 'Фирменный стиль',
-                },
-                {
-                    id: 29,
-                    subcategory_name: 'Логотипы',
-                },
-                {
-                    id: 30,
-                    subcategory_name: 'Визитки',
-                },
-                {
-                    id: 31,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 32,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 33,
-                    subcategory_name: 'Анимация',
-                },
-            ]
-        },
-        {
-            id: 34,
-            filter_category_title: 'Красота и здоровье',
-            filter_item_subcategories: [
-                {
-                    id: 35,
-                    subcategory_name: 'Фирменный стиль',
-                },
-                {
-                    id: 36,
-                    subcategory_name: 'Логотипы',
-                },
-                {
-                    id: 37,
-                    subcategory_name: 'Визитки',
-                },
-                {
-                    id: 38,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 39,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 40,
-                    subcategory_name: 'Анимация',
-                },
-            ]
-        },
-
-    ]);
-    const [selectedCategories, setSelectedCategories] = useState([]);
-
-    const [citiesList, setCitiesList] = useState([
-        {
-            id: 1,
-            city_name: 'Москва'
-        },
-        {
-            id: 2,
-            city_name: 'Санкт-Петербург'
-        },
-        {
-            id: 3,
-            city_name: 'Екатеринбург'
-        },
-        {
-            id: 4,
-            city_name: 'Новосибирск'
-        },
-        {
-            id: 5,
-            city_name: 'Нижний Новгород'
-        },
-        {
-            id: 6,
-            city_name: 'Самара'
-        },
-
-    ]);
-    const [selectedCities, setSelectedCities] = useState([]);
-
-
-
-    const handleCheckboxChange = () => {
-        setIsCheckedAllCategories(!isCheckedAllCategories);
-    };
-
-
-
-    useEffect(() => {
-       handleUseFilter()
-    }, [selectedCategories, selectedCities]);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -444,9 +63,6 @@ export default function Home() {
         }
     }, []);
 
-    const handleUseFilter = async () => {
-        console.log('use fiter')
-    }
     const disableBodyScroll = () => {
         document.body.style.overflow = "hidden";
     };
@@ -461,7 +77,7 @@ export default function Home() {
     };
     return (
         <>
-            <main className='general_page_wrapper'>
+            <main className='general_page_wrapper1' id='home_page'>
                 <Head>
                     <title>Главная страница</title>
                     <meta name="dwsdwdwd" content="This is the home page" />
@@ -470,7 +86,7 @@ export default function Home() {
                     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
 
                 </Head>
-                <div className="home_general_wrapper" id='home_page'>
+                <div className="home_general_wrapper">
                     <Header/>
                 </div>
                 <div className="top">
@@ -494,306 +110,118 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="services">
-                    <div className="services_wrapper">
-                        <div className="services_search_box_logo_wrapper">
-                            <div className="services_search_box">
-                                <div className="services_search_input_field">
-                                    <div className='services_search_input_field_icon'>
-                                        <SearchIcon/>
-                                    </div>
-                                    <input type="text" placeholder='Услуга' className='services_search_input'/>
-                                </div>
-                                <div className='services_search_box_buttons_wrapper'>
-                                    <button className='services_search_box_search_button'>
-                                        Найти
-                                    </button>
-                                    <button
-                                        className='services_search_box_map_button'
-                                        onClick={() => {
-                                            navigateToMapPage()
-                                        }}
-                                    >
-                                        Карта
-                                    </button>
-                                </div>
+                <div className="how_works">
+                    <div className="how_works_wrapper">
+                        <h1 className='how_works_title'>Как работает <span>DoYouDo</span>?</h1>
+                        <div className="how_works_items_wrapper">
+                            <div className="how_works_item">
+                                <p className="how_works_item_info">
+                                    <span className="how_works_item_info_span">Опишите</span>
+                                    свою задачу и условия. Это бесплатно и займёт 3‑4 минуты
+                                </p>
                             </div>
-                            <div className="mobile_services_search_box">
-                                <div className='services_search_input_field_btn_wrapper'>
-                                    <div className="services_search_input_field">
-                                        <div className='services_search_input_field_icon'>
-                                            <SearchIcon/>
+                            <div className="how_works_item">
+                                <p className="how_works_item_info">
+                                    <span className="how_works_item_info_span">Получите отклики</span>
+                                    с ценами от исполнителей. Обычно они приходят в течение 30 минут
+                                </p>
+                            </div>
+                            <div className="how_works_item">
+                                <p className="how_works_item_info">
+                                    <span className="how_works_item_info_span">Выберите</span>
+                                    подходящего исполнителя и обсудите сроки выполнения
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="reviews_of_performers">
+                    <div className="reviews_of_performers_wrapper">
+                        <h1 className="reviews_of_performers_title">
+                            Отзывы об исполнителях
+                        </h1>
+                        <div className="reviews_of_performers_items_wrapper">
+                            {reviewsOfPerformers.map((item, index) => {
+                                return (
+                                    <div className="reviews_of_performers_item" key={index}>
+                                        <div className="reviews_of_performers_item_user_img_info_wrapper">
+                                            <div className="reviews_of_performers_item_user_img">
+                                                <Image
+                                                    src={item.user_img}
+                                                    alt="Example Image"
+                                                    layout="fill" // Fill the parent element
+                                                    objectFit="cover" // Cover the area of the parent element
+                                                    quality={100} // Image quality
+                                                />
+                                            </div>
+                                            <div className="reviews_of_performers_item_user_info_wrapper">
+                                                <p className="reviews_of_performers_item_user_name">{item.user_name}</p>
+                                                <p className="reviews_of_performers_item_review_title">{item.review_title}</p>
+                                            </div>
                                         </div>
-                                        <input type="text" placeholder='Услуга' className='services_search_input'/>
+                                        <p className='reviews_of_performers_item_review_text'>
+                                            {item.review_info}
+                                        </p>
                                     </div>
-                                    <button className='services_search_input_field_btn'>
-                                        <SearchMobileIcon/>
-                                    </button>
-                                </div>
-
-                                <div className='services_search_box_buttons_wrapper'>
-                                    <button className='services_search_box_search_button'>
-                                        Найти
-                                    </button>
-                                    <button
-                                        className='services_search_box_search_button'
-                                        onClick={() => {
-                                            setShowFilterMobile(true)
-                                            disableBodyScroll()
-                                        }}
-                                    >
-                                        Фильтр
-                                    </button>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+                <div className="download_application">
+                    <div className='download_application_wrapper'>
+                        <div className='download_application_items_wrapper'>
+                            <div className="download_application_info_item">
+                                <h1 className='download_application_title'>Скачайте приложение пользуйтесь</h1>
+                                <p className='download_application_info'>
+                                    Добро пожаловать на нашу DoYouDo, где лучшие профессионалы и инновационные проекты встречаются для создания выдающихся результатов.Начните свой проект уже сегодня, легко и быстро находя талантливых фрилансеров со всего мира.
+                                </p>
+                                <div className='download_application_app_google_links_wrapper'>
+                                    <a href="" className='download_application_app_link'>
+                                        <Image
+                                            src="/app_store_img.png"
+                                            alt="Example Image"
+                                            layout="fill" // Fill the parent element
+                                            objectFit="cover" // Cover the area of the parent element
+                                            quality={100} // Image quality
+                                        />
+                                    </a>
+                                    <a href="" className='download_application_google_link'>
+                                        <Image
+                                            src="/google_market_img.png"
+                                            alt="Example Image"
+                                            layout="fill" // Fill the parent element
+                                            objectFit="cover" // Cover the area of the parent element
+                                            quality={100} // Image quality
+                                        />
+                                    </a>
                                 </div>
                             </div>
-                            <div className='services_search_box_logo'>
+                            <div className="download_application_img_item">
                                 <Image
-                                    src="/main_logo.png"
+                                    src="/phones_img.png"
                                     alt="Example Image"
                                     layout="fill" // Fill the parent element
                                     objectFit="cover" // Cover the area of the parent element
                                     quality={100} // Image quality
                                 />
                             </div>
-                        </div>
-                        <div className="services_items_filter_main_wrapper">
-                            <div className="services_filter_items_wrapper">
-
-                                <div className='services_filter_item'>
-                                    <label className='service_label'>
-                                        <input
-                                            type="checkbox"
-                                            checked={isCheckedAllCategories}
-                                            onChange={handleCheckboxChange}
-                                            className='service_label_checkbox_input_field checkbox'
-                                        />
-                                        <span className='service_label_custom_checkbox customCheckbox'></span>
-                                        Все категории
-
-                                    </label>
-                                </div>
-
-                                <City
-                                    cityData={citiesList}
-                                    selectedCities={selectedCities}
-                                    setNewSelectedCities={(val)=>{
-                                        setSelectedCities(val)
-                                        console.log(val)
-                                    }}
+                            <div className="mobile_download_application_img_item">
+                                <Image
+                                    src="/download_mobile_img.png"
+                                    alt="Example Image"
+                                    layout="fill" // Fill the parent element
+                                    objectFit="cover" // Cover the area of the parent element
+                                    quality={100} // Image quality
                                 />
-
-                                <div className='service_category_items_wrapper'>
-                                    {filterCategoryList.map((item, index) => {
-                                        return (
-                                            <Category
-                                                categoryData={item}
-                                                selectedCategories={selectedCategories}
-                                                setNewSelectedCategories={(val)=>{
-                                                    setSelectedCategories(val)
-                                                    console.log(val)
-                                                }}
-                                            />
-                                        )
-                                    })}
-                                </div>
                             </div>
-                            <div className='services_items_wrapper'>
-                                {servicesList.map((item, index) => {
-                                    return (
-                                        <div className='services_item' key={index}>
-                                            <p className="services_item_name">{item?.service_name}</p>
-                                            <p className="services_item_info">{item?.service_type_info}</p>
-                                            <div className='services_item_pirce_date_info_wrapper'>
-                                                <div className='services_item_pirce_wrapper'>
-                                                    <p className='services_item_pirce_info'>{item?.service_price}</p>
-                                                </div>
-                                                <div className='services_item_date_hour_wrapper'>
-                                                    <div className='services_item_date_hour_title_icon_wrapper'>
-                                                        <p className='services_item_date_hour_title_icon_wrapper_title'>Начать</p>
-                                                        <DateIcon/>
-                                                    </div>
-                                                    <div className='services_item_date_hour_info_wrapper'>
-                                                        <p className='services_item_date_hour_info1'>{item.service_date},</p>
-                                                        <p className='services_item_date_hour_info2'>{item.service_hour}</p>
-                                                    </div>
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                            </div>
                         </div>
-                    </div>
-                </div>
-                <div className="recommendations">
-                    <div className="recommendations_wrapper">
-                          <h1 className='recommendations_title'>Рекомендации</h1>
-                            <div className='recommendations_items_wrapper'>
-                                {recommendationsList.map((item, index) => {
-                                    return (
-                                        <div className='services_item' key={index}>
-                                            <p className="services_item_name">{item?.service_name}</p>
-                                            <p className="services_item_info">{item?.service_type_info}</p>
-                                            <div className='services_item_pirce_date_info_wrapper'>
-                                                <div className='services_item_pirce_wrapper'>
-                                                    <p className='services_item_pirce_info'>{item?.service_price}</p>
-                                                </div>
-                                                <div className='services_item_date_hour_wrapper'>
-                                                    <div className='services_item_date_hour_title_icon_wrapper'>
-                                                        <p className='services_item_date_hour_title_icon_wrapper_title'>Начать</p>
-                                                        <DateIcon/>
-                                                    </div>
-                                                    <div className='services_item_date_hour_info_wrapper'>
-                                                        <p className='services_item_date_hour_info1'>{item.service_date},</p>
-                                                        <p className='services_item_date_hour_info2'>{item.service_hour}</p>
-                                                    </div>
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                            <div className="pagination_links_wrapper">
-                                <button className="pagination_link_btn">
-                                    <PaginationLeftIcon/>
-                                </button>
-                                <button className="pagination_link">
-                                    <p className="pagination_link_title">1</p>
-                                </button>
-                                <button className="pagination_link active">
-                                    <p className="pagination_link_title">2</p>
-                                </button>
-                                <button className="pagination_link">
-                                    <p className="pagination_link_title">3</p>
-                                </button>
-                                <button className="pagination_link">
-                                    <p className="pagination_link_title">4</p>
-                                </button>
-                                <button className="pagination_link">
-                                    <p className="pagination_link_title">....</p>
-                                </button>
-                                <button className="pagination_link_btn">
-                                    <PaginationRightIcon/>
-                                </button>
-                            </div>
-                    </div>
-                </div>
-                <div className="recommendations">
-                    <div className="recommendations_wrapper">
-                          <h1 className='recommendations_title'>Похожие работы</h1>
-                            <div className='recommendations_items_wrapper'>
-                                {similarWorksList.map((item, index) => {
-                                    return (
-                                        <div className='services_item' key={index}>
-                                            <p className="services_item_name">{item?.service_name}</p>
-                                            <p className="services_item_info">{item?.service_type_info}</p>
-                                            <div className='services_item_pirce_date_info_wrapper'>
-                                                <div className='services_item_pirce_wrapper'>
-                                                    <p className='services_item_pirce_info'>{item?.service_price}</p>
-                                                </div>
-                                                <div className='services_item_date_hour_wrapper'>
-                                                    <div className='services_item_date_hour_title_icon_wrapper'>
-                                                        <p className='services_item_date_hour_title_icon_wrapper_title'>Начать</p>
-                                                        <DateIcon/>
-                                                    </div>
-                                                    <div className='services_item_date_hour_info_wrapper'>
-                                                        <p className='services_item_date_hour_info1'>{item.service_date},</p>
-                                                        <p className='services_item_date_hour_info2'>{item.service_hour}</p>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                            <div className="pagination_links_wrapper">
-                                <button className="pagination_link_btn">
-                                    <PaginationLeftIcon/>
-                                </button>
-                                <button className="pagination_link">
-                                    <p className="pagination_link_title">1</p>
-                                </button>
-                                <button className="pagination_link active">
-                                    <p className="pagination_link_title">2</p>
-                                </button>
-                                <button className="pagination_link">
-                                    <p className="pagination_link_title">3</p>
-                                </button>
-                                <button className="pagination_link">
-                                    <p className="pagination_link_title">4</p>
-                                </button>
-                                <button className="pagination_link">
-                                    <p className="pagination_link_title">....</p>
-                                </button>
-                                <button className="pagination_link_btn">
-                                    <PaginationRightIcon/>
-                                </button>
-                            </div>
                     </div>
                 </div>
                 <Footer/>
-                {showFilterMobile &&
-                    <div className='filter_mobile_menu'>
-                        <div className='filter_mobile_menu_wrapper'>
-                            <div className='filter_mobile_menu_title_close_icon_wrapper'>
-                                <button
-                                    className='filter_mobile_menu_close_btn'
-                                    onClick={() => {
-                                        setShowFilterMobile(false)
-                                        enableBodyScroll()
-                                    }}
-                                >
-                                    <FilterCloseIcon/>
-                                </button>
-                                <p className='filter_mobile_menu_title'>Фильтр</p>
-                            </div>
-                            <div className="mobile_services_filter_items_wrapper">
 
-                                <div className='services_filter_item'>
-                                    <label className='service_label'>
-                                        <input
-                                            type="checkbox"
-                                            checked={isCheckedAllCategories}
-                                            onChange={handleCheckboxChange}
-                                            className='service_label_checkbox_input_field checkbox'
-                                        />
-                                        <span className='service_label_custom_checkbox customCheckbox'></span>
-                                        Все категории
-
-                                    </label>
-                                </div>
-
-                                <City
-                                    cityData={citiesList}
-                                    selectedCities={selectedCities}
-                                    setNewSelectedCities={(val)=>{
-                                        setSelectedCities(val)
-                                        console.log(val)
-                                    }}
-                                />
-
-                                <div className='service_category_items_wrapper'>
-                                    {filterCategoryList.map((item, index) => {
-                                        return (
-                                            <Category
-                                                categoryData={item}
-                                                selectedCategories={selectedCategories}
-                                                setNewSelectedCategories={(val)=>{
-                                                    setSelectedCategories(val)
-                                                    console.log(val)
-                                                }}
-                                            />
-                                        )
-                                    })}
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                }
             </main>
         </>
     );
