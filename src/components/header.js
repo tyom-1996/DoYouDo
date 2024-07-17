@@ -4,7 +4,6 @@ import '../assets/css/header.css';
 import {CloseIcon} from "@/components/icons/CloseIcon";
 import {MobileMenuIcon} from "@/components/icons/MobileMenuIcon";
 import {useRouter} from "next/router";
-import RegistrationModal from "../components/RegistrationModal";
 
 export default function Header(props) {
     const [windowHeight, setWindowHeight] = useState(0);
@@ -45,12 +44,12 @@ export default function Header(props) {
                     <nav className="header_nav">
                         <ul className="header_ul_list">
                             <li className="header_ul_li">
-                                <a href="/ForBothUserTypes/Job" className={`header_ul_link ${props.activePage === 'job_page' ? 'active_link' : ''}`}>
+                                <a href="/projects" className={`header_ul_link ${props.activePage === 'job_page' ? 'active_link' : ''}`}>
                                     Работа
                                 </a>
                             </li>
                             <li className="header_ul_li">
-                                <a href="/ForBothUserTypes/Freelancers" className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
+                                <a href="/freelancers" className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
                                     Фрилансеры
                                 </a>
 
@@ -61,7 +60,7 @@ export default function Header(props) {
                                 </a>
                             </li>
                             <li className="header_ul_li">
-                                <a href="" className="header_ul_link">
+                                <a href="/myProjects" className={`header_ul_link ${props.activePage === 'my_project_page' ? 'active_link' : ''}`}>
                                     Мои Проекты
                                 </a>
                             </li>

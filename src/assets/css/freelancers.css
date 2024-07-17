@@ -816,7 +816,7 @@
     }
 }
 
-@media (min-width: 330px) and (max-width: 362px) {
+@media (min-width: 336px) and (max-width: 362px) {
     .footer_ul_link{
         font-size: 14px!important;
     }
@@ -830,7 +830,7 @@
         height: 35px!important;
     }
 }
-@media  (max-width: 330px) {
+@media  (max-width: 336px) {
     .footer_ul_link{
         font-size: 12px!important;
     }
@@ -915,7 +915,8 @@
     box-shadow: 0px 4px 20px 0px #33333326;
     background: #ffffff;
     margin-bottom: 25px;
-
+    border: none;
+    outline: none;
 }
 .freelancers_item_user_img {
     position: relative;
@@ -952,6 +953,7 @@
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 4px;
+    text-align: left;
 
 }
 .freelancers_item_user_profession {
@@ -960,6 +962,7 @@
     font-size: 16px;
     font-weight: 400;
     margin-bottom: 15px;
+    text-align: left;
 
 }
 .freelancers_item_user_rating_icon_reviews_info_wrapper {
@@ -1003,6 +1006,7 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
+    text-align: left;
 }
 @media (min-width: 591px) and (max-width: 1145px) {
     .freelancers_item {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from "next/image";
 import '../assets/css/footer.css';
 
-export default function Footer() {
+export default function Footer(props) {
     const [windowHeight, setWindowHeight] = useState(0);
 
 
@@ -23,23 +23,31 @@ export default function Footer() {
                         <nav className="footer_nav">
                             <ul className="footer_ul_list">
                                 <li className="footer_ul_li">
-                                    <a href="" className="footer_ul_link active_link">
+                                    <a href="/projects"
+                                       className={`footer_ul_link ${props.activePage === 'job_page' ? 'active_link' : ''}`}
+                                    >
                                         Работа
                                     </a>
                                 </li>
                                 <li className="footer_ul_li">
-                                    <a href="" className="footer_ul_link">
+                                    <a href="/freelancers"
+                                       className={`footer_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}
+                                    >
                                         Фрилансеры
                                     </a>
 
                                 </li>
                                 <li className="footer_ul_li">
-                                    <a href="" className="footer_ul_link">
+                                    <a href=""
+                                       className="footer_ul_link"
+                                    >
                                         Создать задание
                                     </a>
                                 </li>
                                 <li className="footer_ul_li">
-                                    <a href="" className="footer_ul_link">
+                                    <a href="/myProjects"
+                                       className={`footer_ul_link ${props.activePage === 'my_project_page' ? 'active_link' : ''}`}
+                                    >
                                         Мои Проекты
                                     </a>
                                 </li>
@@ -48,32 +56,51 @@ export default function Footer() {
                                         Чат
                                     </a>
                                 </li>
+                                <li className="footer_ul_li">
+                                    <a href="/howItWorks"
+                                       className={`footer_ul_link ${props.activePage === 'how_it_works_page' ? 'active_link' : ''}`}
+                                    >
+                                        Как это работает?
+                                    </a>
+                                </li>
+                                <li className="footer_ul_li">
+                                    <a href="/aboutCompany"
+                                       className={`footer_ul_link ${props.activePage === 'about_company' ? 'active_link' : ''}`}
+                                    >
+                                        О Компании
+                                    </a>
+                                </li>
+                                <li className="footer_ul_li">
+                                    <a href="" className="footer_ul_link">
+                                        Контакты
+                                    </a>
+                                </li>
 
                             </ul>
                         </nav>
                         <nav className="mobile_footer_nav">
                             <ul className="footer_ul_list">
-                                <div className='mobile_footer_nav_child1'>
                                     <li className="footer_ul_li">
-                                        <a href="" className="footer_ul_link active_link">
+                                        <a href="/projects"
+                                           className={`footer_ul_link ${props.activePage === 'job_page' ? 'active_link' : ''}`}>
                                             Работа
                                         </a>
                                     </li>
                                     <li className="footer_ul_li">
-                                        <a href="" className="footer_ul_link">
+                                        <a href="/freelancers"
+                                           className={`footer_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
                                             Фрилансеры
                                         </a>
 
                                     </li>
-                                </div>
-                                <div className='mobile_footer_nav_child2'>
                                     <li className="footer_ul_li">
                                         <a href="" className="footer_ul_link">
                                             Создать задание
                                         </a>
                                     </li>
                                     <li className="footer_ul_li">
-                                        <a href="" className="footer_ul_link">
+                                        <a href="/myProjects"
+                                           className={`footer_ul_link ${props.activePage === 'my_project_page' ? 'active_link' : ''}`}>
                                             Мои Проекты
                                         </a>
                                     </li>
@@ -82,7 +109,25 @@ export default function Footer() {
                                             Чат
                                         </a>
                                     </li>
-                                </div>
+                                <li className="footer_ul_li">
+                                    <a href="/howItWorks"
+                                       className={`footer_ul_link ${props.activePage === 'how_it_works_page' ? 'active_link' : ''}`}
+                                    >
+                                        Как это работает?
+                                    </a>
+                                </li>
+                                <li className="footer_ul_li">
+                                    <a href="/aboutCompany"
+                                       className={`footer_ul_link ${props.activePage === 'about_company' ? 'active_link' : ''}`}
+                                    >
+                                        О Компании
+                                    </a>
+                                </li>
+                                <li className="footer_ul_li">
+                                    <a href="" className="footer_ul_link">
+                                        Контакты
+                                    </a>
+                                </li>
 
 
 

@@ -241,6 +241,8 @@
     font-size: 18px;
     margin-bottom: 36px;
     font-weight: 600;
+    width: 100%;
+    text-align: left;
 }
 .services_item_pirce_date_info_wrapper {
     width: 100%;
@@ -1721,7 +1723,7 @@
     }
 }
 
-@media (min-width: 330px) and (max-width: 362px) {
+@media (min-width: 336px) and (max-width: 362px) {
     .footer_ul_link{
         font-size: 14px!important;
     }
@@ -1735,7 +1737,7 @@
         height: 35px!important;
     }
 }
-@media  (max-width: 330px) {
+@media  (max-width: 336px) {
     .footer_ul_link{
         font-size: 12px!important;
     }

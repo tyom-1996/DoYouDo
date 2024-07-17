@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.general_page_wrapper {
+    width: 100%;
+    max-width: 1244px;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+
+
+.about_company_main_wrapper {
+    width: 100%;
+    margin-bottom: 100px;
+}
+
+
+.about_company_top_img_item {
+    max-width: 424px;
+    height: 423px;
+    position: relative;
+}
+.about_company_top_img_item Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.about_company_mission_img_item1 {
+    width: 100%;
+    position: relative;
+    height: 434px;
+}
+.about_company_mission_img_item2 {
+    width: 100%;
+    position: relative;
+    height: 343px;
+}
+.about_company_mission_img_item1 Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about_company_mission_img_item2 Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about_company_founders_img_item1 {
+    width: 100%;
+    position: relative;
+    height: 168px;
+}
+.about_company_founders_img_item1 Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.about_company_awards_img_item1 {
+    width: 100%;
+    position: relative;
+    height: 256px;
+}
+.about_company_awards_img_item1 Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

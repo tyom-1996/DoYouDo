@@ -3,7 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/ForBothUserTypes/Job": "pages/ForBothUserTypes/Job.js",
-  "/ForBothUserTypes/Freelancers": "pages/ForBothUserTypes/Freelancers.js",
-  "/FreelancerPages/OrderPageForFreelancer": "pages/FreelancerPages/OrderPageForFreelancer.js"
+  "/howItWorks": "pages/howItWorks.js",
+  "/aboutCompany": "pages/aboutCompany.js"
 }

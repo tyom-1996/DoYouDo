@@ -73,7 +73,7 @@ export default function Home() {
     const router = useRouter();
 
     const navigateToMapPage = () => {
-        router.push('/Map');
+        router.push('/map');
     };
     return (
         <>
