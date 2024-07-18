@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.general_page_wrapper {
+    width: 100%;
+    max-width: 1244px;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+
+
+.contacts_wrapper {
+    width: 100%;
+    margin-bottom: 100px;
+}
+.contacts_wrapper_title {
+    color: #141933;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 36px;
+    margin-bottom: 30px;
+
+}
+
+.contacts_wrapper_info1 {
+    color: #333333;
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    max-width: 448px;
+    width: 100%;
+    margin-bottom: 30px;
+
+}
+
+.contacts_wrapper_write_to_support_btn {
+    max-width: 283px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+    color: #FFFFFF;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    background: #FF6C00;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    border-radius: 5px;
+}
+
+.contacts_wrapper_details_box {
+    max-width: 853px;
+    width: 100%;
+}
+.contacts_wrapper_details_box_title {
+    color: #333333;
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.contacts_wrapper_info2 {
+    color: #333333;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+.contacts_wrapper_info3 {
+    color: #333333;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+
+}
+
+@media (min-width: 426px) and (max-width: 768px) {
+    .contacts_wrapper_title {
+        font-size: 32px!important;
+    }
+    .contacts_wrapper {
+        margin-bottom: 80px!important;
+    }
+}
+@media (max-width: 426px) {
+    .contacts_wrapper_title {
+        font-size: 28px!important;
+    }
+    .contacts_wrapper_info1 {
+        font-size: 16px;
+    }
+    .contacts_wrapper {
+        margin-bottom: 60px!important;
+    }
+}

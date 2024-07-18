@@ -312,15 +312,38 @@ export default function AboutCompany () {
                         <h1 className="about_company_founders_wrapper_title">
                             Основатели YouDo
                         </h1>
-                        <div className="about_company_founders_img_item1">
-                            <Image
-                                src="/about_company_img4.png"
-                                alt="Example Image"
-                                layout="fill" // Fill the parent element
-                                objectFit="cover" // Cover the area of the parent element
-                                quality={100} // Image quality
-                            />
-                        </div>
+                       <div className='about_company_founders_wrapper_items_wrapper'>
+                           <div className='about_company_founders_wrapper_item'>
+                               <div className="about_company_founders_wrapper_item_img">
+                                   <Image
+                                    src="/freelancers_img8.png"
+                                    alt="Example Image"
+                                    layout="fill" // Fill the parent element
+                                    objectFit="cover" // Cover the area of the parent element
+                                    quality={100} // Image quality
+                                   />
+                               </div>
+                               <div className="about_company_founders_wrapper_item_info_box">
+                                   <p className="about_company_founders_wrapper_item_title">Заказчик Evgenia G.</p>
+                                   <p className="about_company_founders_wrapper_item_info">Дизайн сайта DoYouDo</p>
+                               </div>
+                           </div>
+                           <div className='about_company_founders_wrapper_item'>
+                               <div className="about_company_founders_wrapper_item_img">
+                                    <Image
+                                        src="/freelancers_img3.png"
+                                        alt="Example Image"
+                                        layout="fill" // Fill the parent element
+                                        objectFit="cover" // Cover the area of the parent element
+                                        quality={100} // Image quality
+                                    />
+                               </div>
+                               <div className="about_company_founders_wrapper_item_info_box">
+                                   <p className="about_company_founders_wrapper_item_title">Заказчик Evgenia G.</p>
+                                   <p className="about_company_founders_wrapper_item_info">Дизайн сайта DoYouDo</p>
+                               </div>
+                           </div>
+                       </div>
 
                     </div>
                     <div className="about_company_awards_wrapper">

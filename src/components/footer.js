@@ -71,7 +71,8 @@ export default function Footer(props) {
                                     </a>
                                 </li>
                                 <li className="footer_ul_li">
-                                    <a href="" className="footer_ul_link">
+                                    <a href="/contacts"
+                                       className={`footer_ul_link ${props.activePage === 'contacts' ? 'active_link' : ''}`}>
                                         Контакты
                                     </a>
                                 </li>
@@ -124,7 +125,8 @@ export default function Footer(props) {
                                     </a>
                                 </li>
                                 <li className="footer_ul_li">
-                                    <a href="" className="footer_ul_link">
+                                    <a href="/contacts"
+                                       className={`footer_ul_link ${props.activePage === 'contacts' ? 'active_link' : ''}`}>
                                         Контакты
                                     </a>
                                 </li>

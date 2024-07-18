@@ -21,6 +21,7 @@
 
 .about_company_top_img_item {
     max-width: 424px;
+    width: 100%;
     height: 423px;
     position: relative;
 }
@@ -33,6 +34,7 @@
     width: 100%;
     position: relative;
     height: 434px;
+    margin-bottom: 30px;
 }
 .about_company_mission_img_item2 {
     width: 100%;
@@ -54,7 +56,7 @@
 .about_company_founders_img_item1 {
     width: 100%;
     position: relative;
-    height: 168px;
+    height: 183px;
 }
 .about_company_founders_img_item1 Image {
     width: 100%;
@@ -70,4 +72,675 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.about_company_top_items_wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.about_company_top_info_item {
+    max-width: 610px;
+    width: 100%;
+}
+
+.about_company_top_item_title {
+    color: #333333;
+    margin-bottom: 9px;
+    font-weight: 600;
+    font-size: 48px;
+    font-family: "Poppins", sans-serif;
+    line-height: 58px;
+}
+.about_company_top_item_title span {
+    color: #FF6C00;
+}
+.about_company_top_item_info {
+    color: #636363;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Inter", sans-serif;
+    line-height: 26px;
+}
+
+.about_company_mission_wrapper {
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.about_company_mission_wrapper_title {
+    font-family: "Poppins", sans-serif;
+    color: #141933;
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+.about_company_mission_wrapper_info {
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    margin-bottom: 30px;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 22px;
+}
+
+.about_company_founders_wrapper {
+    width: 100%;
+    margin-bottom: 50px;
+}
+.about_company_awards_wrapper {
+    width: 100%;
+    margin-bottom: 50px;
+}
+.about_company_founders_wrapper_title {
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 50px;
+    font-size: 36px;
+    font-weight: 600;
+    color: #141933;
+}
+
+.about_company_awards_wrapper_title {
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 50px;
+    font-size: 36px;
+    font-weight: 600;
+    color: #141933;
+}
+
+@media (min-width: 885px) and (max-width: 970px) {
+    .about_company_top_img_item {
+        max-width: 390px!important;
+        height: 390px!important;
+    }
+    .about_company_top_info_item {
+        max-width: 500px!important;
+    }
+    .about_company_top_item_title {
+        font-size: 44px!important;
+    }
+}
+@media (min-width: 789px) and (max-width: 885px) {
+    .about_company_top_img_item {
+        max-width: 360px!important;
+        height: 360px!important;
+    }
+    .about_company_top_info_item {
+        max-width: 500px!important;
+    }
+    .about_company_top_item_title {
+        font-size: 38px!important;
+        line-height: 48px!important;
+    }
+}
+@media (min-width: 769px) and  (max-width: 789px) {
+    .about_company_top_img_item {
+        max-width: 330px!important;
+        height: 330px!important;
+    }
+    .about_company_top_info_item {
+        max-width: 500px!important;
+    }
+    .about_company_top_item_title {
+        font-size: 34px!important;
+        line-height: 40px!important;
+    }
+    .about_company_top_item_info {
+        font-size: 14px!important;
+        line-height: 20px!important;
+    }
+}
+
+@media (max-width: 769px) {
+    .about_company_top_items_wrapper {
+        flex-direction: column;
+    }
+   .about_company_top_info_item {
+       max-width: unset!important;
+       margin-bottom: 30px;
+   }
+
+}
+
+@media (min-width: 580px) and (max-width: 769px) {
+    .about_company_mission_wrapper_title {
+        font-size: 32px!important;
+    }
+    .about_company_founders_wrapper_title {
+        font-size: 32px!important;
+    }
+    .about_company_awards_wrapper_title {
+        font-size: 32px!important;
+    }
+    .about_company_top_item_title {
+        font-size: 44px!important;
+        line-height: 48px!important;
+    }
+}
+@media (min-width: 470px) and (max-width: 580px) {
+    .about_company_founders_wrapper_title {
+        font-size: 30px!important;
+    }
+    .about_company_awards_wrapper_title {
+        font-size: 30px!important;
+    }
+    .about_company_mission_wrapper_title {
+        font-size: 30px!important;
+    }
+    .about_company_top_item_title {
+        font-size: 40px!important;
+        line-height: 42px!important;
+    }
+}
+@media (min-width: 426px) and (max-width: 470px) {
+    .about_company_founders_wrapper_title {
+        font-size: 28px!important;
+    }
+    .about_company_awards_wrapper_title {
+        font-size: 28px!important;
+    }
+    .about_company_mission_wrapper_info {
+        font-size: 16px!important;
+    }
+    .about_company_mission_wrapper_title {
+        font-size: 28px!important;
+    }
+    .about_company_top_item_title {
+        font-size: 38px!important;
+        line-height: 42px!important;
+    }
+    .about_company_top_img_item {
+        max-width: 390px;
+        width: 100%;
+        height: 390px;
+        position: relative;
+    }
+}
+@media (min-width: 390px) and (max-width: 426px) {
+    .about_company_mission_wrapper_info {
+        font-size: 16px!important;
+    }
+    .about_company_mission_wrapper_title {
+        font-size: 26px!important;
+    }
+    .about_company_founders_wrapper_title {
+        font-size: 26px!important;
+    }
+    .about_company_awards_wrapper_title {
+        font-size: 26px!important;
+    }
+    .about_company_top_item_title {
+        font-size: 34px!important;
+        line-height: 39px!important;
+    }
+    .about_company_top_img_item {
+        max-width: 370px;
+        width: 100%;
+        height: 370px;
+        position: relative;
+    }
+}
+@media (min-width: 350px) and (max-width: 390px) {
+    .about_company_founders_wrapper_title {
+        font-size: 24px!important;
+    }
+    .about_company_awards_wrapper_title {
+        font-size: 24px!important;
+    }
+    .about_company_mission_wrapper_info {
+        font-size: 15px!important;
+    }
+    .about_company_mission_wrapper_title {
+        font-size: 24px!important;
+    }
+    .about_company_top_item_info {
+        font-size: 14px!important;
+    }
+    .about_company_top_item_title {
+        font-size: 30px!important;
+        line-height: 30px!important;
+    }
+    .about_company_top_img_item {
+        max-width: 300px;
+        width: 100%;
+        height: 300px;
+        position: relative;
+    }
+}
+@media (max-width: 350px) {
+    .about_company_founders_wrapper_title {
+        font-size: 24px!important;
+    }
+    .about_company_awards_wrapper_title {
+        font-size: 24px!important;
+    }
+    .about_company_mission_wrapper_info {
+        font-size: 14px!important;
+    }
+    .about_company_mission_wrapper_title {
+        font-size: 24px!important;
+    }
+    .about_company_top_item_title {
+        font-size: 26px!important;
+        line-height: 30px!important;
+    }
+    .about_company_top_img_item {
+        max-width: 270px;
+        width: 100%;
+        height: 270px;
+        position: relative;
+    }
+    .about_company_top_item_info {
+        font-size: 14px!important;
+    }
+}
+
+@media (min-width: 1188px) and (max-width: 1290px) {
+    .about_company_mission_img_item1 {
+        height: 400px!important;
+    }
+}
+@media (min-width: 1050px) and (max-width: 1188px) {
+    .about_company_mission_img_item1 {
+        height: 350px!important;
+    }
+}
+@media (min-width: 967px) and (max-width: 1050px) {
+    .about_company_mission_img_item1 {
+        height: 325px!important;
+    }
+}
+@media (min-width: 875px) and (max-width: 967px) {
+    .about_company_mission_img_item1 {
+        height: 300px!important;
+    }
+}
+@media (min-width: 740px) and (max-width: 875px) {
+    .about_company_mission_img_item1 {
+        height: 250px!important;
+    }
+}
+@media (min-width: 714px) and (max-width: 740px) {
+    .about_company_mission_img_item1 {
+        height: 240px!important;
+    }
+}
+@media (min-width: 690px) and (max-width: 714px) {
+    .about_company_mission_img_item1 {
+        height: 234px!important;
+    }
+}
+@media (min-width: 670px) and (max-width: 690px) {
+    .about_company_mission_img_item1 {
+        height: 227px!important;
+    }
+}
+@media (min-width: 650px) and (max-width: 670px) {
+    .about_company_mission_img_item1 {
+        height: 222px!important;
+    }
+}
+@media (min-width: 610px) and (max-width: 650px) {
+    .about_company_mission_img_item1 {
+        height: 213px!important;
+    }
+}
+@media (min-width: 530px) and  (max-width: 610px) {
+    .about_company_mission_img_item1 {
+        height: 197px!important;
+    }
+}
+@media (min-width: 459px) and   (max-width: 530px) {
+    .about_company_mission_img_item1 {
+        height: 170px!important;
+    }
+}
+@media (min-width: 410px) and (max-width: 459px) {
+    .about_company_mission_img_item1 {
+        height: 150px!important;
+    }
+}
+@media (min-width: 383px) and  (max-width: 410px) {
+    .about_company_mission_img_item1 {
+        height: 140px!important;
+    }
+}
+@media (min-width: 360px) and (max-width: 383px) {
+    .about_company_mission_img_item1 {
+        height: 130px!important;
+    }
+}
+@media (min-width: 340px) and (max-width: 360px) {
+    .about_company_mission_img_item1 {
+        height: 120px!important;
+    }
+}
+@media  (max-width: 340px) {
+    .about_company_mission_img_item1 {
+        height: 112px!important;
+    }
+}
+
+@media (min-width: 1240px) and (max-width: 1290px) {
+    .about_company_mission_img_item2 {
+        height: 329px!important;
+    }
+}
+@media (min-width: 1197px) and (max-width: 1240px) {
+    .about_company_mission_img_item2 {
+        height: 317px!important;
+    }
+}
+@media  (min-width: 1160px) and (max-width: 1197px) {
+    .about_company_mission_img_item2 {
+        height: 306px!important;
+    }
+}
+@media (min-width: 1115px) and (max-width: 1160px) {
+    .about_company_mission_img_item2 {
+        height: 296px!important;
+    }
+}
+@media (min-width: 1070px) and  (max-width: 1115px) {
+    .about_company_mission_img_item2 {
+        height: 283px!important;
+    }
+}
+@media (min-width: 1030px) and  (max-width: 1070px) {
+    .about_company_mission_img_item2 {
+        height: 273px!important;
+    }
+}
+@media (min-width: 990px) and (max-width: 1030px) {
+    .about_company_mission_img_item2 {
+        height: 263px!important;
+    }
+}
+@media (min-width: 950px) and (max-width: 990px) {
+    .about_company_mission_img_item2 {
+        height: 253px!important;
+    }
+}
+@media (min-width: 910px) and (max-width: 950px) {
+    .about_company_mission_img_item2 {
+        height: 243px!important;
+    }
+}
+@media (min-width: 879px) and (max-width: 910px) {
+    .about_company_mission_img_item2 {
+        height: 233px!important;
+    }
+}
+@media (min-width: 835px) and  (max-width: 879px) {
+    .about_company_mission_img_item2 {
+        height: 223px!important;
+    }
+}
+@media  (min-width: 799px) and (max-width: 835px) {
+    .about_company_mission_img_item2 {
+        height: 213px!important;
+    }
+}
+@media (min-width: 768px) and (max-width: 799px) {
+    .about_company_mission_img_item2 {
+        height: 203px!important;
+    }
+}
+@media (min-width: 740px) and (max-width: 768px) {
+    .about_company_mission_img_item2 {
+        height: 197px!important;
+    }
+}
+@media (min-width: 700px) and  (max-width: 740px) {
+    .about_company_mission_img_item2 {
+        height: 188px!important;
+    }
+}
+@media (min-width: 670px) and (max-width: 700px) {
+    .about_company_mission_img_item2 {
+        height: 177px!important;
+    }
+}
+@media (min-width: 640px) and  (max-width: 670px) {
+    .about_company_mission_img_item2 {
+        height: 167px!important;
+    }
+}
+@media (min-width: 610px) and (max-width: 640px) {
+    .about_company_mission_img_item2 {
+        height: 160px!important;
+    }
+}
+@media (min-width: 585px) and (max-width: 610px) {
+    .about_company_mission_img_item2 {
+        height: 152px!important;
+    }
+}
+@media (min-width: 565px) and (max-width: 585px) {
+    .about_company_mission_img_item2 {
+        height: 147px!important;
+    }
+}
+@media (min-width: 539px) and (max-width: 565px) {
+    .about_company_mission_img_item2 {
+        height: 140px!important;
+    }
+}
+@media  (min-width: 520px) and (max-width: 539px) {
+    .about_company_mission_img_item2 {
+        height: 135px!important;
+    }
+}
+@media (min-width: 500px) and  (max-width: 520px) {
+    .about_company_mission_img_item2 {
+        height: 131px!important;
+    }
+}
+@media (min-width: 480px) and  (max-width: 500px) {
+    .about_company_mission_img_item2 {
+        height: 125px!important;
+    }
+}
+@media (min-width: 460px) and  (max-width: 480px) {
+    .about_company_mission_img_item2 {
+        height: 120px!important;
+    }
+}
+@media (min-width: 453px) and (max-width: 460px) {
+    .about_company_mission_img_item2 {
+        height: 118px!important;
+    }
+}
+@media (min-width: 439px) and (max-width: 453px) {
+    .about_company_mission_img_item2 {
+        height: 112px!important;
+    }
+}
+@media (min-width: 420px) and (max-width: 439px) {
+    .about_company_mission_img_item2 {
+        height: 107px!important;
+    }
+}
+@media (min-width: 396px) and (max-width: 420px) {
+    .about_company_mission_img_item2 {
+        height: 102px!important;
+    }
+}
+@media (min-width: 386px) and (max-width: 396px) {
+    .about_company_mission_img_item2 {
+        height: 98px!important;
+    }
+}
+@media  (min-width: 376px) and (max-width: 386px) {
+    .about_company_mission_img_item2 {
+        height: 94px!important;
+    }
+}
+@media  (min-width: 366px) and  (max-width: 376px) {
+    .about_company_mission_img_item2 {
+        height: 90px!important;
+    }
+}
+@media  (min-width: 356px) and (max-width: 366px) {
+    .about_company_mission_img_item2 {
+        height: 86px!important;
+    }
+}
+@media (min-width: 346px) and (max-width: 356px) {
+    .about_company_mission_img_item2 {
+        height: 84px!important;
+    }
+}
+@media (min-width: 336px) and (max-width: 346px) {
+    .about_company_mission_img_item2 {
+        height: 82px!important;
+    }
+}
+@media (min-width: 326px) and (max-width: 336px) {
+    .about_company_mission_img_item2 {
+        height: 81px!important;
+    }
+}
+@media  (max-width: 326px) {
+    .about_company_mission_img_item2 {
+        height: 78px!important;
+    }
+}
+
+.about_company_founders_wrapper_items_wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.about_company_founders_wrapper_item {
+    width: 48%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.about_company_founders_wrapper_item_img {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+.about_company_founders_wrapper_item_img Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about_company_founders_wrapper_item_title {
+    color: #333333;
+    margin-bottom: 9px;
+    font-weight: 600;
+    font-size: 26px;
+    font-family: "Poppins", sans-serif;
+}
+.about_company_founders_wrapper_item_info {
+    color: #333333;
+    margin-bottom: 9px;
+    font-weight: 400;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+}
+
+
+@media (min-width: 737px) and  (max-width: 1052px) {
+    .about_company_founders_wrapper_item_title {
+        font-size: 20px!important;
+    }
+}
+
+@media (min-width: 800px) and (max-width: 928px) {
+    .about_company_founders_wrapper_item_img {
+        width: 150px!important;
+        height: 150px!important;
+    }
+}
+@media (min-width: 737px) and (max-width: 800px) {
+    .about_company_founders_wrapper_item_img {
+        width: 120px!important;
+        height: 120px!important;
+    }
+}
+@media (min-width: 660px) and (max-width: 737px) {
+    .about_company_founders_wrapper_item_img {
+        width: 100px!important;
+        height: 100px!important;
+    }
+    .about_company_founders_wrapper_item_title {
+        font-size: 18px!important;
+    }
+}
+@media (min-width: 620px) and (max-width: 660px) {
+    .about_company_founders_wrapper_item_img {
+        width: 80px!important;
+        height: 80px!important;
+    }
+    .about_company_founders_wrapper_item_title {
+        font-size: 18px!important;
+    }
+}
+
+@media (min-width: 392px) and (max-width: 620px) {
+    .about_company_founders_wrapper_items_wrapper {
+        flex-direction: column;
+    }
+    .about_company_founders_wrapper_item {
+        width: 100%;
+        margin-bottom: 20px;
+        justify-content: center!important;
+    }
+    .about_company_founders_wrapper_item_img {
+        width: 150px!important;
+        height: 150px!important;
+    }
+    .about_company_founders_wrapper_item_title {
+        font-size: 18px!important;
+    }
+}
+@media (min-width: 360px) and (max-width: 392px) {
+    .about_company_founders_wrapper_items_wrapper {
+        flex-direction: column;
+    }
+    .about_company_founders_wrapper_item {
+        width: 100%;
+        margin-bottom: 20px;
+        justify-content: center!important;
+    }
+    .about_company_founders_wrapper_item_img {
+        width: 120px!important;
+        height: 120px!important;
+    }
+    .about_company_founders_wrapper_item_title {
+        font-size: 18px!important;
+    }
+}
+@media (max-width: 360px) {
+    .about_company_founders_wrapper_items_wrapper {
+        flex-direction: column;
+    }
+    .about_company_founders_wrapper_item {
+        width: 100%;
+        margin-bottom: 20px;
+        justify-content: center!important;
+    }
+    .about_company_founders_wrapper_item_img {
+        width: 100px!important;
+        height: 100px!important;
+    }
+    .about_company_founders_wrapper_item_title {
+        font-size: 16px!important;
+    }
+    .about_company_founders_wrapper_item_info {
+        font-size: 14px!important;
+    }
 }
