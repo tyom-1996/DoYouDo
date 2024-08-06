@@ -24,7 +24,7 @@
     position: relative;
 }
 .mobile_chat_header_select_freelancer_button {
-    display: none;
+    display: none!important;
 }
 
 

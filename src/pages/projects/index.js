@@ -27,7 +27,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 2,
@@ -36,7 +36,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 3,
@@ -45,7 +45,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 4,
@@ -54,7 +54,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 5,
@@ -63,7 +63,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 6,
@@ -72,7 +72,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 7,
@@ -81,7 +81,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 8,
@@ -90,7 +90,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 9,
@@ -99,7 +99,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 10,
@@ -108,7 +108,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 11,
@@ -117,7 +117,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 12,
@@ -126,7 +126,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 13,
@@ -135,7 +135,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 14,
@@ -144,7 +144,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 15,
@@ -153,7 +153,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 16,
@@ -162,7 +162,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
     ]);
     const [recommendationsList, setRecommendationsList] = useState([
@@ -173,7 +173,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 2,
@@ -182,7 +182,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 3,
@@ -191,7 +191,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 4,
@@ -200,7 +200,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
 
     ]);
@@ -212,7 +212,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 2,
@@ -221,7 +221,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 3,
@@ -230,7 +230,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
         {
             id: 4,
@@ -239,7 +239,7 @@ export default function Job () {
             service_price: 'до 1 000 ₽',
             service_date: '12 июня',
             service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
+            service_address: '6666 466 метров от вас'
         },
 
     ]);

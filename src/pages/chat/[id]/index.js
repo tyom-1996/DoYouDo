@@ -4,6 +4,8 @@ import '../../../assets/css/chat_single_page.css';
 import Header from '../../../components/header'
 import Footer from '../../../components/footer'
 import Head from 'next/head';
+import {useRouter} from "next/router";
+import SelectFreelancerModal from "@/components/selectFreelancerModal";
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -72,12 +74,25 @@ export default function  Chat  ({id})  {
     ]);
     const [showForClient, setShowForClient] = useState(true);
     const [chatMessage, setChatMessage] = useState('');
+    const [showSelectFreelancerModal, setShowSelectFreelancerModal] = useState(false);
 
+    const disableBodyScroll = () => {
+        document.body.style.overflow = "hidden";
+    };
+
+    const enableBodyScroll = () => {
+        document.body.style.overflow = "auto";
+    };
 
     const handleChatMessage = (e) => {
          setChatMessage(e.target.value);
     }
 
+    const router = useRouter();
+
+    const openSelectFreelancerModal = () => {
+        router.push('/select-freelancer');
+    };
     return (
         <>
             <main className='general_page_wrapper'>
@@ -116,7 +131,13 @@ export default function  Chat  ({id})  {
                                     </div>
                                 </div>
                                 {showForClient &&
-                                    <button className='chat_header_select_freelancer_button  desktop_chat_header_select_freelancer_button'>
+                                    <button
+                                        className='chat_header_select_freelancer_button  desktop_chat_header_select_freelancer_button'
+                                        onClick={() => {
+                                            setShowSelectFreelancerModal(true)
+                                            disableBodyScroll()
+                                        }}
+                                    >
                                         Выбрать исполнителем
                                     </button>
                                 }
@@ -209,16 +230,27 @@ export default function  Chat  ({id})  {
 
                         </div>
                         {showForClient &&
-                            <button className='chat_header_select_freelancer_button  mobile_chat_header_select_freelancer_button'>
+                            <button
+                                className='chat_header_select_freelancer_button  mobile_chat_header_select_freelancer_button'
+                                onClick={() => {
+                                    setShowSelectFreelancerModal(true)
+                                    disableBodyScroll()
+                                }}
+                            >
                                 Выбрать исполнителем
                             </button>
                         }
                     </div>
-
-
+                    <Footer activePage={"chat"}/>
                 </div>
 
-                <Footer activePage={"chat"}/>
+
+                <SelectFreelancerModal
+                    isActive={showSelectFreelancerModal}
+                    onClose={() => {
+                        setShowSelectFreelancerModal(false);
+                    }}
+                />
             </main>
         </>
     );

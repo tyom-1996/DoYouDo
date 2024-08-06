@@ -177,7 +177,7 @@ export default function ClientProfilePage () {
                     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
 
                 </Head>
-                <div className="home_general_wrapper" id='client_profile'>
+                <div className="home_general_wrapper" id='freelancer_profile'>
                     <Header activePage={"freelancer_profile"}/>
                     <div className="freelancer_single_page_wrapper">
                         <div className="freelancer_single_page_user_info_wrapper">
@@ -343,7 +343,7 @@ export default function ClientProfilePage () {
                         </div>
                     </div>
 
-                    <Footer activePage={"client_profile"}/>
+                    <Footer activePage={"freelancer_profile"}/>
                 </div>
 
 

@@ -100,7 +100,7 @@ export default function Header(props) {
                         <div className='profile_popup'>
                             <div className='profile_popup_wrapper'>
                                 <a href="/freelancer-profile-settings" className='profile_popup_link'>Настройки</a>
-                                <a href="" className='profile_popup_link'>Войти как заказчик</a>
+                                <a href="/client-profile" className='profile_popup_link'>Войти как заказчик</a>
                                 <a href="" className='profile_popup_link'>Выйти из аккаунта</a>
                             </div>
                         </div>

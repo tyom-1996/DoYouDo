@@ -25,6 +25,7 @@ export default function Freelancers () {
             freelancer_img: '/freelancers_img1.png',
             freelancer_name: 'Daniela Gallego',
             freelancer_profession: 'Дизайн',
+            distance: '466 метров от вас',
             freelancer_rating: '4.8/5',
             freelancer_reviews_quantity: '53',
             freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
@@ -36,6 +37,7 @@ export default function Freelancers () {
             freelancer_img: '/freelancers_img2.png',
             freelancer_name: 'Daniela Gallego',
             freelancer_profession: 'Дизайн',
+            distance: '466 метров от вас',
             freelancer_rating: '4.8/5',
             freelancer_reviews_quantity: '53',
             freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
@@ -47,6 +49,7 @@ export default function Freelancers () {
             freelancer_img: '/freelancers_img3.png',
             freelancer_name: 'Daniela Gallego',
             freelancer_profession: 'Дизайн',
+            distance: '466 метров от вас',
             freelancer_rating: '4.8/5',
             freelancer_reviews_quantity: '53',
             freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
@@ -58,6 +61,7 @@ export default function Freelancers () {
             freelancer_img: '/freelancers_img4.png',
             freelancer_name: 'Daniela Gallego',
             freelancer_profession: 'Дизайн',
+            distance: '466 метров от вас',
             freelancer_rating: '4.8/5',
             freelancer_reviews_quantity: '53',
             freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
@@ -69,6 +73,7 @@ export default function Freelancers () {
             freelancer_img: '/freelancers_img5.png',
             freelancer_name: 'Daniela Gallego',
             freelancer_profession: 'Дизайн',
+            distance: '466 метров от вас',
             freelancer_rating: '4.8/5',
             freelancer_reviews_quantity: '53',
             freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
@@ -80,6 +85,7 @@ export default function Freelancers () {
             freelancer_img: '/freelancers_img6.png',
             freelancer_name: 'Daniela Gallego',
             freelancer_profession: 'Дизайн',
+            distance: '466 метров от вас',
             freelancer_rating: '4.8/5',
             freelancer_reviews_quantity: '53',
             freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
@@ -91,6 +97,7 @@ export default function Freelancers () {
             freelancer_img: '/freelancers_img7.png',
             freelancer_name: 'Daniela Gallego',
             freelancer_profession: 'Дизайн',
+            distance: '466 метров от вас',
             freelancer_rating: '4.8/5',
             freelancer_reviews_quantity: '53',
             freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
@@ -102,6 +109,7 @@ export default function Freelancers () {
             freelancer_img: '/freelancers_img8.png',
             freelancer_name: 'Daniela Gallego',
             freelancer_profession: 'Дизайн',
+            distance: '466 метров от вас',
             freelancer_rating: '4.8/5',
             freelancer_reviews_quantity: '53',
             freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
@@ -113,6 +121,7 @@ export default function Freelancers () {
             freelancer_img: '/freelancers_img9.png',
             freelancer_name: 'Daniela Gallego',
             freelancer_profession: 'Дизайн',
+            distance: '466 метров от вас',
             freelancer_rating: '4.8/5',
             freelancer_reviews_quantity: '53',
             freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
@@ -579,7 +588,11 @@ export default function Freelancers () {
                                                     </div>
                                                     <div className='freelancers_item_info_box'>
                                                         <p className="freelancers_item_user_name">{item.freelancer_name}</p>
-                                                        <p className="freelancers_item_user_profession">{item.freelancer_profession}</p>
+                                                        <div className='freelancers_item_user_header_item'>
+                                                            <p className="freelancers_item_user_profession">{item.freelancer_profession}</p>
+                                                            <p className="freelancers_item_user_distance_info">{item.distance}</p>
+                                                        </div>
+
                                                         <div className="freelancers_item_user_rating_icon_reviews_info_wrapper">
                                                             <div className="freelancers_item_user_rating_info_wrapper">
                                                                 <div className="freelancers_item_user_rating_icon">

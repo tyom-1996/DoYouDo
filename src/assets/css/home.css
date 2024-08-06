@@ -1105,17 +1105,25 @@
     align-items: center;
     z-index: 999999;
     width: 100%;
-    height: 100%
+    height: 100%;
+    /*background-image: url("/modal_back_img.png");*/
+    /*background-size: cover;*/
+    /*background-repeat: no-repeat;*/
+    overflow: scroll;
+    padding-top: 70px;
+    padding-bottom: 70px;
 }
 .filter_mobile_menu_wrapper {
     background: #ffffff;
+    max-width: 570px;
     width: 100%;
-    height: 100%;
     margin: 0 auto;
-    padding-top: 15px;
-    padding-bottom: 28px;
+    padding-top: 40px;
+    padding-bottom: 50px;
     position: relative;
     overflow-y: scroll;
+    border-radius: 15px;
+    height: 100%;
 }
 .mobile_services_filter_items_wrapper {
     width: 100%;
@@ -1777,6 +1785,7 @@
     justify-content: space-between;
     width: 100%;
     align-items: center;
+    cursor: pointer;
 }
 
 .filter_task_categories_header_icon {
@@ -1811,7 +1820,9 @@
     margin-bottom: 16px;
     position: relative;
 }
+
 .radius_dropdown_title {
+    font-family: "Inter", sans-serif;
     margin-bottom: 6px;
     color: #929292;
     font-weight: 500;
@@ -1823,6 +1834,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    cursor: pointer;
 }
 
 .radius_dropdownHeader {
@@ -1849,7 +1861,7 @@
     width: 100%;
     position: absolute;
     z-index: 999;
-    bottom: -180px;
+    bottom: -191px;
 }
 .radius_dropdownItem {
     width: 100%;
@@ -2068,4 +2080,11 @@
 }
 .sort-option {
     cursor: pointer;
+}
+
+@media (max-width: 590px) {
+    .filter_mobile_menu_wrapper {
+        max-width: unset!important;
+        width: 95% !important;
+    }
 }
