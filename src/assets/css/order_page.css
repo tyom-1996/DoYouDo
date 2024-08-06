@@ -145,6 +145,13 @@
         width: 100%!important;
         padding: 0 20px;
     }
+    .order_date_fee_info_wrapper {
+        flex-direction: column;
+    }
+    .order_date_fee_input_title_wrapper {
+        width: 100% !important;
+        margin-bottom: 15px;
+    }
 }
 
 
@@ -564,8 +571,24 @@
     .order_page_item2 {
         padding: 30px 20px!important;
     }
+    .order_review_textarea {
+        font-size: 15px!important;
+    }
+    .order_review_textarea::placeholder {
+        font-size: 15px!important;
+    }
 }
 @media (max-width: 426px) {
+    .order_review_wrapper_header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .order_review_textarea {
+        font-size: 14px!important;
+    }
+    .order_review_textarea::placeholder {
+        font-size: 14px!important;
+    }
     .order_page_item2 {
         padding: 22px 15px!important;
     }
@@ -607,5 +630,237 @@
     .map_img2 {
         height: 651px!important;
         border-radius: 15px!important;
+    }
+}
+
+.order_review_wrapper {
+    width: 100%;
+    margin-bottom: 20px;
+}
+.order_review_wrapper_header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.order_review_wrapper_header_title {
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-size: 15px;
+    font-weight: 500;
+}
+.order_review_wrapper_header_info {
+    font-family: "Inter", sans-serif;
+    color: #FF6C00;
+    font-size: 15px;
+    font-weight: 500;
+}
+.order_review_textarea {
+    background: #F7F7F7;
+    border-radius: 10px;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 10px 15px 33px 15px;
+    height: 100px;
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-size: 16px;
+    font-weight: 400;
+    resize: none;
+}
+.order_review_textarea::placeholder {
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-size: 16px;
+    font-weight: 400;
+    max-width: 590px;
+}
+
+.order_date_fee_info_wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.order_date_fee_input_title_wrapper {
+    width: 48%;
+}
+
+.order_date_fee_input_title {
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+.order_date_fee_input_field {
+    background: #F7F7F7;
+    border-radius: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    width: 100%;
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.order_date_fee_input_field::placeholder {
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.discuss_btn  {
+    border: 2px solid #FF6C00;
+    max-width: 240px;
+    height: 45px;
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+    background: none;
+    color: #333333;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+
+}
+.discuss_btn_wrapper {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+
+.discuss_accept_order_refuse_buttons_main_wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accept_order_refuse_buttons_wrapper {
+    display: flex;
+    align-items: center;
+}
+.accept_order_refuse_buttons_wrapper {
+    max-width: 500px;
+    width: 100%;
+}
+.accept_order_btn {
+    background: #FF6C00;
+    margin-right: 20px;
+    border: none;
+    height: 45px;
+    width: 48%;
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #F3F5F6;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+
+}
+
+.refuse_btn {
+    background: #FF6C00;
+    border: none;
+    height: 45px;
+    width: 48%;
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #F3F5F6;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+
+}
+
+.leave_feedback_btn {
+    background: #FF6C00;
+    border: none;
+    height: 45px;
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #F3F5F6;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+    max-width: 240px;
+}
+
+@media (max-width: 480px) {
+    .leave_feedback_btn {
+        max-width: unset!important;
+    }
+    .discuss_btn {
+        max-width: unset!important;
+    }
+}
+
+@media (min-width: 1028px) and (max-width: 1165px) {
+    .accept_order_refuse_buttons_wrapper {
+        max-width: 450px!important;
+    }
+    .discuss_btn {
+        max-width: 200px!important;
+    }
+}
+@media (min-width: 651px) and (max-width: 1028px) {
+    .accept_order_refuse_buttons_wrapper {
+        max-width: 380px!important;
+    }
+    .discuss_btn {
+        max-width: 150px!important;
+    }
+}
+
+@media (max-width: 650px) {
+    .accept_order_refuse_buttons_wrapper {
+        max-width: unset!important;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+    .discuss_accept_order_refuse_buttons_main_wrapper {
+        flex-direction: column;
+    }
+    .discuss_btn {
+        width: 100% !important;
+        max-width: unset!important;
+    }
+    .accept_order_btn {
+        width: 100% !important;
+        margin-right: unset!important;
+        margin-bottom: 15px;
+    }
+    .refuse_btn {
+        width: 100% !important;
     }
 }

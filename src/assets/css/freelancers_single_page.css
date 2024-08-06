@@ -66,7 +66,7 @@
 }
 
 
-pagination_links_wrapper {
+.pagination_links_wrapper {
     width: 100%;
     max-width: 398px;
     margin: 0 auto;
@@ -243,7 +243,7 @@ pagination_links_wrapper {
     object-fit: cover;
 }
 
-.freelancer_single_page_ratings_reviews_wrapper {
+#freelancer_single_page .freelancer_single_page_ratings_reviews_wrapper {
     width: 100%;
     padding-top: 400px;
 }
@@ -364,6 +364,7 @@ pagination_links_wrapper {
     font-weight: 600;
     font-size: 36px;
     font-family: "Poppins", sans-serif;
+    margin-right: 5px;
 }
 .freelancer_single_page_rating_info_wrapper_info {
     color: #FF6C00;
@@ -828,7 +829,7 @@ pagination_links_wrapper {
     .freelancer_single_page_user_info_wrapper_item2_img {
         display: none!important;
     }
-    .freelancer_single_page_ratings_reviews_wrapper {
+   #freelancer_single_page .freelancer_single_page_ratings_reviews_wrapper {
         padding-top: unset!important;
     }
     .freelancer_single_page_user_info_wrapper_items_wrapper {

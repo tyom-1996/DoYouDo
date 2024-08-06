@@ -14,6 +14,8 @@ import {PaginationRightIcon} from "@/components/icons/paginationRightIcon";
 import {FilterCloseIcon} from "@/components/icons/FilterCloseIcon";
 import {FilterIcon} from "@/components/icons/FilterIcon";
 import { useRouter } from 'next/router';
+import {DropDownIcon3} from "@/components/icons/DropDownIcon3";
+import {DeleteAddressIcon} from "@/components/icons/DeleteAddressIcon";
 
 export default function Job () {
     const [windowHeight, setWindowHeight] = useState(0);
@@ -421,7 +423,6 @@ export default function Job () {
 
     ]);
     const [selectedCategories, setSelectedCategories] = useState([]);
-
     const [citiesList, setCitiesList] = useState([
         {
             id: 1,
@@ -450,8 +451,41 @@ export default function Job () {
 
     ]);
     const [selectedCities, setSelectedCities] = useState([]);
+    const [showHiddenFilterCategoriesPart, setShowHiddenFilterCategoriesPart] = useState(false);
 
+    const [IsOpenForRadius, setIsOpenForRadius] = useState(false);
+    const [selectedRadius, setSelectedRadius] = useState('');
+    const [taskCost, setTaskCost] = useState('');
+    const [radius, setRadius] = useState([
+        '50 км',
+        '100 км',
+        '200 км',
+        '300 км',
+        '400 км',
+        '500 км',
+    ]);
+    const [address, setAddress] = useState('');
+    const [coordinates, setCoordinates] = useState([55.751574, 37.573856]);
+    const [filters, setFilters] = useState({
+        remoteWork: false,
+        noResponses: true,
+        sortBy: 'urgency',
+    });
 
+    const handleFilterChange = (e) => {
+        const { name, checked } = e.target;
+        setFilters((prev) => ({
+            ...prev,
+            [name]: checked,
+        }));
+    };
+
+    const handleSortChange = (e) => {
+        setFilters((prev) => ({
+            ...prev,
+            sortBy: e.target.value,
+        }));
+    };
 
     const handleCheckboxChange = () => {
         setIsCheckedAllCategories(!isCheckedAllCategories);
@@ -487,8 +521,32 @@ export default function Job () {
     const redirectToOrderPageForFreelancer = (id) => {
         router.push(`/projects/${id}`);
     };
+    const  handleSelectRadius = (item) => {
+        setSelectedRadius(item);
+        setIsOpenForRadius(false);
+    }
+   const handleTaskCostChange = (e) => {
+        setTaskCost(e.target.value);
+   }
+    const handleAddressChange = async (e) => {
+        const newAddress = e.target.value;
+        setAddress(newAddress);
 
+        if (newAddress.length > 3) {
+            // Fetch coordinates from Yandex Geocode API
+            const response = await fetch(
+                `https://geocode-maps.yandex.ru/1.x/?apikey=ed170562-fba8-4475-84f5-8940538e66e2&format=json&geocode=${newAddress}`
+            );
+            const data = await response.json();
 
+            if (data.response.GeoObjectCollection.featureMember.length) {
+                const coords =
+                    data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ').map(Number);
+                setCoordinates([coords[1], coords[0]]);
+            }
+
+        }
+    };
     return (
         <>
             <main className='general_page_wrapper' id='job_page'>
@@ -527,6 +585,10 @@ export default function Job () {
                                     </button>
                                     <button
                                         className='services_search_box_filter_button'
+                                        onClick={() => {
+                                            setShowFilterMobile(true)
+                                            disableBodyScroll()
+                                        }}
                                     >
                                        <FilterIcon/>
                                     </button>
@@ -577,7 +639,6 @@ export default function Job () {
                         </div>
                         <div className="services_items_filter_main_wrapper">
                             <div className="services_filter_items_wrapper">
-
                                 <div className='services_filter_item'>
                                     <label className='service_label'>
                                         <input
@@ -591,7 +652,6 @@ export default function Job () {
 
                                     </label>
                                 </div>
-
                                 <City
                                     cityData={citiesList}
                                     selectedCities={selectedCities}
@@ -600,7 +660,6 @@ export default function Job () {
                                         console.log(val)
                                     }}
                                 />
-
                                 <div className='service_category_items_wrapper'>
                                     {filterCategoryList.map((item, index) => {
                                         return (
@@ -811,6 +870,185 @@ export default function Job () {
                                 <p className='filter_mobile_menu_title'>Фильтр</p>
                             </div>
                             <div className="mobile_services_filter_items_wrapper">
+                                <div className='filter_task_categories_wrapper'>
+                                    <div
+                                        className='filter_task_categories_header'
+                                        onClick={() => {
+                                            setShowHiddenFilterCategoriesPart(!showHiddenFilterCategoriesPart)
+                                        }}
+                                    >
+                                        <p className='filter_task_categories_header_title'>Категории заданий</p>
+                                        <button
+                                            className={`filter_task_categories_header_icon${showHiddenFilterCategoriesPart ? '2' : ''}`}
+                                        >
+                                            <DropDownIcon3/>
+                                        </button>
+
+                                    </div>
+                                    {showHiddenFilterCategoriesPart &&
+                                        <div className='filter_task_categories_main'>
+                                            <div className="filter_task_categories_input_title_wrapper filter_task_categories_input_title_wrapper2">
+                                                <p className="filter_task_categories_input_title">Город, адрес, метро, район</p>
+                                                <input
+                                                    type="text"
+                                                    value={address}
+                                                    onChange={handleAddressChange}
+                                                    placeholder="Город, адрес, метро, район"
+                                                    className='filter_task_categories_input_field filter_task_categories_input_field_address'
+                                                />
+                                                {address.length > 0 &&
+                                                    <button
+                                                        className='delete_input_btn'
+                                                        onClick={() => {
+                                                            setAddress('')
+                                                        }}
+                                                    >
+                                                        <DeleteAddressIcon/>
+                                                    </button>
+                                                }
+
+                                            </div>
+
+                                            <div className="radius_dropdown">
+                                                <p className='radius_dropdown_title'>Радиус поиска</p>
+                                                <div className="radius_dropdownHeader" onClick={() => setIsOpenForRadius(!IsOpenForRadius)}>
+                                                    <p className='radius_dropdownHeader_title'>{selectedRadius || 'Радиус поиска'}</p>
+                                                    <span className="arrow">
+                                            {IsOpenForRadius ?
+                                                <div style={{ transform: "rotate(-180deg)" }}>
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width={24}
+                                                        height={24}
+                                                        fill="none"
+                                                    >
+                                                        <path
+                                                            stroke="#333"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={1.5}
+                                                            d="m18 9-6 6-1.5-1.5M6 9l2 2"
+                                                        />
+                                                    </svg>
+                                                </div>
+                                                :
+
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width={24}
+                                                    height={24}
+                                                    fill="none"
+                                                >
+                                                    <path
+                                                        stroke="#333"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={1.5}
+                                                        d="m18 9-6 6-1.5-1.5M6 9l2 2"
+                                                    />
+                                                </svg>
+
+                                            }
+                                        </span>
+                                                </div>
+                                                {IsOpenForRadius && (
+                                                    <div className="radius_dropdownList radius_dropdownList2">
+                                                        {radius.map((item, index) => (
+                                                            <p key={index} className="radius_dropdownItem" onClick={() => handleSelectRadius(item)}>
+                                                                {item}
+                                                            </p>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="filter_task_categories_input_title_wrapper">
+                                                <p className="filter_task_categories_input_title">Стоимость заданий от</p>
+                                                <input
+                                                    type="text"
+                                                    value={taskCost}
+                                                    onChange={handleTaskCostChange}
+                                                    placeholder="₽"
+                                                    className='filter_task_categories_input_field'
+                                                />
+                                            </div>
+                                            <div className='filter_option_checkbox_items_wrapper'>
+                                                <div className='filter_option_checkbox_item'>
+                                                    <h3 className="filter_option_checkbox_items_wrapper_title">Показывать только задания со статусами</h3>
+                                                    <div className="filter-option">
+                                                        <label className='filter_option_label'>
+                                                            <input
+                                                                type="checkbox"
+                                                                name="remoteWork"
+                                                                checked={filters.remoteWork}
+                                                                onChange={handleFilterChange}
+                                                            />
+                                                            <div className='filter_option_label_title_wrapper'>
+                                                                <span className='filter_option_label_title'>Удалённая работа</span>
+                                                                <span className='filter_option_label_title2'>Никуда не надо ехать</span>
+                                                            </div>
+
+                                                        </label>
+                                                    </div>
+                                                    <div className="filter-option">
+                                                        <label className='filter_option_label'>
+                                                            <input
+                                                                type="checkbox"
+                                                                name="noResponses"
+                                                                checked={filters.noResponses}
+                                                                onChange={handleFilterChange}
+                                                            />
+                                                            <div className='filter_option_label_title_wrapper'>
+                                                                <span className='filter_option_label_title'>Задания без откликов</span>
+                                                                <span className='filter_option_label_title2'>Откликнитесь первым</span>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div className='filter_option_checkbox_item'>
+                                                    <h3 className="filter_option_checkbox_items_wrapper_title">Сортировать по:</h3>
+                                                    <div className="sort-options">
+                                                        <label className="sort-option">
+                                                            <input
+                                                                type="radio"
+                                                                name="sortBy"
+                                                                value="date"
+                                                                checked={filters.sortBy === 'date'}
+                                                                onChange={handleSortChange}
+                                                            />
+                                                            <p className='sort_option_title'> Дате публикации</p>
+
+                                                        </label>
+                                                        <label className="sort-option">
+                                                            <input
+                                                                type="radio"
+                                                                name="sortBy"
+                                                                value="urgency"
+                                                                checked={filters.sortBy === 'urgency'}
+                                                                onChange={handleSortChange}
+                                                            />
+                                                            <p className='sort_option_title'>Срочности</p>
+
+                                                        </label>
+                                                        <label className="sort-option">
+                                                            <input
+                                                                type="radio"
+                                                                name="sortBy"
+                                                                value="distance"
+                                                                checked={filters.sortBy === 'distance'}
+                                                                onChange={handleSortChange}
+                                                            />
+                                                            <p className='sort_option_title'>Удалённости</p>
+
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
 
                                 <div className='services_filter_item'>
                                     <label className='service_label'>
@@ -849,6 +1087,10 @@ export default function Job () {
                                         )
                                     })}
                                 </div>
+                            </div>
+                            <div className='apply_reset_filter_btn_wrapper'>
+                                <button className='apply_filter_btn'>Применить</button>
+                                <button className='reset_filter_btn'>Сбросить</button>
                             </div>
 
                         </div>

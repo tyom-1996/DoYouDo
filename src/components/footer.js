@@ -45,26 +45,25 @@ export default function Footer(props) {
                                     </a>
                                 </li>
                                 <li className="footer_ul_li">
-                                    <a href="/myProjects"
-                                       className={`footer_ul_link ${props.activePage === 'my_project_page' ? 'active_link' : ''}`}
-                                    >
+                                    <a href="/my-projects/client" className={`footer_ul_link ${props.activePage === 'my_projects_for_client_page' ? 'active_link' : ''}`}>
                                         Мои Проекты
                                     </a>
                                 </li>
                                 <li className="footer_ul_li">
-                                    <a href="" className="footer_ul_link">
+                                    <a href=""
+                                       className={`footer_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
                                         Чат
                                     </a>
                                 </li>
                                 <li className="footer_ul_li">
-                                    <a href="/howItWorks"
+                                    <a href="/how-it-works"
                                        className={`footer_ul_link ${props.activePage === 'how_it_works_page' ? 'active_link' : ''}`}
                                     >
                                         Как это работает?
                                     </a>
                                 </li>
                                 <li className="footer_ul_li">
-                                    <a href="/aboutCompany"
+                                    <a href="/about-company"
                                        className={`footer_ul_link ${props.activePage === 'about_company' ? 'active_link' : ''}`}
                                     >
                                         О Компании
@@ -100,25 +99,25 @@ export default function Footer(props) {
                                         </a>
                                     </li>
                                     <li className="footer_ul_li">
-                                        <a href="/myProjects"
-                                           className={`footer_ul_link ${props.activePage === 'my_project_page' ? 'active_link' : ''}`}>
+                                        <a href="/my-projects/client" className={`footer_ul_link ${props.activePage === 'my_projects_for_client_page' ? 'active_link' : ''}`}>
                                             Мои Проекты
                                         </a>
                                     </li>
                                     <li className="footer_ul_li">
-                                        <a href="" className="footer_ul_link">
+                                        <a href=""
+                                           className={`footer_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
                                             Чат
                                         </a>
                                     </li>
                                 <li className="footer_ul_li">
-                                    <a href="/howItWorks"
+                                    <a href="/how-it-works"
                                        className={`footer_ul_link ${props.activePage === 'how_it_works_page' ? 'active_link' : ''}`}
                                     >
                                         Как это работает?
                                     </a>
                                 </li>
                                 <li className="footer_ul_li">
-                                    <a href="/aboutCompany"
+                                    <a href="/about-company"
                                        className={`footer_ul_link ${props.activePage === 'about_company' ? 'active_link' : ''}`}
                                     >
                                         О Компании

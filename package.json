@@ -10,11 +10,20 @@
     "export": "next export"
   },
   "dependencies": {
+    "@pbe/react-yandex-maps": "^1.2.5",
+    "axios": "^1.7.2",
+    "cloudinary": "^2.3.1",
+    "date-fns": "^3.6.0",
     "next": "^14.2.3",
     "react": "^18",
+    "react-datepicker": "^7.3.0",
     "react-dom": "^18",
-    "react-router-dom": "^6.23.1",
-    "squoosh": "^0.0.0"
+    "react-router-dom": "^6.26.0",
+    "react-select": "^5.8.0",
+    "react-star-rating-component": "^1.4.1",
+    "react-yandex-maps": "^4.6.0",
+    "squoosh": "^0.0.0",
+    "swiper": "^11.1.9"
   },
   "devDependencies": {
     "eslint": "^8",

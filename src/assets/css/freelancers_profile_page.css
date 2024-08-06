@@ -1,0 +1,2762 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.general_page_wrapper {
+    width: 100%;
+    max-width: 1244px;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+.general_page_wrapper1 {
+    width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+}
+@media (min-width: 769px) and (max-width: 1290px) {
+    .general_page_wrapper {
+        max-width: unset !important;
+        width: 95% !important;
+    }
+}
+@media  (max-width: 769px) {
+    .general_page_wrapper {
+        max-width: unset!important;
+        width: 100%!important;
+        padding: 0 20px;
+    }
+}
+
+
+
+
+
+@media (min-width: 580px) and (max-width: 769px) {
+    .footer {
+        padding-bottom: 40px!important;
+    }
+}
+@media (min-width: 426px) and (max-width: 580px) {
+    .footer {
+        padding-bottom: 30px!important;
+    }
+}
+@media (max-width: 426px) {
+    .footer {
+        padding-bottom: 20px!important;
+    }
+}
+
+@media (min-width: 336px) and (max-width: 362px) {
+    .footer_ul_link{
+        font-size: 14px!important;
+    }
+    .footer_app_link {
+        width: 130px!important;
+        height: 35px!important;
+        margin-right: 10px!important;
+    }
+    .footer_google_link {
+        width: 130px!important;
+        height: 35px!important;
+    }
+}
+@media  (max-width: 336px) {
+    .footer_ul_link{
+        font-size: 12px!important;
+    }
+    .footer_app_link {
+        width: 125px!important;
+        height: 35px!important;
+        margin-right: 8px!important;
+    }
+    .footer_google_link {
+        width: 125px!important;
+        height: 35px!important;
+    }
+}
+
+
+.pagination_links_wrapper {
+    width: 100%;
+    max-width: 398px;
+    margin: 0 auto;
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination_link {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #FF6C00;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+}
+.pagination_link_btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #FF6C00;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+}
+.pagination_link_title {
+    font-family: "Inter", sans-serif;
+    color: #636363;
+    font-weight: 400;
+    font-size: 16px;
+}
+.pagination_link:hover {
+    background: #FF6C00;
+}
+
+.pagination_link:hover .pagination_link_title{
+    color: #ffffff;
+}
+
+.pagination_link.active {
+    background: #FF6C00;
+}
+
+.pagination_link.active .pagination_link_title{
+    color: #ffffff;
+}
+
+@media (min-width: 350px) and (max-width: 425px) {
+    .pagination_links_wrapper {
+        width: 100%;
+        max-width: 320px!important;
+    }
+
+    .pagination_link_title {
+        font-size: 14px!important;
+    }
+    .pagination_link {
+        width: 34px!important;
+        height: 34px!important;
+    }
+    .pagination_link_btn {
+        width: 34px!important;
+        height: 34px!important;
+    }
+
+}
+@media (max-width: 350px) {
+    .pagination_links_wrapper {
+        width: 100%;
+        max-width: 270px!important;
+    }
+
+    .pagination_link_title {
+        font-size: 12px!important;
+    }
+    .pagination_link {
+        width: 30px!important;
+        height: 30px!important;
+    }
+    .pagination_link_btn {
+        width: 30px!important;
+        height: 30px!important;
+    }
+
+}
+
+.freelancer_single_page_wrapper {
+    width: 100%;
+    margin-bottom: 100px;
+}
+#freelancer_single_page_wrapper_settings {
+    padding-bottom: 400px;
+}
+#freelancer_profile_settings .freelancer_single_page_user_info_wrapper {
+    width: 100%;
+    margin-bottom: 880px;
+    position: relative;
+}
+.freelancer_single_page_user_info_wrapper {
+    width: 100%;
+    margin-bottom: 100px;
+    position: relative;
+}
+.freelancer_single_page_user_info_wrapper_child {
+    width: 100%;
+    background: #F5F5F5;
+    height: 280px;
+    border-radius: 20px;
+}
+#freelancer_profile_settings .freelancer_single_page_user_info_wrapper_items_wrapper {
+    width: 100%;
+    max-width: 1196px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: absolute;
+    z-index: 999;
+    top: 68px;
+    left: 44px;
+}
+#freelancer_profile .freelancer_single_page_user_info_wrapper_items_wrapper {
+    width: 100%;
+    max-width: 1128px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: absolute;
+    z-index: 999;
+    top: 68px;
+    left: 44px;
+}
+.freelancer_single_page_user_info_wrapper_item1 {
+    width: 100%;
+    max-width: 283px;
+    /*flex: 1;*/
+}
+.freelancer_single_page_user_info_wrapper_item1_image {
+    position: relative;
+    width: 100%;
+    /*max-width: 283px;*/
+    height: 386px;
+    margin-bottom: 34px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.freelancer_single_page_user_info_wrapper_item1_image Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.freelancer_single_page_user_info_wrapper_item2_img {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    height: 145px;
+}
+
+.freelancer_single_page_user_info_wrapper_item2_img Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.freelancer_single_page_user_rating_icon {
+    max-width: 123px;
+    width: 100%;
+    height: 20px;
+    position: relative;
+}
+.freelancer_single_page_user_rating_icon Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.reviews_item_img {
+    max-width: 69px;
+    width: 100%;
+    height: 14px;
+    position: relative;
+}
+.reviews_item_img Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#freelancer_profile .freelancer_single_page_ratings_reviews_wrapper {
+    width: 100%;
+}
+
+#freelancer_profile_settings .freelancer_single_page_user_info_wrapper_item2 {
+    max-width: 870px;
+    width: 100%;
+}
+.freelancer_single_page_user_info_wrapper_item2 {
+    max-width: 785px;
+    width: 100%;
+}
+.freelancer_single_page_user_info_wrapper_item2_details {
+    width: 100%;
+    margin-top: 117px;
+}
+
+.freelancer_single_page_user_name_age_country_info_wrapper {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.freelancer_single_page_user_name {
+    color: #141933;
+    font-weight: 600;
+    font-size: 20px;
+    font-family: "Inter", sans-serif;
+    margin-right: 12px;
+}
+.freelancer_single_page_user_age_country_info {
+    color: #636363;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Inter", sans-serif;
+}
+.freelancer_single_page_user_rating_icon_info_wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 31px;
+}
+.freelancer_single_page_user_rating_info {
+    color: #636363;
+    font-weight: 400;
+    font-size: 14px;
+    margin-left: 8px;
+    font-family: "Inter", sans-serif;
+}
+
+.freelancer_single_page_user_info_professional_information_items_wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+.freelancer_single_page_user_info_professional_information_item {
+    width: 48%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.freelancer_single_page_user_info_professional_information_item_title {
+    color: #636363;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: "Inter", sans-serif;
+    margin-right: 5px;
+}
+.freelancer_single_page_user_info_professional_information_item_info {
+    color: #636363;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Inter", sans-serif;
+}
+.freelancer_single_page_about_user_info {
+    color: #636363;
+    width: 100%;
+    margin-bottom: 20px;
+    line-height: 26px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Inter", sans-serif;
+}
+
+.freelancer_single_page_user_hobbies_items_wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.freelancer_single_page_user_hobbies_item {
+    background: #F5F5F5;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    padding: 7px 20px;
+    margin-right: 15px;
+}
+.freelancer_single_page_user_hobbies_item_info {
+    color: #333333;
+    font-weight: 500;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+}
+.freelancer_single_page_ratings_reviews_wrapper_header {
+    width: 100%;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.freelancer_single_page_rating_info_wrapper {
+    display: flex;
+    align-items: center;
+}
+.freelancer_single_page_rating_info_wrapper_title {
+    color: #141933;
+    font-weight: 600;
+    font-size: 36px;
+    font-family: "Poppins", sans-serif;
+    margin-right: 5px;
+}
+.freelancer_single_page_rating_info_wrapper_info {
+    color: #FF6C00;
+    font-weight: 600;
+    font-size: 36px;
+    font-family: "Poppins", sans-serif;
+}
+
+.freelancer_single_page_likes_reviews_info_wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.freelancer_single_page_likes_info_icon_wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+.freelancer_single_page_dislikes_info_icon_wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.freelancer_single_page_likes_info {
+    color: #008000;
+    font-weight: 600;
+    font-size: 28px;
+    margin-left: 5px;
+}
+.freelancer_single_page_dislikes_info {
+    color: #FF0000;
+    font-weight: 600;
+    font-size: 28px;
+    margin-left: 5px;
+    font-family: "Poppins", sans-serif;
+}
+
+
+.freelancer_single_page_reviews_info {
+    color: #9A9A9A;
+    font-size: 36px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+}
+.reviews_items_wrapper {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.reviews_item {
+    width: 49%;
+    background: #F5F5F5;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    padding: 30px 24px;
+}
+.reviews_item_header {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.reviews_item_header_date_info {
+    font-size: 14px;
+    font-weight: 300;
+    color: #505050;
+    margin-bottom: 3px;
+    font-family: "Rubik", sans-serif;
+}
+.reviews_item_header_project_name {
+    font-size: 14px;
+    font-weight: 300;
+    color: #505050;
+    font-family: "Rubik", sans-serif;
+}
+.reviews_item_header_client_name_info {
+    font-size: 16px;
+    font-weight: 500;
+    color: #303030;
+    margin-bottom: 5px;
+    font-family: "Rubik", sans-serif;
+}
+
+.reviews_info {
+    font-family: "Rubik", sans-serif;
+    font-size: 16px;
+    color: #303030;
+    font-weight: 300;
+    line-height: 26px;
+}
+
+.freelancer_single_page_portfolio_wrapper {
+    width: 100%;
+}
+.freelancer_single_page_portfolio_wrapper_header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.freelancer_single_page_portfolio_wrapper_header_title {
+    color: #141933;
+    font-size: 36px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+
+}
+
+.freelancer_single_page_portfolio_wrapper_header_info {
+    color: #9A9A9A;
+    font-size: 36px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+}
+.mobile_buttons_wrapper {
+    display: none;
+}
+
+.reviews {
+    width: 100%;
+    margin-bottom: 100px;
+}
+
+.portfolio {
+    width: 100%;
+}
+#freelancer_profile .portfolio_items_wrapper {
+    display: flex;
+    justify-content: space-between;
+    /*align-items: center;*/
+    flex-wrap: wrap;
+    width: 100%;
+}
+#freelancer_profile .portfolio_item {
+    box-shadow: 0px 4px 20px 0px #33333326;
+    width: 24%;
+    background: #FFFFFF;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+.portfolio_item2 {
+    box-shadow: 0px 4px 20px 0px #33333326;
+    width: 24%;
+    background: #FFFFFF;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /*height: 434px;*/
+}
+.portfolio_item_img {
+    width: 100%;
+    position: relative;
+    height: 225px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    overflow: hidden;
+}
+.portfolio_item_img Image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.portfolio_item_info_box {
+    width: 100%;
+    padding: 20px;
+}
+
+.portfolio_item_title {
+    color: #141933;
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 9px;
+    font-family: "Inter", sans-serif;
+    text-align: left;
+}
+.portfolio_item_info1 {
+    color: #636363;
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-family: "Inter", sans-serif;
+    text-align: left;
+}
+
+.portfolio_item_line {
+    border: 0.5px solid #636363;
+    margin-bottom: 15px;
+    width: 100%;
+}
+.portfolio_item_info2 {
+    color: #636363;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: left;
+}
+.suggest_task_btn {
+    width: 100%;
+    background: #FF6C00;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+    cursor: pointer;
+    color: #FFFFFF;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    margin-bottom: 15px;
+}
+
+.add_to_favorites_btn {
+    width: 100%;
+    border: 2px solid #FF6C00;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+    cursor: pointer;
+    color: #333333;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    outline: none;
+    background: none;
+}
+
+@media  (max-width: 1220px) {
+    .freelancer_single_page_user_info_wrapper_item2_details {
+        width: 97% !important;
+    }
+    .freelancer_single_page_user_info_wrapper_item1 {
+        flex: 1;
+    }
+
+    .freelancer_single_page_user_info_wrapper_item2 {
+        max-width: unset!important;
+        width: 70% !important;
+    }
+}
+@media (min-width: 986px) and (max-width: 1080px) {
+    .freelancer_single_page_user_info_wrapper_item1 {
+        max-width: 260px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item1_image {
+        height: 355px!important;
+    }
+}
+@media (min-width: 938px) and (max-width: 986px) {
+    .freelancer_single_page_user_info_wrapper_item1 {
+        max-width: 245px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item1_image {
+        height: 334px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item2_img {
+        max-width: 360px!important;
+        height: 135px!important;
+    }
+    .portfolio_item_img {
+        height: 200px!important;
+    }
+    .portfolio_item_info2 {
+        font-size: 12px!important;
+    }
+    .portfolio_item_info_box {
+        padding: 15px!important;
+    }
+}
+@media (min-width: 911px) and (max-width: 938px) {
+    .portfolio_items_wrapper {
+        flex-wrap: wrap;
+    }
+    .portfolio_item {
+        width: 49% !important;
+        margin-bottom: 20px;
+    }
+    .portfolio_item2 {
+        width: 49% !important;
+        margin-bottom: 20px;
+    }
+    .freelancer_single_page_user_info_wrapper_item1 {
+        max-width: 230px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item1_image {
+        height: 314px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item2_img {
+        max-width: 360px!important;
+        height: 135px!important;
+    }
+
+    .portfolio_item_info2 {
+        font-size: 12px!important;
+    }
+    .portfolio_item_info_box {
+        padding: 15px!important;
+    }
+}
+@media (min-width: 800px) and (max-width: 911px) {
+    .portfolio_items_wrapper {
+        flex-wrap: wrap;
+    }
+    .portfolio_item {
+        width: 49% !important;
+        margin-bottom: 20px;
+    }
+    .portfolio_item2 {
+        width: 49% !important;
+        margin-bottom: 20px;
+    }
+    .reviews_item {
+        padding: 25px 20px!important;
+    }
+    .reviews_info {
+        font-size: 15px!important;
+    }
+
+    .freelancer_single_page_dislikes_info_icon_wrapper svg {
+        width: 30px!important;
+        height: 30px!important;
+    }
+    .freelancer_single_page_dislikes_info_icon_wrapper {
+        height: 30px!important;
+    }
+    .freelancer_single_page_likes_info_icon_wrapper {
+        height: 30px!important;
+    }
+    .freelancer_single_page_likes_info_icon_wrapper svg {
+        width: 30px!important;
+        height: 30px!important;
+    }
+
+    .freelancer_single_page_dislikes_info_icon_wrapper svg {
+        width: 30px!important;
+        height: 30px!important;
+    }
+    .freelancer_single_page_rating_info_wrapper_title {
+        font-size: 30px!important;
+
+    }
+    .freelancer_single_page_rating_info_wrapper_info {
+        font-size: 30px!important;
+    }
+    .freelancer_single_page_reviews_info {
+        font-size: 30px!important;
+    }
+    .freelancer_single_page_likes_info {
+        font-size: 24px!important;
+        position: relative;
+        top: 3px;
+    }
+    .freelancer_single_page_dislikes_info {
+        font-size: 24px!important;
+        position: relative;
+        top: 3px;
+    }
+    .reviews_item_header_client_name_info {
+        font-size: 15px!important;
+    }
+    .freelancer_single_page_about_user_info {
+        font-size: 14px!important;
+    }
+    .freelancer_single_page_user_hobbies_item_info {
+        font-size: 15px!important;
+    }
+    .freelancer_single_page_user_info_professional_information_item_title {
+        font-size: 15px!important;
+    }
+    .freelancer_single_page_user_info_professional_information_item_info {
+        font-size: 14px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item1 {
+        max-width: 210px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item1_image {
+        height: 288px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item2_img {
+        max-width: 360px!important;
+        height: 135px!important;
+    }
+
+    .portfolio_item_info2 {
+        font-size: 12px!important;
+    }
+    .portfolio_item_info_box {
+        padding: 15px!important;
+    }
+    .add_to_favorites_btn {
+        font-size: 15px!important;
+    }
+    .suggest_task_btn {
+        font-size: 15px!important;
+    }
+}
+@media (min-width: 769px) and  (max-width: 800px) {
+    .portfolio_items_wrapper {
+        flex-wrap: wrap;
+    }
+    .portfolio_item {
+        width: 48% !important;
+        margin-bottom: 20px;
+    }
+    .portfolio_item2 {
+        width: 48% !important;
+        margin-bottom: 20px;
+    }
+    .freelancer_single_page_about_user_info {
+        font-size: 14px!important;
+    }
+    .freelancer_single_page_user_hobbies_item_info {
+        font-size: 15px!important;
+    }
+    .freelancer_single_page_user_info_professional_information_item_title {
+        font-size: 15px!important;
+    }
+    .freelancer_single_page_user_info_professional_information_item_info {
+        font-size: 14px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item1 {
+        max-width: 190px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item1_image {
+        height: 258px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item2_img {
+        max-width: 340px!important;
+        height: 130px!important;
+    }
+
+    .portfolio_item_info2 {
+        font-size: 11px!important;
+    }
+    .portfolio_item_info_box {
+        padding: 12px!important;
+    }
+    .add_to_favorites_btn {
+        font-size: 14px!important;
+    }
+    .suggest_task_btn {
+        font-size: 14px!important;
+    }
+}
+@media   (max-width: 769px) {
+    .freelancer_single_page_user_name_age_country_info_wrapper {
+        justify-content: space-between;
+    }
+    .freelancer_single_page_ratings_reviews_wrapper_header {
+         flex-direction: column;
+         align-items: flex-start!important;
+        margin-bottom: 15px!important;
+    }
+
+    .mobile_buttons_wrapper {
+        margin-bottom: 20px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item2 {
+        width: 100% !important;
+    }
+    .freelancer_single_page_user_info_wrapper_item2_details {
+        margin-top: unset!important;
+        width: 100% !important;
+    }
+    .mobile_buttons_wrapper {
+        display: block!important;
+    }
+
+    .desktop_suggest_add_to_fav_btn {
+        display: none!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item1 {
+        max-width: unset!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item2_img {
+        display: none!important;
+    }
+    #freelancer_profile .freelancer_single_page_ratings_reviews_wrapper {
+        padding-top: unset!important;
+    }
+    .freelancer_single_page_user_info_wrapper_items_wrapper {
+        position: unset!important;
+        flex-direction: column;
+    }
+    .freelancer_single_page_user_info_wrapper_child {
+        display: none!important;
+    }
+    .reviews_item {
+        width: 100% !important;
+    }
+    .portfolio_items_wrapper {
+        flex-wrap: wrap;
+    }
+
+    .freelancer_single_page_user_info_wrapper_item2_img {
+        max-width: 340px!important;
+        height: 130px!important;
+    }
+
+
+}
+
+@media (min-width: 1267px) and (max-width: 1276px) {
+    #freelancer_profile_settings .freelancer_single_page_user_info_wrapper_items_wrapper  {
+        left: 36px!important;
+    }
+}
+@media (min-width: 1250px) and (max-width: 1267px) {
+    #freelancer_profile_settings .freelancer_single_page_user_info_wrapper_items_wrapper  {
+        left: 29px!important;
+    }
+}
+@media (min-width: 970px) and (max-width: 1250px) {
+    #freelancer_profile_settings .freelancer_single_page_user_info_wrapper_items_wrapper  {
+        left: 20px!important;
+    }
+}
+@media (min-width: 870px) and (max-width: 970px) {
+    #freelancer_profile_settings .freelancer_single_page_user_info_wrapper_items_wrapper  {
+        left: 16px!important;
+    }
+}
+@media (max-width: 870px) {
+    #freelancer_profile_settings .freelancer_single_page_user_info_wrapper_items_wrapper  {
+        left: 10px!important;
+    }
+}
+@media  (max-width: 911px) {
+    .freelancer_single_page_user_info_wrapper_items_wrapper {
+        left: 13px!important;
+    }
+}
+
+@media (min-width: 580px) and (max-width: 769px) {
+    .portfolio_item {
+        width: 49%!important;
+        margin-bottom: 20px;
+    }
+    .portfolio_item2 {
+        width: 49%!important;
+        margin-bottom: 20px;
+    }
+}
+@media (max-width: 580px) {
+    .portfolio_item {
+        width: 100% !important;
+        margin-bottom: 20px;
+    }
+    .portfolio_item2 {
+        width: 100% !important;
+        margin-bottom: 20px;
+        padding: 157px 0;
+    }
+    .freelancer_single_page_user_info_professional_information_items_wrapper {
+        flex-wrap: wrap;
+    }
+    .freelancer_single_page_user_info_professional_information_item {
+        width: 100% !important;
+        margin-bottom: 15px;
+    }
+}
+
+
+@media (min-width: 426px) and (max-width: 769px) {
+    .suggest_tasks_modal_services_items_wrapper {
+        margin-bottom: 30px!important;
+    }
+
+    .task_services_item {
+        width: 100% !important;
+        margin-bottom: 20px!important;
+    }
+    .suggest_task_modal_title {
+        font-size: 28px!important;
+    }
+    .suggest_task_btn {
+        font-size: 18px!important;
+    }
+    .add_to_favorites_btn {
+        font-size: 18px!important;
+    }
+    .freelancer_single_page_portfolio_wrapper_header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 23px!important;
+    }
+    .freelancer_single_page_portfolio_wrapper_header_title {
+        font-size: 30px!important;
+    }
+    .freelancer_single_page_portfolio_wrapper_header_info {
+        font-size: 30px!important;
+    }
+
+    .reviews_item {
+        border-radius: 13px!important;
+        padding: 20px 16px!important;
+    }
+    .freelancer_single_page_reviews_info {
+        font-size: 30px!important;
+    }
+    .freelancer_single_page_likes_info {
+        font-size: 26px!important;
+    }
+    .freelancer_single_page_dislikes_info {
+        font-size: 26px!important;
+    }
+    .freelancer_single_page_rating_info_wrapper_info {
+        font-size: 30px!important;
+    }
+    .freelancer_single_page_rating_info_wrapper_title {
+        font-size: 30px!important;
+    }
+    .freelancer_single_page_user_info_wrapper {
+        margin-bottom: 80px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item1_image {
+        margin-bottom: 25px!important;
+    }
+    .freelancer_single_page_user_name {
+        margin-right: unset!important;
+    }
+    .freelancer_single_page_user_age_country_info {
+        margin-right: 14px!important;
+    }
+    .freelancer_single_page_user_rating_icon {
+        max-width: 116px!important;
+        height: 18px!important;
+    }
+    .freelancer_single_page_user_rating_info {
+        font-size: 12px!important;
+    }
+}
+@media (min-width: 379px) and (max-width: 426px) {
+    .suggest_task_modal_close_btn {
+        right: 20px!important;
+        top: 20px!important;
+    }
+    .suggest_tasks_modal_services_items_wrapper {
+        margin-bottom: 20px!important;
+    }
+    .task_services_item_date_hour_info1 {
+        font-size: 14px!important;
+    }
+    .task_services_item_date_hour_info2 {
+        font-size: 14px!important;
+    }
+    .task_services_item_date_hour_title_icon_wrapper_title {
+        font-size: 14px!important;
+    }
+    .task_services_item_info {
+        font-size: 16px!important;
+    }
+    .task_services_item {
+        width: 100% !important;
+        margin-bottom: 15px!important;
+        padding: 10px!important;
+    }
+    .suggest_task_modal_title {
+        font-size: 26px!important;
+        margin-bottom: 20px!important;
+    }
+    .suggest_task_btn {
+        font-size: 18px!important;
+    }
+    .add_to_favorites_btn {
+        font-size: 18px!important;
+    }
+    .freelancer_single_page_portfolio_wrapper_header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 15px!important;
+    }
+    .freelancer_single_page_portfolio_wrapper_header_title {
+        font-size: 26px!important;
+    }
+    .freelancer_single_page_portfolio_wrapper_header_info {
+        font-size: 26px!important;
+    }
+    .reviews_info {
+        font-size: 14px!important;
+    }
+    .reviews_item {
+        border-radius: 10px!important;
+        padding: 15px 13px!important;
+        margin-bottom: 15px!important;
+    }
+    .freelancer_single_page_reviews_info {
+        font-size: 26px!important;
+    }
+    .freelancer_single_page_likes_info {
+        font-size: 26px!important;
+    }
+    .freelancer_single_page_dislikes_info {
+        font-size: 26px!important;
+    }
+    .freelancer_single_page_rating_info_wrapper_info {
+        font-size: 26px!important;
+    }
+    .freelancer_single_page_rating_info_wrapper_title {
+        font-size: 26px!important;
+    }
+    .freelancer_single_page_user_info_wrapper {
+        margin-bottom: 60px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item1_image {
+        margin-bottom: 25px!important;
+    }
+    .freelancer_single_page_user_name {
+        margin-right: unset!important;
+    }
+    .freelancer_single_page_user_age_country_info {
+        margin-right: 14px!important;
+    }
+    .freelancer_single_page_user_rating_icon {
+        max-width: 116px!important;
+        height: 18px!important;
+    }
+    .freelancer_single_page_user_rating_info {
+        font-size: 12px!important;
+    }
+}
+@media (max-width: 379px) {
+    .suggest_task_modal_close_btn {
+        right: 15px!important;
+        top: 15px!important;
+    }
+    .suggest_tasks_modal_services_items_wrapper {
+        margin-bottom: 20px!important;
+    }
+    .task_services_item_date_hour_info1 {
+        font-size: 14px!important;
+    }
+    .task_services_item_date_hour_info2 {
+        font-size: 14px!important;
+    }
+    .task_services_item_date_hour_title_icon_wrapper_title {
+        font-size: 14px!important;
+    }
+    .task_services_item_info {
+        font-size: 15px!important;
+    }
+    .task_services_item {
+        width: 100% !important;
+        margin-bottom: 15px!important;
+        padding: 10px!important;
+    }
+
+    .freelancer_single_page_user_info_wrapper_item1_image {
+        height: 343px!important;
+    }
+    .suggest_task_btn {
+        font-size: 18px!important;
+    }
+    .add_to_favorites_btn {
+        font-size: 18px!important;
+    }
+    .freelancer_single_page_portfolio_wrapper_header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 15px!important;
+    }
+    .freelancer_single_page_portfolio_wrapper_header_title {
+        font-size: 24px!important;
+    }
+    .freelancer_single_page_portfolio_wrapper_header_info {
+        font-size: 24px!important;
+    }
+    .reviews_info {
+        font-size: 14px!important;
+    }
+    .reviews_item {
+        border-radius: 10px!important;
+        padding: 15px 13px!important;
+        margin-bottom: 15px!important;
+    }
+
+    .freelancer_single_page_user_info_wrapper {
+        margin-bottom: 60px!important;
+    }
+    .freelancer_single_page_user_info_wrapper_item1_image {
+        margin-bottom: 25px!important;
+    }
+    .freelancer_single_page_user_name {
+        margin-right: unset!important;
+        font-size: 18px!important;
+    }
+    .freelancer_single_page_user_name {
+        font-size: 14px!important;
+    }
+    .freelancer_single_page_user_age_country_info {
+        font-size: 14px!important;
+    }
+    .freelancer_single_page_user_rating_icon {
+        max-width: 116px!important;
+        height: 18px!important;
+    }
+    .freelancer_single_page_user_rating_info {
+        font-size: 12px!important;
+    }
+    .reviews_item_header_project_name {
+        font-size: 12px!important;
+    }
+    .reviews_item_header_client_name_info {
+        font-size: 14px!important;
+    }
+    .freelancer_single_page_user_hobbies_item_info {
+        font-size: 14px!important;
+    }
+    .freelancer_single_page_user_hobbies_item {
+        padding: 7px 15px!important;
+    }
+}
+.mobile_reviews_item_header_item {
+    display: none;
+}
+
+@media (max-width: 335px) {
+    .desktop_reviews_item_header_item {
+        display: none!important;
+    }
+    .mobile_reviews_item_header_item {
+        display: block!important;
+    }
+    .reviews_item_header_project_name {
+        margin-bottom: 5px;
+    }
+}
+
+@media (min-width: 350px) and (max-width: 379px) {
+    .suggest_task_modal_title {
+        font-size: 26px!important;
+        margin-bottom: 20px!important;
+    }
+    .freelancer_single_page_likes_info_icon_wrapper svg {
+        width: 32px!important;
+        height: 32px!important;
+    }
+    .freelancer_single_page_likes_info_icon_wrapper svg {
+        height: 32px!important;
+    }
+    .freelancer_single_page_dislikes_info_icon_wrapper svg {
+        width: 32px!important;
+        height: 32px!important;
+    }
+    .freelancer_single_page_dislikes_info_icon_wrapper svg {
+        height: 32px!important;
+    }
+
+    .freelancer_single_page_reviews_info {
+        font-size: 24px!important;
+    }
+    .freelancer_single_page_likes_info {
+        font-size: 24px!important;
+    }
+    .freelancer_single_page_dislikes_info {
+        font-size: 24px!important;
+    }
+    .freelancer_single_page_rating_info_wrapper_info {
+        font-size: 24px!important;
+    }
+    .freelancer_single_page_rating_info_wrapper_title {
+        font-size: 24px!important;
+    }
+}
+@media  (max-width: 350px) {
+    .suggest_task_modal_title {
+        font-size: 24px!important;
+        margin-bottom: 20px!important;
+    }
+    .freelancer_single_page_likes_info_icon_wrapper svg {
+        width: 32px!important;
+        height: 32px!important;
+    }
+    .freelancer_single_page_likes_info_icon_wrapper svg {
+        height: 32px!important;
+    }
+    .freelancer_single_page_dislikes_info_icon_wrapper svg {
+        width: 32px!important;
+        height: 32px!important;
+    }
+    .freelancer_single_page_dislikes_info_icon_wrapper svg {
+        height: 32px!important;
+    }
+    .freelancer_single_page_reviews_info {
+        font-size: 22px!important;
+    }
+    .freelancer_single_page_likes_info {
+        font-size: 22px!important;
+    }
+    .freelancer_single_page_dislikes_info {
+        font-size: 22px!important;
+    }
+    .freelancer_single_page_rating_info_wrapper_info {
+        font-size: 22px!important;
+    }
+    .freelancer_single_page_rating_info_wrapper_title {
+        font-size: 22px!important;
+    }
+}
+
+.task_services_item {
+    width: 49%;
+    background: #F5F5F5;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    padding: 15px;
+    /*border: none;*/
+    outline: none;
+    cursor: pointer;
+    border: 4px solid #F5F5F5;
+}
+ .task_services_item:hover {
+    border: 4px solid #FF6C00!important;
+}
+
+.task_services_item_name {
+    font-family: "Inter", sans-serif;
+    color: #636363;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: left;
+}
+.task_services_item_address_info {
+    font-family: "Inter", sans-serif;
+    color: #636363;
+    font-weight: 400;
+    font-size: 14px;
+}
+.task_services_item_info {
+    font-family: "Inter", sans-serif;
+    color: #222222;
+    font-size: 18px;
+    margin-bottom: 36px;
+    font-weight: 600;
+    width: 100%;
+    text-align: left;
+}
+.task_services_item_pirce_date_info_wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task_services_item_pirce_wrapper {
+    background: #FF6C00;
+    /*width: 111px;*/
+    /*height: 30px;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    padding: 8px 16px;
+}
+
+
+.task_services_item_pirce_info {
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.task_services_item_date_hour_title_icon_wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3px;
+    justify-content: flex-end;
+}
+
+.task_services_item_date_hour_title_icon_wrapper_title {
+    color: #636363;
+    margin-right: 7px;
+    font-family: "Inter", sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.task_services_item_date_hour_info_wrapper {
+    display: flex;
+    align-items: center;
+}
+.task_services_item_date_hour_info1 {
+    color: #636363;
+    margin-right: 2px;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+}
+.task_services_item_date_hour_info2 {
+    color: #636363;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+
+/*suggest_task_modal*/
+.suggest_task_modal {
+    position: fixed;
+    background: #FFFFFF40;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    backdrop-filter: blur(20px);
+    box-shadow: 0px 8px 18px 0px #18274B1F,0px 4px 4px 0px #00000040;
+    width: 100%;
+    height: 100vh;
+
+}
+
+.suggest_task_modal_wrapper {
+    box-shadow: 0px 5px 8px 0px #0000001A;
+    background: #FFFFFF;
+    border-radius: 15px;
+    padding: 40px 52px;
+    max-width: 1030px;
+    width: 100%;
+    position: relative;
+}
+.suggest_tasks_modal_services_items_wrapper {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: 340px;
+    overflow: scroll;
+    margin-bottom: 50px;
+}
+
+.suggest_task_modal_title {
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.suggest_task_modal_button {
+    background: #FF6C00;
+    max-width: 260px;
+    height: 50px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif;
+}
+.suggest_task_modal_close_btn {
+    position: absolute;
+    z-index: 999;
+    right: 25px;
+    top: 25px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+}
+
+@media (min-width: 769px) and (max-width: 1055px) {
+    .suggest_task_modal_wrapper {
+        max-width: unset!important;
+        width: 95% !important;
+        padding: 40px 30px!important;
+    }
+}
+@media (min-width: 426px) and (max-width: 769px) {
+    .suggest_task_modal_wrapper {
+        max-width: unset!important;
+        width: 95% !important;
+        padding: 40px 20px!important;
+    }
+}
+@media (max-width: 426px) {
+    .suggest_task_modal_wrapper {
+        max-width: unset!important;
+        width: 95% !important;
+        padding: 40px 15px!important;
+    }
+}
+
+
+.freelancer_click_balance_info_wrapper {
+    width: 100%;
+    padding-top: 400px;
+    margin-bottom: 100px;
+}
+#client_profile .freelancer_click_balance_info_wrapper {
+    padding-top: 300px;
+}
+
+.freelancer_click_balance_info_header_wrapper {
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.freelancer_click_balance_info_header_title {
+    font-family: "Poppins", sans-serif;
+    color: #141933;
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.freelancer_click_balance_items_wrapper {
+    width: 100%;
+}
+
+.freelancer_click_balance_item1 {
+    box-shadow: 0px 0px 4px 0px #00000040;
+    width: 100%;
+    margin-bottom: 30px;
+    border: 2px solid #FF6C00;
+    padding: 22px 25px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.freelancer_click_balance_item1_child_title {
+    font-family: "Poppins", sans-serif;
+    color: #333333;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.freelancer_click_balance_item1_child_info {
+    font-family: "Poppins", sans-serif;
+    color: #636363;
+    font-size: 16px;
+    font-weight: 400;
+    max-width: 652px;
+    width: 100%;
+}
+.freelancer_click_balance_info_header_balance_quantity {
+    font-family: "Poppins", sans-serif;
+    color: #FF6C00;
+    font-size: 36px;
+    font-weight: 600;
+}
+.freelancer_click_balance_buy_balance_btn {
+    border: 2px solid #FF6C00;
+    max-width: 283px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    height: 45px;
+    color: #FF6C00;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 5px;
+}
+
+.freelancer_click_balance_item1_child:first-child {
+    max-width: 652px;
+    width: 100%;
+}
+
+.freelancer_click_balance_item1_child:nth-child(2) {
+    max-width: 283px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+}
+.freelancer_click_balance_item2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.freelancer_click_balance_item2_child {
+    width: 49%;
+    border: 2px solid #EBEBEB;
+    padding:  25px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.freelancer_click_balance_item2_child_box_title {
+    font-family: "Poppins", sans-serif;
+    color: #333333;
+    font-size: 24px;
+    font-weight: 500;
+}
+.freelancer_click_balance_item2_child_box_info {
+    font-family: "Poppins", sans-serif;
+    color: #FF6C00;
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.freelancer_click_balance_item2_child_box:first-child {
+    width: 42%;
+}
+.freelancer_click_balance_item2_child_box:nth-child(2) {
+    width: 51%;
+}
+.freelancer_click_balance_item2_child_box_buy_btn {
+    border: 2px solid #FF6C00;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    height: 45px;
+    color: #FF6C00;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 5px;
+}
+
+.add_project_icon_title {
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+
+    .freelancer_click_balance_info_header_title {
+        font-size: 33px!important;
+    }
+    .freelancer_click_balance_info_header_balance_quantity {
+        font-size: 33px!important;
+    }
+    .freelancer_click_balance_item1_child_title {
+        font-size: 28px!important;
+    }
+    .freelancer_click_balance_item2_child_box_info {
+        font-size: 33px!important;
+    }
+}
+@media (min-width: 426px) and (max-width: 481px) {
+    .freelancer_click_balance_item2_child_box_title {
+        font-size: 22px!important;
+    }
+    .freelancer_click_balance_item2_child {
+        padding: 22px 20px!important;
+    }
+    .freelancer_click_balance_info_wrapper {
+        margin-bottom: 80px!important;
+    }
+    .freelancer_click_balance_info_header_wrapper {
+        margin-bottom: 20px!important;
+    }
+    .freelancer_click_balance_info_header_title {
+        font-size: 30px!important;
+    }
+    .freelancer_click_balance_info_header_balance_quantity {
+        font-size: 30px!important;
+    }
+    .freelancer_click_balance_item1 {
+        margin-bottom: 25px!important;
+        padding: 20px!important;
+    }
+    .freelancer_click_balance_item1_child_title {
+        font-size: 26px!important;
+        margin-bottom: 10px;
+    }
+    .freelancer_click_balance_item1_child_info {
+        font-size: 14px!important;
+        margin-bottom: 20px;
+    }
+    .freelancer_click_balance_item2_child_box_info {
+        font-size: 30px!important;
+    }
+}
+@media (min-width: 375px) and (max-width: 426px) {
+    .freelancer_click_balance_item2_child_box_title {
+        font-size: 20px!important;
+    }
+    .freelancer_click_balance_item2_child {
+        padding: 20px 15px!important;
+    }
+    .freelancer_click_balance_info_wrapper {
+        margin-bottom: 60px!important;
+    }
+    .freelancer_click_balance_item1 {
+        margin-bottom: 20px!important;
+        padding: 20px 15px!important;
+    }
+    .freelancer_click_balance_info_header_wrapper {
+        margin-bottom: 15px!important;
+    }
+    .freelancer_click_balance_info_header_title {
+        font-size: 28px!important;
+    }
+    .freelancer_click_balance_info_header_balance_quantity {
+        font-size: 28px!important;
+    }
+    .freelancer_click_balance_item1_child_title {
+        font-size: 24px!important;
+        margin-bottom: 10px;
+    }
+    .freelancer_click_balance_item1_child_info {
+        font-size: 14px!important;
+        margin-bottom: 20px;
+    }
+    .freelancer_click_balance_item2_child_box_info {
+        font-size: 28px!important;
+    }
+}
+@media  (max-width: 375px) {
+    .freelancer_click_balance_item2_child_box_info {
+        font-size: 26px!important;
+    }
+    .freelancer_click_balance_item2_child_box_title {
+        font-size: 18px!important;
+    }
+    .freelancer_click_balance_item2_child {
+        padding: 20px 15px!important;
+    }
+    .freelancer_click_balance_info_wrapper {
+        margin-bottom: 60px!important;
+    }
+    .freelancer_click_balance_item1_child_title {
+        font-size: 22px!important;
+        margin-bottom: 10px;
+    }
+    .freelancer_click_balance_item1 {
+        margin-bottom: 15px!important;
+        padding: 20px 15px!important;
+    }
+    .freelancer_click_balance_info_header_wrapper {
+        margin-bottom: 15px!important;
+    }
+    .freelancer_click_balance_info_header_title {
+        font-size: 26px!important;
+    }
+    .freelancer_click_balance_info_header_balance_quantity {
+        font-size: 26px!important;
+    }
+    .freelancer_click_balance_item1_child_info {
+        font-size: 14px!important;
+        margin-bottom: 20px;
+    }
+}
+
+@media (min-width: 810px) and (max-width: 863px) {
+    .freelancer_click_balance_item1_child:nth-child(2) {
+        max-width: 230px!important;
+    }
+}
+@media (min-width: 768px) and (max-width: 810px) {
+    .freelancer_click_balance_item1_child:nth-child(2) {
+        max-width: 180px!important;
+    }
+}
+
+@media (max-width: 768px) {
+    .freelancer_click_balance_info_wrapper {
+        padding-top: unset!important;
+    }
+    .freelancer_click_balance_item1 {
+        flex-direction: column;
+        align-items: flex-start!important;
+    }
+    .freelancer_click_balance_item1_child {
+        width: 100% !important;
+        max-width: unset!important;
+        margin-bottom: 20px;
+    }
+    .freelancer_click_balance_buy_balance_btn {
+        max-width: unset!important;
+    }
+    .freelancer_click_balance_item1_child:nth-child(2) {
+        align-items: flex-start!important;
+    }
+}
+
+@media (min-width: 1030px) and (max-width: 1290px) {
+    .freelancer_click_balance_item2_child_box_info {
+        font-size: 30px!important;
+    }
+    .freelancer_click_balance_item2_child_box {
+        width: 49% !important;
+    }
+}
+@media (min-width: 960px) and (max-width: 1030px) {
+    .freelancer_click_balance_item2_child_box_info {
+        font-size: 26px!important;
+    }
+    .freelancer_click_balance_item2_child_box_title {
+        font-size: 22px!important;
+    }
+    .freelancer_click_balance_item2_child_box {
+        width: 49% !important;
+    }
+}
+@media (min-width: 768px) and (max-width: 960px) {
+    .freelancer_click_balance_item2_child {
+        flex-direction: column;
+        align-items: flex-start!important;
+    }
+    .freelancer_click_balance_item2_child_box {
+        width: 100% !important;
+        margin-bottom: 20px!important;
+    }
+}
+@media  (max-width: 768px) {
+    .freelancer_click_balance_item2_child {
+        flex-direction: column;
+        align-items: flex-start!important;
+        width: 100% !important;
+        margin-bottom: 15px;
+    }
+    .freelancer_click_balance_item2_child_box {
+        width: 100% !important;
+
+    }
+    .freelancer_click_balance_item2_child_box:first-child {
+        margin-bottom: 20px!important;
+    }
+    .freelancer_click_balance_item2 {
+        flex-direction: column;
+    }
+}
+
+
+.freelancer_single_page_user_hobbies_add_btn {
+    border: 1px solid #FF6C00;
+    background: #ffffff;
+    border-radius: 30px;
+    width: 51px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    margin-bottom: 15px;
+    position: absolute;
+    /* left: revert; */
+    right: 27%;
+}
+
+.add_category_modal {
+    position: fixed;
+    background: #FFFFFF40;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 8px 18px 0px #18274B1F, 0px 4px 4px 0px #00000040;
+    width: 100%;
+    height: 100vh;
+}
+.add_category_modal_wrapper {
+    box-shadow: 0px 5px 8px 0px #0000001A;
+    background: #FFFFFF;
+    border-radius: 15px;
+    padding: 50px 73px;
+    max-width: 570px;
+    width: 100%;
+    position: relative;
+}
+
+.add_category_modal_close_btn {
+    position: absolute;
+    z-index: 9999;
+    right: 15px;
+    top: 15px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add_category_modal_title {
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-size: 30px;
+    font-weight: 600;
+
+}
+.add_category_modal_save_btn {
+    height: 50px;
+    max-width: 260px;
+    margin: 0 auto;
+    width: 100%;
+    background: #FF6C00;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    font-family: "Poppins", sans-serif;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 10px;
+
+}
+.add_category_dropdown {
+    width: 100%;
+
+}
+.add_category_dropdown1 {
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+.add_category_dropdown2 {
+    margin-bottom: 40px;
+    cursor: pointer;
+}
+.add_category_create_order_dropdownHeader {
+    background: #F5F5F5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* height: 50px; */
+    padding: 14px 12px;
+    border-radius: 8px;
+}
+.add_category_create_order_dropdownHeader_title {
+    font-family: "Poppins", sans-serif;
+    color: #333333;
+    font-weight: 500;
+    font-size: 14px;
+}
+.add_category_dropdownList1 {
+    background: #F7F7F7;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px 15px;
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+    bottom: -162px;
+}
+.add_category_dropdownList2 {
+    background: #F7F7F7;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px 15px;
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+    bottom: -162px;
+}
+.add_category_dropdown1 {
+    position: relative;
+}
+.add_category_dropdown2 {
+    position: relative;
+}
+
+.add_category_dropdownItem {
+    width: 100%;
+    margin-bottom: 15px;
+    color: #333333;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: "Inter", sans-serif;
+    cursor: pointer;
+}
+
+.freelancer_single_page_user_hobbies_main_wrapper {
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+}
+.freelancer_single_page_user_hobbies_add_btn {
+    position: absolute;
+    z-index: 999;
+    right: 27%;
+}
+
+@media (max-width: 598px) {
+    .add_category_modal_wrapper {
+        max-width: unset!important;
+        width: 95% !important;
+    }
+}
+@media (min-width: 481px) and (max-width: 768px) {
+    .add_category_modal_wrapper {
+        padding: 50px!important;
+    }
+}
+@media (min-width: 426px) and (max-width: 481px) {
+    .add_category_modal_wrapper {
+        padding: 50px 30px!important;
+    }
+    .add_category_modal_title {
+        font-size: 28px!important;
+    }
+}
+@media (min-width: 375px) and (max-width: 426px) {
+    .add_category_modal_title {
+        font-size: 26px!important;
+    }
+    .add_category_modal_wrapper {
+        padding: 50px 25px!important;
+    }
+}
+@media (max-width: 375px) {
+    .add_category_modal_wrapper {
+        padding: 50px 20px!important;
+    }
+}
+.image_upload_title2 {
+    color: #FFFFFF;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    background: #FF6C00;
+    border-radius: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    height: 45px;
+
+}
+.uploadButton_image2 {
+    max-width: 283px;
+    width: 100%;
+    height: 386px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.uploadButton_image2 Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.uploadButton2 {
+    max-width: 283px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.settings_items_wrapper {
+    width: 100%;
+    padding-top: 120px;
+}
+
+.settings_item {
+    border: 5px solid #F7F7F7;
+    width: 100%;
+    padding: 20px 18px;
+    background: #ffffff;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.settings_item_title {
+    margin-bottom: 20px;
+    color: #333333;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+
+}
+.settings_item_input_title_wrapper {
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.settings_item_input_title {
+    width: 100%;
+    color: #333333;
+    font-weight: 500;
+    font-size: 15px;
+    font-family: "Inter", sans-serif;
+    margin-bottom: 6px;
+}
+.settings_item_input_field {
+    width: 100%;
+    background: #F7F7F7;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: #9B9B9B;
+    font-weight: 400;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+}
+.settings_item_input_field::placeholder {
+    color: #9B9B9B;
+    font-weight: 400;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+}
+
+.settings_item_add_passport_title_btn_wrapper {
+    width: 100%;
+    margin-bottom: 25px;
+}
+.settings_item_add_passport_title {
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    margin-bottom: 6px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.settings_item_add_passport_btn {
+    /* font-family: "Inter", sans-serif; */
+    background: #FF6C00;
+    border-radius: 5px;
+    max-width: 283px;
+    width: 100%;
+    /* margin: 0 auto; */
+    border: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+}
+.settings_dropdown {
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.settings_dropdown_title {
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    width: 100%;
+}
+.settings_dropdownHeader {
+    width: 100%;
+    background: #F7F7F7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+.settings_dropdownHeader_title {
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-size: 16px;
+    font-weight: 400;
+}
+.settings_dropdownList1 {
+    background: #F7F7F7;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px 15px;
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+    bottom: -72px;
+}
+
+.settings_dropdownList2 {
+    background: #F7F7F7;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px 15px;
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+    bottom: -307px;
+}
+.settings_dropdown1 {
+    position: relative;
+}
+.settings_dropdown2 {
+    position: relative;
+}
+
+.settings_dropdownItem {
+    width: 100%;
+    margin-bottom: 15px;
+    color: #333333;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: "Inter", sans-serif;
+    cursor: pointer
+}
+
+.settings_save_btn {
+    background: #FF6C00;
+    max-width: 283px;
+    width: 100%;
+    height: 45px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: "Inter", sans-serif;
+}
+.react-datepicker-wrapper {
+    width: 100%;
+}
+.react-datepicker__close-icon::after {
+    background: #FF6C00!important;
+}
+
+.settings_change_password_delete_profile_btns_wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+}
+
+.settings_change_password_delete_profile_btn {
+    border: 2px solid #FF6C00;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333333;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: "Inter", sans-serif;
+    height: 45px;
+    max-width: 283px;
+    width: 100%;
+    background: none;
+}
+
+
+.settings_change_password_delete_profile_btn:first-child {
+    margin-right: 25px;
+}
+
+
+@media (max-width: 800px) {
+    .image_upload_title2 {
+        font-size: 14px!important;
+    }
+}
+
+#freelancer_profile_settings .imageContainer {
+    max-width: 283px;
+    height: 386px;
+}
+#freelancer_profile_settings .imageContainer img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+}
+.hidden {
+    display: none;
+}
+
+/* #freelancer_profile_settings .imageGallery {*/
+/*    max-width: 283px;*/
+/*    height: 386px;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+@media (min-width: 768px) and (max-width: 1290px) {
+    .settings_items_wrapper {
+        width: 97% !important;
+    }
+}
+@media  (max-width: 768px) {
+    .settings_items_wrapper {
+        width: 100% !important;
+        padding-top: unset!important;
+    }
+      #freelancer_profile_settings .freelancer_single_page_user_info_wrapper_item1 {
+        margin-bottom: 30px;
+    }
+   #freelancer_profile_settings .imageGallery {
+        max-width: unset!important;
+    }
+    #freelancer_profile_settings .imageContainer {
+        max-width: unset!important;
+    }
+    .uploadButton2 {
+        margin: 0 auto;
+    }
+    #freelancer_single_page_wrapper_settings {
+        padding-bottom: unset!important;
+    }
+    .settings_change_password_delete_profile_btns_wrapper {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .settings_change_password_delete_profile_btn {
+        margin-bottom: 20px!important;
+    }
+    .settings_change_password_delete_profile_btn:first-child {
+        margin-right: unset!important;
+    }
+    .settings_item {
+         border: unset!important;
+        box-shadow: 0px 4px 20px 0px #33333326;
+        background: #ffffff;
+        margin-bottom: 30px!important;
+    }
+}
+
+@media (max-width: 426px) {
+    .add_phone_modal_icon {
+        margin-bottom: 41px!important;
+    }
+
+    .settings_item_input_title {
+        font-size: 14px!important;
+    }
+    .settings_item_input_field {
+        font-size: 14px!important;
+        padding: 8px 12px!important;
+        border-radius: 8px!important;
+    }
+    .settings_item_input_field::placeholder {
+        font-size: 14px!important;
+    }
+    .settings_item_add_passport_title {
+        font-size: 14px!important;
+    }
+    .settings_dropdown_title {
+        font-size: 14px!important;
+    }
+    .settings_dropdownHeader_title {
+        font-size: 14px!important;
+    }
+    .settings_item_add_passport_btn {
+        font-size: 18px!important;
+    }
+    .settings_change_password_delete_profile_btn {
+        font-size: 18px!important;
+    }
+}
+
+@media (max-width: 480px) {
+    .settings_item_add_passport_btn {
+        max-width: unset!important;
+    }
+    .settings_save_btn {
+        max-width: unset!important;
+    }
+}
+
+
+/*modal*/
+.add_phone_modal {
+    position: fixed;
+    background: #FFFFFF40;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 8px 18px 0px #18274B1F, 0px 4px 4px 0px #00000040;
+    width: 100%;
+    height: 100vh;
+    background-image: url("/add_phone_modal_img.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.add_phone_modal_wrapper {
+    box-shadow: 0px 5px 8px 0px #0000001A;
+    background: #FFFFFF;
+    border-radius: 15px;
+    padding: 40px 73px 50px 73px;
+    max-width: 570px;
+    width: 100%;
+    position: relative;
+}
+
+.add_phone_modal_title {
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-weight: 600;
+    font-size: 30px;
+    margin-bottom: 10px;
+    text-align: center;
+
+}
+.add_phone_modal_info {
+    font-family: "Poppins", sans-serif;
+    color: #333333;
+    font-weight: 300;
+    font-size: 14px;
+    margin-bottom: 26px;
+    text-align: center;
+
+}
+
+.add_phone_modal_close_btn {
+    position: absolute;
+    z-index: 999;
+    right: 10px;
+    top: 10px;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+.add_phone_modal_item_input_wrapper {
+    width: 100%;
+    margin-bottom: 50px;
+}
+.add_phone_modal_item_input_wrapper2 {
+    width: 100%;
+    margin-bottom: 15px;
+}
+.add_phone_modal_item_input_wrapper2:last-of-type {
+    margin-bottom: 40px;
+}
+.add_phone_modal_item_input_wrapper3 {
+    position: relative;
+}
+.add_phone_modal_item_input_wrapper4 {
+    position: relative;
+}
+.add_phone_modal_item_input_wrapper5 {
+    position: relative;
+}
+
+.add_phone_modal_item_input_field {
+    width: 100%;
+    background: #F5F5F5;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    height: 50px;
+    padding: 15px 12px;
+    color: #333333;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+}
+.add_phone_modal_item_input_field::placeholder {
+    color: #333333;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.add_phone_modal_button {
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto;
+    height: 50px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background: #FF6C00;
+    border-radius: 10px;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 18px;
+
+
+}
+.add_phone_modal_button2 {
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    border: 2px solid #FF6C00;
+    background: none;
+    border-radius: 10px;
+    color: #333333;
+    font-weight: 700;
+    font-size: 18px;
+
+
+}
+
+
+
+
+
+@media (max-width: 585px) {
+    .add_phone_modal_wrapper {
+        max-width: unset!important;
+        width: 95% !important;
+    }
+
+}
+
+@media (min-width: 585px) and (max-width: 768px) {
+    .add_phone_modal_wrapper {
+        padding: 40px 50px 35px 50px;
+    }
+}
+@media (min-width: 426px) and (max-width: 585px) {
+    .add_phone_modal_wrapper {
+        padding: 40px 40px 35px 40px;
+    }
+
+}
+@media (min-width: 375px) and (max-width: 426px) {
+    .add_phone_modal_wrapper {
+        padding: 35px 30px 35px 30px;
+    }
+    .add_phone_modal_title {
+        font-size: 28px!important;
+    }
+    .add_phone_modal {
+        margin-bottom: 61px!important;
+    }
+}
+@media (min-width: 360px) and  (max-width: 375px) {
+    /*.add_phone_modal {*/
+    /*    margin-bottom: 61px!important;*/
+    /*}*/
+    .add_phone_modal_title {
+        font-size: 26px!important;
+    }
+    .add_phone_modal_wrapper {
+        padding: 35px 20px 35px 20px;
+    }
+}
+@media (max-width: 360px) {
+    /*.add_phone_modal {*/
+    /*    margin-bottom: 61px!important;*/
+    /*}*/
+    .add_phone_modal_title {
+        font-size: 26px!important;
+    }
+    .add_phone_modal_wrapper {
+        padding: 35px 15px 35px 15px;
+    }
+}
+
+.add_phone_modal_icon {
+    margin-bottom: 21px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add_phone_modal_title2 {
+    margin-bottom: 35px;
+}
+.add_phone_modal_title3 {
+    max-width: 283px;
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 35px;
+}
+.uploadButton3 {
+    background: #F5F5F5;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 41px 0 20px 0;
+    /*width: 204px;*/
+    /*height: 204px;*/
+}
+.uploadButton_image3 {
+    width: 69px;
+    height: 87px;
+    margin-bottom: 34px;
+    position: relative;
+}
+
+.uploadButton_image3 Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.image_upload_title3 {
+    font-family: "Poppins", sans-serif;
+    color: #333333;
+    font-weight: 500;
+    font-size: 14px;
+}
+.add_scan_passport_item {
+    width: 48%;
+}
+.add_scan_passport_items_wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+.imageGallery2 {
+   position: relative;
+}
+
+.imageContainer2 {
+    max-width: 204px;
+    height: 204px;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.imageContainer2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.deleteButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.uploadButton_image4 {
+    width: 87px;
+    height: 87px;
+    margin-bottom: 34px;
+    position: relative;
+}
+
+
+@media (min-width: 426px) and (max-width: 768px) {
+    .uploadButton3 {
+        padding: 31px 0 20px 0!important;
+    }
+    .uploadButton_image3 {
+        width: 60px!important;
+        height: 75px!important;
+        margin-bottom: 26px!important;
+    }
+    .uploadButton_image4 {
+        width: 75px!important;
+        height: 75px!important;
+        margin-bottom: 26px!important;
+    }
+}
+@media (min-width: 375px) and (max-width: 426px) {
+    .uploadButton3 {
+        padding: 26px 0 15px 0!important;
+    }
+    .image_upload_title3 {
+        font-size: 12px!important;
+    }
+    .uploadButton_image3 {
+        width: 55px!important;
+        height: 66px!important;
+        margin-bottom: 20px!important;
+    }
+    .uploadButton_image4 {
+        width: 66px!important;
+        height: 66px!important;
+        margin-bottom: 20px!important;
+    }
+}
+@media (max-width: 375px) {
+    .uploadButton3 {
+        padding: 21px 0 13px 0!important;
+    }
+    .uploadButton_image3 {
+        width: 51px!important;
+        height: 63px!important;
+        margin-bottom: 20px!important;
+    }
+    .uploadButton_image4 {
+        width: 63px!important;
+        height: 63px!important;
+        margin-bottom: 20px!important;
+    }
+    .image_upload_title3 {
+        font-size: 10px!important;
+    }
+}

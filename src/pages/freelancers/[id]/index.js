@@ -27,9 +27,7 @@ export async function getServerSideProps({ params }) {
 }
 
 
-
-
-export default function FreelancerSinglePaeg ({id}) {
+export default function FreelancerSinglePage ({id}) {
     const [windowHeight, setWindowHeight] = useState(0);
     const [isCheckedAllCategories, setIsCheckedAllCategories] = useState(false);
     const [showFilterMobile, setShowFilterMobile] = useState(false);
@@ -359,6 +357,12 @@ export default function FreelancerSinglePaeg ({id}) {
         document.body.style.overflow = "auto";
     };
 
+    const router = useRouter();
+
+    const redirectFromPortfolioSinglePage = (id) => {
+        router.push(`/portfolio/${id}`);
+    };
+
     return (
         <>
             <main className='general_page_wrapper'>
@@ -372,479 +376,484 @@ export default function FreelancerSinglePaeg ({id}) {
                 </Head>
                 <div className="home_general_wrapper" id='freelancer_single_page'>
                     <Header activePage={"freelancers_page"}/>
-                </div>
 
-                {showForFreelancer &&
-                    <div className="freelancer_single_page_wrapper">
-                        <div className="freelancer_single_page_user_info_wrapper">
-                            <div className="freelancer_single_page_user_info_wrapper_child"></div>
-                            <div className="freelancer_single_page_user_info_wrapper_items_wrapper">
-                                <div className="freelancer_single_page_user_info_wrapper_item1">
-                                    <div className="freelancer_single_page_user_info_wrapper_item1_image">
-                                        <Image
-                                            src="/freelancer_single_page_img.png"
-                                            alt="Example Image"
-                                            layout="fill" // Fill the parent element
-                                            objectFit="cover" // Cover the area of the parent element
-                                            quality={100} // Image quality
-                                        />
-                                    </div>
-                                    <button
-                                        className='suggest_task_btn desktop_suggest_add_to_fav_btn'
-                                        onClick={() => {
-                                            setShowSuggestModal(true)
-                                            disableBodyScroll()
-                                        }}
-                                    >
-                                        Предложить задание
-                                    </button>
-                                    <button className='add_to_favorites_btn desktop_suggest_add_to_fav_btn'>
-                                        Добавить в избранные
-                                    </button>
-                                </div>
-                                <div className="freelancer_single_page_user_info_wrapper_item2">
-                                    <div className="freelancer_single_page_user_info_wrapper_item2_img">
-                                        <Image
-                                            src="/freelancer_logo_img.png"
-                                            alt="Example Image"
-                                            layout="fill" // Fill the parent element
-                                            objectFit="cover" // Cover the area of the parent element
-                                            quality={100} // Image quality
-                                        />
-                                    </div>
-                                    <div className='freelancer_single_page_user_info_wrapper_item2_details'>
-                                        <div className='freelancer_single_page_user_name_age_country_info_wrapper'>
-                                            <p className='freelancer_single_page_user_name'>Анастасия Кодаш</p>
-                                            <p className='freelancer_single_page_user_age_country_info'>34 года, Москва</p>
+                    {showForFreelancer &&
+                        <div className="freelancer_single_page_wrapper">
+                            <div className="freelancer_single_page_user_info_wrapper">
+                                <div className="freelancer_single_page_user_info_wrapper_child"></div>
+                                <div className="freelancer_single_page_user_info_wrapper_items_wrapper">
+                                    <div className="freelancer_single_page_user_info_wrapper_item1">
+                                        <div className="freelancer_single_page_user_info_wrapper_item1_image">
+                                            <Image
+                                                src="/freelancer_single_page_img.png"
+                                                alt="Example Image"
+                                                layout="fill" // Fill the parent element
+                                                objectFit="cover" // Cover the area of the parent element
+                                                quality={100} // Image quality
+                                            />
                                         </div>
-                                        <div className="freelancer_single_page_user_rating_icon_info_wrapper">
-                                            <div className="freelancer_single_page_user_rating_icon">
-                                                <Image
-                                                    src="/star_img2.png"
-                                                    alt="Example Image"
-                                                    layout="fill" // Fill the parent element
-                                                    objectFit="cover" // Cover the area of the parent element
-                                                    quality={100} // Image quality
-                                                />
-                                            </div>
-                                            <p className="freelancer_single_page_user_rating_info">
-                                                5/5
-                                            </p>
-                                        </div>
-                                        <div className='mobile_buttons_wrapper'>
-                                            <button className='suggest_task_btn'>
-                                                Предложить задание
-                                            </button>
-                                            <button className='add_to_favorites_btn'>
-                                                Добавить в избранные
-                                            </button>
-                                        </div>
-                                        <div className='freelancer_single_page_user_info_professional_information_items_wrapper'>
-                                            <div className="freelancer_single_page_user_info_professional_information_item">
-                                                <p className="freelancer_single_page_user_info_professional_information_item_title">
-                                                    Опыт:
-                                                </p>
-                                                <p className="freelancer_single_page_user_info_professional_information_item_info">12 лет</p>
-                                            </div>
-                                            <div className="freelancer_single_page_user_info_professional_information_item">
-                                                <p className="freelancer_single_page_user_info_professional_information_item_title">
-                                                    Выполнила:
-                                                </p>
-                                                <p className="freelancer_single_page_user_info_professional_information_item_info">57 заданий</p>
-                                            </div>
-                                            <div className="freelancer_single_page_user_info_professional_information_item">
-                                                <p className="freelancer_single_page_user_info_professional_information_item_title">
-                                                    На DoYouDo:
-                                                </p>
-                                                <p className="freelancer_single_page_user_info_professional_information_item_info"> с 6 сентября 2019</p>
-                                            </div>
-                                            <div className="freelancer_single_page_user_info_professional_information_item">
-                                                <p className="freelancer_single_page_user_info_professional_information_item_title">
-                                                    Cоздала:
-                                                </p>
-                                                <p className="freelancer_single_page_user_info_professional_information_item_info">2 задания</p>
-                                            </div>
-                                        </div>
-                                        <p className='freelancer_single_page_about_user_info'>
-                                            Действующий школьный учитель. Опыт работы в школе 9 лет. Проведение индивидуальных занятий со школьниками  5–11 классов. Профессиональное устранение любых пробелов в знаниях, доходчивое объяснение учебного материала, подготовка к успешной сдаче экзамена.
-                                        </p>
-                                        <div className="freelancer_single_page_user_hobbies_items_wrapper">
-                                            <div className="freelancer_single_page_user_hobbies_item">
-                                                <p className="freelancer_single_page_user_hobbies_item_info">Дизайн</p>
-                                            </div>
-                                            <div className="freelancer_single_page_user_hobbies_item">
-                                                <p className="freelancer_single_page_user_hobbies_item_info">Разработка ПО</p>
-                                            </div>
-                                            <div className="freelancer_single_page_user_hobbies_item">
-                                                <p className="freelancer_single_page_user_hobbies_item_info">Фото, видео и аудио</p>
-                                            </div>
-                                            <div className="freelancer_single_page_user_hobbies_item">
-                                                <p className="freelancer_single_page_user_hobbies_item_info">Красота и здоровье</p>
-                                            </div>
-                                            <div className="freelancer_single_page_user_hobbies_item">
-                                                <p className="freelancer_single_page_user_hobbies_item_info">Установка и ремонт техники</p>
-                                            </div>
-                                            <div className="freelancer_single_page_user_hobbies_item">
-                                                <p className="freelancer_single_page_user_hobbies_item_info">Репетиторы и обучение</p>
-                                            </div>
-                                        </div>
+                                        <button
+                                            className='suggest_task_btn desktop_suggest_add_to_fav_btn'
+                                            onClick={() => {
+                                                setShowSuggestModal(true)
+                                                disableBodyScroll()
+                                            }}
+                                        >
+                                            Предложить задание
+                                        </button>
+                                        <button className='add_to_favorites_btn desktop_suggest_add_to_fav_btn'>
+                                            Добавить в избранные
+                                        </button>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="freelancer_single_page_ratings_reviews_wrapper">
-                            <div className="freelancer_single_page_ratings_reviews_wrapper_header">
-                                <div className="freelancer_single_page_rating_info_wrapper">
-                                    <p className='freelancer_single_page_rating_info_wrapper_title'>
-                                        Средняя оценка
-                                    </p>
-                                    <p className='freelancer_single_page_rating_info_wrapper_info'>4.9</p>
-                                </div>
-                                <div className='freelancer_single_page_likes_reviews_info_wrapper'>
-                                    <div className='freelancer_single_page_likes_info_icon_wrapper'>
-                                        <LikeIcon/>
-                                        <p className='freelancer_single_page_likes_info'>43</p>
-                                    </div>
-                                    <div className='freelancer_single_page_dislikes_info_icon_wrapper'>
-                                        <DislikeIcon/>
-                                        <p className='freelancer_single_page_dislikes_info'>10</p>
-                                    </div>
-                                    <p className='freelancer_single_page_reviews_info'>53 отзыва</p>
-                                </div>
-                            </div>
-                            <div className="reviews">
-                                <div className='reviews_items_wrapper'>
-                                    {reviewsList.map((item, index) => {
-                                        return (
-                                            <div className='reviews_item'>
-                                                <div className="reviews_item_header">
-                                                    <div className="reviews_item_header_item">
-                                                        <p className="reviews_item_header_date_info">{item.review_date}</p>
-                                                        <p className="reviews_item_header_project_name mobile_reviews_item_header_item">{item.project_name}</p>
-                                                        <p className="reviews_item_header_client_name_info">{item.client_name}</p>
-                                                        <div className='reviews_item_img'>
-                                                            <Image
-                                                                src={item.star_icon}
-                                                                alt="Example Image"
-                                                                layout="fill" // Fill the parent element
-                                                                objectFit="cover" // Cover the area of the parent element
-                                                                quality={100} // Image quality
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                    <div className="reviews_item_header_item desktop_reviews_item_header_item">
-                                                        <p className="reviews_item_header_project_name">{item.project_name}</p>
-                                                    </div>
-                                                </div>
-                                                <p className='reviews_info'>
-                                                    {item.review_info}
-                                                </p>
+                                    <div className="freelancer_single_page_user_info_wrapper_item2">
+                                        <div className="freelancer_single_page_user_info_wrapper_item2_img">
+                                            <Image
+                                                src="/freelancer_logo_img.png"
+                                                alt="Example Image"
+                                                layout="fill" // Fill the parent element
+                                                objectFit="cover" // Cover the area of the parent element
+                                                quality={100} // Image quality
+                                            />
+                                        </div>
+                                        <div className='freelancer_single_page_user_info_wrapper_item2_details'>
+                                            <div className='freelancer_single_page_user_name_age_country_info_wrapper'>
+                                                <p className='freelancer_single_page_user_name'>Анастасия Кодаш</p>
+                                                <p className='freelancer_single_page_user_age_country_info'>34 года, Москва</p>
                                             </div>
-                                        )
-                                    })}
-                                </div>
-                                <div className="pagination_links_wrapper">
-                                    <button className="pagination_link_btn">
-                                        <PaginationLeftIcon/>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">1</p>
-                                    </button>
-                                    <button className="pagination_link active">
-                                        <p className="pagination_link_title">2</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">3</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">4</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">....</p>
-                                    </button>
-                                    <button className="pagination_link_btn">
-                                        <PaginationRightIcon/>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='freelancer_single_page_portfolio_wrapper'>
-                            <div className="freelancer_single_page_portfolio_wrapper_header">
-                                <h1 className='freelancer_single_page_portfolio_wrapper_header_title'>Портфолио</h1>
-                                <p className="freelancer_single_page_portfolio_wrapper_header_info">13 Проектов</p>
-                            </div>
-                            <div className="portfolio">
-                                <div className='portfolio_items_wrapper'>
-                                    {portfolioList.map((item, index) => {
-                                        return (
-                                            <div className='portfolio_item' key={index}>
-                                                <div className="portfolio_item_img">
+                                            <div className="freelancer_single_page_user_rating_icon_info_wrapper">
+                                                <div className="freelancer_single_page_user_rating_icon">
                                                     <Image
-                                                        src={item.portfolio_img}
+                                                        src="/star_img2.png"
                                                         alt="Example Image"
                                                         layout="fill" // Fill the parent element
                                                         objectFit="cover" // Cover the area of the parent element
                                                         quality={100} // Image quality
                                                     />
                                                 </div>
-                                                <div className='portfolio_item_info_box'>
-                                                    <p className='portfolio_item_title'>{item.portfolio_project_name}</p>
-                                                    <p className='portfolio_item_info1'>{item.portfolio_field_name}</p>
-                                                    <div className="portfolio_item_line"></div>
-                                                    <p className='portfolio_item_info2'>{item.portfolio_info}</p>
+                                                <p className="freelancer_single_page_user_rating_info">
+                                                    5/5
+                                                </p>
+                                            </div>
+                                            <div className='mobile_buttons_wrapper'>
+                                                <button className='suggest_task_btn'>
+                                                    Предложить задание
+                                                </button>
+                                                <button className='add_to_favorites_btn'>
+                                                    Добавить в избранные
+                                                </button>
+                                            </div>
+                                            <div className='freelancer_single_page_user_info_professional_information_items_wrapper'>
+                                                <div className="freelancer_single_page_user_info_professional_information_item">
+                                                    <p className="freelancer_single_page_user_info_professional_information_item_title">
+                                                        Опыт:
+                                                    </p>
+                                                    <p className="freelancer_single_page_user_info_professional_information_item_info">12 лет</p>
                                                 </div>
-
-
+                                                <div className="freelancer_single_page_user_info_professional_information_item">
+                                                    <p className="freelancer_single_page_user_info_professional_information_item_title">
+                                                        Выполнила:
+                                                    </p>
+                                                    <p className="freelancer_single_page_user_info_professional_information_item_info">57 заданий</p>
+                                                </div>
+                                                <div className="freelancer_single_page_user_info_professional_information_item">
+                                                    <p className="freelancer_single_page_user_info_professional_information_item_title">
+                                                        На DoYouDo:
+                                                    </p>
+                                                    <p className="freelancer_single_page_user_info_professional_information_item_info"> с 6 сентября 2019</p>
+                                                </div>
+                                                <div className="freelancer_single_page_user_info_professional_information_item">
+                                                    <p className="freelancer_single_page_user_info_professional_information_item_title">
+                                                        Cоздала:
+                                                    </p>
+                                                    <p className="freelancer_single_page_user_info_professional_information_item_info">2 задания</p>
+                                                </div>
                                             </div>
-                                        )
-                                    })}
-                                </div>
-                                <div className="pagination_links_wrapper">
-                                    <button className="pagination_link_btn">
-                                        <PaginationLeftIcon/>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">1</p>
-                                    </button>
-                                    <button className="pagination_link active">
-                                        <p className="pagination_link_title">2</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">3</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">4</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">....</p>
-                                    </button>
-                                    <button className="pagination_link_btn">
-                                        <PaginationRightIcon/>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                }
-
-                {showForClient &&
-                    <div className="freelancer_single_page_wrapper">
-                        <div className="freelancer_single_page_user_info_wrapper">
-                            <div className="freelancer_single_page_user_info_wrapper_child"></div>
-                            <div className="freelancer_single_page_user_info_wrapper_items_wrapper">
-                                <div className="freelancer_single_page_user_info_wrapper_item1">
-                                    <div className="freelancer_single_page_user_info_wrapper_item1_image">
-                                        <Image
-                                            src="/freelancer_single_page_img2.png"
-                                            alt="Example Image"
-                                            layout="fill" // Fill the parent element
-                                            objectFit="cover" // Cover the area of the parent element
-                                            quality={100} // Image quality
-                                        />
-                                    </div>
-
-                                </div>
-                                <div className="freelancer_single_page_user_info_wrapper_item2">
-                                    <div className="freelancer_single_page_user_info_wrapper_item2_img">
-                                        <Image
-                                            src="/freelancer_logo_img.png"
-                                            alt="Example Image"
-                                            layout="fill" // Fill the parent element
-                                            objectFit="cover" // Cover the area of the parent element
-                                            quality={100} // Image quality
-                                        />
-                                    </div>
-                                    <div className='freelancer_single_page_user_info_wrapper_item2_details'>
-                                        <div className='freelancer_single_page_user_name_age_country_info_wrapper'>
-                                            <p className='freelancer_single_page_user_name'>Алексей Смирнов</p>
-                                            <p className='freelancer_single_page_user_age_country_info'>24 года, Москва</p>
-                                        </div>
-                                        <div className="freelancer_single_page_user_rating_icon_info_wrapper">
-                                            <div className="freelancer_single_page_user_rating_icon">
-                                                <Image
-                                                    src="/star_img2.png"
-                                                    alt="Example Image"
-                                                    layout="fill" // Fill the parent element
-                                                    objectFit="cover" // Cover the area of the parent element
-                                                    quality={100} // Image quality
-                                                />
-                                            </div>
-                                            <p className="freelancer_single_page_user_rating_info">
-                                                5/5
+                                            <p className='freelancer_single_page_about_user_info'>
+                                                Действующий школьный учитель. Опыт работы в школе 9 лет. Проведение индивидуальных занятий со школьниками  5–11 классов. Профессиональное устранение любых пробелов в знаниях, доходчивое объяснение учебного материала, подготовка к успешной сдаче экзамена.
                                             </p>
-                                        </div>
-
-                                        <div className='freelancer_single_page_user_info_professional_information_items_wrapper'>
-                                            <div className="freelancer_single_page_user_info_professional_information_item">
-                                                <p className="freelancer_single_page_user_info_professional_information_item_title">
-                                                    Cоздал:
-                                                </p>
-                                                <p className="freelancer_single_page_user_info_professional_information_item_info">2 задания</p>
+                                            <div className="freelancer_single_page_user_hobbies_items_wrapper">
+                                                <div className="freelancer_single_page_user_hobbies_item">
+                                                    <p className="freelancer_single_page_user_hobbies_item_info">Дизайн</p>
+                                                </div>
+                                                <div className="freelancer_single_page_user_hobbies_item">
+                                                    <p className="freelancer_single_page_user_hobbies_item_info">Разработка ПО</p>
+                                                </div>
+                                                <div className="freelancer_single_page_user_hobbies_item">
+                                                    <p className="freelancer_single_page_user_hobbies_item_info">Фото, видео и аудио</p>
+                                                </div>
+                                                <div className="freelancer_single_page_user_hobbies_item">
+                                                    <p className="freelancer_single_page_user_hobbies_item_info">Красота и здоровье</p>
+                                                </div>
+                                                <div className="freelancer_single_page_user_hobbies_item">
+                                                    <p className="freelancer_single_page_user_hobbies_item_info">Установка и ремонт техники</p>
+                                                </div>
+                                                <div className="freelancer_single_page_user_hobbies_item">
+                                                    <p className="freelancer_single_page_user_hobbies_item_info">Репетиторы и обучение</p>
+                                                </div>
                                             </div>
-                                            <div className="freelancer_single_page_user_info_professional_information_item">
-                                                <p className="freelancer_single_page_user_info_professional_information_item_title">
-                                                    На DoYouDo:
-                                                </p>
-                                                <p className="freelancer_single_page_user_info_professional_information_item_info"> с 6 сентября 2019</p>
-                                            </div>
-
                                         </div>
-                                        <p className='freelancer_single_page_about_user_info'>
-                                            А также интерактивные прототипы набирают популярность среди определенных слоев населения, а значит, должны быть смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности. А ещё базовые сценарии поведения пользователей могут быть разоблачены. Банальные, но неопровержимые выводы, а
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="freelancer_single_page_ratings_reviews_wrapper">
+                                <div className="freelancer_single_page_ratings_reviews_wrapper_header">
+                                    <div className="freelancer_single_page_rating_info_wrapper">
+                                        <p className='freelancer_single_page_rating_info_wrapper_title'>
+                                            Средняя оценка
                                         </p>
-
+                                        <p className='freelancer_single_page_rating_info_wrapper_info'>4.9</p>
+                                    </div>
+                                    <div className='freelancer_single_page_likes_reviews_info_wrapper'>
+                                        <div className='freelancer_single_page_likes_info_icon_wrapper'>
+                                            <LikeIcon/>
+                                            <p className='freelancer_single_page_likes_info'>43</p>
+                                        </div>
+                                        <div className='freelancer_single_page_dislikes_info_icon_wrapper'>
+                                            <DislikeIcon/>
+                                            <p className='freelancer_single_page_dislikes_info'>10</p>
+                                        </div>
+                                        <p className='freelancer_single_page_reviews_info'>53 отзыва</p>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="freelancer_single_page_ratings_reviews_wrapper">
-                            <div className="freelancer_single_page_ratings_reviews_wrapper_header">
-                                <div className="freelancer_single_page_rating_info_wrapper">
-                                    <p className='freelancer_single_page_rating_info_wrapper_title'>
-                                        Средняя оценка
-                                    </p>
-                                    <p className='freelancer_single_page_rating_info_wrapper_info'>4.9</p>
-                                </div>
-                                <div className='freelancer_single_page_likes_reviews_info_wrapper'>
-                                    <div className='freelancer_single_page_likes_info_icon_wrapper'>
-                                        <LikeIcon/>
-                                        <p className='freelancer_single_page_likes_info'>43</p>
-                                    </div>
-                                    <div className='freelancer_single_page_dislikes_info_icon_wrapper'>
-                                        <DislikeIcon/>
-                                        <p className='freelancer_single_page_dislikes_info'>10</p>
-                                    </div>
-                                    <p className='freelancer_single_page_reviews_info'>53 отзыва</p>
-                                </div>
-                            </div>
-                            <div className="reviews">
-                                <div className='reviews_items_wrapper'>
-                                    {reviewsList.map((item, index) => {
-                                        return (
-                                            <div className='reviews_item'>
-                                                <div className="reviews_item_header">
-                                                    <div className="reviews_item_header_item">
-                                                        <p className="reviews_item_header_date_info">{item.review_date}</p>
-                                                        <p className="reviews_item_header_project_name mobile_reviews_item_header_item">{item.project_name}</p>
-                                                        <p className="reviews_item_header_client_name_info">{item.client_name}</p>
-                                                        <div className='reviews_item_img'>
-                                                            <Image
-                                                                src={item.star_icon}
-                                                                alt="Example Image"
-                                                                layout="fill" // Fill the parent element
-                                                                objectFit="cover" // Cover the area of the parent element
-                                                                quality={100} // Image quality
-                                                            />
+                                <div className="reviews">
+                                    <div className='reviews_items_wrapper'>
+                                        {reviewsList.map((item, index) => {
+                                            return (
+                                                <div className='reviews_item'>
+                                                    <div className="reviews_item_header">
+                                                        <div className="reviews_item_header_item">
+                                                            <p className="reviews_item_header_date_info">{item.review_date}</p>
+                                                            <p className="reviews_item_header_project_name mobile_reviews_item_header_item">{item.project_name}</p>
+                                                            <p className="reviews_item_header_client_name_info">{item.client_name}</p>
+                                                            <div className='reviews_item_img'>
+                                                                <Image
+                                                                    src={item.star_icon}
+                                                                    alt="Example Image"
+                                                                    layout="fill" // Fill the parent element
+                                                                    objectFit="cover" // Cover the area of the parent element
+                                                                    quality={100} // Image quality
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="reviews_item_header_item desktop_reviews_item_header_item">
+                                                            <p className="reviews_item_header_project_name">{item.project_name}</p>
                                                         </div>
                                                     </div>
-                                                    <div className="reviews_item_header_item desktop_reviews_item_header_item">
-                                                        <p className="reviews_item_header_project_name">{item.project_name}</p>
+                                                    <p className='reviews_info'>
+                                                        {item.review_info}
+                                                    </p>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                    <div className="pagination_links_wrapper">
+                                        <button className="pagination_link_btn">
+                                            <PaginationLeftIcon/>
+                                        </button>
+                                        <button className="pagination_link">
+                                            <p className="pagination_link_title">1</p>
+                                        </button>
+                                        <button className="pagination_link active">
+                                            <p className="pagination_link_title">2</p>
+                                        </button>
+                                        <button className="pagination_link">
+                                            <p className="pagination_link_title">3</p>
+                                        </button>
+                                        <button className="pagination_link">
+                                            <p className="pagination_link_title">4</p>
+                                        </button>
+                                        <button className="pagination_link">
+                                            <p className="pagination_link_title">....</p>
+                                        </button>
+                                        <button className="pagination_link_btn">
+                                            <PaginationRightIcon/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='freelancer_single_page_portfolio_wrapper'>
+                                <div className="freelancer_single_page_portfolio_wrapper_header">
+                                    <h1 className='freelancer_single_page_portfolio_wrapper_header_title'>Портфолио</h1>
+                                    <p className="freelancer_single_page_portfolio_wrapper_header_info">13 Проектов</p>
+                                </div>
+                                <div className="portfolio">
+                                    <div className='portfolio_items_wrapper'>
+                                        {portfolioList.map((item, index) => {
+                                            return (
+                                                <div
+                                                    className='portfolio_item'
+                                                    key={index}
+                                                    onClick={() => {
+                                                        redirectFromPortfolioSinglePage(item?.id)
+                                                    }}
+                                                >
+                                                    <div className="portfolio_item_img">
+                                                        <Image
+                                                            src={item.portfolio_img}
+                                                            alt="Example Image"
+                                                            layout="fill" // Fill the parent element
+                                                            objectFit="cover" // Cover the area of the parent element
+                                                            quality={100} // Image quality
+                                                        />
+                                                    </div>
+                                                    <div className='portfolio_item_info_box'>
+                                                        <p className='portfolio_item_title'>{item.portfolio_project_name}</p>
+                                                        <p className='portfolio_item_info1'>{item.portfolio_field_name}</p>
+                                                        <div className="portfolio_item_line"></div>
+                                                        <p className='portfolio_item_info2'>{item.portfolio_info}</p>
                                                     </div>
                                                 </div>
-                                                <p className='reviews_info'>
-                                                    {item.review_info}
+                                            )
+                                        })}
+                                    </div>
+                                    <div className="pagination_links_wrapper">
+                                        <button className="pagination_link_btn">
+                                            <PaginationLeftIcon/>
+                                        </button>
+                                        <button className="pagination_link">
+                                            <p className="pagination_link_title">1</p>
+                                        </button>
+                                        <button className="pagination_link active">
+                                            <p className="pagination_link_title">2</p>
+                                        </button>
+                                        <button className="pagination_link">
+                                            <p className="pagination_link_title">3</p>
+                                        </button>
+                                        <button className="pagination_link">
+                                            <p className="pagination_link_title">4</p>
+                                        </button>
+                                        <button className="pagination_link">
+                                            <p className="pagination_link_title">....</p>
+                                        </button>
+                                        <button className="pagination_link_btn">
+                                            <PaginationRightIcon/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    }
+
+                    {showForClient &&
+                        <div className="freelancer_single_page_wrapper">
+                            <div className="freelancer_single_page_user_info_wrapper">
+                                <div className="freelancer_single_page_user_info_wrapper_child"></div>
+                                <div className="freelancer_single_page_user_info_wrapper_items_wrapper">
+                                    <div className="freelancer_single_page_user_info_wrapper_item1">
+                                        <div className="freelancer_single_page_user_info_wrapper_item1_image">
+                                            <Image
+                                                src="/freelancer_single_page_img2.png"
+                                                alt="Example Image"
+                                                layout="fill" // Fill the parent element
+                                                objectFit="cover" // Cover the area of the parent element
+                                                quality={100} // Image quality
+                                            />
+                                        </div>
+
+                                    </div>
+                                    <div className="freelancer_single_page_user_info_wrapper_item2">
+                                        <div className="freelancer_single_page_user_info_wrapper_item2_img">
+                                            <Image
+                                                src="/freelancer_logo_img.png"
+                                                alt="Example Image"
+                                                layout="fill" // Fill the parent element
+                                                objectFit="cover" // Cover the area of the parent element
+                                                quality={100} // Image quality
+                                            />
+                                        </div>
+                                        <div className='freelancer_single_page_user_info_wrapper_item2_details'>
+                                            <div className='freelancer_single_page_user_name_age_country_info_wrapper'>
+                                                <p className='freelancer_single_page_user_name'>Алексей Смирнов</p>
+                                                <p className='freelancer_single_page_user_age_country_info'>24 года, Москва</p>
+                                            </div>
+                                            <div className="freelancer_single_page_user_rating_icon_info_wrapper">
+                                                <div className="freelancer_single_page_user_rating_icon">
+                                                    <Image
+                                                        src="/star_img2.png"
+                                                        alt="Example Image"
+                                                        layout="fill" // Fill the parent element
+                                                        objectFit="cover" // Cover the area of the parent element
+                                                        quality={100} // Image quality
+                                                    />
+                                                </div>
+                                                <p className="freelancer_single_page_user_rating_info">
+                                                    5/5
                                                 </p>
                                             </div>
-                                        )
-                                    })}
+
+                                            <div className='freelancer_single_page_user_info_professional_information_items_wrapper'>
+                                                <div className="freelancer_single_page_user_info_professional_information_item">
+                                                    <p className="freelancer_single_page_user_info_professional_information_item_title">
+                                                        Cоздал:
+                                                    </p>
+                                                    <p className="freelancer_single_page_user_info_professional_information_item_info">2 задания</p>
+                                                </div>
+                                                <div className="freelancer_single_page_user_info_professional_information_item">
+                                                    <p className="freelancer_single_page_user_info_professional_information_item_title">
+                                                        На DoYouDo:
+                                                    </p>
+                                                    <p className="freelancer_single_page_user_info_professional_information_item_info"> с 6 сентября 2019</p>
+                                                </div>
+
+                                            </div>
+                                            <p className='freelancer_single_page_about_user_info'>
+                                                А также интерактивные прототипы набирают популярность среди определенных слоев населения, а значит, должны быть смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности. А ещё базовые сценарии поведения пользователей могут быть разоблачены. Банальные, но неопровержимые выводы, а
+                                            </p>
+
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="pagination_links_wrapper">
-                                    <button className="pagination_link_btn">
-                                        <PaginationLeftIcon/>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">1</p>
-                                    </button>
-                                    <button className="pagination_link active">
-                                        <p className="pagination_link_title">2</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">3</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">4</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">....</p>
-                                    </button>
-                                    <button className="pagination_link_btn">
-                                        <PaginationRightIcon/>
-                                    </button>
+                            </div>
+                            <div className="freelancer_single_page_ratings_reviews_wrapper">
+                                <div className="freelancer_single_page_ratings_reviews_wrapper_header">
+                                    <div className="freelancer_single_page_rating_info_wrapper">
+                                        <p className='freelancer_single_page_rating_info_wrapper_title'>
+                                            Средняя оценка
+                                        </p>
+                                        <p className='freelancer_single_page_rating_info_wrapper_info'>4.9</p>
+                                    </div>
+                                    <div className='freelancer_single_page_likes_reviews_info_wrapper'>
+                                        <div className='freelancer_single_page_likes_info_icon_wrapper'>
+                                            <LikeIcon/>
+                                            <p className='freelancer_single_page_likes_info'>43</p>
+                                        </div>
+                                        <div className='freelancer_single_page_dislikes_info_icon_wrapper'>
+                                            <DislikeIcon/>
+                                            <p className='freelancer_single_page_dislikes_info'>10</p>
+                                        </div>
+                                        <p className='freelancer_single_page_reviews_info'>53 отзыва</p>
+                                    </div>
+                                </div>
+                                <div className="reviews">
+                                    <div className='reviews_items_wrapper'>
+                                        {reviewsList.map((item, index) => {
+                                            return (
+                                                <div className='reviews_item'>
+                                                    <div className="reviews_item_header">
+                                                        <div className="reviews_item_header_item">
+                                                            <p className="reviews_item_header_date_info">{item.review_date}</p>
+                                                            <p className="reviews_item_header_project_name mobile_reviews_item_header_item">{item.project_name}</p>
+                                                            <p className="reviews_item_header_client_name_info">{item.client_name}</p>
+                                                            <div className='reviews_item_img'>
+                                                                <Image
+                                                                    src={item.star_icon}
+                                                                    alt="Example Image"
+                                                                    layout="fill" // Fill the parent element
+                                                                    objectFit="cover" // Cover the area of the parent element
+                                                                    quality={100} // Image quality
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="reviews_item_header_item desktop_reviews_item_header_item">
+                                                            <p className="reviews_item_header_project_name">{item.project_name}</p>
+                                                        </div>
+                                                    </div>
+                                                    <p className='reviews_info'>
+                                                        {item.review_info}
+                                                    </p>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                    <div className="pagination_links_wrapper">
+                                        <button className="pagination_link_btn">
+                                            <PaginationLeftIcon/>
+                                        </button>
+                                        <button className="pagination_link">
+                                            <p className="pagination_link_title">1</p>
+                                        </button>
+                                        <button className="pagination_link active">
+                                            <p className="pagination_link_title">2</p>
+                                        </button>
+                                        <button className="pagination_link">
+                                            <p className="pagination_link_title">3</p>
+                                        </button>
+                                        <button className="pagination_link">
+                                            <p className="pagination_link_title">4</p>
+                                        </button>
+                                        <button className="pagination_link">
+                                            <p className="pagination_link_title">....</p>
+                                        </button>
+                                        <button className="pagination_link_btn">
+                                            <PaginationRightIcon/>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
 
 
-                <Footer activePage={"freelancers_page"}/>
-                {showFilterMobile &&
-                    <div className='filter_mobile_menu'>
-                        <div className='filter_mobile_menu_wrapper'>
-                            <div className='filter_mobile_menu_title_close_icon_wrapper'>
-                                <button
-                                    className='filter_mobile_menu_close_btn'
-                                    onClick={() => {
-                                        setShowFilterMobile(false)
-                                        enableBodyScroll()
-                                    }}
-                                >
-                                    <FilterCloseIcon/>
-                                </button>
-                                <p className='filter_mobile_menu_title'>Фильтр</p>
-                            </div>
-                            <div className="mobile_services_filter_items_wrapper">
-
-                                <div className='services_filter_item'>
-                                    <label className='service_label'>
-                                        <input
-                                            type="checkbox"
-                                            checked={isCheckedAllCategories}
-                                            onChange={handleCheckboxChange}
-                                            className='service_label_checkbox_input_field checkbox'
-                                        />
-                                        <span className='service_label_custom_checkbox customCheckbox'></span>
-                                        Все категории
-
-                                    </label>
+                    <Footer activePage={"freelancers_page"}/>
+                    {showFilterMobile &&
+                        <div className='filter_mobile_menu'>
+                            <div className='filter_mobile_menu_wrapper'>
+                                <div className='filter_mobile_menu_title_close_icon_wrapper'>
+                                    <button
+                                        className='filter_mobile_menu_close_btn'
+                                        onClick={() => {
+                                            setShowFilterMobile(false)
+                                            enableBodyScroll()
+                                        }}
+                                    >
+                                        <FilterCloseIcon/>
+                                    </button>
+                                    <p className='filter_mobile_menu_title'>Фильтр</p>
                                 </div>
+                                <div className="mobile_services_filter_items_wrapper">
 
-                                <City
-                                    cityData={citiesList}
-                                    selectedCities={selectedCities}
-                                    setNewSelectedCities={(val)=>{
-                                        setSelectedCities(val)
-                                        console.log(val)
-                                    }}
-                                />
-
-                                <div className='service_category_items_wrapper'>
-                                    {filterCategoryList.map((item, index) => {
-                                        return (
-                                            <Category
-                                                categoryData={item}
-                                                selectedCategories={selectedCategories}
-                                                setNewSelectedCategories={(val)=>{
-                                                    setSelectedCategories(val)
-                                                    console.log(val)
-                                                }}
+                                    <div className='services_filter_item'>
+                                        <label className='service_label'>
+                                            <input
+                                                type="checkbox"
+                                                checked={isCheckedAllCategories}
+                                                onChange={handleCheckboxChange}
+                                                className='service_label_checkbox_input_field checkbox'
                                             />
-                                        )
-                                    })}
-                                </div>
-                            </div>
+                                            <span className='service_label_custom_checkbox customCheckbox'></span>
+                                            Все категории
 
+                                        </label>
+                                    </div>
+
+                                    <City
+                                        cityData={citiesList}
+                                        selectedCities={selectedCities}
+                                        setNewSelectedCities={(val)=>{
+                                            setSelectedCities(val)
+                                            console.log(val)
+                                        }}
+                                    />
+
+                                    <div className='service_category_items_wrapper'>
+                                        {filterCategoryList.map((item, index) => {
+                                            return (
+                                                <Category
+                                                    categoryData={item}
+                                                    selectedCategories={selectedCategories}
+                                                    setNewSelectedCategories={(val)=>{
+                                                        setSelectedCategories(val)
+                                                        console.log(val)
+                                                    }}
+                                                />
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
-                    </div>
-                }
-                <SuggestTaskModal
-                    isActive={showSuggestModal}
-                    onClose={() => {
-                        setShowSuggestModal(false)
-                    }}
-                />
+                    }
+                    <SuggestTaskModal
+                        isActive={showSuggestModal}
+                        onClose={() => {
+                            setShowSuggestModal(false)
+                        }}
+                    />
+                </div>
+
             </main>
         </>
     );

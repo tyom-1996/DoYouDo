@@ -8,6 +8,8 @@ import {useRouter} from "next/router";
 export default function Header(props) {
     const [windowHeight, setWindowHeight] = useState(0);
     const [showMobileMenu, setShowMobileMenu] = useState(false);
+    const [showProfilePopup, setShowProfilePopup] = useState(false);
+    const [isLogged, setIsLogged] = useState(false);
 
 
     const disableBodyScroll = () => {
@@ -21,6 +23,9 @@ export default function Header(props) {
 
     const handleNavigateToHome = () => {
         router.push('/');
+    };
+    const handleNavigateToLogin = () => {
+        router.push('/login');
     };
 
     return (
@@ -55,26 +60,53 @@ export default function Header(props) {
 
                             </li>
                             <li className="header_ul_li">
-                                <a href="" className="header_ul_link">
+                                <a href="/create-order" className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
                                     Создать задание
                                 </a>
                             </li>
                             <li className="header_ul_li">
-                                <a href="/myProjects" className={`header_ul_link ${props.activePage === 'my_project_page' ? 'active_link' : ''}`}>
+                                <a href="/my-projects/freelancer" className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}>
                                     Мои Проекты
                                 </a>
                             </li>
                             <li className="header_ul_li">
-                                <a href="" className="header_ul_link">
+                                <a href="/chat" className={`header_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
                                     Чат
                                 </a>
                             </li>
 
                         </ul>
                     </nav>
-                    <button className='header_login_btn'>
-                        Войти
-                    </button>
+                    {props.activePage === 'freelancer_profile' ?
+                        <button
+                            className='header_login_btn'
+                            onClick={() => {
+                                setShowProfilePopup(!showProfilePopup)
+                            }}
+                        >
+                            Профиль
+                        </button>
+                        :
+                        <button
+                            className='header_login_btn'
+                            onClick={() => {
+                                handleNavigateToLogin()
+                            }}
+                        >
+                            Войти
+                        </button>
+                    }
+                    {showProfilePopup &&
+                        <div className='profile_popup'>
+                            <div className='profile_popup_wrapper'>
+                                <a href="/freelancer-profile-settings" className='profile_popup_link'>Настройки</a>
+                                <a href="" className='profile_popup_link'>Войти как заказчик</a>
+                                <a href="" className='profile_popup_link'>Выйти из аккаунта</a>
+                            </div>
+                        </div>
+                    }
+
+
                 </div>
                 <div className="mobile_header_wrapper">
                     <button
@@ -95,6 +127,7 @@ export default function Header(props) {
                             quality={100} // Image quality
                         />
                     </div>
+
                 </div>
                 {showMobileMenu &&
                     <div className='mobile_menu'>
@@ -123,46 +156,46 @@ export default function Header(props) {
                             <nav className="header_nav">
                                 <ul className="header_ul_list">
                                     <li className="header_ul_li">
-                                        <a href="" className="header_ul_link active_link">
+                                        <a href="/projects" className={`header_ul_link ${props.activePage === 'job_page' ? 'active_link' : ''}`}>
                                             Работа
                                         </a>
                                     </li>
                                     <li className="header_ul_li">
-                                        <a href="" className="header_ul_link">
+                                        <a href="/freelancers" className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
                                             Фрилансеры
                                         </a>
-
                                     </li>
                                     <li className="header_ul_li">
-                                        <a href="" className="header_ul_link">
+                                        <a href="/create-order" className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
                                             Создать задание
                                         </a>
                                     </li>
                                     <li className="header_ul_li">
-                                        <a href="" className="header_ul_link">
+                                        <a href="/my-projects/freelancer" className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}>
                                             Мои Проекты
                                         </a>
                                     </li>
                                     <li className="header_ul_li">
-                                        <a href="" className="header_ul_link">
+                                        <a href="/chat" className={`header_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
                                             Чат
                                         </a>
                                     </li>
+
+                                    <a href="" className='profile_popup_link'>Настройки</a>
+                                    <a href="" className='profile_popup_link'>Войти как заказчик</a>
+                                    <a href="" className='profile_popup_link'>Выйти из аккаунта</a>
 
                                 </ul>
                             </nav>
                             <button className='header_login_btn'>
                                 Войти
                             </button>
+
                         </div>
                     </div>
                 }
-                {/*<RegistrationModal*/}
-                {/*    isActive={showMissionModal}*/}
-                {/*    onClose={() => {*/}
-                {/*        setShowMissionModal(false)*/}
-                {/*    }}*/}
-                {/*/>*/}
+
+
 
 
             </header>

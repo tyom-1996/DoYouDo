@@ -33,7 +33,7 @@
 .my_project_tabs_wrapper {
     width: 100%;
     margin-bottom: 30px;
-    max-width: 548px;
+    max-width: 710px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -473,7 +473,43 @@
 
 }
 
+.create_order_dropdownHeader {
+    background: #F7F7F7;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    width: 100%;
+    cursor: pointer;
+}
+.create_order_dropdownHeader_title {
+    color: #333333;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+}
 
+.dropdownList2 {
+    background: #F7F7F7;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px 15px;
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+    bottom: -73px;
+}
+.dropdownList1 {
+    background: #F7F7F7;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px 15px;
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+    bottom: -160px;
+}
 .dropdownWrapper {
     display: none;
     position: relative;
@@ -545,5 +581,14 @@
 @media (min-width: 622px) and (max-width: 768px) {
     .my_projects_item2 {
         height: 167px!important;
+    }
+}
+
+@media (max-width: 750px) {
+    .my_project_tab {
+        padding: 15px 20px!important;
+    }
+    .my_project_tabs_wrapper {
+        max-width: 600px!important;
     }
 }

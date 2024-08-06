@@ -2,7 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/aboutCompany": "pages/aboutCompany.js",
-  "/contacts": "pages/contacts.js"
+  "/login": "pages/login.js",
+  "/freelancer-profile": "pages/freelancer-profile.js",
+  "/freelancers/[id]": "pages/freelancers/[id].js"
 }

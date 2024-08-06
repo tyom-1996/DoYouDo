@@ -276,6 +276,7 @@ export default function Order ({id}) {
         },
 
     ]);
+    const [date, setDate] = useState('');
 
 
 
@@ -308,6 +309,10 @@ export default function Order ({id}) {
     const enableBodyScroll = () => {
         document.body.style.overflow = "auto";
     };
+    const handleDateChange = (event) => {
+        setDate(event.target.value);
+
+    }
 
     return (
         <>
@@ -391,6 +396,40 @@ export default function Order ({id}) {
                                     <p className="order_detail_item_info">
                                         В производственной организации из 200 человек используется 1С ERP (последняя версия). Аналитики и программисты должны проанализировать текущие процессы в 1С ERP, описать их, а также реализовать заявки пользователей (решение инциндентов и развитие системы). Проект долгий, постоянный, оплата почасовая, возможно по 100% предоплате. В предложении прошу указать: - аккредитованния ли ИТ компания или нет: да или нет - количество: аналитиков 1С, разработчиков 1С, всего сотрудников в компании (3 цифры) - возможность аналитикам 1С и разработчикам 1С работать полную занятость (проект интенсивный):
                                     </p>
+                                </div>
+                                <div className="order_review_wrapper">
+                                    <div className="order_review_wrapper_header">
+                                        <p className="order_review_wrapper_header_title">Ваш отклик</p>
+                                        <p className="order_review_wrapper_header_info">
+                                            Осталось ответов на заказы: 3
+                                        </p>
+                                    </div>
+                                    <textarea
+                                        className="order_review_textarea"
+                                        placeholder='- Другие фрилансеры не увидят ваш отклик и ответы на него
+                                                        — Опишите суть предложения и что входит в стоимость работы
+                                                        - Если мало информации, напишите здесь вопросы, стоимость согласуете потом'
+                                    ></textarea>
+                                </div>
+                                <div className="order_date_fee_info_wrapper">
+                                    <div className="order_date_fee_input_title_wrapper">
+                                        <p className="order_date_fee_input_title">Срок исполнения в днях</p>
+                                        <input
+                                            type="text"
+                                            onChange={handleDateChange}
+                                            className='order_date_fee_input_field'
+                                            placeholder='13'
+                                        />
+                                    </div>
+                                    <div className="order_date_fee_input_title_wrapper">
+                                        <p className="order_date_fee_input_title">Ваш гонорар</p>
+                                        <input
+                                            type="text"
+                                            onChange={handleDateChange}
+                                            className='order_date_fee_input_field'
+                                            placeholder='13'
+                                        />
+                                    </div>
                                 </div>
                             </div>
                             <button className='reply_to_order_btn'>Откликнуться</button>

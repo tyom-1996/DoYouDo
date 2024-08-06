@@ -1763,3 +1763,309 @@
         font-size: 14px!important;
     }
 }
+
+
+.filter_task_categories_wrapper {
+    width: 100%;
+    border-bottom: 0.5px solid #636363;
+    margin-bottom: 37px;
+    padding-bottom: 37px;
+}
+
+.filter_task_categories_header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.filter_task_categories_header_icon {
+    display: flex;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.filter_task_categories_header_icon2 {
+    display: flex;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transform: rotate(-180deg);
+}
+
+.filter_task_categories_header_title {
+    color: #222222;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+}
+.filter_task_categories_main {
+    width: 100%;
+}
+.filter_task_categories_main {
+    width: 100%;
+    padding-top: 30px;
+}
+.radius_dropdown {
+    width: 100%;
+    margin-bottom: 16px;
+    position: relative;
+}
+.radius_dropdown_title {
+    margin-bottom: 6px;
+    color: #929292;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.radius_dropdownHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.radius_dropdownHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: #F7F7F7;
+    border-radius: 10px;
+    padding: 10px 15px;
+}
+.radius_dropdownHeader_title {
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.radius_dropdownList {
+    background: #F7F7F7;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px 15px;
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+    bottom: -180px;
+}
+.radius_dropdownItem {
+    width: 100%;
+    margin-bottom: 15px;
+    color: #333333;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: "Inter", sans-serif;
+    cursor: pointer;
+}
+
+.filter_task_categories_input_title_wrapper {
+    width: 100%;
+    margin-bottom: 16px;
+}
+.filter_task_categories_input_title {
+    font-family: "Inter", sans-serif;
+    color: #929292;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+.filter_task_categories_input_field {
+    background: #F7F7F7;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 10px 15px;
+    font-family: "Inter", sans-serif;
+    color: #B1B1B1;
+    font-size: 16px;
+    font-weight: 400;
+}
+.filter_task_categories_input_field_address {
+    position: relative;
+}
+.delete_input_btn {
+    position: absolute;
+    z-index: 999;
+    right: 15px;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     top: 32px;
+}
+
+.filter_task_categories_input_title_wrapper2 {
+    position: relative;
+}
+.filter_option_checkbox_items_wrapper_title {
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color:  #929292;
+    margin-bottom: 15px;
+
+}
+
+.filter-option {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+}
+.sort-option {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.filter-option label,
+.sort-option label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.filter-option input[type='checkbox'] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    /* border: 2px solid #ccc; */
+    margin-right: 7px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 3px;
+    position: relative;
+    border: 1.5px solid #929292;
+    cursor: pointer;
+
+}
+
+.filter-option input[type='checkbox']:checked {
+    background: #FF6C00;
+    border-color: #FF6C00;
+}
+
+.filter-option input[type='checkbox']:checked::before {
+    content: '✔';
+    position: absolute;
+    top: 0;
+    left: 3px;
+    color: white;
+    font-size: 12px;
+}
+
+.filter_option_label_title {
+    display: block;
+    color: #333333;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: "Inter", sans-serif;
+}
+.filter_option_label_title2 {
+    font-family: "Inter", sans-serif;
+    color: #929292;
+    font-size: 13px;
+    font-weight: 400;
+}
+.sort-option input[type='radio'] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #929292;
+    margin-right: 7px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+}
+
+.sort-option input[type='radio']:checked {
+    background: #FF6C00;
+    border-color:  #FF6C00;
+}
+
+.sort-option input[type='radio']:checked::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: white;
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.sort-options {
+    display: flex;
+    flex-direction: column;
+}
+.sort_option_title {
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-size: 15px;
+    font-weight: 500;
+}
+.filter_option_checkbox_item {
+    width: 100%;
+    margin-bottom: 25px;
+}
+.apply_reset_filter_btn_wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.apply_filter_btn {
+    background: #FF6C00;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    max-width: 270px;
+    height: 46px;
+    margin-bottom: 10px;
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 18px;
+    font-family: "Poppins", sans-serif;
+    width: 100%;
+
+
+}
+.reset_filter_btn {
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    border: 2px solid #FF6C00;
+    max-width: 270px;
+    height: 46px;
+    margin-bottom: 10px;
+    color: #333333;
+    font-weight: 600;
+    font-size: 18px;
+    font-family: "Poppins", sans-serif;
+    width: 100%;
+    background: none;
+}
+
+.filter_option_label {
+    cursor: pointer;
+}
+.sort-option {
+    cursor: pointer;
+}
