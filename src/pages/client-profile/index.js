@@ -20,7 +20,7 @@ export default function ClientProfilePage () {
             review_date: '20 апреля 2024',
             client_name: 'Заказчик Evgenia G.',
             project_name: 'Дизайн сайта DoYouDo',
-            star_icon: '/star_img3.png',
+            star_icon: '/star_icon2.png',
             review_info: 'Спасибо большое, Анастасия Викторовна быстро откликнулась, назначила время созвона и очень доступно всё объяснила ребёнку. Будем обращаться снова при необходимости! 👏👏👏'
         },
         {
@@ -28,7 +28,7 @@ export default function ClientProfilePage () {
             review_date: '20 апреля 2024',
             client_name: 'Заказчик Evgenia G.',
             project_name: 'Дизайн сайта DoYouDo',
-            star_icon: '/star_img3.png',
+            star_icon: '/star_icon2.png',
             review_info: 'Спасибо большое, Анастасия Викторовна быстро откликнулась, назначила время созвона и очень доступно всё объяснила ребёнку. Будем обращаться снова при необходимости! 👏👏👏'
         },
         {
@@ -36,7 +36,7 @@ export default function ClientProfilePage () {
             review_date: '20 апреля 2024',
             client_name: 'Заказчик Evgenia G.',
             project_name: 'Дизайн сайта DoYouDo',
-            star_icon: '/star_img3.png',
+            star_icon: '/star_icon2.png',
             review_info: 'Спасибо большое, Анастасия Викторовна быстро откликнулась, назначила время созвона и очень доступно всё объяснила ребёнку. Будем обращаться снова при необходимости! 👏👏👏'
         },
 
@@ -45,7 +45,7 @@ export default function ClientProfilePage () {
             review_date: '20 апреля 2024',
             client_name: 'Заказчик Evgenia G.',
             project_name: 'Дизайн сайта DoYouDo',
-            star_icon: '/star_img3.png',
+            star_icon: '/star_icon2.png',
             review_info: 'Спасибо большое, Анастасия Викторовна быстро откликнулась, назначила время созвона и очень доступно всё объяснила ребёнку. Будем обращаться снова при необходимости! 👏👏👏'
         },
         {
@@ -53,7 +53,7 @@ export default function ClientProfilePage () {
             review_date: '20 апреля 2024',
             client_name: 'Заказчик Evgenia G.',
             project_name: 'Дизайн сайта DoYouDo',
-            star_icon: '/star_img3.png',
+            star_icon: '/star_icon2.png',
             review_info: 'Спасибо большое, Анастасия Викторовна быстро откликнулась, назначила время созвона и очень доступно всё объяснила ребёнку. Будем обращаться снова при необходимости! 👏👏👏'
         },
         {
@@ -61,7 +61,7 @@ export default function ClientProfilePage () {
             review_date: '20 апреля 2024',
             client_name: 'Заказчик Evgenia G.',
             project_name: 'Дизайн сайта DoYouDo',
-            star_icon: '/star_img3.png',
+            star_icon: '/star_icon2.png',
             review_info: 'Спасибо большое, Анастасия Викторовна быстро откликнулась, назначила время созвона и очень доступно всё объяснила ребёнку. Будем обращаться снова при необходимости! 👏👏👏'
         },
 
@@ -159,12 +159,16 @@ export default function ClientProfilePage () {
 
     const router = useRouter();
 
-    const redirectFromPortfolioSinglePage = (id) => {
-        router.push(`/portfolio/${id}`);
-    };
-    const redirectToAddProjectPage = () => {
-        router.push(`/add-project`);
-    };
+    // const redirectFromPortfolioSinglePage = (id) => {
+    //     router.push(`/portfolio/${id}`);
+    // };
+    // const redirectToAddProjectPage = () => {
+    //     router.push(`/add-project`);
+    // };
+    const redirectToClientSettingsPage = () => {
+        router.push(`/freelancer-profile-settings`);
+    }
+
 
     return (
         <>
@@ -177,7 +181,7 @@ export default function ClientProfilePage () {
                     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
 
                 </Head>
-                <div className="home_general_wrapper" id='freelancer_profile'>
+                <div className="home_general_wrapper client-profile" id='freelancer_profile'>
                     <Header activePage={"freelancer_profile"}/>
                     <div className="freelancer_single_page_wrapper">
                         <div className="freelancer_single_page_user_info_wrapper">
@@ -193,6 +197,14 @@ export default function ClientProfilePage () {
                                             quality={100} // Image quality
                                         />
                                     </div>
+                                    <button
+                                        className='suggest_task_btn desktop_suggest_add_to_fav_btn'
+                                        onClick={() => {
+                                            redirectToClientSettingsPage()
+                                        }}
+                                    >
+                                        Настройки
+                                    </button>
 
                                 </div>
                                 <div className="freelancer_single_page_user_info_wrapper_item2">
@@ -205,6 +217,7 @@ export default function ClientProfilePage () {
                                             quality={100} // Image quality
                                         />
                                     </div>
+
                                     <div className='freelancer_single_page_user_info_wrapper_item2_details'>
                                         <div className='freelancer_single_page_user_name_age_country_info_wrapper'>
                                             <p className='freelancer_single_page_user_name'>Алексей Смирнов</p>

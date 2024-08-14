@@ -115,20 +115,20 @@ export default function Home() {
                         <h1 className='how_works_title'>Как работает <span>DoYouDo</span>?</h1>
                         <div className="how_works_items_wrapper">
                             <div className="how_works_item">
+                                <p className="how_works_item_info_span">Опишите</p>
                                 <p className="how_works_item_info">
-                                    <span className="how_works_item_info_span">Опишите</span>
                                     свою задачу и условия. Это бесплатно и займёт 3‑4 минуты
                                 </p>
                             </div>
                             <div className="how_works_item">
+                                <p className="how_works_item_info_span">Получите отклики</p>
                                 <p className="how_works_item_info">
-                                    <span className="how_works_item_info_span">Получите отклики</span>
                                     с ценами от исполнителей. Обычно они приходят в течение 30 минут
                                 </p>
                             </div>
                             <div className="how_works_item">
+                                <p className="how_works_item_info_span">Выберите</p>
                                 <p className="how_works_item_info">
-                                    <span className="how_works_item_info_span">Выберите</span>
                                     подходящего исполнителя и обсудите сроки выполнения
                                 </p>
                             </div>
@@ -177,7 +177,7 @@ export default function Home() {
                                     Добро пожаловать на нашу DoYouDo, где лучшие профессионалы и инновационные проекты встречаются для создания выдающихся результатов.Начните свой проект уже сегодня, легко и быстро находя талантливых фрилансеров со всего мира.
                                 </p>
                                 <div className='download_application_app_google_links_wrapper'>
-                                    <a href="" className='download_application_app_link'>
+                                    <a href="/download-application" className='download_application_app_link'>
                                         <Image
                                             src="/app_store_img.png"
                                             alt="Example Image"
@@ -186,7 +186,7 @@ export default function Home() {
                                             quality={100} // Image quality
                                         />
                                     </a>
-                                    <a href="" className='download_application_google_link'>
+                                    <a href="/download-application" className='download_application_google_link'>
                                         <Image
                                             src="/google_market_img.png"
                                             alt="Example Image"

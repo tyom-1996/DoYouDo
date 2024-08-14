@@ -229,6 +229,21 @@
     justify-content: center;
     align-items: center;
     border-radius: 100%;
+    position: relative;
+}
+.pagination_links_wrapper .pagination_link_btn:last-child svg {
+    position: absolute;
+    left: 50%;
+    z-index: 999;
+    top: 50%;
+    transform: translate(-35%, -50%);
+}
+.pagination_links_wrapper .pagination_link_btn:first-child svg {
+    position: absolute;
+    left: 50%;
+    z-index: 999;
+    top: 50%;
+    transform: translate(-66%, -50%);
 }
 .pagination_link_title {
     font-family: "Inter", sans-serif;

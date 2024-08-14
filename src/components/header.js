@@ -32,51 +32,54 @@ export default function Header(props) {
         <>
             <header className="header" id='home_page'>
                 <div className="header_wrapper">
-                    <button
-                        className='header_img'
-                        onClick={() => {
-                            handleNavigateToHome()
-                        }}
-                    >
-                        <Image
-                            src="/main_logo.png"
-                            alt="Example Image"
-                            layout="fill" // Fill the parent element
-                            objectFit="cover" // Cover the area of the parent element
-                            quality={100} // Image quality
-                        />
-                    </button>
-                    <nav className="header_nav">
-                        <ul className="header_ul_list">
-                            <li className="header_ul_li">
-                                <a href="/projects" className={`header_ul_link ${props.activePage === 'job_page' ? 'active_link' : ''}`}>
-                                    Работа
-                                </a>
-                            </li>
-                            <li className="header_ul_li">
-                                <a href="/freelancers" className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
-                                    Фрилансеры
-                                </a>
+                    <div className='header_logo_nav_wrapper'>
+                        <button
+                            className='header_img'
+                            onClick={() => {
+                                handleNavigateToHome()
+                            }}
+                        >
+                            <Image
+                                src="/main_logo.png"
+                                alt="Example Image"
+                                layout="fill" // Fill the parent element
+                                objectFit="cover" // Cover the area of the parent element
+                                quality={100} // Image quality
+                            />
+                        </button>
+                        <nav className="header_nav">
+                            <ul className="header_ul_list">
+                                <li className="header_ul_li">
+                                    <a href="/projects" className={`header_ul_link ${props.activePage === 'job_page' ? 'active_link' : ''}`}>
+                                        Работа
+                                    </a>
+                                </li>
+                                <li className="header_ul_li">
+                                    <a href="/freelancers" className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
+                                        Фрилансеры
+                                    </a>
 
-                            </li>
-                            <li className="header_ul_li">
-                                <a href="/create-order" className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
-                                    Создать задание
-                                </a>
-                            </li>
-                            <li className="header_ul_li">
-                                <a href="/my-projects/freelancer" className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}>
-                                    Мои Проекты
-                                </a>
-                            </li>
-                            <li className="header_ul_li">
-                                <a href="/chat" className={`header_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
-                                    Чат
-                                </a>
-                            </li>
+                                </li>
+                                <li className="header_ul_li">
+                                    <a href="/create-order" className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
+                                        Создать задание
+                                    </a>
+                                </li>
+                                <li className="header_ul_li">
+                                    <a href="/my-projects/freelancer" className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}>
+                                        Мои Проекты
+                                    </a>
+                                </li>
+                                <li className="header_ul_li">
+                                    <a href="/chat" className={`header_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
+                                        Чат
+                                    </a>
+                                </li>
 
-                        </ul>
-                    </nav>
+                            </ul>
+                        </nav>
+                    </div>
+
                     {props.activePage === 'freelancer_profile' ?
                         <button
                             className='header_login_btn'

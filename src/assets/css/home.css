@@ -130,7 +130,7 @@
     border: none;
     outline: none;
     cursor: pointer;
-    color: #33333399;
+    color: #333333;
     font-family: "Inter", sans-serif;
     font-size: 16px;
     font-weight: 400;
@@ -366,6 +366,21 @@
     justify-content: center;
     align-items: center;
     border-radius: 100%;
+    position: relative;
+}
+.pagination_links_wrapper .pagination_link_btn:last-child svg {
+    position: absolute;
+    left: 50%;
+    z-index: 999;
+    top: 50%;
+    transform: translate(-35%, -50%);
+}
+.pagination_links_wrapper .pagination_link_btn:first-child svg {
+    position: absolute;
+    left: 50%;
+    z-index: 999;
+    top: 50%;
+    transform: translate(-66%, -50%);
 }
 .pagination_link_title {
     font-family: "Inter", sans-serif;
@@ -407,7 +422,7 @@
 .services_filter_item {
     width: 100%;
     margin-bottom: 28px;
-    border-bottom: 0.5px solid #636363;
+    border-bottom: 0.5px solid #63636380;
     padding-bottom: 30px;
 }
 
@@ -469,14 +484,14 @@
     width: 100%;
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 0.5px solid #636363;
+    border-bottom: 0.5px solid #63636380;
 
 }
 .category_item {
     width: 100%;
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 0.5px solid #636363;
+    border-bottom: 0.5px solid #63636380;
 
 }
 
@@ -1218,17 +1233,17 @@
     color: #333333;
     font-family: "Poppins", sans-serif;
     font-weight: 300;
+    font-style: normal;
     font-size: 18px;
     line-height: 22px;
 
 }
 .how_works_item_info_span {
     color: #FF6C00;
-    font-family: "Poppins", sans-serif!important;
+    font-family: "Poppins", sans-serif;
     font-weight: 800;
     font-size: 22px;
     line-height: 33px;
-    display: block;
 
 }
 
@@ -1297,6 +1312,7 @@
     font-weight: 600;
     font-size: 26px;
     color: #333333;
+    text-transform: uppercase;
 }
 
 .reviews_of_performers_item_review_title {
@@ -1341,7 +1357,7 @@
 .download_application_info {
     color: #ffffff;
     font-family: "Inter", sans-serif;
-    font-weight: 400;
+    font-weight: 200;
     font-size: 18px;
     margin-bottom: 48px;
 }
@@ -2085,6 +2101,11 @@
 @media (max-width: 590px) {
     .filter_mobile_menu_wrapper {
         max-width: unset!important;
-        width: 95% !important;
+        width: 100%!important;
+        height: 100% !important;
+    }
+    .filter_mobile_menu {
+        padding-bottom: unset!important;
+        padding-top: unset!important;
     }
 }

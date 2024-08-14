@@ -472,6 +472,7 @@ export default function Job () {
         sortBy: 'urgency',
     });
 
+
     const handleFilterChange = (e) => {
         const { name, checked } = e.target;
         setFilters((prev) => ({
@@ -546,6 +547,16 @@ export default function Job () {
             }
 
         }
+    };
+    const handleFilterMenuClick = () => {
+        // Close the filter menu when clicking on the background
+        setShowFilterMobile(false);
+        enableBodyScroll();
+    };
+
+    const stopPropagation = (event) => {
+        // Prevent click event from bubbling up to the filter menu
+        event.stopPropagation();
     };
     return (
         <>
@@ -855,8 +866,18 @@ export default function Job () {
                 </div>
                 <Footer activePage={"job_page"}/>
                 {showFilterMobile &&
-                    <div className='filter_mobile_menu'>
-                        <div className='filter_mobile_menu_wrapper'>
+                    <div
+                        className='filter_mobile_menu'
+                        onClick={() => {
+                            handleFilterMenuClick()
+                        }}
+                    >
+                        <div
+                            className='filter_mobile_menu_wrapper'
+                            onClick={(e) => {
+                                stopPropagation(e)
+                            }}
+                        >
                             <div className='filter_mobile_menu_title_close_icon_wrapper'>
                                 <button
                                     className='filter_mobile_menu_close_btn'

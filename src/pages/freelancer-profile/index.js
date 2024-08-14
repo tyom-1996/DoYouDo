@@ -196,6 +196,9 @@ export default function FreelancerProfilePage () {
     const redirectToAddProjectPage = () => {
         router.push(`/add-project`);
     };
+    const redirectToFreelancerSettingsPage = () => {
+        router.push(`/freelancer-profile-settings`);
+    }
 
     return (
         <>
@@ -227,15 +230,14 @@ export default function FreelancerProfilePage () {
                                     <button
                                         className='suggest_task_btn desktop_suggest_add_to_fav_btn'
                                         onClick={() => {
-                                            setShowSuggestModal(true)
-                                            disableBodyScroll()
+                                           redirectToFreelancerSettingsPage()
                                         }}
                                     >
-                                        Предложить задание
+                                        Настройки
                                     </button>
-                                    <button className='add_to_favorites_btn desktop_suggest_add_to_fav_btn'>
-                                        Добавить в избранные
-                                    </button>
+                                    {/*<button className='add_to_favorites_btn desktop_suggest_add_to_fav_btn'>*/}
+                                    {/*    Добавить в избранные*/}
+                                    {/*</button>*/}
                                 </div>
                                 <div className="freelancer_single_page_user_info_wrapper_item2">
                                     <div className="freelancer_single_page_user_info_wrapper_item2_img">

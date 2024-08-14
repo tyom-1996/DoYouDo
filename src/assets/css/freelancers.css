@@ -76,7 +76,7 @@
     border: none;
     outline: none;
     cursor: pointer;
-    color: #33333399;
+    color: #333333;
     font-family: "Inter", sans-serif;
     font-size: 16px;
     font-weight: 400;
@@ -260,7 +260,7 @@
 .services_filter_item {
     width: 100%;
     margin-bottom: 28px;
-    border-bottom: 0.5px solid #636363;
+    border-bottom: 0.5px solid #63636399;
     padding-bottom: 30px;
 }
 
@@ -322,14 +322,14 @@
     width: 100%;
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 0.5px solid #636363;
+    border-bottom: 0.5px solid #63636380;
 
 }
 .category_item {
     width: 100%;
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 0.5px solid #636363;
+    border-bottom: 0.5px solid #63636380;
 
 }
 
@@ -884,6 +884,21 @@
     justify-content: center;
     align-items: center;
     border-radius: 100%;
+    position: relative;
+}
+.pagination_links_wrapper .pagination_link_btn:last-child svg {
+    position: absolute;
+    left: 50%;
+    z-index: 999;
+    top: 50%;
+    transform: translate(-35%, -50%);
+}
+.pagination_links_wrapper .pagination_link_btn:first-child svg {
+    position: absolute;
+    left: 50%;
+    z-index: 999;
+    top: 50%;
+    transform: translate(-66%, -50%);
 }
 .pagination_link_title {
     font-family: "Inter", sans-serif;
@@ -978,25 +993,25 @@
 }
 
 .freelancers_item_user_rating_info {
-    color: #636363;
+    color: #63636380;
     font-family: "Inter", sans-serif;
     font-size: 10px;
-    font-weight: 400;
+    font-weight: 300;
     margin-left: 15px;
 }
 
 .freelancers_item_reviews_info {
-    color: #636363;
+    color: #63636380;
     font-family: "Inter", sans-serif;
     font-size: 13px;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 .freelancers_item_line {
     width: 100%;
     height: 1px;
     margin-bottom: 16px;
-    background: #636363;
+    background: #63636380;
 }
 
 .freelancers_item_user_service_info {
@@ -1029,8 +1044,8 @@
 
 .about_company_founders_wrapper_item {
     width: 48%;
-
 }
+
 .freelancers_item_user_header_item {
     width: 100%;
     display: flex;

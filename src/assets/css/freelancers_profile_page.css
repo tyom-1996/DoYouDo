@@ -113,6 +113,21 @@
     justify-content: center;
     align-items: center;
     border-radius: 100%;
+    position: relative;
+}
+.pagination_links_wrapper .pagination_link_btn:last-child svg {
+    position: absolute;
+    left: 50%;
+    z-index: 999;
+    top: 50%;
+    transform: translate(-35%, -50%);
+}
+.pagination_links_wrapper .pagination_link_btn:first-child svg {
+    position: absolute;
+    left: 50%;
+    z-index: 999;
+    top: 50%;
+    transform: translate(-66%, -50%);
 }
 .pagination_link_title {
     font-family: "Inter", sans-serif;
@@ -1522,7 +1537,8 @@
     padding-top: 400px;
     margin-bottom: 100px;
 }
-#client_profile .freelancer_click_balance_info_wrapper {
+
+.client-profile .freelancer_click_balance_info_wrapper {
     padding-top: 300px;
 }
 
@@ -1619,7 +1635,7 @@
     border-radius: 20px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
 
 }
 
@@ -1638,6 +1654,8 @@
 
 .freelancer_click_balance_item2_child_box:first-child {
     width: 42%;
+    position: relative;
+    top: 8px;
 }
 .freelancer_click_balance_item2_child_box:nth-child(2) {
     width: 51%;
@@ -2083,6 +2101,8 @@
     height: 386px;
     margin-bottom: 20px;
     position: relative;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .uploadButton_image2 Image {
@@ -2775,5 +2795,19 @@
     }
     .image_upload_title3 {
         font-size: 10px!important;
+    }
+}
+#freelancer_profile_settings .imageGallery {
+    margin-bottom: 20px;
+}
+
+#freelancer_profile_settings .imageContainer {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+@media (max-width: 960px) {
+    .freelancer_click_balance_item2_child_box:first-child {
+        position: unset!important;
     }
 }
