@@ -146,7 +146,6 @@ export default function AddProject () {
                 </div>
                 <Footer />
 
-
             </main>
         </>
     );

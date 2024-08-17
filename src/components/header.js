@@ -190,7 +190,13 @@ export default function Header(props) {
 
                                 </ul>
                             </nav>
-                            <button className='header_login_btn'>
+                            <button
+                                className='header_login_btn'
+                                onClick={() => {
+                                    setShowMobileMenu(false)
+                                    handleNavigateToLogin()
+                                }}
+                            >
                                 Войти
                             </button>
 

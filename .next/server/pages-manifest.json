@@ -2,8 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/create-order": "pages/create-order.js",
-  "/my-projects/freelancer": "pages/my-projects/freelancer.js",
   "/": "pages/index.js",
-  "/download-application": "pages/download-application.js"
+  "/login": "pages/login.js",
+  "/freelancer-profile": "pages/freelancer-profile.js",
+  "/recovery-account": "pages/recovery-account.js"
 }
