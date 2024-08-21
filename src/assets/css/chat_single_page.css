@@ -155,6 +155,7 @@
 .chat_single_page_item_user_img_info_wrapper {
     display: flex;
     align-items: flex-start;
+    flex: 1;
 }
 .chat_single_page_item_user_img {
     height: 40px;

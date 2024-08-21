@@ -237,6 +237,14 @@ export default function ClientProfilePage () {
                                                 5/5
                                             </p>
                                         </div>
+                                        <button
+                                            className='suggest_task_btn mobile_suggest_add_to_fav_btn'
+                                            onClick={() => {
+                                                redirectToClientSettingsPage()
+                                            }}
+                                        >
+                                            Настройки
+                                        </button>
 
                                         <div className='freelancer_single_page_user_info_professional_information_items_wrapper'>
                                             <div className="freelancer_single_page_user_info_professional_information_item">
@@ -264,6 +272,7 @@ export default function ClientProfilePage () {
                         <div className="freelancer_click_balance_info_wrapper">
                             <div className='freelancer_click_balance_info_header_wrapper'>
                                 <p className='freelancer_click_balance_info_header_title'>Баланс</p>
+                                <p className='freelancer_click_balance_info_header_balance_quantity'>13.000 Руб.</p>
                             </div>
                             <div className='freelancer_click_balance_items_wrapper'>
                                 <div className='freelancer_click_balance_item1'>
@@ -272,7 +281,6 @@ export default function ClientProfilePage () {
                                         <p className='freelancer_click_balance_item1_child_info'>Попоните баланс для размещения заказа</p>
                                     </div>
                                     <div className="freelancer_click_balance_item1_child">
-                                        <p className='freelancer_click_balance_info_header_balance_quantity'>13.000 Руб.</p>
                                         <button className='freelancer_click_balance_buy_balance_btn'>Пополнить</button>
                                     </div>
                                 </div>

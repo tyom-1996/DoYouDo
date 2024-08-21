@@ -172,7 +172,7 @@ export default function Home() {
                     <div className='download_application_wrapper'>
                         <div className='download_application_items_wrapper'>
                             <div className="download_application_info_item">
-                                <h1 className='download_application_title'>Скачайте приложение пользуйтесь</h1>
+                                <h1 className='download_application_title'>Скачайте приложении пользуйтесь</h1>
                                 <p className='download_application_info'>
                                     Добро пожаловать на нашу DoYouDo, где лучшие профессионалы и инновационные проекты встречаются для создания выдающихся результатов.Начните свой проект уже сегодня, легко и быстро находя талантливых фрилансеров со всего мира.
                                 </p>

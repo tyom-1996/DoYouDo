@@ -53,7 +53,7 @@ export default function Footer(props) {
                                 </ul>
                                 <ul className="footer_ul_list_second_list">
                                     <li className="footer_ul_li">
-                                        <a href=""
+                                        <a href="/chat"
                                            className={`footer_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
                                             Чат
                                         </a>
@@ -83,36 +83,41 @@ export default function Footer(props) {
                         </div>
 
                         <nav className="mobile_footer_nav">
-                            <ul className="footer_ul_list">
-                                    <li className="footer_ul_li">
-                                        <a href="/projects"
-                                           className={`footer_ul_link ${props.activePage === 'job_page' ? 'active_link' : ''}`}>
-                                            Работа
-                                        </a>
-                                    </li>
-                                    <li className="footer_ul_li">
-                                        <a href="/freelancers"
-                                           className={`footer_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
-                                            Фрилансеры
-                                        </a>
+                            <ul className="mobile_footer_ul_list1">
+                                <li className="footer_ul_li">
+                                    <a href="/projects"
+                                       className={`footer_ul_link ${props.activePage === 'job_page' ? 'active_link' : ''}`}>
+                                        Работа
+                                    </a>
+                                </li>
+                                <li className="footer_ul_li">
+                                    <a href="/freelancers"
+                                       className={`footer_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
+                                        Фрилансеры
+                                    </a>
 
-                                    </li>
-                                    <li className="footer_ul_li">
-                                        <a href="" className="footer_ul_link">
-                                            Создать задание
-                                        </a>
-                                    </li>
-                                    <li className="footer_ul_li">
-                                        <a href="/my-projects/client" className={`footer_ul_link ${props.activePage === 'my_projects_for_client_page' ? 'active_link' : ''}`}>
-                                            Мои Проекты
-                                        </a>
-                                    </li>
-                                    <li className="footer_ul_li">
-                                        <a href=""
-                                           className={`footer_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
-                                            Чат
-                                        </a>
-                                    </li>
+                                </li>
+                            </ul>
+                            <ul className="mobile_footer_ul_list2">
+                                <li className="footer_ul_li">
+                                    <a href="" className="footer_ul_link">
+                                        Создать задание
+                                    </a>
+                                </li>
+                                <li className="footer_ul_li">
+                                    <a href="/my-projects/client" className={`footer_ul_link ${props.activePage === 'my_projects_for_client_page' ? 'active_link' : ''}`}>
+                                        Мои Проекты
+                                    </a>
+                                </li>
+                                <li className="footer_ul_li">
+                                    <a href="/chat"
+                                       className={`footer_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
+                                        Чат
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <ul className="mobile_footer_ul_list3">
                                 <li className="footer_ul_li">
                                     <a href="/how-it-works"
                                        className={`footer_ul_link ${props.activePage === 'how_it_works_page' ? 'active_link' : ''}`}
@@ -127,14 +132,15 @@ export default function Footer(props) {
                                         О Компании
                                     </a>
                                 </li>
+
+                            </ul>
+                            <ul className="mobile_footer_ul_list4">
                                 <li className="footer_ul_li">
                                     <a href="/contacts"
                                        className={`footer_ul_link ${props.activePage === 'contacts' ? 'active_link' : ''}`}>
                                         Контакты
                                     </a>
                                 </li>
-
-
 
                             </ul>
                         </nav>

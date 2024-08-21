@@ -258,9 +258,9 @@
 }
 
 @media (min-width: 336px) and (max-width: 362px) {
-    .footer_ul_link{
-        font-size: 14px!important;
-    }
+    /*.footer_ul_link{*/
+    /*    font-size: 14px!important;*/
+    /*}*/
     .footer_app_link {
         width: 130px!important;
         height: 35px!important;
@@ -272,9 +272,9 @@
     }
 }
 @media  (max-width: 336px) {
-    .footer_ul_link{
-        font-size: 12px!important;
-    }
+    /*.footer_ul_link{*/
+    /*    font-size: 12px!important;*/
+    /*}*/
    .footer_app_link {
         width: 125px!important;
         height: 35px!important;

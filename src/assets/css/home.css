@@ -125,6 +125,17 @@
     width: 100%;
     margin-right: 17px;
 }
+.services_search_input_field2 {
+    display: flex;
+    border: 1px solid #33333399;
+    background: #ffffff;
+    border-radius: 5px;
+    align-items: center;
+    padding: 12px 17px;
+    width: 100%;
+    margin-bottom: 20px;
+
+}
 
 .services_search_input {
     border: none;
@@ -895,6 +906,10 @@
         height: 38px;
         flex: 1;
     }
+    .services_search_input_field2 {
+        height: 38px;
+        flex: 1;
+    }
     .mobile_services_search_box {
         display: block!important;
         width: 100%;
@@ -1105,6 +1120,9 @@
 @media (max-width: 926px) {
   #job_page .services_filter_items_wrapper {
         display: none!important;
+    }
+    .input_delete_icon {
+        top: 7px!important;
     }
 }
 
@@ -1748,9 +1766,9 @@
 }
 
 @media (min-width: 336px) and (max-width: 362px) {
-    .footer_ul_link{
-        font-size: 14px!important;
-    }
+    /*.footer_ul_link{*/
+    /*    font-size: 14px!important;*/
+    /*}*/
     .footer_app_link {
         width: 130px!important;
         height: 35px!important;
@@ -1762,9 +1780,9 @@
     }
 }
 @media  (max-width: 336px) {
-    .footer_ul_link{
-        font-size: 12px!important;
-    }
+    /*.footer_ul_link{*/
+    /*    font-size: 12px!important;*/
+    /*}*/
    .footer_app_link {
         width: 125px!important;
         height: 35px!important;
@@ -2108,4 +2126,15 @@
         padding-bottom: unset!important;
         padding-top: unset!important;
     }
+}
+
+.input_delete_icon {
+    position: absolute;
+    z-index: 999;
+    right: 12px;
+    top: 11px;
+    height: 24px;
+}
+.services_search_input_field2 {
+    position: relative;
 }

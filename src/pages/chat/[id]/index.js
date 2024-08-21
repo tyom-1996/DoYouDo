@@ -26,7 +26,7 @@ export default function  Chat  ({id})  {
                   id: 1,
                   text: 'Но постоянный количественный рост и сфера нашей активности предполагает независимые.',
                   sender: 'Daniela',
-                  time: '12:33',
+                  time: 'Вчера 12:33',
                   avatar: '/chat_user_img.png',
                   isSender: true
               },
@@ -39,7 +39,7 @@ export default function  Chat  ({id})  {
                   id: 1,
                   text: 'Равным образом, постоянный.',
                   sender: 'Alexey',
-                  time: '12:33',
+                  time: 'Сегодня 12:33',
                   avatar: '/chat_user_img2.png',
                   isSender: false
               },
@@ -47,7 +47,7 @@ export default function  Chat  ({id})  {
                   id: 2,
                   text: 'В своём стремлении повысить.',
                   sender: 'Daniela',
-                  time: '12:33',
+                  time: 'Сегодня 12:33',
                   avatar: '/chat_user_img.png',
                   isSender: true
               },
@@ -55,7 +55,7 @@ export default function  Chat  ({id})  {
                   id: 3,
                   text: 'С учётом сложившейся международной обстановки, убеждённость некоторых оппонентов однозначно.',
                   sender: 'Alexey',
-                  time: '12:33',
+                  time: 'Сегодня 12:33',
                   avatar: '/chat_user_img2.png',
                   isSender: false
               },
@@ -63,7 +63,7 @@ export default function  Chat  ({id})  {
                   id: 4,
                   text: 'Здравствуйте',
                   sender: 'Daniela',
-                  time: '12:33',
+                  time: 'Сегодня 12:33',
                   avatar: '/chat_user_img.png',
                   isSender: true
               }

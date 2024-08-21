@@ -318,3 +318,17 @@
         margin-right: 5px!important;
     }
 }
+
+@media (min-width: 769px) and (max-width: 1290px) {
+    .general_page_wrapper {
+        max-width: unset !important;
+        width: 95% !important;
+    }
+}
+@media  (max-width: 769px) {
+    .general_page_wrapper {
+        max-width: unset!important;
+        width: 100%!important;
+        padding: 0 20px;
+    }
+}

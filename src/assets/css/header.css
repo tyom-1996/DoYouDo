@@ -460,10 +460,11 @@
 }
 .login_modal_item_input_wrapper {
     width: 100%;
-}
-.login_modal_item_input_wrapper:first-child {
     margin-bottom: 20px;
 }
+/*.login_modal_item_input_wrapper:first-child {*/
+/*    margin-bottom: 20px;*/
+/*}*/
 .login_modal_item_input_field {
     width: 100%;
     background: #F5F5F5;
@@ -706,9 +707,9 @@
     .recovery_account_modal_tab {
         font-size: 13px!important;
     }
-    .login_modal_item_input_wrapper:first-child {
-        margin-bottom: 12px!important;
-    }
+    /*.login_modal_item_input_wrapper:first-child {*/
+    /*    margin-bottom: 12px!important;*/
+    /*}*/
     .login_modal_title {
         font-size: 28px!important;
     }
@@ -720,9 +721,9 @@
     }
 }
 @media (min-width: 360px) and  (max-width: 375px) {
-    .login_modal_item_input_wrapper:first-child {
-        margin-bottom: 12px!important;
-    }
+    /*.login_modal_item_input_wrapper:first-child {*/
+    /*    margin-bottom: 12px!important;*/
+    /*}*/
     .recovery_account_modal_item_input_wrapper {
         margin-bottom: 12px!important;
     }
@@ -752,9 +753,9 @@
     }
 }
 @media (max-width: 360px) {
-    .login_modal_item_input_wrapper:first-child {
-        margin-bottom: 12px!important;
-    }
+    /*.login_modal_item_input_wrapper:first-child {*/
+    /*    margin-bottom: 12px!important;*/
+    /*}*/
     .recovery_account_modal_item_input_wrapper {
         margin-bottom: 12px!important;
     }

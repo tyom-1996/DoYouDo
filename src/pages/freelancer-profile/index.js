@@ -268,14 +268,14 @@ export default function FreelancerProfilePage () {
                                                 5/5
                                             </p>
                                         </div>
-                                        <div className='mobile_buttons_wrapper'>
-                                            <button className='suggest_task_btn'>
-                                                Предложить задание
-                                            </button>
-                                            <button className='add_to_favorites_btn'>
-                                                Добавить в избранные
-                                            </button>
-                                        </div>
+                                        <button
+                                            className='suggest_task_btn mobile_suggest_add_to_fav_btn'
+                                            onClick={() => {
+                                                redirectToFreelancerSettingsPage()
+                                            }}
+                                        >
+                                            Настройки
+                                        </button>
                                         <div className='freelancer_single_page_user_info_professional_information_items_wrapper'>
                                             <div className="freelancer_single_page_user_info_professional_information_item">
                                                 <p className="freelancer_single_page_user_info_professional_information_item_title">
@@ -344,6 +344,7 @@ export default function FreelancerProfilePage () {
                         <div className="freelancer_click_balance_info_wrapper">
                             <div className='freelancer_click_balance_info_header_wrapper'>
                                 <p className='freelancer_click_balance_info_header_title'>Баланс кликов</p>
+                                <p className='freelancer_click_balance_info_header_balance_quantity'>130</p>
                             </div>
                             <div className='freelancer_click_balance_items_wrapper'>
                                 <div className='freelancer_click_balance_item1'>
@@ -352,7 +353,6 @@ export default function FreelancerProfilePage () {
                                         <p className='freelancer_click_balance_item1_child_info'>Действующий школьный учитель. Опыт работы в школе 9 лет. Проведение индивидуальных занятий со школьниками </p>
                                     </div>
                                     <div className="freelancer_click_balance_item1_child">
-                                        <p className='freelancer_click_balance_info_header_balance_quantity'>130</p>
                                         <button className='freelancer_click_balance_buy_balance_btn'>Купить</button>
                                     </div>
                                 </div>
