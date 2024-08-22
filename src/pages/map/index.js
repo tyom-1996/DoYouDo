@@ -596,16 +596,16 @@ export default function Map () {
                                     {/*                    </div>*/}
                                     {/*                )}*/}
                                     {/*            </div>*/}
-                                    {/*            <div className="filter_task_categories_input_title_wrapper">*/}
-                                    {/*                <p className="filter_task_categories_input_title">Стоимость заданий от</p>*/}
-                                    {/*                <input*/}
-                                    {/*                    type="text"*/}
-                                    {/*                    value={taskCost}*/}
-                                    {/*                    onChange={handleTaskCostChange}*/}
-                                    {/*                    placeholder="₽"*/}
-                                    {/*                    className='filter_task_categories_input_field'*/}
-                                    {/*                />*/}
-                                    {/*            </div>*/}
+                                                <div className="filter_task_categories_input_title_wrapper">
+                                                    <p className="filter_task_categories_input_title">Стоимость заданий от</p>
+                                                    <input
+                                                        type="text"
+                                                        value={taskCost}
+                                                        onChange={handleTaskCostChange}
+                                                        placeholder="₽"
+                                                        className='filter_task_categories_input_field'
+                                                    />
+                                                </div>
                                     {/*            <div className='filter_option_checkbox_items_wrapper'>*/}
                                     {/*                <div className='filter_option_checkbox_item'>*/}
                                     {/*                    <h3 className="filter_option_checkbox_items_wrapper_title">Показывать только задания со статусами</h3>*/}

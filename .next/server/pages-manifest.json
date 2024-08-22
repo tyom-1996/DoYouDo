@@ -1,8 +1,8 @@
 {
   "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/my-projects/freelancer": "pages/my-projects/freelancer.js",
+  "/_error": "pages/_error.js",
   "/": "pages/index.js",
-  "/leave-feedback": "pages/leave-feedback.js"
+  "/projects": "pages/projects.js",
+  "/map": "pages/map.js"
 }
