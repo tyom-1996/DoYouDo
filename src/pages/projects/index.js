@@ -899,183 +899,90 @@ export default function Job () {
                             </div>
                             <div className="mobile_services_filter_items_wrapper">
 
-                                {/*<div className='filter_task_categories_wrapper'>*/}
-                                {/*    <div*/}
-                                {/*        className='filter_task_categories_header'*/}
-                                {/*        onClick={() => {*/}
-                                {/*            setShowHiddenFilterCategoriesPart(!showHiddenFilterCategoriesPart)*/}
-                                {/*        }}*/}
-                                {/*    >*/}
-                                {/*        <p className='filter_task_categories_header_title'>Категории заданий</p>*/}
-                                {/*        <button*/}
-                                {/*            className={`filter_task_categories_header_icon${showHiddenFilterCategoriesPart ? '2' : ''}`}*/}
-                                {/*        >*/}
-                                {/*            <DropDownIcon3/>*/}
-                                {/*        </button>*/}
-
-                                {/*    </div>*/}
-                                {/*    {showHiddenFilterCategoriesPart &&*/}
-                                {/*        <div className='filter_task_categories_main'>*/}
-                                {/*            <div className="filter_task_categories_input_title_wrapper filter_task_categories_input_title_wrapper2">*/}
-                                {/*                <p className="filter_task_categories_input_title">Город, адрес, метро, район</p>*/}
-                                {/*                <input*/}
-                                {/*                    type="text"*/}
-                                {/*                    value={address}*/}
-                                {/*                    onChange={handleAddressChange}*/}
-                                {/*                    placeholder="Город, адрес, метро, район"*/}
-                                {/*                    className='filter_task_categories_input_field filter_task_categories_input_field_address'*/}
-                                {/*                />*/}
-                                {/*                {address.length > 0 &&*/}
-                                {/*                    <button*/}
-                                {/*                        className='delete_input_btn'*/}
-                                {/*                        onClick={() => {*/}
-                                {/*                            setAddress('')*/}
-                                {/*                        }}*/}
-                                {/*                    >*/}
-                                {/*                        <DeleteAddressIcon/>*/}
-                                {/*                    </button>*/}
-                                {/*                }*/}
-
-                                {/*            </div>*/}
-
-                                {/*            <div className="radius_dropdown">*/}
-                                {/*                <p className='radius_dropdown_title'>Радиус поиска</p>*/}
-                                {/*                <div className="radius_dropdownHeader" onClick={() => setIsOpenForRadius(!IsOpenForRadius)}>*/}
-                                {/*                    <p className='radius_dropdownHeader_title'>{selectedRadius || 'Радиус поиска'}</p>*/}
-                                {/*                    <span className="arrow">*/}
-                                {/*            {IsOpenForRadius ?*/}
-                                {/*                <div style={{ transform: "rotate(-180deg)" }}>*/}
-                                {/*                    <svg*/}
-                                {/*                        xmlns="http://www.w3.org/2000/svg"*/}
-                                {/*                        width={24}*/}
-                                {/*                        height={24}*/}
-                                {/*                        fill="none"*/}
-                                {/*                    >*/}
-                                {/*                        <path*/}
-                                {/*                            stroke="#333"*/}
-                                {/*                            strokeLinecap="round"*/}
-                                {/*                            strokeLinejoin="round"*/}
-                                {/*                            strokeWidth={1.5}*/}
-                                {/*                            d="m18 9-6 6-1.5-1.5M6 9l2 2"*/}
-                                {/*                        />*/}
-                                {/*                    </svg>*/}
-                                {/*                </div>*/}
-                                {/*                :*/}
-
-                                {/*                <svg*/}
-                                {/*                    xmlns="http://www.w3.org/2000/svg"*/}
-                                {/*                    width={24}*/}
-                                {/*                    height={24}*/}
-                                {/*                    fill="none"*/}
-                                {/*                >*/}
-                                {/*                    <path*/}
-                                {/*                        stroke="#333"*/}
-                                {/*                        strokeLinecap="round"*/}
-                                {/*                        strokeLinejoin="round"*/}
-                                {/*                        strokeWidth={1.5}*/}
-                                {/*                        d="m18 9-6 6-1.5-1.5M6 9l2 2"*/}
-                                {/*                    />*/}
-                                {/*                </svg>*/}
-
-                                {/*            }*/}
-                                {/*        </span>*/}
-                                {/*                </div>*/}
-                                {/*                {IsOpenForRadius && (*/}
-                                {/*                    <div className="radius_dropdownList radius_dropdownList2">*/}
-                                {/*                        {radius.map((item, index) => (*/}
-                                {/*                            <p key={index} className="radius_dropdownItem" onClick={() => handleSelectRadius(item)}>*/}
-                                {/*                                {item}*/}
-                                {/*                            </p>*/}
-                                {/*                        ))}*/}
-                                {/*                    </div>*/}
-                                {/*                )}*/}
-                                {/*            </div>*/}
-                                            <div className="filter_task_categories_input_title_wrapper">
-                                                <p className="filter_task_categories_input_title">Стоимость заданий от</p>
+                                <div className='filter_task_categories_wrapper'>
+                                <div className="filter_task_categories_input_title_wrapper">
+                                    <p className="filter_task_categories_input_title">Стоимость заданий от</p>
+                                    <input
+                                        type="text"
+                                        value={taskCost}
+                                        onChange={handleTaskCostChange}
+                                        placeholder="₽"
+                                        className='filter_task_categories_input_field'
+                                    />
+                                </div>
+                                <div className='filter_option_checkbox_items_wrapper'>
+                                    <div className='filter_option_checkbox_item'>
+                                        <h3 className="filter_option_checkbox_items_wrapper_title">Показывать только задания со статусами</h3>
+                                        <div className="filter-option">
+                                            <label className='filter_option_label'>
                                                 <input
-                                                    type="text"
-                                                    value={taskCost}
-                                                    onChange={handleTaskCostChange}
-                                                    placeholder="₽"
-                                                    className='filter_task_categories_input_field'
+                                                    type="checkbox"
+                                                    name="remoteWork"
+                                                    checked={filters.remoteWork}
+                                                    onChange={handleFilterChange}
                                                 />
-                                            </div>
-                                {/*            <div className='filter_option_checkbox_items_wrapper'>*/}
-                                {/*                <div className='filter_option_checkbox_item'>*/}
-                                {/*                    <h3 className="filter_option_checkbox_items_wrapper_title">Показывать только задания со статусами</h3>*/}
-                                {/*                    <div className="filter-option">*/}
-                                {/*                        <label className='filter_option_label'>*/}
-                                {/*                            <input*/}
-                                {/*                                type="checkbox"*/}
-                                {/*                                name="remoteWork"*/}
-                                {/*                                checked={filters.remoteWork}*/}
-                                {/*                                onChange={handleFilterChange}*/}
-                                {/*                            />*/}
-                                {/*                            <div className='filter_option_label_title_wrapper'>*/}
-                                {/*                                <span className='filter_option_label_title'>Удалённая работа</span>*/}
-                                {/*                                <span className='filter_option_label_title2'>Никуда не надо ехать</span>*/}
-                                {/*                            </div>*/}
+                                                <div className='filter_option_label_title_wrapper'>
+                                                    <span className='filter_option_label_title'>Удалённая работа</span>
+                                                    <span className='filter_option_label_title2'>Никуда не надо ехать</span>
+                                                </div>
 
-                                {/*                        </label>*/}
-                                {/*                    </div>*/}
-                                {/*                    <div className="filter-option">*/}
-                                {/*                        <label className='filter_option_label'>*/}
-                                {/*                            <input*/}
-                                {/*                                type="checkbox"*/}
-                                {/*                                name="noResponses"*/}
-                                {/*                                checked={filters.noResponses}*/}
-                                {/*                                onChange={handleFilterChange}*/}
-                                {/*                            />*/}
-                                {/*                            <div className='filter_option_label_title_wrapper'>*/}
-                                {/*                                <span className='filter_option_label_title'>Задания без откликов</span>*/}
-                                {/*                                <span className='filter_option_label_title2'>Откликнитесь первым</span>*/}
-                                {/*                            </div>*/}
-                                {/*                        </label>*/}
-                                {/*                    </div>*/}
-                                {/*                </div>*/}
+                                            </label>
+                                        </div>
+                                        <div className="filter-option">
+                                            <label className='filter_option_label'>
+                                                <input
+                                                    type="checkbox"
+                                                    name="noResponses"
+                                                    checked={filters.noResponses}
+                                                    onChange={handleFilterChange}
+                                                />
+                                                <div className='filter_option_label_title_wrapper'>
+                                                    <span className='filter_option_label_title'>Задания без откликов</span>
+                                                    <span className='filter_option_label_title2'>Откликнитесь первым</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div className='filter_option_checkbox_item'>
+                                        <h3 className="filter_option_checkbox_items_wrapper_title">Сортировать по:</h3>
+                                        <div className="sort-options">
+                                            <label className="sort-option">
+                                                <input
+                                                    type="radio"
+                                                    name="sortBy"
+                                                    value="date"
+                                                    checked={filters.sortBy === 'date'}
+                                                    onChange={handleSortChange}
+                                                />
+                                                <p className='sort_option_title'> Дате публикации</p>
 
-                                {/*                <div className='filter_option_checkbox_item'>*/}
-                                {/*                    <h3 className="filter_option_checkbox_items_wrapper_title">Сортировать по:</h3>*/}
-                                {/*                    <div className="sort-options">*/}
-                                {/*                        <label className="sort-option">*/}
-                                {/*                            <input*/}
-                                {/*                                type="radio"*/}
-                                {/*                                name="sortBy"*/}
-                                {/*                                value="date"*/}
-                                {/*                                checked={filters.sortBy === 'date'}*/}
-                                {/*                                onChange={handleSortChange}*/}
-                                {/*                            />*/}
-                                {/*                            <p className='sort_option_title'> Дате публикации</p>*/}
+                                            </label>
+                                            <label className="sort-option">
+                                                <input
+                                                    type="radio"
+                                                    name="sortBy"
+                                                    value="urgency"
+                                                    checked={filters.sortBy === 'urgency'}
+                                                    onChange={handleSortChange}
+                                                />
+                                                <p className='sort_option_title'>Срочности</p>
 
-                                {/*                        </label>*/}
-                                {/*                        <label className="sort-option">*/}
-                                {/*                            <input*/}
-                                {/*                                type="radio"*/}
-                                {/*                                name="sortBy"*/}
-                                {/*                                value="urgency"*/}
-                                {/*                                checked={filters.sortBy === 'urgency'}*/}
-                                {/*                                onChange={handleSortChange}*/}
-                                {/*                            />*/}
-                                {/*                            <p className='sort_option_title'>Срочности</p>*/}
+                                            </label>
+                                            <label className="sort-option">
+                                                <input
+                                                    type="radio"
+                                                    name="sortBy"
+                                                    value="distance"
+                                                    checked={filters.sortBy === 'distance'}
+                                                    onChange={handleSortChange}
+                                                />
+                                                <p className='sort_option_title'>Удалённости</p>
 
-                                {/*                        </label>*/}
-                                {/*                        <label className="sort-option">*/}
-                                {/*                            <input*/}
-                                {/*                                type="radio"*/}
-                                {/*                                name="sortBy"*/}
-                                {/*                                value="distance"*/}
-                                {/*                                checked={filters.sortBy === 'distance'}*/}
-                                {/*                                onChange={handleSortChange}*/}
-                                {/*                            />*/}
-                                {/*                            <p className='sort_option_title'>Удалённости</p>*/}
-
-                                {/*                        </label>*/}
-                                {/*                    </div>*/}
-                                {/*                </div>*/}
-
-                                {/*            </div>*/}
-                                {/*        </div>*/}
-                                {/*    }*/}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/*</div>*/}
 
                                 {/*</div>*/}
 
@@ -1106,8 +1013,6 @@ export default function Job () {
 
 
                                 </div>
-
-
                                 <div className='services_filter_item'>
                                     <label className='service_label'>
                                         <input
@@ -1122,14 +1027,14 @@ export default function Job () {
                                     </label>
                                 </div>
 
-                                <City
-                                    cityData={citiesList}
-                                    selectedCities={selectedCities}
-                                    setNewSelectedCities={(val)=>{
-                                        setSelectedCities(val)
-                                        console.log(val)
-                                    }}
-                                />
+                                {/*<City*/}
+                                {/*    cityData={citiesList}*/}
+                                {/*    selectedCities={selectedCities}*/}
+                                {/*    setNewSelectedCities={(val)=>{*/}
+                                {/*        setSelectedCities(val)*/}
+                                {/*        console.log(val)*/}
+                                {/*    }}*/}
+                                {/*/>*/}
 
                                 <div className='service_category_items_wrapper'>
                                     {filterCategoryList.map((item, index) => {
@@ -1145,12 +1050,13 @@ export default function Job () {
                                         )
                                     })}
                                 </div>
-                            </div>
                             <div className='apply_reset_filter_btn_wrapper'>
                                 <button className='apply_filter_btn'>Применить</button>
                                 <button className='reset_filter_btn'>Сбросить</button>
                             </div>
 
+                        </div>
+                    </div>
                         </div>
                     </div>
                 }
