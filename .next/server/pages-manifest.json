@@ -2,8 +2,10 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/projects": "pages/projects.js",
   "/map": "pages/map.js",
-  "/freelancers": "pages/freelancers.js"
+  "/freelancers": "pages/freelancers.js",
+  "/create-order": "pages/create-order.js",
+  "/freelancers/[id]": "pages/freelancers/[id].js",
+  "/chat": "pages/chat.js",
+  "/my-projects/freelancer": "pages/my-projects/freelancer.js"
 }

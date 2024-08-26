@@ -692,18 +692,112 @@ export default function Freelancers () {
                                     <p className='filter_mobile_menu_title'>Фильтр</p>
                                 </div>
                                 <div className="mobile_services_filter_items_wrapper">
+                                    <div style={{width: '100%'}}>
+                                        <div
+                                            className='filter_task_categories_header'
+                                            // onClick={() => {
+                                            //     setShowHiddenFilterCategoriesPart(!showHiddenFilterCategoriesPart)
+                                            // }}
+                                        >
+                                            <p className='filter_task_categories_header_title'>Характеристики задания</p>
+                                            {/*<button*/}
+                                            {/*    className={`filter_task_categories_header_icon${showHiddenFilterCategoriesPart ? '2' : ''}`}*/}
+                                            {/*>*/}
+                                            {/*    <DropDownIcon3/>*/}
+                                            {/*</button>*/}
+
+                                        </div>
+                                        {/*{showHiddenFilterCategoriesPart &&*/}
+                                        <div className='filter_task_categories_main'>
+                                            <div className="filter_task_categories_input_title_wrapper filter_task_categories_input_title_wrapper2">
+                                                <p className="filter_task_categories_input_title">Город, адрес, метро, район</p>
+                                                <input
+                                                    type="text"
+                                                    value={address}
+                                                    onChange={handleAddressChange}
+                                                    placeholder="Город, адрес, метро, район"
+                                                    className='filter_task_categories_input_field filter_task_categories_input_field_address'
+                                                />
+                                                {address.length > 0 &&
+                                                    <button
+                                                        className='delete_input_btn'
+                                                        onClick={() => {
+                                                            setAddress('')
+                                                        }}
+                                                    >
+                                                        <DeleteAddressIcon/>
+                                                    </button>
+                                                }
+
+                                            </div>
+
+                                            <div className="radius_dropdown">
+                                                <p className='radius_dropdown_title'>Радиус поиска</p>
+                                                <div className="radius_dropdownHeader" onClick={() => setIsOpenForRadius(!IsOpenForRadius)}>
+                                                    <p className='radius_dropdownHeader_title'>{selectedRadius || 'Радиус поиска'}</p>
+                                                    <span className="arrow">
+                                {IsOpenForRadius ?
+                                    <div style={{ transform: "rotate(-180deg)" }}>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width={24}
+                                            height={24}
+                                            fill="none"
+                                        >
+                                            <path
+                                                stroke="#333"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={1.5}
+                                                d="m18 9-6 6-1.5-1.5M6 9l2 2"
+                                            />
+                                        </svg>
+                                    </div>
+                                    :
+
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width={24}
+                                        height={24}
+                                        fill="none"
+                                    >
+                                        <path
+                                            stroke="#333"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={1.5}
+                                            d="m18 9-6 6-1.5-1.5M6 9l2 2"
+                                        />
+                                    </svg>
+
+                                }
+                            </span>
+                                                </div>
+                                                {IsOpenForRadius && (
+                                                    <div className="radius_dropdownList radius_dropdownList2">
+                                                        {radius.map((item, index) => (
+                                                            <p key={index} className="radius_dropdownItem" onClick={() => handleSelectRadius(item)}>
+                                                                {item}
+                                                            </p>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="filter_task_categories_input_title_wrapper">
+                                                <p className="filter_task_categories_input_title">Стоимость заданий от</p>
+                                                <input
+                                                    type="text"
+                                                    value={taskCost}
+                                                    onChange={handleTaskCostChange}
+                                                    placeholder="₽"
+                                                    className='filter_task_categories_input_field'
+                                                />
+                                            </div>
+                                        </div>
+                                        {/*}*/}
+                                    </div>
 
                                     <div className='filter_task_categories_wrapper'>
-                                        <div className="filter_task_categories_input_title_wrapper">
-                                            <p className="filter_task_categories_input_title">Стоимость заданий от</p>
-                                            <input
-                                                type="text"
-                                                value={taskCost}
-                                                onChange={handleTaskCostChange}
-                                                placeholder="₽"
-                                                className='filter_task_categories_input_field'
-                                            />
-                                        </div>
                                         <div className='filter_option_checkbox_items_wrapper'>
                                             <div className='filter_option_checkbox_item'>
                                                 <h3 className="filter_option_checkbox_items_wrapper_title">Показывать только задания со статусами</h3>

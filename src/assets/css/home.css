@@ -1809,7 +1809,7 @@
 
 .filter_task_categories_wrapper {
     width: 100%;
-    border-bottom: 0.5px solid #636363;
+    /*border-bottom: 0.5px solid #636363;*/
     margin-bottom: 37px;
     padding-bottom: 37px;
 }
