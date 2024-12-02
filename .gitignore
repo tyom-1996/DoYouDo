@@ -100,6 +100,7 @@ cython_debug/
 !django_app/media/cat_avatar/default.png
 data
 node_modules/
+.next
 
 # TEMP
 django_app/test.py
