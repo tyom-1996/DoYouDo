@@ -10,7 +10,11 @@ const RecoveryAccountNewPasswordModal = ({isActive, onClose}) => {
     const [showPhonePart, setShowPhonePart] = useState(true);
     const [showEmailPart, setShowEmailPart] = useState(false);
     const [code, setCode] = useState('');
-
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
+    const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
+    const [showRecoveryAccountMainModal, setShowRecoveryAccountMainModal] = useState(false);
 
     const handleNewPasswordChange = (e) => {
         setNewPassword(e.target.value);
