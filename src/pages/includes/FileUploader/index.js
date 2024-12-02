@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import styles from '../../../assets/css/create_order.css'; // Импорт CSS модуля
+import React, { useState } from 'react';
+import styles from '../../../assets/css/create_order.css'; // Import CSS module
 
-export default function FileUploader() {
+export default function FileUploader({ onFilesUpdate }) {
     const [files, setFiles] = useState([]);
 
     const selectFiles = (event) => {
@@ -15,12 +15,19 @@ export default function FileUploader() {
             alert('Image files are not allowed. Please select only non-image files.');
         }
 
-        // Update the state with non-image files only
-        setFiles(prevFiles => [...prevFiles, ...filteredFiles]);
+        const updatedFiles = [...files, ...filteredFiles];
+        setFiles(updatedFiles);
+
+        // Send updated files to the parent component
+        onFilesUpdate(updatedFiles);
     };
 
     const deleteFile = (index) => {
-        setFiles(prevFiles => prevFiles.filter((_, i) => i !== index));
+        const updatedFiles = files.filter((_, i) => i !== index);
+        setFiles(updatedFiles);
+
+        // Send updated files to the parent component
+        onFilesUpdate(updatedFiles);
     };
 
     return (
@@ -62,9 +69,6 @@ export default function FileUploader() {
                     <span className='file_upload_title'>Добавить</span>
                 </label>
             </div>
-
-
-
         </div>
     );
 }

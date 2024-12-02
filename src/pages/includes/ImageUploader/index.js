@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from '../../../assets/css/create_order.css';
-import Image from "next/image"; // Импорт CSS модуля
+import Image from "next/image";
 
-export default function ImageUploader() {
+export default function ImageUploader({ onImagesUpdate }) {
     const [userImages, setUserImages] = useState([]);
 
     const selectImages = async (event) => {
@@ -20,14 +20,22 @@ export default function ImageUploader() {
                     reader.readAsDataURL(file);
                 });
             }));
-            setUserImages(prevImages => [...prevImages, ...newImages]);
+            const updatedImages = [...userImages, ...newImages];
+            setUserImages(updatedImages);
+
+            // Send updated images to parent component
+            onImagesUpdate(updatedImages);
         } else {
             alert('Please use correct image format (jpg, jpeg, png)');
         }
     };
 
     const deleteUserImg = (index) => {
-        setUserImages(prevImages => prevImages.filter((_, i) => i !== index));
+        const updatedImages = userImages.filter((_, i) => i !== index);
+        setUserImages(updatedImages);
+
+        // Send updated images to parent component
+        onImagesUpdate(updatedImages);
     };
 
     return (
@@ -74,16 +82,14 @@ export default function ImageUploader() {
                         <Image
                             src="/upload_img.png"
                             alt="Example Image"
-                            layout="fill" // Fill the parent element
-                            objectFit="cover" // Cover the area of the parent element
-                            quality={100} // Image quality
+                            layout="fill"
+                            objectFit="cover"
+                            quality={100}
                         />
                    </span>
                     <span className='image_upload_title'>Добавить</span>
                 </label>
             </div>
-
-
         </div>
     );
 }

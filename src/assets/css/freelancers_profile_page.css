@@ -134,6 +134,11 @@
     color: #636363;
     font-weight: 400;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }
 .pagination_link:hover {
     background: #FF6C00;
@@ -1663,7 +1668,7 @@
 }
 
 .freelancer_click_balance_item2_child_box:first-child {
-    width: 42%;
+    width: 49%;
     position: relative;
     top: 8px;
 }
@@ -1909,9 +1914,9 @@
     cursor: pointer;
     outline: none;
     margin-bottom: 15px;
-    position: absolute;
-    /* left: revert; */
-    right: 27%;
+    /*position: absolute;*/
+    /*!* left: revert; *!*/
+    /*right: 27%;*/
 }
 
 .add_category_modal {
@@ -2018,7 +2023,7 @@
     width: 100%;
     position: absolute;
     z-index: 999;
-    bottom: -162px;
+    top: 43px;
 }
 .add_category_dropdownList2 {
     background: #F7F7F7;
@@ -2028,7 +2033,7 @@
     width: 100%;
     position: absolute;
     z-index: 999;
-    bottom: -162px;
+    top: 43px;
 }
 .add_category_dropdown1 {
     position: relative;
@@ -2052,11 +2057,11 @@
     align-items: flex-end;
     position: relative;
 }
-.freelancer_single_page_user_hobbies_add_btn {
-    position: absolute;
-    z-index: 999;
-    right: 27%;
-}
+/*.freelancer_single_page_user_hobbies_add_btn {*/
+/*    position: absolute;*/
+/*    z-index: 999;*/
+/*    right: 27%;*/
+/*}*/
 
 @media (max-width: 598px) {
     .add_category_modal_wrapper {
@@ -2854,61 +2859,61 @@
         max-width: unset!important;
     }
 }
-@media (min-width: 448px) and (max-width: 480px) {
-    .freelancer_single_page_user_hobbies_add_btn {
-        right: 30% !important;
-    }
-}
-@media (min-width: 429px) and (max-width: 448px) {
-    .freelancer_single_page_user_hobbies_add_btn {
-        right: 26% !important;
-    }
-}
-@media (min-width: 409px) and (max-width: 429px) {
-    .freelancer_single_page_user_hobbies_add_btn {
-        right: 23% !important;
-    }
-}
-@media (min-width: 394px) and (max-width: 409px) {
-    .freelancer_single_page_user_hobbies_add_btn {
-        right: 19% !important;
-    }
-}
-@media (min-width: 382px) and (max-width: 394px) {
-    .freelancer_single_page_user_hobbies_add_btn {
-        right: 17% !important;
-    }
-}
-@media (min-width: 372px) and (max-width: 382px) {
-    .freelancer_single_page_user_hobbies_add_btn {
-        right: 15% !important;
-    }
-}
-@media (min-width: 362px) and (max-width: 372px) {
-    .freelancer_single_page_user_hobbies_add_btn {
-        right: 13% !important;
-    }
-}
-@media (min-width: 352px) and (max-width: 362px) {
-    .freelancer_single_page_user_hobbies_add_btn {
-        right: 11% !important;
-    }
-}
-@media (min-width: 342px) and (max-width: 352px) {
-    .freelancer_single_page_user_hobbies_add_btn {
-        right: 9% !important;
-    }
-}
-@media (min-width: 332px) and (max-width: 342px) {
-    .freelancer_single_page_user_hobbies_add_btn {
-        right: 7% !important;
-    }
-}
-@media  (max-width: 332px) {
-    .freelancer_single_page_user_hobbies_add_btn {
-        right: 4% !important;
-    }
-}
+/*@media (min-width: 448px) and (max-width: 480px) {*/
+/*    .freelancer_single_page_user_hobbies_add_btn {*/
+/*        right: 30% !important;*/
+/*    }*/
+/*}*/
+/*@media (min-width: 429px) and (max-width: 448px) {*/
+/*    .freelancer_single_page_user_hobbies_add_btn {*/
+/*        right: 26% !important;*/
+/*    }*/
+/*}*/
+/*@media (min-width: 409px) and (max-width: 429px) {*/
+/*    .freelancer_single_page_user_hobbies_add_btn {*/
+/*        right: 23% !important;*/
+/*    }*/
+/*}*/
+/*@media (min-width: 394px) and (max-width: 409px) {*/
+/*    .freelancer_single_page_user_hobbies_add_btn {*/
+/*        right: 19% !important;*/
+/*    }*/
+/*}*/
+/*@media (min-width: 382px) and (max-width: 394px) {*/
+/*    .freelancer_single_page_user_hobbies_add_btn {*/
+/*        right: 17% !important;*/
+/*    }*/
+/*}*/
+/*@media (min-width: 372px) and (max-width: 382px) {*/
+/*    .freelancer_single_page_user_hobbies_add_btn {*/
+/*        right: 15% !important;*/
+/*    }*/
+/*}*/
+/*@media (min-width: 362px) and (max-width: 372px) {*/
+/*    .freelancer_single_page_user_hobbies_add_btn {*/
+/*        right: 13% !important;*/
+/*    }*/
+/*}*/
+/*@media (min-width: 352px) and (max-width: 362px) {*/
+/*    .freelancer_single_page_user_hobbies_add_btn {*/
+/*        right: 11% !important;*/
+/*    }*/
+/*}*/
+/*@media (min-width: 342px) and (max-width: 352px) {*/
+/*    .freelancer_single_page_user_hobbies_add_btn {*/
+/*        right: 9% !important;*/
+/*    }*/
+/*}*/
+/*@media (min-width: 332px) and (max-width: 342px) {*/
+/*    .freelancer_single_page_user_hobbies_add_btn {*/
+/*        right: 7% !important;*/
+/*    }*/
+/*}*/
+/*@media  (max-width: 332px) {*/
+/*    .freelancer_single_page_user_hobbies_add_btn {*/
+/*        right: 4% !important;*/
+/*    }*/
+/*}*/
 
 .password_icon_btn {
     position: absolute;

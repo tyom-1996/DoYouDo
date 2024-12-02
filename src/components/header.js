@@ -2,14 +2,38 @@ import React, { useEffect, useState } from 'react';
 import Image from "next/image";
 import '../assets/css/header.css';
 import {CloseIcon} from "@/components/icons/CloseIcon";
+import {LogoutIcon} from "@/components/icons/LogoutIcon";
 import {MobileMenuIcon} from "@/components/icons/MobileMenuIcon";
 import {useRouter} from "next/router";
+import {useGetProfileInfo} from "@/hooks/useGetProfileInfo";
 
 export default function Header(props) {
     const [windowHeight, setWindowHeight] = useState(0);
     const [showMobileMenu, setShowMobileMenu] = useState(false);
     const [showProfilePopup, setShowProfilePopup] = useState(false);
     const [isLogged, setIsLogged] = useState(false);
+    const [userImage, setUserImage] = useState('');
+    const [activeRole, setActiveRole] = useState('');
+    const { getProfileInfo, loadingUserInfo, profileInfoData } = useGetProfileInfo();
+    const [imagePath] = useState('http://localhost:3007/');
+
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            setIsLogged(true);
+        } else {
+            setIsLogged(false);
+        }
+    }, []);
+
+    useEffect(() => {
+          if (profileInfoData) {
+                setUserImage(profileInfoData?.photo)
+                setActiveRole(profileInfoData?.active_role)
+          }
+     }, [profileInfoData])
 
 
     const disableBodyScroll = () => {
@@ -25,8 +49,12 @@ export default function Header(props) {
         router.push('/');
     };
     const handleNavigateToLogin = () => {
-        router.push('/login');
+        router.push('/auth/login');
     };
+    const logout = async () => {
+        await localStorage.clear()
+        router.push('/auth/login');
+    }
 
     return (
         <>
@@ -66,7 +94,10 @@ export default function Header(props) {
                                     </a>
                                 </li>
                                 <li className="header_ul_li">
-                                    <a href="/my-projects/freelancer" className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}>
+                                    <a
+                                        href={activeRole == 'freelancer' ? '/my-projects/freelancer' : activeRole == 'client' ? '/my-projects/client' : ''}
+                                        className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}
+                                    >
                                         Мои Проекты
                                     </a>
                                 </li>
@@ -80,14 +111,22 @@ export default function Header(props) {
                         </nav>
                     </div>
 
-                    {props.activePage === 'freelancer_profile' ?
+                    {isLogged ?
                         <button
-                            className='header_login_btn'
+                            className='header_user_btn'
                             onClick={() => {
                                 setShowProfilePopup(!showProfilePopup)
                             }}
                         >
-                            Профиль
+
+                            <Image
+                                src={userImage ? userImage : '/user_img2.png'}
+                                alt="Example Image"
+                                layout="fill" // Fill the parent element
+                                objectFit="cover" // Cover the area of the parent element
+                                quality={100} // Image quality
+                            />
+
                         </button>
                         :
                         <button
@@ -95,16 +134,43 @@ export default function Header(props) {
                             onClick={() => {
                                 handleNavigateToLogin()
                             }}
+
                         >
+
                             Войти
+
                         </button>
                     }
                     {showProfilePopup &&
                         <div className='profile_popup'>
                             <div className='profile_popup_wrapper'>
-                                <a href="/freelancer-profile-settings" className='profile_popup_link'>Настройки</a>
-                                <a href="/client-profile" className='profile_popup_link'>Войти как заказчик</a>
-                                <a href="" className='profile_popup_link'>Выйти из аккаунта</a>
+
+                                {activeRole == 'freelancer' &&
+                                    <a href="/profile/freelancer-profile" className='profile_popup_link'>Профиль</a>
+                                }
+
+                                {activeRole == 'client' &&
+                                    <a href="/profile/client-profile" className='profile_popup_link'>Профиль</a>
+                                }
+
+                                {activeRole == 'freelancer' &&
+                                    <a href="/profile/freelancer-profile-settings" className='profile_popup_link'>Настройки</a>
+                                }
+
+                                {activeRole == 'client' &&
+                                    <a href="/profile/client-profile-settings" className='profile_popup_link'>Настройки</a>
+                                }
+
+                                <a href="/profile/client-profile" className='profile_popup_link'>Войти как заказчик</a>
+                                <button
+                                    className='profile_logout_btn'
+                                    onClick={() => {
+                                        logout()
+                                    }}
+                                >
+                                    Выйти из аккаунта
+                                    <LogoutIcon/>
+                                </button>
                             </div>
                         </div>
                     }
@@ -203,9 +269,6 @@ export default function Header(props) {
                         </div>
                     </div>
                 }
-
-
-
 
             </header>
         </>

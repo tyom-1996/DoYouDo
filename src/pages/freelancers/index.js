@@ -783,93 +783,96 @@ export default function Freelancers () {
                                                     </div>
                                                 )}
                                             </div>
-                                            <div className="filter_task_categories_input_title_wrapper">
-                                                <p className="filter_task_categories_input_title">Стоимость заданий от</p>
-                                                <input
-                                                    type="text"
-                                                    value={taskCost}
-                                                    onChange={handleTaskCostChange}
-                                                    placeholder="₽"
-                                                    className='filter_task_categories_input_field'
-                                                />
-                                            </div>
+                                            {/*<div className="filter_task_categories_input_title_wrapper">*/}
+                                            {/*    <p className="filter_task_categories_input_title">Стоимость заданий от</p>*/}
+                                            {/*    <input*/}
+                                            {/*        type="text"*/}
+                                            {/*        value={taskCost}*/}
+                                            {/*        onChange={handleTaskCostChange}*/}
+                                            {/*        placeholder="₽"*/}
+                                            {/*        className='filter_task_categories_input_field'*/}
+                                            {/*    />*/}
+                                            {/*</div>*/}
                                         </div>
                                         {/*}*/}
                                     </div>
 
                                     <div className='filter_task_categories_wrapper'>
-                                        <div className='filter_option_checkbox_items_wrapper'>
-                                            <div className='filter_option_checkbox_item'>
-                                                <h3 className="filter_option_checkbox_items_wrapper_title">Показывать только задания со статусами</h3>
-                                                <div className="filter-option">
-                                                    <label className='filter_option_label'>
-                                                        <input
-                                                            type="checkbox"
-                                                            name="remoteWork"
-                                                            checked={filters.remoteWork}
-                                                            onChange={handleFilterChange}
-                                                        />
-                                                        <div className='filter_option_label_title_wrapper'>
-                                                            <span className='filter_option_label_title'>Удалённая работа</span>
-                                                            <span className='filter_option_label_title2'>Никуда не надо ехать</span>
-                                                        </div>
+                                        {/*<div className='filter_option_checkbox_items_wrapper'>*/}
 
-                                                    </label>
-                                                </div>
-                                                <div className="filter-option">
-                                                    <label className='filter_option_label'>
-                                                        <input
-                                                            type="checkbox"
-                                                            name="noResponses"
-                                                            checked={filters.noResponses}
-                                                            onChange={handleFilterChange}
-                                                        />
-                                                        <div className='filter_option_label_title_wrapper'>
-                                                            <span className='filter_option_label_title'>Задания без откликов</span>
-                                                            <span className='filter_option_label_title2'>Откликнитесь первым</span>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div className='filter_option_checkbox_item'>
-                                                <h3 className="filter_option_checkbox_items_wrapper_title">Сортировать по:</h3>
-                                                <div className="sort-options">
-                                                    <label className="sort-option">
-                                                        <input
-                                                            type="radio"
-                                                            name="sortBy"
-                                                            value="date"
-                                                            checked={filters.sortBy === 'date'}
-                                                            onChange={handleSortChange}
-                                                        />
-                                                        <p className='sort_option_title'> Дате публикации</p>
+                                            {/*<div className='filter_option_checkbox_item'>*/}
+                                            {/*    <h3 className="filter_option_checkbox_items_wrapper_title">Показывать только задания со статусами</h3>*/}
+                                            {/*    <div className="filter-option">*/}
+                                            {/*        <label className='filter_option_label'>*/}
+                                            {/*            <input*/}
+                                            {/*                type="checkbox"*/}
+                                            {/*                name="remoteWork"*/}
+                                            {/*                checked={filters.remoteWork}*/}
+                                            {/*                onChange={handleFilterChange}*/}
+                                            {/*            />*/}
+                                            {/*            <div className='filter_option_label_title_wrapper'>*/}
+                                            {/*                <span className='filter_option_label_title'>Удалённая работа</span>*/}
+                                            {/*                <span className='filter_option_label_title2'>Никуда не надо ехать</span>*/}
+                                            {/*            </div>*/}
 
-                                                    </label>
-                                                    <label className="sort-option">
-                                                        <input
-                                                            type="radio"
-                                                            name="sortBy"
-                                                            value="urgency"
-                                                            checked={filters.sortBy === 'urgency'}
-                                                            onChange={handleSortChange}
-                                                        />
-                                                        <p className='sort_option_title'>Срочности</p>
+                                            {/*        </label>*/}
+                                            {/*    </div>*/}
+                                            {/*    <div className="filter-option">*/}
+                                            {/*        <label className='filter_option_label'>*/}
+                                            {/*            <input*/}
+                                            {/*                type="checkbox"*/}
+                                            {/*                name="noResponses"*/}
+                                            {/*                checked={filters.noResponses}*/}
+                                            {/*                onChange={handleFilterChange}*/}
+                                            {/*            />*/}
+                                            {/*            <div className='filter_option_label_title_wrapper'>*/}
+                                            {/*                <span className='filter_option_label_title'>Задания без откликов</span>*/}
+                                            {/*                <span className='filter_option_label_title2'>Откликнитесь первым</span>*/}
+                                            {/*            </div>*/}
+                                            {/*        </label>*/}
+                                            {/*    </div>*/}
+                                            {/*</div>*/}
 
-                                                    </label>
-                                                    <label className="sort-option">
-                                                        <input
-                                                            type="radio"
-                                                            name="sortBy"
-                                                            value="distance"
-                                                            checked={filters.sortBy === 'distance'}
-                                                            onChange={handleSortChange}
-                                                        />
-                                                        <p className='sort_option_title'>Удалённости</p>
+                                            {/*<div className='filter_option_checkbox_item'>*/}
+                                            {/*    <h3 className="filter_option_checkbox_items_wrapper_title">Сортировать по:</h3>*/}
+                                            {/*    <div className="sort-options">*/}
+                                            {/*        <label className="sort-option">*/}
+                                            {/*            <input*/}
+                                            {/*                type="radio"*/}
+                                            {/*                name="sortBy"*/}
+                                            {/*                value="date"*/}
+                                            {/*                checked={filters.sortBy === 'date'}*/}
+                                            {/*                onChange={handleSortChange}*/}
+                                            {/*            />*/}
+                                            {/*            <p className='sort_option_title'> Дате публикации</p>*/}
 
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            {/*        </label>*/}
+                                            {/*        <label className="sort-option">*/}
+                                            {/*            <input*/}
+                                            {/*                type="radio"*/}
+                                            {/*                name="sortBy"*/}
+                                            {/*                value="urgency"*/}
+                                            {/*                checked={filters.sortBy === 'urgency'}*/}
+                                            {/*                onChange={handleSortChange}*/}
+                                            {/*            />*/}
+                                            {/*            <p className='sort_option_title'>Срочности</p>*/}
+
+                                            {/*        </label>*/}
+                                            {/*        <label className="sort-option">*/}
+                                            {/*            <input*/}
+                                            {/*                type="radio"*/}
+                                            {/*                name="sortBy"*/}
+                                            {/*                value="distance"*/}
+                                            {/*                checked={filters.sortBy === 'distance'}*/}
+                                            {/*                onChange={handleSortChange}*/}
+                                            {/*            />*/}
+                                            {/*            <p className='sort_option_title'>Удалённости</p>*/}
+
+                                            {/*        </label>*/}
+                                            {/*    </div>*/}
+                                            {/*</div>*/}
+
+                                        {/*</div>*/}
                                         {/*</div>*/}
 
                                         {/*</div>*/}

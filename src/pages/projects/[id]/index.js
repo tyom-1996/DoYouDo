@@ -12,6 +12,10 @@ import { useRouter } from 'next/router';
 import {DateIcon} from "@/components/icons/DateIcon";
 import {PaginationLeftIcon} from "@/components/icons/paginationLeftIcon";
 import {PaginationRightIcon} from "@/components/icons/paginationRightIcon";
+import {useGetOrderById} from "@/hooks/useGetOrderById";
+import {useCreateResponse} from "@/hooks/useCreateResponse";
+import {useGetProfileInfo} from "@/hooks/useGetProfileInfo";
+
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -23,220 +27,8 @@ export async function getServerSideProps({ params }) {
     };
 }
 
-
-
-
 export default function Order ({id}) {
     const [windowHeight, setWindowHeight] = useState(0);
-    const [isCheckedAllCategories, setIsCheckedAllCategories] = useState(false);
-    const [showFilterMobile, setShowFilterMobile] = useState(false);
-    const [filterCategoryList, setFilterCategoryList] = useState([
-        {
-            id: 1,
-            filter_category_title: 'Дизайн',
-            filter_item_subcategories: [
-                {
-                    id: 2,
-                    subcategory_name: 'Фирменный стиль',
-                },
-                {
-                    id: 3,
-                    subcategory_name: 'Логотипы',
-                },
-                {
-                    id: 4,
-                    subcategory_name: 'Визитки',
-                },
-                {
-                    id: 5,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 6,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 7,
-                    subcategory_name: 'Анимация',
-                },
-            ]
-        },
-        {
-            id: 8,
-            filter_category_title: 'Дизайн',
-            filter_item_subcategories: [
-                {
-                    id: 9,
-                    subcategory_name: 'Фирменный стиль',
-                },
-                {
-                    id: 10,
-                    subcategory_name: 'Логотипы',
-                },
-                {
-                    id: 11,
-                    subcategory_name: 'Визитки',
-                },
-                {
-                    id: 12,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 13,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 14,
-                    subcategory_name: 'Анимация',
-                },
-            ]
-        },
-        {
-            id: 15,
-            filter_category_title: 'Компьютерная помощь',
-            filter_item_subcategories: [
-                {
-                    id: 16,
-                    subcategory_name: 'Ремонт компьютеров',
-                },
-                {
-                    id: 17,
-                    subcategory_name: 'Установка и настройка',
-                },
-                {
-                    id: 18,
-                    subcategory_name: 'Удаление вирусов',
-                },
-                {
-                    id: 19,
-                    subcategory_name: '3d-Настройка интернета',
-                },
-                {
-                    id: 20,
-                    subcategory_name: 'Консультация и обучение',
-                },
-
-            ]
-        },
-        {
-            id: 21,
-            filter_category_title: 'Разработка ПО',
-            filter_item_subcategories: [
-                {
-                    id: 22,
-                    subcategory_name: 'Ремонт компьютеров',
-                },
-                {
-                    id: 23,
-                    subcategory_name: 'Установка и настройка',
-                },
-                {
-                    id: 24,
-                    subcategory_name: 'Удаление вирусов',
-                },
-                {
-                    id: 25,
-                    subcategory_name: '3d-Настройка интернета',
-                },
-                {
-                    id: 26,
-                    subcategory_name: 'Консультация и обучение',
-                },
-
-            ]
-        },
-        {
-            id: 27,
-            filter_category_title: 'Фото, видео и аудио',
-            filter_item_subcategories: [
-                {
-                    id: 28,
-                    subcategory_name: 'Фирменный стиль',
-                },
-                {
-                    id: 29,
-                    subcategory_name: 'Логотипы',
-                },
-                {
-                    id: 30,
-                    subcategory_name: 'Визитки',
-                },
-                {
-                    id: 31,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 32,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 33,
-                    subcategory_name: 'Анимация',
-                },
-            ]
-        },
-        {
-            id: 34,
-            filter_category_title: 'Красота и здоровье',
-            filter_item_subcategories: [
-                {
-                    id: 35,
-                    subcategory_name: 'Фирменный стиль',
-                },
-                {
-                    id: 36,
-                    subcategory_name: 'Логотипы',
-                },
-                {
-                    id: 37,
-                    subcategory_name: 'Визитки',
-                },
-                {
-                    id: 38,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 39,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 40,
-                    subcategory_name: 'Анимация',
-                },
-            ]
-        },
-
-    ]);
-    const [selectedCategories, setSelectedCategories] = useState([]);
-
-    const [citiesList, setCitiesList] = useState([
-        {
-            id: 1,
-            city_name: 'Москва'
-        },
-        {
-            id: 2,
-            city_name: 'Санкт-Петербург'
-        },
-        {
-            id: 3,
-            city_name: 'Екатеринбург'
-        },
-        {
-            id: 4,
-            city_name: 'Новосибирск'
-        },
-        {
-            id: 5,
-            city_name: 'Нижний Новгород'
-        },
-        {
-            id: 6,
-            city_name: 'Самара'
-        },
-
-    ]);
-    const [selectedCities, setSelectedCities] = useState([]);
     const [similarWorksList, setSimilarWorksList] = useState([
         {
             id: 1,
@@ -277,41 +69,69 @@ export default function Order ({id}) {
 
     ]);
     const [date, setDate] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [order, setOrder] = useState(null);
+    const [responseText, setResponseText] = useState('');
+    const [price, setPrice] = useState('');
+    const { getOrderById, orderByIdData,loading } = useGetOrderById();
+    const { createResponse, createResponseData,loadingCreateResponse,responseErrorText, dateErrorText, priceErrorText } = useCreateResponse();
+    const [activeRole, setActiveRole] = useState('');
+    const { getProfileInfo, loadingUserInfo, profileInfoData } = useGetProfileInfo();
 
-
-
-    const handleCheckboxChange = () => {
-        setIsCheckedAllCategories(!isCheckedAllCategories);
-    };
-
-
-
-    useEffect(() => {
-        handleUseFilter()
-    }, [selectedCategories, selectedCities]);
 
     useEffect(() => {
         console.log(id, 'params______id')
-    }, [])
+        getOrderById(id)
+    }, [id])
+
+    useEffect(() => {
+         if (orderByIdData) {
+             setFirstName(orderByIdData?.user?.first_name)
+             setLastName(orderByIdData?.user?.last_name)
+             setEmail(orderByIdData?.user?.email)
+             setOrder(orderByIdData?.order)
+         }
+    }, [orderByIdData])
+
+    useEffect(() => {
+         if (createResponseData) {
+             console.log(createResponseData, 'hhfh  sp12212i12i')
+             if (createResponseData?.message == "Отклик успешно создан") {
+                 setPrice('');
+                 setResponseText('');
+                 setDate('');
+             }
+
+         }
+    }, [createResponseData])
+
+
     useEffect(() => {
         if (typeof window !== 'undefined') {
             setWindowHeight(window.innerHeight);
         }
     }, []);
 
-    const handleUseFilter = async () => {
-        console.log('use fiter')
+    useEffect(() => {
+        if (profileInfoData) {
+
+            setActiveRole(profileInfoData?.active_role)
+        }
+    }, [profileInfoData])
+
+
+    const formatDate = (isoDate) =>  {
+        const date = new Date(isoDate);
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
     }
-    const disableBodyScroll = () => {
-        document.body.style.overflow = "hidden";
-    };
-
-    const enableBodyScroll = () => {
-        document.body.style.overflow = "auto";
-    };
-    const handleDateChange = (event) => {
-        setDate(event.target.value);
-
+    const makeResponse  = async () => {
+         await createResponse(id, responseText, price, date )
     }
 
     return (
@@ -323,11 +143,12 @@ export default function Order ({id}) {
                     <meta charSet="UTF-8"/>
                     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
                     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-
                 </Head>
+
                 <div className="home_general_wrapper" id='order_page_for_freelancer'>
                     <Header activePage={"job_page"}/>
                 </div>
+
                 <div className='order_page'>
                     <div className="order_page_items_wrapper">
                         <div className="order_page_item1">
@@ -342,7 +163,7 @@ export default function Order ({id}) {
                                     />
                                 </div>
                                 <div className='order_page_item1_child_info_wrapper'>
-                                    <p className='order_page_user_name'>Daniela Gallego</p>
+                                    <p className='order_page_user_name'>{firstName} {lastName}</p>
                                     <p className='order_page_user_country'>Москва</p>
                                     <div className="order_page_user_rating_info_wrapper_main">
                                         <div className='order_page_user_rating_icon_info_wrapper'>
@@ -372,20 +193,20 @@ export default function Order ({id}) {
                                 <div className="order_page_date_icon">
                                     <DateIcon2/>
                                 </div>
-                                <p className='order_page_date_info'>January 15, 2023</p>
+                                <p className='order_page_date_info'>{formatDate(order?.start_date)}-{formatDate(order?.end_date)}</p>
                             </div>
                             <div className="order_details_items_wrapper">
                                 <div className="order_detail_item">
                                     <p className="order_detail_item_title">Адрес</p>
-                                    <p className="order_detail_item_info">Виртуальное задание</p>
+                                    <p className="order_detail_item_info">{order?.address}</p>
                                 </div>
                                 <div className="order_detail_item">
                                     <p className="order_detail_item_title">Начать</p>
-                                    <p className="order_detail_item_info">Виртуальное задание</p>
+                                    <p className="order_detail_item_info">{order?.title}</p>
                                 </div>
                                 <div className="order_detail_item">
                                     <p className="order_detail_item_title">Бюджет</p>
-                                    <p className="order_detail_item_info">Крупный — до 10000 000 ₽</p>
+                                    <p className="order_detail_item_info">{order?.price} ₽</p>
                                 </div>
                                 <div className="order_detail_item">
                                     <p className="order_detail_item_title">Оплата задания</p>
@@ -394,57 +215,91 @@ export default function Order ({id}) {
                                 <div className="order_detail_item">
                                     <p className="order_detail_item_title">Нужно</p>
                                     <p className="order_detail_item_info">
-                                        В производственной организации из 200 человек используется 1С ERP (последняя версия). Аналитики и программисты должны проанализировать текущие процессы в 1С ERP, описать их, а также реализовать заявки пользователей (решение инциндентов и развитие системы). Проект долгий, постоянный, оплата почасовая, возможно по 100% предоплате. В предложении прошу указать: - аккредитованния ли ИТ компания или нет: да или нет - количество: аналитиков 1С, разработчиков 1С, всего сотрудников в компании (3 цифры) - возможность аналитикам 1С и разработчикам 1С работать полную занятость (проект интенсивный):
+                                        {order?.description}
                                     </p>
                                 </div>
-                                <div className="order_review_wrapper">
-                                    <div className="order_review_wrapper_header">
-                                        <p className="order_review_wrapper_header_title">Ваш отклик</p>
-                                        <p className="order_review_wrapper_header_info">
-                                            Осталось ответов на заказы: 3
-                                        </p>
-                                    </div>
-                                    <textarea
-                                        className="order_review_textarea"
-                                        placeholder='- Другие фрилансеры не увидят ваш отклик и ответы на него
+
+                                {activeRole == 'freelancer' &&
+                                    <div className='order_review_date_info_wrapper'>
+                                        <div className="order_review_wrapper">
+                                            <div className="order_review_wrapper_header">
+                                                <p className="order_review_wrapper_header_title">Ваш отклик</p>
+                                                <p className="order_review_wrapper_header_info">
+                                                    Осталось ответов на заказы: 3
+                                                </p>
+                                            </div>
+                                            <textarea
+                                                className="order_review_textarea"
+                                                value={responseText}
+                                                onChange={(event) => {
+                                                    setResponseText(event.target.value)
+                                                }}
+                                                placeholder='- Другие фрилансеры не увидят ваш отклик и ответы на него
                                                         — Опишите суть предложения и что входит в стоимость работы
                                                         - Если мало информации, напишите здесь вопросы, стоимость согласуете потом'
-                                    ></textarea>
-                                </div>
-                                <div className="order_date_fee_info_wrapper">
-                                    <div className="order_date_fee_input_title_wrapper">
-                                        <p className="order_date_fee_input_title">Срок исполнения в днях</p>
-                                        <input
-                                            type="text"
-                                            onChange={handleDateChange}
-                                            className='order_date_fee_input_field'
-                                            placeholder='13'
-                                        />
+                                            ></textarea>
+                                            {responseErrorText &&
+                                                <p className='error_text'>{responseErrorText}</p>
+                                            }
+                                        </div>
+                                        <div className="order_date_fee_info_wrapper">
+                                            <div className="order_date_fee_input_title_wrapper">
+                                                <p className="order_date_fee_input_title">Срок исполнения в днях</p>
+                                                <input
+                                                    type="number"
+                                                    onChange={(event) => {
+                                                        setDate(event.target.value)
+                                                    }}
+                                                    className='order_date_fee_input_field'
+                                                    placeholder='13'
+
+                                                />
+                                                {dateErrorText &&
+                                                    <p className='error_text'>{dateErrorText}</p>
+                                                }
+                                            </div>
+                                            <div className="order_date_fee_input_title_wrapper">
+                                                <p className="order_date_fee_input_title">Ваш гонорар</p>
+                                                <input
+                                                    type="number"
+                                                    onChange={(event) => {
+                                                        setPrice(event.target.value)
+                                                    }}
+                                                    className='order_date_fee_input_field'
+                                                    placeholder='13'
+                                                />
+                                                {priceErrorText &&
+                                                    <p className='error_text'>{priceErrorText}</p>
+                                                }
+                                            </div>
+                                        </div>
+                                        <button
+                                            className='reply_to_order_btn'
+                                            onClick={() => {
+                                                makeResponse()
+                                            }}
+                                        >
+                                            Откликнуться
+                                        </button>
                                     </div>
-                                    <div className="order_date_fee_input_title_wrapper">
-                                        <p className="order_date_fee_input_title">Ваш гонорар</p>
-                                        <input
-                                            type="text"
-                                            onChange={handleDateChange}
-                                            className='order_date_fee_input_field'
-                                            placeholder='13'
-                                        />
-                                    </div>
-                                </div>
+                                }
+
                             </div>
-                            <button className='reply_to_order_btn'>Откликнуться</button>
+
                         </div>
                     </div>
                 </div>
-                <div className="map_img2">
-                    <Image
-                        src="/map_img.png"
-                        alt="Example Image"
-                        layout="fill" // Fill the parent element
-                        objectFit="cover" // Cover the area of the parent element
-                        quality={100} // Image quality
-                    />
-                </div>
+
+                {/*<div className="map_img2">*/}
+                {/*    <Image*/}
+                {/*        src="/map_img.png"*/}
+                {/*        alt="Example Image"*/}
+                {/*        layout="fill" // Fill the parent element*/}
+                {/*        objectFit="cover" // Cover the area of the parent element*/}
+                {/*        quality={100} // Image quality*/}
+                {/*    />*/}
+                {/*</div>*/}
+
                 <div className="recommendations">
                     <div className="recommendations_wrapper">
                         <h1 className='recommendations_title'>Похожие работы</h1>
@@ -504,65 +359,7 @@ export default function Order ({id}) {
                     </div>
                 </div>
                 <Footer activePage={"job_page"}/>
-                {showFilterMobile &&
-                    <div className='filter_mobile_menu'>
-                        <div className='filter_mobile_menu_wrapper'>
-                            <div className='filter_mobile_menu_title_close_icon_wrapper'>
-                                <button
-                                    className='filter_mobile_menu_close_btn'
-                                    onClick={() => {
-                                        setShowFilterMobile(false)
-                                        enableBodyScroll()
-                                    }}
-                                >
-                                    <FilterCloseIcon/>
-                                </button>
-                                <p className='filter_mobile_menu_title'>Фильтр</p>
-                            </div>
-                            <div className="mobile_services_filter_items_wrapper">
 
-                                <div className='services_filter_item'>
-                                    <label className='service_label'>
-                                        <input
-                                            type="checkbox"
-                                            checked={isCheckedAllCategories}
-                                            onChange={handleCheckboxChange}
-                                            className='service_label_checkbox_input_field checkbox'
-                                        />
-                                        <span className='service_label_custom_checkbox customCheckbox'></span>
-                                        Все категории
-
-                                    </label>
-                                </div>
-
-                                <City
-                                    cityData={citiesList}
-                                    selectedCities={selectedCities}
-                                    setNewSelectedCities={(val)=>{
-                                        setSelectedCities(val)
-                                        console.log(val)
-                                    }}
-                                />
-
-                                <div className='service_category_items_wrapper'>
-                                    {filterCategoryList.map((item, index) => {
-                                        return (
-                                            <Category
-                                                categoryData={item}
-                                                selectedCategories={selectedCategories}
-                                                setNewSelectedCategories={(val)=>{
-                                                    setSelectedCategories(val)
-                                                    console.log(val)
-                                                }}
-                                            />
-                                        )
-                                    })}
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                }
             </main>
         </>
     );

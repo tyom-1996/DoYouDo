@@ -500,6 +500,7 @@ export default function MyProjectsForClient () {
                 <div className="my_projects">
                     <div className="my_projects_wrapper">
                         <div style={{width: '100%'}}>
+
                             <div className='my_project_tabs_wrapper'>
                                 <button
                                     className={`my_project_tab ${showMyResponsesProjects ? 'active_tab' : ''}`}
@@ -510,7 +511,7 @@ export default function MyProjectsForClient () {
                                         setShowClosingProjectsList(false)
                                     }}
                                 >
-                                    Мои отклики
+                                    Все проекты
                                 </button>
                                 <button
                                     className={`my_project_tab ${showInProgressProjects ? 'active_tab' : ''}`}
@@ -594,6 +595,7 @@ export default function MyProjectsForClient () {
                                 )}
 
                             </div>
+
                             {showMyResponsesProjects &&
                                 <div className='my_projects_items_wrapper'>
                                     {myResponsesProjectsList.map((item, index) => {

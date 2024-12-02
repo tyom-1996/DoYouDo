@@ -13,6 +13,7 @@ import {DropDownIcon2} from "@/components/icons/DropDownIcon2";
 import {LikesIcon2} from "@/components/icons/LikesIcon2";
 import {DisLikesIcon2} from "@/components/icons/DisLikesIcon2";
 import {useRouter} from "next/router";
+import {useGetSelectedFreelancers} from "@/hooks/useGetSelectedFreelancers";
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -28,7 +29,6 @@ export async function getServerSideProps({ params }) {
 
 export default function OrderForClient (id) {
     const [windowHeight, setWindowHeight] = useState(0);
-
     const [showForEditing, setShowForEditing] = useState(false);
     const [showForResponses, setShowForResponses] = useState(false);
     const [showForFeaturedFreelancers, setShowForFeaturedFreelancers] = useState(true);
@@ -110,11 +110,6 @@ export default function OrderForClient (id) {
     ]);
     const [showHiddenDropDownMenu, setShowHiddenDropDownMenu] = useState(false);
     const [selectedTab, setSelectedTab] = useState('featuredFreelancers');
-
-
-    useEffect(() => {
-        console.log(id, 'params______id')
-    }, [])
 
 
 
@@ -297,7 +292,7 @@ export default function OrderForClient (id) {
                             )}
                         </div>
                         <div className="order_single_page_items_wrapper">
-                                {featuredFreelancersList.map((item, index) => {
+                            {featuredFreelancersList.map((item, index) => {
                                     return (
                                         <div className='order_single_page_item' key={index}>
                                             <div className="order_single_page_item_img_info_wrapper">
@@ -346,7 +341,7 @@ export default function OrderForClient (id) {
                                         </div>
                                     )
                                 })}
-                            </div>
+                        </div>
 
                     </div>
 

@@ -2,10 +2,9 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/map": "pages/map.js",
+  "/my-projects/client/[id]/featured-freelancers": "pages/my-projects/client/[id]/featured-freelancers.js",
+  "/my-projects/client/[id]/edit": "pages/my-projects/client/[id]/edit.js",
+  "/projects": "pages/projects.js",
   "/freelancers": "pages/freelancers.js",
-  "/create-order": "pages/create-order.js",
-  "/freelancers/[id]": "pages/freelancers/[id].js",
-  "/chat": "pages/chat.js",
-  "/my-projects/freelancer": "pages/my-projects/freelancer.js"
+  "/create-order": "pages/create-order.js"
 }

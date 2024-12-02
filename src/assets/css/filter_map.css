@@ -1,0 +1,66 @@
+/* FilterMap.module.css */
+
+.container {
+    padding: 16px;
+    padding-top: 23px;
+    position: relative;
+}
+
+.inputBox {
+    margin-bottom: 10px;
+}
+
+.inputBoxTitle {
+    font-size: 15px;
+    font-weight: 500;
+    color: #929292;
+    margin-bottom: 10px;
+}
+
+.inputField {
+    height: 40px;
+    border-color: #ccc;
+    border-width: 1px;
+    padding: 0 8px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.addressList {
+    max-height: 350px;
+    overflow-y: scroll;
+    background-color: #fff;
+    border-color: #ccc;
+    border-width: 1px;
+    border-radius: 4px;
+    margin-top: 5px;
+    padding: 8px;
+    position: absolute;
+    top: 90px;
+    width: 100%;
+    z-index: 99;
+}
+
+.addressItem {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.mapContainer {
+    width: 100%;
+    height: 518px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.closeButton {
+    position: absolute;
+    z-index: 99;
+    right: 10px;
+    top: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}

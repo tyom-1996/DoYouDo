@@ -39,17 +39,12 @@ export default function Category(props) {
 
 
     return (
-        <>
-            <Head>
-                {/*<title>Главная страница</title>*/}
-                <meta name="dwsdwdwd" content="This is the home page" />
-            </Head>
-            <div className='category_item'>
+        <div className='category_item'>
                 <button
                     className="category_item_title_icon_wrapper"
                     onClick={toggleSubcategories}
                 >
-                    <p className="category_item_title">{categoryData?.filter_category_title}</p>
+                    <p className="category_item_title">{categoryData?.name}</p>
                     <div
                         className={`category_item_icon ${showSubcategories ? 'category_item_icon_rotate' : 'category_item_icon'}`}
                     >
@@ -58,7 +53,7 @@ export default function Category(props) {
                 </button>
                 {showSubcategories &&
                     <div className="category_item_subcategories_list_wrapper">
-                        {categoryData?.filter_item_subcategories.map((item, index) => (
+                        {categoryData?.subcategories.map((item, index) => (
                             <div
                                 className="category_item_subcategory" key={index}
                                 onClick={() => handleSubcategoryClick(item?.id)}
@@ -70,13 +65,12 @@ export default function Category(props) {
                                         <div className="category_item_subcategory_checked_icon"></div>
                                     )}
                                 </div>
-                                <p className='category_item_subcategory_title'>{item?.subcategory_name}</p>
+                                <p className='category_item_subcategory_title'>{item?.name}</p>
                             </div>
                         ))}
                     </div>
 
                 }
             </div>
-        </>
     );
 }

@@ -92,6 +92,25 @@
     outline: none;
     cursor: pointer;
 
+
+}
+
+.header_user_btn {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+.header_user_btn Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 @media (max-width: 980px) {
@@ -653,8 +672,19 @@
     margin-bottom: 15px;
     position: relative;
 }
-.recovery_account_modal_item .recovery_account_modal_item_input_wrapper2:nth-child(2) {
+.recovery_account_modal_item_input_wrapper3 {
+    width: 100%;
+    margin-bottom: 15px;
+}
+.recovery_account_modal_item_input_wrapper4 {
+    width: 100%;
+    margin-bottom: 15px;
+    position: relative;
+}
+.recovery_account_modal_item_input_wrapper5 {
     margin-bottom: 50px;
+    width: 100%;
+    position: relative;
 }
 
 @media (max-width: 585px) {
@@ -875,4 +905,34 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.error_text {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: red;
+    margin-top: 5px;
+}
+
+.profile_logout_btn {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-family: "Inter", sans-serif;
+    color: #333333;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.profile_logout_btn:hover {
+    color: #FF6C00;
+    font-weight: 600;
+
 }

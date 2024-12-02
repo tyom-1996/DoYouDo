@@ -129,7 +129,27 @@
     outline: none;
     border: none;
 }
+.create_order_map_input_field_address {
+    background: #F7F7F7;
+    border-radius: 10px;
+    padding: 10px 15px;
+    width: 100%;
+    color: #333333;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    position: relative;
+}
 .create_order_map_input_field::placeholder {
+    color: #333333;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+.create_order_map_input_field_address::placeholder {
     color: #333333;
     font-family: "Inter", sans-serif;
     font-weight: 400;
@@ -864,4 +884,65 @@
     .create_order_dropdownHeader_title {
         font-size: 12px!important;
     }
+}
+
+.add_category_dropdown1 {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.add_category_dropdown2 {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.add_category_create_order_dropdownHeader {
+    background: #F7F7F7;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    width: 100%;
+    cursor: pointer;
+}
+
+
+.add_category_dropdownList1 {
+    background: #F7F7F7;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px 15px;
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+    bottom: -103px;
+}
+.add_category_dropdownList2 {
+    background: #F7F7F7;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px 15px;
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+    bottom: -103px;
+}
+
+.add_category_create_order_dropdownHeader_title {
+    color: #333333;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.add_category_dropdownItem {
+    width: 100%;
+    margin-bottom: 15px;
+    color: #333333;
+    font-size: 13px;
+    font-weight: 400;
+    font-family: "Inter", sans-serif;
+    cursor: pointer;
 }

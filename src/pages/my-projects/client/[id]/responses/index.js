@@ -5,10 +5,13 @@ import Header from '../../../../../components/header'
 import Footer from '../../../../../components/footer'
 import Head from 'next/head';
 import 'react-datepicker/dist/react-datepicker.css';
-import {DropDownIcon2} from "@/components/icons/DropDownIcon2";
-import {LikesIcon2} from "@/components/icons/LikesIcon2";
-import {DisLikesIcon2} from "@/components/icons/DisLikesIcon2";
-import {useRouter} from "next/router";
+import { DropDownIcon2 } from "@/components/icons/DropDownIcon2";
+import { LikesIcon2 } from "@/components/icons/LikesIcon2";
+import { DisLikesIcon2 } from "@/components/icons/DisLikesIcon2";
+import { useRouter } from "next/router";
+import { useGetResponses } from "@/hooks/useGetResponses";
+import { useSelectFreelancer } from "@/hooks/useSelectFreelancer";
+import { useAddFavorites } from "@/hooks/useAddFavorites";
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -19,95 +22,38 @@ export async function getServerSideProps({ params }) {
     };
 }
 
-
-
-export default function OrderForClient (id) {
+export default function OrderForClient({ id }) {
     const [windowHeight, setWindowHeight] = useState(0);
     const [showForEditing, setShowForEditing] = useState(false);
     const [showForResponses, setShowForResponses] = useState(true);
     const [showForFeaturedFreelancers, setShowForFeaturedFreelancers] = useState(false);
     const [showForSelectedUser, setShowForSelectedUser] = useState(false);
-    const [myResponsesList, setMyResponsesList] = useState([
-        {
-            id: 1,
-            user_img: '/order_page_user_img.png',
-            user_name: 'Sarah Williams',
-            user_country_name: '24 года, Москва',
-            likes: '43',
-            dislikes: '10',
-            price: '1000 руб.',
-            deadline: 'Сделаю 06 июня',
-            review: 'Остался доволен, спасибо. Предложил много идей. Приехал в нужное время. Видно что очень любит своё дело. Насчёт фото не заставил ждать.',
-
-        },
-        {
-            id: 2,
-            user_img: '/order_page_user_img.png',
-            user_name: 'Sarah Williams',
-            user_country_name: '24 года, Москва',
-            likes: '43',
-            dislikes: '10',
-            price: '1000 руб.',
-            deadline: 'Сделаю 06 июня',
-            review: 'Остался доволен, спасибо. Предложил много идей. Приехал в нужное время. Видно что очень любит своё дело. Насчёт фото не заставил ждать.',
-
-        },
-        {
-            id: 3,
-            user_img: '/order_page_user_img.png',
-            user_name: 'Sarah Williams',
-            user_country_name: '24 года, Москва',
-            likes: '43',
-            dislikes: '10',
-            price: '1000 руб.',
-            deadline: 'Сделаю 06 июня',
-            review: 'Остался доволен, спасибо. Предложил много идей. Приехал в нужное время. Видно что очень любит своё дело. Насчёт фото не заставил ждать.',
-
-        },
-        {
-            id: 4,
-            user_img: '/order_page_user_img.png',
-            user_name: 'Sarah Williams',
-            user_country_name: '24 года, Москва',
-            likes: '43',
-            dislikes: '10',
-            price: '1000 руб.',
-            deadline: 'Сделаю 06 июня',
-            review: 'Остался доволен, спасибо. Предложил много идей. Приехал в нужное время. Видно что очень любит своё дело. Насчёт фото не заставил ждать.',
-
-        },
-        {
-            id: 5,
-            user_img: '/order_page_user_img.png',
-            user_name: 'Sarah Williams',
-            user_country_name: '24 года, Москва',
-            likes: '43',
-            dislikes: '10',
-            price: '1000 руб.',
-            deadline: 'Сделаю 06 июня',
-            review: 'Остался доволен, спасибо. Предложил много идей. Приехал в нужное время. Видно что очень любит своё дело. Насчёт фото не заставил ждать.',
-
-        },
-        {
-            id: 6,
-            user_img: '/order_page_user_img.png',
-            user_name: 'Sarah Williams',
-            user_country_name: '24 года, Москва',
-            likes: '43',
-            dislikes: '10',
-            price: '1000 руб.',
-            deadline: 'Сделаю 06 июня',
-            review: 'Остался доволен, спасибо. Предложил много идей. Приехал в нужное время. Видно что очень любит своё дело. Насчёт фото не заставил ждать.',
-
-        },
-    ]);
     const [showHiddenDropDownMenu, setShowHiddenDropDownMenu] = useState(false);
+    const [myResponsesList, setMyResponsesList] = useState([]);
     const [selectedTab, setSelectedTab] = useState('responses');
+    const [selectedFreelancerId, setSelectedFreelancerId] = useState(null); // Track selected freelancer ID
+    const { getResponses, loadingUserInfo, responsesData } = useGetResponses();
+    const { selectFreelancer, loadingSelectFreelancer, selectFreelancerData } = useSelectFreelancer();
+    const {addFavorites, loadingAddFavorites,addFavoritesData  } = useAddFavorites();
+
+    useEffect(() => {
+        if (responsesData) {
+            setMyResponsesList(responsesData?.responses);
+        }
+    }, [responsesData]);
+
+    useEffect(() => {
+        if (selectFreelancerData) {
+            if (selectFreelancerData?.message == "Freelancer successfully selected as performer") {
+                setSelectedFreelancerId(selectFreelancerData?.freelancerId);
+            }
+        }
+    }, [selectFreelancerData]);
 
 
     useEffect(() => {
-        console.log(id, 'params______id')
-    }, [])
+        getResponses(2);
+    }, [2]);
 
 
 
@@ -123,56 +69,44 @@ export default function OrderForClient (id) {
 
     const handleTabClick = (tab, setSelectedTab, setShowForEditing, setShowForResponses, setShowForFeaturedFreelancers, setShowForSelectedUser, setShowHiddenDropDownMenu) => {
         setSelectedTab(tab);
+        const pageId = id;
         if (tab === 'editing') {
-            // setShowForEditing(true);
-            // setShowForResponses(false);
-            // setShowForFeaturedFreelancers(false);
-            // setShowForSelectedUser(false);
-            setShowHiddenDropDownMenu(false);
-            let pageId = id?.id;
             router.push(`/my-projects/client/${pageId}/edit`);
-
         } else if (tab === 'responses') {
-            // setShowForEditing(false);
-            // setShowForResponses(true);
-            // setShowForFeaturedFreelancers(false);
-            // setShowForSelectedUser(false);
-            setShowHiddenDropDownMenu(false);
-            let pageId = id?.id;
             router.push(`/my-projects/client/${pageId}/responses`);
         } else if (tab === 'featuredFreelancers') {
-            setShowForEditing(false);
-            setShowForResponses(false);
-            setShowForFeaturedFreelancers(true);
-            setShowForSelectedUser(false);
-            setShowHiddenDropDownMenu(false);
-            let pageId = id?.id;
             router.push(`/my-projects/client/${pageId}/featured-freelancers`);
-
         } else if (tab === 'selectedUser') {
-            setShowForEditing(false);
-            setShowForResponses(false);
-            setShowForFeaturedFreelancers(false);
-            setShowForSelectedUser(true);
-            setShowHiddenDropDownMenu(false);
-            let pageId = id?.id;
             router.push(`/my-projects/client/${pageId}/selected-users`);
         }
-
+        setShowHiddenDropDownMenu(false);
     };
 
     const router = useRouter();
     const redirectToFeaturedFreelancersPage = () => {
-        let pageId = id?.id;
+        const pageId = id;
         router.push(`/my-projects/client/${pageId}/featured-freelancers`);
     };
     const redirectToEditPage = () => {
-        let pageId = id?.id;
+        const pageId = id;
         router.push(`/my-projects/client/${pageId}/edit`);
     };
     const redirectToSelectedUsersPage = () => {
-        let pageId = id?.id;
+        const pageId = id;
         router.push(`/my-projects/client/${pageId}/selected-users`);
+    };
+
+    const formattedNumber = (number) => {
+        return number.toString().replace(/\.00$/, '');
+    };
+
+    const selectFavFreelancer = async (responseId) => {
+        const id = 11;
+        await selectFreelancer(id, responseId);
+    };
+    const addToFavoritesList = async (freelancerId) => {
+        const id = 11;
+        await addFavorites(id, freelancerId);
     };
 
     return (
@@ -181,24 +115,23 @@ export default function OrderForClient (id) {
                 <Head>
                     <title>Мои проекты</title>
                     <meta name="dwsdwdwd" content="This is the home page" />
-                    <meta charSet="UTF-8"/>
-                    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-                    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-
+                    <meta charSet="UTF-8" />
+                    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+                    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
                 </Head>
                 <div className="home_general_wrapper my_projects_for_client_page" id="my_projects_for_client_resposes_page">
-                    <Header activePage='my_projects_for_client_page'/>
+                    <Header activePage='my_projects_for_client_page' />
                     <div className="create_order_page_wrapper">
                         <h1 className="create_order_page_title">Страница заказа</h1>
                         <div className='my_project_single_page_tabs_wrapper'>
                             <button
                                 className={`my_project_single_page_tab ${showForEditing ? 'active_tab' : ''}`}
                                 onClick={() => {
-                                    setShowForEditing(true)
-                                    setShowForSelectedUser(false)
-                                    setShowForResponses(false)
-                                    setShowForFeaturedFreelancers(false)
-                                    redirectToEditPage()
+                                    setShowForEditing(true);
+                                    setShowForSelectedUser(false);
+                                    setShowForResponses(false);
+                                    setShowForFeaturedFreelancers(false);
+                                    redirectToEditPage();
                                 }}
                             >
                                 Редактирование
@@ -206,11 +139,10 @@ export default function OrderForClient (id) {
                             <button
                                 className={`my_project_single_page_tab ${showForResponses ? 'active_tab' : ''}`}
                                 onClick={() => {
-                                    setShowForResponses(true)
-                                    setShowForSelectedUser(false)
-                                    setShowForEditing(false)
-                                    setShowForFeaturedFreelancers(false)
-
+                                    setShowForResponses(true);
+                                    setShowForSelectedUser(false);
+                                    setShowForEditing(false);
+                                    setShowForFeaturedFreelancers(false);
                                 }}
                             >
                                 Отклики
@@ -218,11 +150,11 @@ export default function OrderForClient (id) {
                             <button
                                 className={`my_project_single_page_tab ${showForFeaturedFreelancers ? 'active_tab' : ''}`}
                                 onClick={() => {
-                                    setShowForFeaturedFreelancers(true)
-                                    setShowForSelectedUser(false)
-                                    setShowForEditing(false)
-                                    setShowForResponses(false)
-                                    redirectToFeaturedFreelancersPage()
+                                    setShowForFeaturedFreelancers(true);
+                                    setShowForSelectedUser(false);
+                                    setShowForEditing(false);
+                                    setShowForResponses(false);
+                                    redirectToFeaturedFreelancersPage();
                                 }}
                             >
                                 Избранные фрилансеры
@@ -230,11 +162,11 @@ export default function OrderForClient (id) {
                             <button
                                 className={`my_project_single_page_tab ${showForSelectedUser ? 'active_tab' : ''}`}
                                 onClick={() => {
-                                    setShowForSelectedUser(true)
-                                    setShowForEditing(false)
-                                    setShowForResponses(false)
-                                    setShowForFeaturedFreelancers(false)
-                                    redirectToSelectedUsersPage()
+                                    setShowForSelectedUser(true);
+                                    setShowForEditing(false);
+                                    setShowForResponses(false);
+                                    setShowForFeaturedFreelancers(false);
+                                    redirectToSelectedUsersPage();
                                 }}
                             >
                                 Выбранный исполнитель
@@ -254,9 +186,9 @@ export default function OrderForClient (id) {
 
                                 <button
                                     className='dropdownHeader_icon'
-                                    style={showHiddenDropDownMenu ? {transform: 'rotate(180deg)'} : {}}
+                                    style={showHiddenDropDownMenu ? { transform: 'rotate(180deg)' } : {}}
                                 >
-                                    <DropDownIcon2/>
+                                    <DropDownIcon2 />
                                 </button>
                             </div>
                             {showHiddenDropDownMenu && (
@@ -290,65 +222,60 @@ export default function OrderForClient (id) {
                         </div>
 
                         <div className="order_single_page_items_wrapper">
-                            {myResponsesList.map((item, index) => {
+                            {myResponsesList && myResponsesList?.map((item, index) => {
                                 return (
                                     <div className='order_single_page_item' key={index}>
                                         <div className="order_single_page_item_img_info_wrapper">
-                                            <div className="order_single_page_item_img">
-                                                <Image
-                                                    src={item.user_img}
-                                                    alt="Example Image"
-                                                    layout="fill" // Fill the parent element
-                                                    objectFit="cover" // Cover the area of the parent element
-                                                    quality={100} // Image quality
-                                                />
-                                            </div>
                                             <div className="order_single_page_item_info_box">
-                                                <p className="order_single_page_item_user_name">{item.user_name}</p>
-                                                <div className="order_single_page_item_user_country_likes_info_wrapper">
-                                                    <p className="order_single_page_item_user_country_name">
-                                                        {item.user_country_name}
-                                                    </p>
-                                                    <div className="order_single_page_item_likes_info_box">
-                                                        <div className="order_single_page_item_like_icon_info_wrapper">
-                                                            <LikesIcon2/>
-                                                            <p className="order_single_page_item_like_info">{item.likes}</p>
-                                                        </div>
-                                                        <div className="order_single_page_item_dislike_icon_info_wrapper">
-                                                            <DisLikesIcon2/>
-                                                            <p className="order_single_page_item_dislike_info">{item.dislikes}</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <p className="order_single_page_item_user_name">{item?.first_name} {item?.last_name}</p>
                                                 <div className='order_single_page_item_price_deadline_info'>
                                                     <p className="order_single_page_item_price">
-                                                        {item.price}
+                                                        {formattedNumber(item?.price)}
                                                     </p>
                                                     <p className="order_single_page_item_deadline_info">
-                                                        {item.deadline}
+                                                        {item?.days_to_complete}
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                         <p className="order_single_page_item_review">
-                                            {item.review}
+                                            {item?.response_text}
                                         </p>
                                         <div className="order_single_page_item_buttons_wrapper">
-                                            <button className="order_single_page_item_select_user_btn">Выбрать исполнителем</button>
-                                            <button className="order_single_page_item_add_to_favourites_btn">В избранные</button>
+                                            {selectedFreelancerId === item.id ? (
+                                                <div className='order_single_page_item_select_user_btn'>
+                                                    <p>Выбранный исполнитель</p>
+                                                </div>
+                                            ) : (
+                                                <button
+                                                    className="order_single_page_item_select_user_btn"
+                                                    onClick={() => {
+                                                        selectFavFreelancer(item?.id);
+                                                    }}
+                                                >
+                                                    Выбрать исполнителем
+                                                </button>
+                                            )}
+                                            <button
+                                                className="order_single_page_item_add_to_favourites_btn"
+                                                onClick={() => {
+                                                    addToFavoritesList(item?.id);
+                                                }}
+                                            >
+                                                В избранные
+                                            </button>
                                         </div>
                                     </div>
-                                )
+                                );
                             })}
                         </div>
 
                     </div>
 
                 </div>
-                <Footer activePage='my_projects_for_client_page'/>
+                <Footer activePage='my_projects_for_client_page' />
 
             </main>
         </>
     );
 }
-
