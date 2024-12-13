@@ -17,6 +17,7 @@ import {FilterIcon} from "@/components/icons/FilterIcon";
 import { useRouter } from 'next/router';
 import {DeleteAddressIcon} from "@/components/icons/DeleteAddressIcon";
 import FilterModal from "@/components/FilterModal";
+import FilterMap from "@/components/FilterMapModal";
 import {useGetOrders} from "@/hooks/useGetOrders";
 import {useGetCategories} from "@/hooks/useGetCategories";
 
@@ -102,7 +103,7 @@ export default function Job () {
 
     ]);
     const [isCheckedAllCategories2, setIsCheckedAllCategories2] = useState(false);
-    const [showFilterMobile, setShowFilterMobile] = useState(false);
+
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [citiesList, setCitiesList] = useState([
         {
@@ -133,10 +134,43 @@ export default function Job () {
     ]);
     const [selectedCities, setSelectedCities] = useState([]);
     const [page, setPage] = useState(1);
+    const [search, setSearch] = useState('');
     const { getOrders, ordersData, totalPages, loading } = useGetOrders();
     const { getCategories, categoriesData } = useGetCategories();
 
     const [filterBody, setFilterBody] = useState({});
+    const [showFilterMobile, setShowFilterMobile] = useState(false);
+    const [showFilterMap, setShowFilterMap] = useState(false);
+    const [selectedFilterAddress, setSelectedFilterAddress] = useState('');
+    const [selectedFilterCoordinates, setSelectedFilterCoordinates] = useState(null);
+
+    // const handleCategorySelection = (val) => {
+    //     if (selectedCategories.includes(val)) {
+    //         const updatedCategories = selectedCategories.filter(cat => cat !== val);
+    //         setSelectedCategories(updatedCategories);
+    //     } else {
+    //         setSelectedCategories([...selectedCategories, val]);
+    //     }
+    // };
+
+    const handleCategorySelection = (val) => {
+        let updatedCategories;
+
+        if (selectedCategories.includes(val)) {
+            updatedCategories = selectedCategories.filter((cat) => cat !== val);
+        } else {
+            updatedCategories = [...selectedCategories, val];
+        }
+
+        setSelectedCategories(updatedCategories);
+
+        // Update filter body with the new categories and fetch orders
+        const updatedFilterBody = { ...filterBody, categories: updatedCategories };
+        setFilterBody(updatedFilterBody);
+
+        getOrders(updatedFilterBody, page);
+    };
+
 
     useEffect(()=>{
         getOrders(filterBody, page)
@@ -216,7 +250,16 @@ export default function Job () {
                                     <div className='services_search_input_field_icon'>
                                         <SearchIcon/>
                                     </div>
-                                    <input type="text" placeholder='Услуга' className='services_search_input'/>
+
+                                    <input
+                                        type='text'
+                                        value={search}
+                                        onChange={(event) => {
+                                            setSearch(event.target.value)
+                                        }}
+                                        placeholder='Услуга'
+                                        className='services_search_input'
+                                    />
                                 </div>
                                 <div className='services_search_box_buttons_wrapper'>
                                     <button className='services_search_box_search_button'>
@@ -307,72 +350,79 @@ export default function Job () {
                                 {/*        console.log(val)*/}
                                 {/*    }}*/}
                                 {/*/>*/}
-                                <div className='service_category_items_wrapper'>
-                                    {categoriesData && categoriesData?.map((item, index) => {
-                                        return (
+                                <div className="service_category_items_wrapper">
+                                    {categoriesData &&
+                                        categoriesData.map((item) => (
                                             <Category
+                                                key={item.id} // Ensure a unique key
                                                 categoryData={item}
                                                 selectedCategories={selectedCategories}
-                                                setNewSelectedCategories={(val)=>{
-                                                    if (selectedCategories.includes(val)) {
-                                                        const updatedCategories = selectedCategories.filter(cat => cat !== val);
-                                                        setSelectedCategories(updatedCategories);
-                                                    } else {
-                                                        setSelectedCategories([...selectedCategories, val]);
-                                                    }
-                                                }}
+                                                setNewSelectedCategories={handleCategorySelection}
                                             />
-                                        )
-                                    })}
+                                        ))}
                                 </div>
                             </div>
                             <div className="services_items_wrapper">
-                                {ordersData?.orders?.map((item, index) => (
-                                    <button
-                                        className='services_item'
-                                        key={index}
-                                        onClick={() => redirectToOrderPageForFreelancer(item?.id)}
-                                    >
-                                        <div className="services_item_name_address_info_wrapper">
-                                            <p className="services_item_name">{item?.title}</p>
-                                            <p className="services_item_address_info">{item?.address}</p>
-                                        </div>
-                                        <p className="services_item_info">{item?.description}</p>
-                                        <div className='services_item_pirce_date_info_wrapper'>
-                                            <div className='services_item_pirce_wrapper'>
-                                                <p className='services_item_pirce_info'>{item?.price}</p>
+                                {ordersData && ordersData?.orders.length > 0 ?
+                                    (
+                                        <div className='services_items_wrapper2'>
+                                            <div className="services_items_wrapper_child">
+                                                {ordersData?.orders?.map((item, index) => (
+                                                    <button
+                                                        className='services_item'
+                                                        key={index}
+                                                        onClick={() => redirectToOrderPageForFreelancer(item?.id)}
+                                                    >
+                                                        <div className="services_item_name_address_info_wrapper">
+                                                            <p className="services_item_name">{item?.title}</p>
+                                                            <p className="services_item_address_info">{item?.address}</p>
+                                                        </div>
+                                                        <p className="services_item_info">{item?.description}</p>
+                                                        <div className='services_item_pirce_date_info_wrapper'>
+                                                            <div className='services_item_pirce_wrapper'>
+                                                                <p className='services_item_pirce_info'>{item?.price}</p>
+                                                            </div>
+                                                            <div className='services_item_date_hour_wrapper'>
+                                                                <div className='services_item_date_hour_title_icon_wrapper'>
+                                                                    <p className='services_item_date_hour_title_icon_wrapper_title'>Начать</p>
+                                                                    <DateIcon />
+                                                                </div>
+                                                                <div className='services_item_date_hour_info_wrapper'>
+                                                                    <p className='services_item_date_hour_info1'>{formatDate(item.start_date)}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                ))}
                                             </div>
-                                            <div className='services_item_date_hour_wrapper'>
-                                                <div className='services_item_date_hour_title_icon_wrapper'>
-                                                    <p className='services_item_date_hour_title_icon_wrapper_title'>Начать</p>
-                                                    <DateIcon />
-                                                </div>
-                                                <div className='services_item_date_hour_info_wrapper'>
-                                                    <p className='services_item_date_hour_info1'>{formatDate(item.start_date)}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                ))}
 
-                                {/* ReactPaginate for Pagination */}
-                                <ReactPaginate
-                                    previousLabel={<PaginationLeftIcon />}
-                                    nextLabel={<PaginationRightIcon />}
-                                    breakLabel={'...'}
-                                    breakClassName={'pagination_break'}
-                                    pageCount={totalPages} // Total number of pages from the API
-                                    marginPagesDisplayed={2}
-                                    pageRangeDisplayed={3}
-                                    onPageChange={handlePageClick}
-                                    containerClassName={'pagination_links_wrapper'}
-                                    activeClassName={'active'}
-                                    previousClassName={'pagination_link_btn'}
-                                    nextClassName={'pagination_link_btn'}
-                                    pageClassName={'pagination_link'}
-                                    pageLinkClassName={'pagination_link_title'}
-                                    disabledClassName={'disabled'}
-                                />
+
+                                            {/* ReactPaginate for Pagination */}
+                                            <ReactPaginate
+                                                previousLabel={<PaginationLeftIcon />}
+                                                nextLabel={<PaginationRightIcon />}
+                                                breakLabel={'...'}
+                                                breakClassName={'pagination_break'}
+                                                pageCount={totalPages} // Total number of pages from the API
+                                                marginPagesDisplayed={2}
+                                                pageRangeDisplayed={3}
+                                                onPageChange={handlePageClick}
+                                                containerClassName={'pagination_links_wrapper'}
+                                                activeClassName={'active'}
+                                                previousClassName={'pagination_link_btn'}
+                                                nextClassName={'pagination_link_btn'}
+                                                pageClassName={'pagination_link'}
+                                                pageLinkClassName={'pagination_link_title'}
+                                                disabledClassName={'disabled'}
+                                            />
+                                        </div>
+                                    )
+                                    :
+                                    (
+                                        <p className='services_items_wrapper_not_found'>Ничего не найдено</p>
+                                    )
+                                }
+
                             </div>
                         </div>
                     </div>
@@ -498,10 +548,21 @@ export default function Job () {
                 <Footer activePage={"job_page"}/>
 
                 <FilterModal
-                    useFilter={setFilterBody}
+
+                    openMap={() => {
+
+                        setShowFilterMap(true)
+                    }}
+                    useFilter={(filterOptions) => {
+                        setFilterBody(filterOptions)
+                        getOrders(filterOptions, page)
+                        // console.log(filterOptions, 'filter_options___')
+                    }}
                     isActive={showFilterMobile}
                     categoryData={categoriesData}
                     selectedCategories={selectedCategories}
+                    filterAddress={selectedFilterAddress}
+                    filterCoordinates={selectedFilterCoordinates}
                     setNewSelectedCategories={(val)=>{
 
                         if (selectedCategories.includes(val)) {
@@ -513,6 +574,21 @@ export default function Job () {
                     }}
                     onClose={() => {
                         setShowFilterMobile(false)
+                    }}
+                />
+
+                <FilterMap
+                    isActive={showFilterMap}
+                    filterAddress={selectedFilterAddress}
+                    filterCoordinates={selectedFilterCoordinates}
+                    onClose={() => {
+                        setShowFilterMap(false)
+                    }}
+                    onChange={(address, coordinates) => {
+                        console.log(address, 'selected_address____')
+                        console.log(address, 'selected_address____')
+                        setSelectedFilterAddress(address)
+                        setSelectedFilterCoordinates(coordinates)
                     }}
                 />
 
