@@ -366,8 +366,6 @@ export default function ClientProfilePage () {
 
                     <Footer activePage={"freelancer_profile"}/>
                 </div>
-
-
             </main>
         </>
     );

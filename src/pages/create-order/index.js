@@ -12,7 +12,7 @@ import CreateOrderModal from "@/components/createOrderModal";
 import InsufficientFundsModal from "@/components/insufficientFundsModal";
 import { useMakeOrder } from '../../hooks/useMakeOrder';
 import { useGetCategories } from "@/hooks/useGetCategories";
-import FilterMap from "src/components/filterMap";
+import FilterMap from "@/components/filterMap";
 
 export default function CreateOrder() {
     const [windowHeight, setWindowHeight] = useState(0);
@@ -110,6 +110,12 @@ export default function CreateOrder() {
         setAddress(selectedAddress.address);  // Set the selected address
         setLatitude(selectedAddress.latitude);  // Set latitude
         setLongitude(selectedAddress.longitude);  // Set longitude
+        if (selectedAddress.address) {
+            setAddressError('');
+            setLatitudeError('');
+            setLongitudeError('');
+        }
+        console.log(selectedAddress, 'selected-adress')
     };
 
     const handleSelectTypes = (type) => {
@@ -168,13 +174,17 @@ export default function CreateOrder() {
 
         // Loop through each field to check for empty values and set errors accordingly
         fieldChecks.forEach(field => {
+            console.log(field, 'fiels______')
             if (!field.value || field.value.length === 0) {
                 field.setError(field.message);
+                console.log(field.message, 'field.message______')
                 hasErrors = true;
             } else {
                 field.setError('');
             }
         });
+
+        console.log(hasErrors, 'hasErrors______')
 
         // If there are no errors, proceed with the order creation
         if (!hasErrors) {
@@ -296,8 +306,8 @@ export default function CreateOrder() {
                                 {/* Map */}
                                 <div className='create_order_map_wrapper'>
                                     <FilterMap onSelectAddress={handleAddressSelect} />
-                                    {latitudeError && longitudeError &&
-                                        <p className='error_text'>{latitudeError}</p>
+                                    {addressError &&
+                                        <p className='error_text'>{addressError}</p>
                                     }
 
                                 </div>
