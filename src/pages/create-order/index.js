@@ -12,7 +12,7 @@ import CreateOrderModal from "@/components/createOrderModal";
 import InsufficientFundsModal from "@/components/insufficientFundsModal";
 import { useMakeOrder } from '../../hooks/useMakeOrder';
 import { useGetCategories } from "@/hooks/useGetCategories";
-import FilterMap from "@/components/filterMap";
+import FilterMap from "@/components/FilterMap";
 
 export default function CreateOrder() {
     const [windowHeight, setWindowHeight] = useState(0);
