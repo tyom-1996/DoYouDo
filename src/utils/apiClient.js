@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Базовый URL для API
-const baseURL = 'http://localhost:3007/api';
+const baseURL = 'https://api.dyd.pro/api';
 
 // Создание экземпляра axios с базовой конфигурацией
 const apiClient = axios.create({

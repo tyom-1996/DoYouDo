@@ -166,7 +166,7 @@ const  FreelancerProfilePage  = ()  => {
     const { getCategories, loadingCategoryInfo, categoriesData } = useGetCategories();
     const { setCategories, loading, categoriesInfoData2 } = useSetCategories();
     const { getProfilePackages, loadingProfilePackagesInfo, profilePackagesData } = useGetProfilePackages();
-    const [imagePath] = useState('http://localhost:3007/');
+    const [imagePath] = useState('https://api.dyd.pro/');
     const [selectedSubCategoryIds, setSelectedSubCategoryIds] = useState([]); // Array to hold subcategory IDs
     const [userCatsIds, setUserCatsIds] = useState([]); // Array to hold subcategory IDs
 
