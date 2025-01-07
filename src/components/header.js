@@ -15,7 +15,7 @@ export default function Header(props) {
     const [userImage, setUserImage] = useState('');
     const [activeRole, setActiveRole] = useState('');
     const { getProfileInfo, loadingUserInfo, profileInfoData } = useGetProfileInfo();
-    const [imagePath] = useState('http://localhost:3007/');
+    const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
 
 
     useEffect(() => {

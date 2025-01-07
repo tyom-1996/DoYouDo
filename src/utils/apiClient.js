@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 // Базовый URL для API
-const baseURL = 'https://api.dyd.pro/api';
+const baseURL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 
+// process.env.NEXT_PUBLIC_API_URL
 // Создание экземпляра axios с базовой конфигурацией
 const apiClient = axios.create({
     baseURL: baseURL,
