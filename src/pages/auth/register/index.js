@@ -27,15 +27,11 @@ const RegisterModal = ({}) => {
         passwordEmailErrorText,
         confirmPasswordPhoneErrorText,
         confirmPasswordEmailErrorText,
-        nameEmailErrorText,
-        namePhoneErrorText,
-        surnameEmailErrorText,
-        surnamePhoneErrorText,
         code, } = useRegister();
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        register(email, phone, passwordEmail, passwordPhone, type, confirmPasswordEmail, confirmPasswordPhone, nameEmail, namePhone, surnameEmail, surnamePhone);
+        register(email, phone, passwordEmail, passwordPhone, type, confirmPasswordEmail, confirmPasswordPhone);
 
     };
 
@@ -119,38 +115,38 @@ const RegisterModal = ({}) => {
 
                     {type == 'phone' && (
                         <div className='login_modal_item'>
-                            <div className='login_modal_item_input_wrapper register_modal_item_input_wrapper'>
-                                <input
-                                    type='text'
-                                    value={namePhone}
-                                    onChange={(event) => {
-                                        setNamePhone(event.target.value)
-                                    }}
-                                    placeholder='Имя'
-                                    className='login_modal_item_input_field'
-                                />
-                                {namePhoneErrorText &&
-                                    <p className='error_text'>
-                                        {namePhoneErrorText}
-                                    </p>
-                                }
-                            </div>
-                            <div className='login_modal_item_input_wrapper register_modal_item_input_wrapper'>
-                                <input
-                                    type='text'
-                                    value={surnamePhone}
-                                    onChange={(event) => {
-                                        setSurnamePhone(event.target.value)
-                                    }}
-                                    placeholder='Фамилия'
-                                    className='login_modal_item_input_field'
-                                />
-                                {surnamePhoneErrorText &&
-                                    <p className='error_text'>
-                                        {surnamePhoneErrorText}
-                                    </p>
-                                }
-                            </div>
+                            {/*<div className='login_modal_item_input_wrapper register_modal_item_input_wrapper'>*/}
+                            {/*    <input*/}
+                            {/*        type='text'*/}
+                            {/*        value={namePhone}*/}
+                            {/*        onChange={(event) => {*/}
+                            {/*            setNamePhone(event.target.value)*/}
+                            {/*        }}*/}
+                            {/*        placeholder='Имя'*/}
+                            {/*        className='login_modal_item_input_field'*/}
+                            {/*    />*/}
+                            {/*    {namePhoneErrorText &&*/}
+                            {/*        <p className='error_text'>*/}
+                            {/*            {namePhoneErrorText}*/}
+                            {/*        </p>*/}
+                            {/*    }*/}
+                            {/*</div>*/}
+                            {/*<div className='login_modal_item_input_wrapper register_modal_item_input_wrapper'>*/}
+                            {/*    <input*/}
+                            {/*        type='text'*/}
+                            {/*        value={surnamePhone}*/}
+                            {/*        onChange={(event) => {*/}
+                            {/*            setSurnamePhone(event.target.value)*/}
+                            {/*        }}*/}
+                            {/*        placeholder='Фамилия'*/}
+                            {/*        className='login_modal_item_input_field'*/}
+                            {/*    />*/}
+                            {/*    {surnamePhoneErrorText &&*/}
+                            {/*        <p className='error_text'>*/}
+                            {/*            {surnamePhoneErrorText}*/}
+                            {/*        </p>*/}
+                            {/*    }*/}
+                            {/*</div>*/}
                             <div className='login_modal_item_input_wrapper register_modal_item_input_wrapper'>
                                 <input
                                     type='text'
@@ -231,38 +227,38 @@ const RegisterModal = ({}) => {
                     )}
                     {type == 'email' && (
                         <div className='login_modal_item'>
-                            <div className='login_modal_item_input_wrapper register_modal_item_input_wrapper'>
-                                <input
-                                    type='text'
-                                    value={nameEmail}
-                                    onChange={(event) => {
-                                        setNameEmail(event.target.value)
-                                    }}
-                                    placeholder='Имя'
-                                    className='login_modal_item_input_field'
-                                />
-                                {nameEmailErrorText &&
-                                    <p className='error_text'>
-                                        {nameEmailErrorText}
-                                    </p>
-                                }
-                            </div>
-                            <div className='login_modal_item_input_wrapper register_modal_item_input_wrapper'>
-                                <input
-                                    type='text'
-                                    value={surnameEmail}
-                                    onChange={(event) => {
-                                        setSurnameEmail(event.target.value)
-                                    }}
-                                    placeholder='Фамилия'
-                                    className='login_modal_item_input_field'
-                                />
-                                {surnameEmailErrorText &&
-                                    <p className='error_text'>
-                                        {surnameEmailErrorText}
-                                    </p>
-                                }
-                            </div>
+                            {/*<div className='login_modal_item_input_wrapper register_modal_item_input_wrapper'>*/}
+                            {/*    <input*/}
+                            {/*        type='text'*/}
+                            {/*        value={nameEmail}*/}
+                            {/*        onChange={(event) => {*/}
+                            {/*            setNameEmail(event.target.value)*/}
+                            {/*        }}*/}
+                            {/*        placeholder='Имя'*/}
+                            {/*        className='login_modal_item_input_field'*/}
+                            {/*    />*/}
+                            {/*    {nameEmailErrorText &&*/}
+                            {/*        <p className='error_text'>*/}
+                            {/*            {nameEmailErrorText}*/}
+                            {/*        </p>*/}
+                            {/*    }*/}
+                            {/*</div>*/}
+                            {/*<div className='login_modal_item_input_wrapper register_modal_item_input_wrapper'>*/}
+                            {/*    <input*/}
+                            {/*        type='text'*/}
+                            {/*        value={surnameEmail}*/}
+                            {/*        onChange={(event) => {*/}
+                            {/*            setSurnameEmail(event.target.value)*/}
+                            {/*        }}*/}
+                            {/*        placeholder='Фамилия'*/}
+                            {/*        className='login_modal_item_input_field'*/}
+                            {/*    />*/}
+                            {/*    {surnameEmailErrorText &&*/}
+                            {/*        <p className='error_text'>*/}
+                            {/*            {surnameEmailErrorText}*/}
+                            {/*        </p>*/}
+                            {/*    }*/}
+                            {/*</div>*/}
                             <div className='login_modal_item_input_wrapper register_modal_item_input_wrapper' >
                                 <input
                                     type='text'

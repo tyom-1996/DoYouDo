@@ -192,7 +192,7 @@ export const useRegister = () => {
     const [confirmPasswordEmailErrorText, setConfirmPasswordEmailErrorText] = useState('');
     const [code, setCode] = useState('');
 
-    const validateInputs = (email, phone, passwordEmail, passwordPhone, type, confirmPasswordEmail, confirmPasswordPhone, nameEmail, namePhone, surnameEmail, surnamePhone) => {
+    const validateInputs = (email, phone, passwordEmail, passwordPhone, type, confirmPasswordEmail, confirmPasswordPhone) => {
         let isValid = true;
 
         if (type === 'phone') {
@@ -200,14 +200,14 @@ export const useRegister = () => {
                 setPhoneNumberErrorText('Поле является обязательным.');
                 isValid = false;
             }
-            if (!namePhone) {
-                setNamePhoneErrorText('Поле является обязательным.');
-                isValid = false;
-            }
-            if (!surnamePhone) {
-                setSurnamePhoneErrorText('Поле является обязательным.');
-                isValid = false;
-            }
+            // if (!namePhone) {
+            //     setNamePhoneErrorText('Поле является обязательным.');
+            //     isValid = false;
+            // }
+            // if (!surnamePhone) {
+            //     setSurnamePhoneErrorText('Поле является обязательным.');
+            //     isValid = false;
+            // }
             if (!passwordPhone) {
                 setPasswordPhoneErrorText('Поле является обязательным.');
                 isValid = false;
@@ -225,14 +225,14 @@ export const useRegister = () => {
                 setEmailErrorText('Поле является обязательным.');
                 isValid = false;
             }
-            if (!nameEmail) {
-                setNameEmailErrorText('Поле является обязательным.');
-                isValid = false;
-            }
-            if (!surnameEmail) {
-                setSurnameEmailErrorText('Поле является обязательным.');
-                isValid = false;
-            }
+            // if (!nameEmail) {
+            //     setNameEmailErrorText('Поле является обязательным.');
+            //     isValid = false;
+            // }
+            // if (!surnameEmail) {
+            //     setSurnameEmailErrorText('Поле является обязательным.');
+            //     isValid = false;
+            // }
             if (!passwordEmail) {
                 setPasswordEmailErrorText('Поле является обязательным.');
                 isValid = false;
@@ -250,7 +250,7 @@ export const useRegister = () => {
         return isValid;
     };
 
-    const register = async (email, phone, passwordEmail, passwordPhone, type, confirmPasswordEmail, confirmPasswordPhone, nameEmail, namePhone, surnameEmail, surnamePhone) => {
+    const register = async (email, phone, passwordEmail, passwordPhone, type, confirmPasswordEmail, confirmPasswordPhone) => {
         setLoading(true);
         setEmailErrorText('');
         setPhoneNumberErrorText('');
@@ -263,7 +263,7 @@ export const useRegister = () => {
         setSurnameEmailErrorText('');
         setSurnamePhoneErrorText('');
 
-        const isValid = validateInputs(email, phone, passwordEmail, passwordPhone, type, confirmPasswordEmail, confirmPasswordPhone, nameEmail, namePhone, surnameEmail, surnamePhone);
+        const isValid = validateInputs(email, phone, passwordEmail, passwordPhone, type, confirmPasswordEmail, confirmPasswordPhone);
         if (!isValid) {
             setLoading(false);
             return false;
@@ -273,16 +273,16 @@ export const useRegister = () => {
 
         if (type === 'email') {
             body = {
-                first_name: nameEmail,
-                last_name: surnameEmail,
+                // first_name: nameEmail,
+                // last_name: surnameEmail,
                 email: email,
                 password: passwordEmail,
                 confirm_password: confirmPasswordEmail
             };
         } else if (type === 'phone') {
             body = {
-                first_name: namePhone,
-                last_name: surnamePhone,
+                // first_name: namePhone,
+                // last_name: surnamePhone,
                 phone: phone,
                 password: passwordPhone,
                 confirm_password: confirmPasswordPhone
@@ -324,10 +324,10 @@ export const useRegister = () => {
         passwordEmailErrorText,
         confirmPasswordPhoneErrorText,
         confirmPasswordEmailErrorText,
-        nameEmailErrorText,
-        namePhoneErrorText,
-        surnameEmailErrorText,
-        surnamePhoneErrorText,
+        // nameEmailErrorText,
+        // namePhoneErrorText,
+        // surnameEmailErrorText,
+        // surnamePhoneErrorText,
         code,
     };
 };
