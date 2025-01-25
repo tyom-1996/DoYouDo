@@ -13,6 +13,11 @@ import {DropDownIcon2} from "@/components/icons/DropDownIcon2";
 import {LikesIcon2} from "@/components/icons/LikesIcon2";
 import {DisLikesIcon2} from "@/components/icons/DisLikesIcon2";
 import {useRouter} from "next/router";
+import {useGetOrderById} from "@/hooks/useGetOrderById";
+import {useGetCategories} from "@/hooks/useGetCategories";
+import {useMakeOrder} from "@/hooks/useMakeOrder";
+import {useEditOrder} from "@/hooks/useEditOrder";
+import FilterMap from "@/components/FilterMap";
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -26,22 +31,14 @@ export async function getServerSideProps({ params }) {
 
 
 
-export default function OrderForClient (id) {
+export default function OrderForClient ({id}) {
     const [windowHeight, setWindowHeight] = useState(0);
-    const [isOpenForCategories, setIsOpenForCategories] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState('');
     const [isOpenForPlaces, setIsOpenForPlaces] = useState(false);
     const [selectedPlace, setSelectedPlace] = useState('');
-    const [categories, setCategories] = useState([
-        'Разработка андроид приложения',
-        'Дизайн',
-        'Компьютерная помощь',
-        'Разработка ПО',
-        'Красота и здоровье',
-    ]);
+
     const [places, setPlaces] = useState([
-        'Можно выполнить удаленно',
-        'Не можно выполнить удаленно',
+        'Удаленная работа',
+        'Работа на месте',
     ]);
     const [address, setAddress] = useState('');
     const [coordinates, setCoordinates] = useState([55.751574, 37.573856]);
@@ -59,18 +56,81 @@ export default function OrderForClient (id) {
 
     const [showHiddenDropDownMenu, setShowHiddenDropDownMenu] = useState(false);
     const [selectedTab, setSelectedTab] = useState('editing');
+    const { getOrderById, orderByIdData,loading } = useGetOrderById();
+    const { getCategories, loadingCategoryInfo, categoriesData } = useGetCategories();
 
+
+    const [isOpenForCategories, setIsOpenForCategories] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [isOpenForSubCategories, setIsOpenForSubCategories] = useState(false);
+    const [selectedSubCategory, setSelectedSubCategory] = useState('');
+    const [selectedSubCategoryId, setSelectedSubCategoryId] = useState(null);
+    const [subCategories, setSubCategories] = useState([]);
+    const [latitude, setLatitude] = useState('');
+    const [longitude, setLongitude] = useState('');
+    const [images, setImages] = useState([]);
+    const [files, setFiles] = useState([]);
+    const {editOrder, editOrderData} = useEditOrder();
 
 
     useEffect(() => {
-        console.log(id, 'params______id')
+        console.log(id, 'id______')
+        getOrderById(id)
     }, [])
 
+    useEffect(() => {
+        if (orderByIdData) {
+            // Set all the other data as before
+            if (orderByIdData?.order?.type === "offline") {
+                setSelectedPlace('Удаленная работа');
+            } else {
+                setSelectedPlace('Работа на месте');
+            }
+            setAddress(orderByIdData?.order?.address);
+            setCoordinates([parseFloat(orderByIdData?.order?.latitude), parseFloat(orderByIdData?.order?.longitude)]);
+            setHeading(orderByIdData?.order?.title);
+            setDescription(orderByIdData?.order?.description);
+            setPrice(parseFloat(orderByIdData?.order?.price).toFixed(2).replace(/\.00$/, ''));
+            setImages(orderByIdData.order.photos || []);
+            setFiles(orderByIdData.order.files || []);
 
-    const handleSelectCategory = (category) => {
-        setSelectedCategory(category);
-        setIsOpenForCategories(false);
-    };
+            // Ensure the dates are valid Date objects
+            const startDate = new Date(orderByIdData?.order?.start_date);
+            const endDate = new Date(orderByIdData?.order?.end_date);
+
+            if (!isNaN(startDate.getTime())) {
+                setSelectedStartDate(startDate);
+            } else {
+                console.error("Invalid start date:", orderByIdData?.order?.start_date);
+            }
+
+            if (!isNaN(endDate.getTime())) {
+                setSelectedEndDate(endDate);
+            } else {
+                console.error("Invalid end date:", orderByIdData?.order?.end_date);
+            }
+
+            // Handle category and subcategory selection
+            if (categoriesData) {
+                const categoryId = orderByIdData.order.category_id;
+
+                const category = categoriesData.find(cat =>
+                    cat.subcategories.some(sub => sub.id === categoryId)
+                );
+
+                if (category) {
+                    const subCategory = category.subcategories.find(sub => sub.id === categoryId);
+
+                    setSelectedCategory(category);
+                    setSelectedSubCategory(subCategory);
+                }
+            }
+        }
+    }, [orderByIdData, categoriesData]);
+
+
+
+
     const handleSelectPlace = (place) => {
         setSelectedPlace(place);
         setIsOpenForPlaces(false);
@@ -96,25 +156,17 @@ export default function OrderForClient (id) {
 
 
 
-    const handleAddressChange = async (e) => {
-        const newAddress = e.target.value;
-        setAddress(newAddress);
-
-        if (newAddress.length > 3) {
-            // Fetch coordinates from Yandex Geocode API
-            const response = await fetch(
-                `https://geocode-maps.yandex.ru/1.x/?apikey=ed170562-fba8-4475-84f5-8940538e66e2&format=json&geocode=${newAddress}`
-            );
-            const data = await response.json();
-
-            if (data.response.GeoObjectCollection.featureMember.length) {
-                const coords =
-                    data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ').map(Number);
-                setCoordinates([coords[1], coords[0]]);
-            }
-        }
+    const handleAddressSelect = (selectedAddress) => {
+        setAddress(selectedAddress.address);  // Set the selected address
+        setLatitude(selectedAddress.latitude);  // Set latitude
+        setLongitude(selectedAddress.longitude);  // Set longitude
+        // if (selectedAddress.address) {
+        //     setAddressError('');
+        //     setLatitudeError('');
+        //     setLongitudeError('');
+        // }
+        console.log(selectedAddress, 'selected-adress')
     };
-
 
     const handleDropdownClick = () => {
         setShowHiddenDropDownMenu(!showHiddenDropDownMenu);
@@ -123,30 +175,19 @@ export default function OrderForClient (id) {
     const handleTabClick = (tab, setSelectedTab, setShowForEditing, setShowForResponses, setShowForFeaturedFreelancers, setShowForSelectedUser, setShowHiddenDropDownMenu) => {
         setSelectedTab(tab);
         if (tab === 'editing') {
-            // setShowForEditing(true);
-            // setShowForResponses(false);
-            // setShowForFeaturedFreelancers(false);
-            // setShowForSelectedUser(false);
             setShowHiddenDropDownMenu(false);
-            let pageId = id?.id;
-            router.push(`/my-projects/client/${pageId}/edit`);
+            router.push(`/my-projects/client/${id}/edit`);
 
         } else if (tab === 'responses') {
-            // setShowForEditing(false);
-            // setShowForResponses(true);
-            // setShowForFeaturedFreelancers(false);
-            // setShowForSelectedUser(false);
             setShowHiddenDropDownMenu(false);
-            let pageId = id?.id;
-            router.push(`/my-projects/client/${pageId}/responses`);
+            router.push(`/my-projects/client/${id}/responses`);
         } else if (tab === 'featuredFreelancers') {
             setShowForEditing(false);
             setShowForResponses(false);
             setShowForFeaturedFreelancers(true);
             setShowForSelectedUser(false);
             setShowHiddenDropDownMenu(false);
-            let pageId = id?.id;
-            router.push(`/my-projects/client/${pageId}/featured-freelancers`);
+            router.push(`/my-projects/client/${id}/featured-freelancers`);
 
         } else if (tab === 'selectedUser') {
             setShowForEditing(false);
@@ -154,24 +195,41 @@ export default function OrderForClient (id) {
             setShowForFeaturedFreelancers(false);
             setShowForSelectedUser(true);
             setShowHiddenDropDownMenu(false);
-            let pageId = id?.id;
-            router.push(`/my-projects/client/${pageId}/selected-users`);
+            router.push(`/my-projects/client/${id}/selected-users`);
         }
 
     };
 
     const router = useRouter();
     const redirectToResponsesPage = () => {
-        let pageId = id?.id;
-        router.push(`/my-projects/client/${pageId}/responses`);
+        router.push(`/my-projects/client/${id}/responses`);
     };
     const redirectToFeaturedFreelancersPage = () => {
-        let pageId = id?.id;
-        router.push(`/my-projects/client/${pageId}/featured-freelancers`);
+        router.push(`/my-projects/client/${id}/featured-freelancers`);
     };
     const redirectToSelectedUsersPage = () => {
-        let pageId = id?.id;
-        router.push(`/my-projects/client/${pageId}/selected-users`);
+        router.push(`/my-projects/client/${id}/selected-users`);
+    };
+    const handleSelectCategory = (category) => {
+        setSelectedCategory(category); // Store the whole category object
+        setSubCategories(category?.subcategories); // Load corresponding subcategories
+        setIsOpenForCategories(false);
+        setSelectedSubCategory(null); // Reset subcategory when category changes
+    };
+
+    const handleSelectSubCategory = (subCategory) => {
+        setSelectedSubCategory(subCategory);
+        setSelectedSubCategoryId(subCategory?.id);
+        setIsOpenForSubCategories(false); // Close the dropdown
+    };
+    const editOrderFunction = async () => {
+        await editOrder(id,selectedSubCategoryId, selectedPlace, address, latitude, longitude,heading, description, price, selectedStartDate, selectedEndDate, images,files)
+    };
+    const handleImagesUpdate = (uploadedImages) => {
+        setImages(uploadedImages); // Update images state with final user images
+    };
+    const handleFilesUpdate = (uploadedFiles) => {
+        setFiles(uploadedFiles); // Update images state with final user images
     };
 
     return (
@@ -291,58 +349,66 @@ export default function OrderForClient (id) {
                         <div className="create_order_form_items_wrapper">
                                 <div className="create_order_form_item">
                                     <h2 className="create_order_form_title">Что нужно сделать</h2>
+                                    {/* Category Dropdown */}
                                     <div className="category_dropdown">
                                         <p className='category_dropdown_title'>Категория</p>
-                                        <div className="create_order_dropdownHeader" onClick={() => setIsOpenForCategories(!isOpenForCategories)}>
-                                            <p className='create_order_dropdownHeader_title'>{selectedCategory || 'Выберите категорию'}</p>
-                                            <span className="arrow">
-                                            {isOpenForCategories ?
-                                                <div style={{ transform: "rotate(-180deg)" }}>
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width={24}
-                                                        height={24}
-                                                        fill="none"
-                                                    >
-                                                        <path
-                                                            stroke="#333"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={1.5}
-                                                            d="m18 9-6 6-1.5-1.5M6 9l2 2"
-                                                        />
+                                        <div className="add_category_dropdown add_category_dropdown1">
+                                            <div className="add_category_create_order_dropdownHeader" onClick={() => setIsOpenForCategories(!isOpenForCategories)}>
+                                                <p className='add_category_create_order_dropdownHeader_title'>{selectedCategory?.name || 'Категория'}</p>
+                                                <span className="arrow">
+                                                {isOpenForCategories ?
+                                                    <div style={{ transform: "rotate(-180deg)" }}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none">
+                                                            <path stroke="#333" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
+                                                        </svg>
+                                                    </div>
+                                                    :
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none">
+                                                        <path stroke="#333" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
                                                     </svg>
-                                                </div>
-                                                :
-
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width={24}
-                                                    height={24}
-                                                    fill="none"
-                                                >
-                                                    <path
-                                                        stroke="#333"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={1.5}
-                                                        d="m18 9-6 6-1.5-1.5M6 9l2 2"
-                                                    />
-                                                </svg>
-
-                                            }
-                                        </span>
-                                        </div>
-                                        {isOpenForCategories && (
-                                            <div className="dropdownList dropdownList1">
-                                                {categories.map((category, index) => (
-                                                    <p key={index} className="dropdownItem" onClick={() => handleSelectCategory(category)}>
-                                                        {category}
-                                                    </p>
-                                                ))}
+                                                }
+                                            </span>
                                             </div>
-                                        )}
+                                            {isOpenForCategories && (
+                                                <div className="add_category_dropdownList add_category_dropdownList1">
+                                                    {categoriesData && categoriesData.map((category) => (
+                                                        <p key={category?.id} className="add_category_dropdownItem" onClick={() => handleSelectCategory(category)}>
+                                                            {category?.name}
+                                                        </p>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                        {/* Subcategory Dropdown */}
+                                        <div className="add_category_dropdown add_category_dropdown2">
+                                            <div className="add_category_create_order_dropdownHeader" onClick={() => setIsOpenForSubCategories(!isOpenForSubCategories)}>
+                                                <p className='add_category_create_order_dropdownHeader_title'>{selectedSubCategory?.name || 'Подкатегория'}</p>
+                                                <span className="arrow">
+                                                {isOpenForSubCategories ?
+                                                    <div style={{ transform: "rotate(-180deg)" }}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none">
+                                                            <path stroke="#333" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
+                                                        </svg>
+                                                    </div>
+                                                    :
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none">
+                                                        <path stroke="#333" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
+                                                    </svg>
+                                                }
+                                            </span>
+                                            </div>
+                                            {isOpenForSubCategories && (
+                                                <div className="add_category_dropdownList add_category_dropdownList2">
+                                                    {subCategories && subCategories.map((subCategory) => (
+                                                        <p key={subCategory?.id} className="add_category_dropdownItem" onClick={() => handleSelectSubCategory(subCategory)}>
+                                                            {subCategory?.name}
+                                                        </p>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
+
                                     <div className="place_dropdown">
                                         <p className='category_dropdown_title'>Место</p>
                                         <div className="create_order_dropdownHeader" onClick={() => setIsOpenForPlaces(!isOpenForPlaces)}>
@@ -395,29 +461,14 @@ export default function OrderForClient (id) {
                                             </div>
                                         )}
                                     </div>
-                                    <div className='create_order_map_wrapper'>
-                                        <div className="create_order_map_input_box">
-                                            <p className="create_order_map_input_box_title">Адрес</p>
-                                            <input
-                                                type="text"
-                                                value={address}
-                                                onChange={handleAddressChange}
-                                                placeholder="137219874"
-                                                className='create_order_map_input_field'
-                                            />
+                                    {/* Map */}
+                                    {selectedPlace =='Работа на месте' &&
+                                        <div className='create_order_map_wrapper'>
+                                            <FilterMap onSelectAddress={handleAddressSelect} />
                                         </div>
+                                    }
 
-                                        <YMaps>
-                                            <Map
-                                                state={{ center: coordinates, zoom: 9 }}
-                                                width="100%"
-                                                height="518px"
-                                                className='create_order_map'
-                                            >
-                                                <Placemark geometry={coordinates} />
-                                            </Map>
-                                        </YMaps>
-                                    </div>
+
                                     <div className='heading_input_title_wrapper'>
                                         <p className='heading_input_title'>Заголовок</p>
                                         <input
@@ -428,13 +479,17 @@ export default function OrderForClient (id) {
                                             placeholder='Заголовок'
                                         />
                                     </div>
+                                    {/* Image Uploader */}
                                     <div className='upload_photo_wrapper'>
                                         <p className='upload_photo_wrapper_title'>Добавить фото</p>
-                                        <ImageUploader/>
+                                        <ImageUploader onImagesUpdate={handleImagesUpdate} />
                                     </div>
+
+                                    {/* File Uploader */}
                                     <div className='upload_file_wrapper'>
                                         <p className="upload_file_wrapper_title">Добавить файл</p>
-                                        <FileUploader/>
+                                        <FileUploader  onFilesUpdate={handleFilesUpdate}/>
+
                                     </div>
                                     <div className='create_order_description_wrapper'>
                                         <p className='create_order_description_wrapper_title'>Подробное описание</p>
@@ -470,6 +525,7 @@ export default function OrderForClient (id) {
                                             isClearable
                                             placeholderText="Выберите дату"
                                         />
+
                                     </div>
                                     <div className="create_order_date_wrapper">
                                         <p className='create_order_date_wrapper_title'>Дедлайн</p>
@@ -483,7 +539,14 @@ export default function OrderForClient (id) {
                                     </div>
                                 </div>
                                 <div className='order_page_edit_save_cancel_buttons_wrapper'>
-                                    <button className='order_page_edit_save_btn'>Сохранить</button>
+                                    <button
+                                        className='order_page_edit_save_btn'
+                                        onClick={() => {
+                                            editOrderFunction()
+                                        }}
+                                    >
+                                        Сохранить
+                                    </button>
                                     <button className='order_page_edit_cancel_btn'>Отменить</button>
                                 </div>
                             </div>

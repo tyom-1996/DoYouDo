@@ -75,6 +75,7 @@ export default function Order ({id}) {
     const [order, setOrder] = useState(null);
     const [responseText, setResponseText] = useState('');
     const [price, setPrice] = useState('');
+    const [showSuccessResponsePopup, setShowSuccessResponsePopup] = useState(false);
     const { getOrderById, orderByIdData,loading } = useGetOrderById();
     const { createResponse, createResponseData,loadingCreateResponse,responseErrorText, dateErrorText, priceErrorText } = useCreateResponse();
     const [activeRole, setActiveRole] = useState('');
@@ -95,6 +96,8 @@ export default function Order ({id}) {
          }
     }, [orderByIdData])
 
+    const router = useRouter();
+
     useEffect(() => {
          if (createResponseData) {
              console.log(createResponseData, 'hhfh  sp12212i12i')
@@ -102,6 +105,7 @@ export default function Order ({id}) {
                  setPrice('');
                  setResponseText('');
                  setDate('');
+                 router.reload();
              }
 
          }
@@ -109,10 +113,12 @@ export default function Order ({id}) {
 
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            setWindowHeight(window.innerHeight);
-        }
-    }, []);
+         if (createResponseData) {
+             if (createResponseData?.message == 'Недостаточно доступных откликов для создания') {
+                       setBalanceError('Н')
+             }
+         }
+    }, [createResponseData]);
 
     useEffect(() => {
         if (profileInfoData) {
@@ -359,6 +365,7 @@ export default function Order ({id}) {
                     </div>
                 </div>
                 <Footer activePage={"job_page"}/>
+
 
             </main>
         </>

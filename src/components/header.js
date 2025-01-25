@@ -29,8 +29,10 @@ export default function Header(props) {
     }, []);
 
     useEffect(() => {
+
           if (profileInfoData) {
                 setUserImage(profileInfoData?.photo)
+              console.log(``, 'profileInfoData?.photo_______')
                 setActiveRole(profileInfoData?.active_role)
           }
      }, [profileInfoData])
@@ -98,7 +100,7 @@ export default function Header(props) {
                                         href={activeRole == 'freelancer' ? '/my-projects/freelancer' : activeRole == 'client' ? '/my-projects/client' : ''}
                                         className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}
                                     >
-                                        Мои Проекты
+                                        Мои Проекты {activeRole}
                                     </a>
                                 </li>
                                 <li className="header_ul_li">
@@ -120,7 +122,7 @@ export default function Header(props) {
                         >
 
                             <Image
-                                src={userImage ? userImage : '/user_img2.png'}
+                                src={userImage ? `${imagePath}${userImage}` : '/user_img2.png'}
                                 alt="Example Image"
                                 layout="fill" // Fill the parent element
                                 objectFit="cover" // Cover the area of the parent element

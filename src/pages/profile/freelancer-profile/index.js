@@ -222,7 +222,7 @@ const  FreelancerProfilePage  = ()  => {
         router.push(`/add-project`);
     };
     const redirectToFreelancerSettingsPage = () => {
-        router.push(`/freelancer-profile-settings`);
+        router.push(`freelancer-profile-settings`);
     }
 
     const handleSendCategories = async (e) => {
@@ -330,12 +330,6 @@ const  FreelancerProfilePage  = ()  => {
                                                     На DoYouDo:
                                                 </p>
                                                 <p className="freelancer_single_page_user_info_professional_information_item_info"> с 6 сентября 2019</p>
-                                            </div>
-                                            <div className="freelancer_single_page_user_info_professional_information_item">
-                                                <p className="freelancer_single_page_user_info_professional_information_item_title">
-                                                    Cоздала:
-                                                </p>
-                                                <p className="freelancer_single_page_user_info_professional_information_item_info">2 задания</p>
                                             </div>
                                         </div>
                                         {profileInfoData?.about_me &&

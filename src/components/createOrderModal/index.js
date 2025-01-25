@@ -2,9 +2,11 @@ import React, {useState, useEffect} from 'react';
 import '../../assets/css/create_order.css'
 import {FilterCloseIcon} from '../icons/FilterCloseIcon'
 import {useMakeOrder} from "@/hooks/useMakeOrder";
+import {useGetProfileInfo} from "@/hooks/useGetProfileInfo";
 
 const CreateOrderModal = ({makeOrder, isActive, onClose, categoryId, type, address, latitude, longitude, title, description, price, startDate, endDate, photos, files}) => {
     // const {makeOrder, makeOrderData, loadingMakeOrder} = useMakeOrder();
+    const { getProfileInfo, loadingUserInfo, profileInfoData } = useGetProfileInfo();
 
 
     const enableBodyScroll = () => {

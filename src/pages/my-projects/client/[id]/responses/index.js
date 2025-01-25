@@ -12,6 +12,8 @@ import { useRouter } from "next/router";
 import { useGetResponses } from "@/hooks/useGetResponses";
 import { useSelectFreelancer } from "@/hooks/useSelectFreelancer";
 import { useAddFavorites } from "@/hooks/useAddFavorites";
+import {useGetSelectedFreelancers} from "@/hooks/useGetSelectedFreelancers";
+import {useGetFavorites} from "@/hooks/useGetFavorites";
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -33,8 +35,45 @@ export default function OrderForClient({ id }) {
     const [selectedTab, setSelectedTab] = useState('responses');
     const [selectedFreelancerId, setSelectedFreelancerId] = useState(null); // Track selected freelancer ID
     const { getResponses, loadingUserInfo, responsesData } = useGetResponses();
+    const { getSelectedFreelancers,  selectedFreelancersData } = useGetSelectedFreelancers();
+    const { getFavorites,  getFavoritesData } = useGetFavorites();
     const { selectFreelancer, loadingSelectFreelancer, selectFreelancerData } = useSelectFreelancer();
     const {addFavorites, loadingAddFavorites,addFavoritesData  } = useAddFavorites();
+    const [showDisableSelectFreelancerButton, setShowDisableSelectFreelancerButton] = useState(false);
+    const [showDisableFavoriteButton, setShowDisableFavoriteButton] = useState(false);
+
+    useEffect(() => {
+         getSelectedFreelancers(id)
+    }, [id]);
+
+    useEffect(() => {
+        getFavorites(id)
+    }, [id]);
+
+
+    useEffect(() => {
+        if (responsesData && selectedFreelancersData && getFavoritesData) {
+            const selectedFreelancerId = selectedFreelancersData.freelancer?.freelancerId;
+            const favoriteFreelancerIds = getFavoritesData.favorites.map(favorite => favorite.freelancerId);
+
+            // Enrich responses data with flags
+            const updatedResponses = responsesData.responses.map(response => {
+                return {
+                    ...response,
+                    isWaiting: response.freelancer_id === selectedFreelancerId,
+                    isInFavorites: favoriteFreelancerIds.includes(response.freelancer_id),
+                };
+            });
+
+            setMyResponsesList(updatedResponses);
+
+            // Debugging
+            console.log('Updated Responses:', updatedResponses);
+            console.log('Selected Freelancer ID:', selectedFreelancerId);
+            console.log('Favorite Freelancer IDs:', favoriteFreelancerIds);
+        }
+    }, [responsesData, selectedFreelancersData, getFavoritesData]);
+
 
     useEffect(() => {
         if (responsesData) {
@@ -52,8 +91,8 @@ export default function OrderForClient({ id }) {
 
 
     useEffect(() => {
-        getResponses(2);
-    }, [2]);
+        getResponses(id);
+    }, [id]);
 
 
 
@@ -69,31 +108,27 @@ export default function OrderForClient({ id }) {
 
     const handleTabClick = (tab, setSelectedTab, setShowForEditing, setShowForResponses, setShowForFeaturedFreelancers, setShowForSelectedUser, setShowHiddenDropDownMenu) => {
         setSelectedTab(tab);
-        const pageId = id;
         if (tab === 'editing') {
-            router.push(`/my-projects/client/${pageId}/edit`);
+            router.push(`/my-projects/client/${id}/edit`);
         } else if (tab === 'responses') {
-            router.push(`/my-projects/client/${pageId}/responses`);
+            router.push(`/my-projects/client/${id}/responses`);
         } else if (tab === 'featuredFreelancers') {
-            router.push(`/my-projects/client/${pageId}/featured-freelancers`);
+            router.push(`/my-projects/client/${id}/featured-freelancers`);
         } else if (tab === 'selectedUser') {
-            router.push(`/my-projects/client/${pageId}/selected-users`);
+            router.push(`/my-projects/client/${id}/selected-users`);
         }
         setShowHiddenDropDownMenu(false);
     };
 
     const router = useRouter();
     const redirectToFeaturedFreelancersPage = () => {
-        const pageId = id;
-        router.push(`/my-projects/client/${pageId}/featured-freelancers`);
+        router.push(`/my-projects/client/${id}/featured-freelancers`);
     };
     const redirectToEditPage = () => {
-        const pageId = id;
-        router.push(`/my-projects/client/${pageId}/edit`);
+        router.push(`/my-projects/client/${id}/edit`);
     };
     const redirectToSelectedUsersPage = () => {
-        const pageId = id;
-        router.push(`/my-projects/client/${pageId}/selected-users`);
+        router.push(`/my-projects/client/${id}/selected-users`);
     };
 
     const formattedNumber = (number) => {
@@ -101,11 +136,11 @@ export default function OrderForClient({ id }) {
     };
 
     const selectFavFreelancer = async (responseId) => {
-        const id = 11;
+        alert('hhh')
         await selectFreelancer(id, responseId);
     };
     const addToFavoritesList = async (freelancerId) => {
-        const id = 11;
+        alert('bbb')
         await addFavorites(id, freelancerId);
     };
 
@@ -221,59 +256,85 @@ export default function OrderForClient({ id }) {
                             )}
                         </div>
 
-                        <div className="order_single_page_items_wrapper">
-                            {myResponsesList && myResponsesList?.map((item, index) => {
-                                return (
-                                    <div className='order_single_page_item' key={index}>
-                                        <div className="order_single_page_item_img_info_wrapper">
-                                            <div className="order_single_page_item_info_box">
-                                                <p className="order_single_page_item_user_name">{item?.first_name} {item?.last_name}</p>
-                                                <div className='order_single_page_item_price_deadline_info'>
-                                                    <p className="order_single_page_item_price">
-                                                        {formattedNumber(item?.price)}
-                                                    </p>
-                                                    <p className="order_single_page_item_deadline_info">
-                                                        {item?.days_to_complete}
-                                                    </p>
+                        <div style={{width: '100%'}} >
+                            {myResponsesList.length > 0 ?  (
+                                <div className="order_single_page_items_wrapper">
+                                    {myResponsesList?.map((item, index) => {
+                                        return (
+                                            <div className='order_single_page_item' key={index}>
+                                                <div className="order_single_page_item_img_info_wrapper">
+                                                    <div className="order_single_page_item_info_box">
+                                                        <p className="order_single_page_item_user_name">{item?.first_name} {item?.last_name}</p>
+                                                        <div className='order_single_page_item_price_deadline_info'>
+                                                            <p className="order_single_page_item_price">
+                                                                {formattedNumber(item?.price)}
+                                                            </p>
+                                                            <p className="order_single_page_item_deadline_info">
+                                                                {item?.days_to_complete}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p className="order_single_page_item_review">
+                                                    {item?.response_text}
+                                                </p>
+                                                <div className="order_single_page_item_buttons_wrapper">
+                                                    {/* "Select as Performer" Button */}
+                                                    {item.isWaiting ? (
+                                                        <button
+                                                            className="order_single_page_item_select_user_btn"
+                                                            style={{opacity: 1, fontSize: 14}}
+                                                            disabled
+                                                        >
+                                                            Ожидание ответа от исполнителя
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            className="order_single_page_item_select_user_btn"
+                                                            style={{opacity: selectedFreelancersData?.freelancer ? 0.5 : 1}}
+                                                            disabled={!!selectedFreelancersData?.freelancer}
+                                                            onClick={() => selectFavFreelancer(item.freelancer_id)}
+                                                        >
+                                                            Выбрать исполнителем
+                                                        </button>
+                                                    )}
+
+                                                    {/* "Add to Favorites" Button */}
+                                                    {item.isInFavorites ? (
+                                                        <button
+                                                            className="order_single_page_item_add_to_favourites_btn"
+                                                            style={{ opacity: 1 }}
+                                                            disabled
+                                                        >
+                                                            В избранных
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            className="order_single_page_item_add_to_favourites_btn"
+                                                            style={{ opacity: selectedFreelancersData?.freelancer ? 0.5 : 1 }}
+                                                            disabled={!!selectedFreelancersData?.freelancer}
+                                                            onClick={() => addToFavoritesList(item.freelancer_id)}
+                                                        >
+                                                            В избранные
+                                                        </button>
+                                                    )}
                                                 </div>
                                             </div>
-                                        </div>
-                                        <p className="order_single_page_item_review">
-                                            {item?.response_text}
-                                        </p>
-                                        <div className="order_single_page_item_buttons_wrapper">
-                                            {selectedFreelancerId === item.id ? (
-                                                <div className='order_single_page_item_select_user_btn'>
-                                                    <p>Выбранный исполнитель</p>
-                                                </div>
-                                            ) : (
-                                                <button
-                                                    className="order_single_page_item_select_user_btn"
-                                                    onClick={() => {
-                                                        selectFavFreelancer(item?.id);
-                                                    }}
-                                                >
-                                                    Выбрать исполнителем
-                                                </button>
-                                            )}
-                                            <button
-                                                className="order_single_page_item_add_to_favourites_btn"
-                                                onClick={() => {
-                                                    addToFavoritesList(item?.id);
-                                                }}
-                                            >
-                                                В избранные
-                                            </button>
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                                        );
+                                    })}
+                                </div>
+                            ) : (
+                                <p className='not_found_text'>Откликов нет</p>
+
+                            )
+                            }
+
                         </div>
 
                     </div>
 
                 </div>
-                <Footer activePage='my_projects_for_client_page' />
+                <Footer activePage='my_projects_for_client_page'/>
 
             </main>
         </>

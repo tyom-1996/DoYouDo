@@ -837,7 +837,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
 }
 .order_single_page_item {
@@ -1121,4 +1121,14 @@
     .order_single_page_item_add_to_favourites_btn {
         width: 100% !important;
     }
+}
+
+.not_found_text {
+    width: 100%;
+    font-family: "Inter", sans-serif;
+    text-align: center;
+    font-size: 20px;
+    color: #333333;
+    font-weight: 600;
+    padding-top: 50px;
 }

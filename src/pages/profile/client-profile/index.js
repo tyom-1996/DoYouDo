@@ -11,6 +11,7 @@ import {LikeIcon} from "@/components/icons/LikeIcon";
 import {DislikeIcon} from "@/components/icons/DisLikeIcon";
 import {AddProjectIcon} from "@/components/icons/AddProjectIcon";
 import {DateIcon} from "@/components/icons/DateIcon";
+import { useGetProfileInfo } from '@/hooks/useGetProfileInfo';
 
 export default function ClientProfilePage () {
     const [windowHeight, setWindowHeight] = useState(0);
@@ -144,6 +145,8 @@ export default function ClientProfilePage () {
 
 
     ]);
+    const { getProfileInfo, loadingUserInfo, profileInfoData } = useGetProfileInfo();
+    const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
 
 
     useEffect(() => {
@@ -166,7 +169,7 @@ export default function ClientProfilePage () {
     //     router.push(`/add-project`);
     // };
     const redirectToClientSettingsPage = () => {
-        router.push(`/freelancer-profile-settings`);
+        router.push(`client-profile-settings`);
     }
 
 
@@ -190,7 +193,7 @@ export default function ClientProfilePage () {
                                 <div className="freelancer_single_page_user_info_wrapper_item1">
                                     <div className="freelancer_single_page_user_info_wrapper_item1_image">
                                         <Image
-                                            src="/freelancer_single_page_img2.png"
+                                            src={profileInfoData?.photo ? `${imagePath}${profileInfoData?.photo}` : '/freelancer_single_page_img.png'}
                                             alt="Example Image"
                                             layout="fill" // Fill the parent element
                                             objectFit="cover" // Cover the area of the parent element
@@ -220,7 +223,9 @@ export default function ClientProfilePage () {
 
                                     <div className='freelancer_single_page_user_info_wrapper_item2_details'>
                                         <div className='freelancer_single_page_user_name_age_country_info_wrapper'>
-                                            <p className='freelancer_single_page_user_name'>Алексей Смирнов</p>
+                                            <p className='freelancer_single_page_user_name'>
+                                                {profileInfoData?.first_name} {profileInfoData?.last_name}
+                                            </p>
                                             <p className='freelancer_single_page_user_age_country_info'>24 года, Москва</p>
                                         </div>
                                         <div className="freelancer_single_page_user_rating_icon_info_wrapper">
@@ -261,10 +266,11 @@ export default function ClientProfilePage () {
                                             </div>
 
                                         </div>
-                                        <p className='freelancer_single_page_about_user_info'>
-                                            А также интерактивные прототипы набирают популярность среди определенных слоев населения, а значит, должны быть смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности. А ещё базовые сценарии поведения пользователей могут быть разоблачены. Банальные, но неопровержимые выводы, а
-                                        </p>
-
+                                        {profileInfoData?.about_me &&
+                                            <p className='freelancer_single_page_about_user_info'>
+                                                {profileInfoData?.about_me}
+                                            </p>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -272,7 +278,9 @@ export default function ClientProfilePage () {
                         <div className="freelancer_click_balance_info_wrapper">
                             <div className='freelancer_click_balance_info_header_wrapper'>
                                 <p className='freelancer_click_balance_info_header_title'>Баланс</p>
-                                <p className='freelancer_click_balance_info_header_balance_quantity'>13.000 Руб.</p>
+                                <p className='freelancer_click_balance_info_header_balance_quantity'>
+                                    {profileInfoData?.balance} Руб.
+                                </p>
                             </div>
                             <div className='freelancer_click_balance_items_wrapper'>
                                 <div className='freelancer_click_balance_item1'>
@@ -303,7 +311,9 @@ export default function ClientProfilePage () {
                                         <DislikeIcon/>
                                         <p className='freelancer_single_page_dislikes_info'>10</p>
                                     </div>
-                                    <p className='freelancer_single_page_reviews_info'>53 отзыва</p>
+                                    <p className='freelancer_single_page_reviews_info'>
+                                        {profileInfoData?.available_responses} отзыва
+                                    </p>
                                 </div>
                             </div>
                             <div className="reviews">

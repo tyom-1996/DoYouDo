@@ -211,6 +211,62 @@ export const makeOrderRequest = async (categoryId, type, address, latitude, long
         throw new Error(errorMessage);
     }
 };
+export const editOrderRequest = async (id, categoryId, type, address, latitude, longitude, title, description, price, startDate, endDate, photos, files) => {
+    try {
+        // Create a new FormData object
+        const formData = new FormData();
+
+        // Append fields to formData
+        formData.append('category_id', categoryId);
+        formData.append('type', type);
+        formData.append('address', address);
+        formData.append('latitude', latitude);
+        formData.append('longitude', longitude);
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('price', price);
+        formData.append('start_date', startDate);
+        formData.append('end_date', endDate);
+
+        // Append photos if they exist
+        if (photos && photos.length > 0) {
+            photos.forEach((photo, index) => {
+                formData.append(`photos[${index}]`, {
+                    uri: photo.uri,
+                    type: photo.type || 'image/jpeg', // Set type if available, otherwise default to image/jpeg
+                    name: photo.name || `photo_${index}.jpg`, // Set name if available, otherwise default name
+                });
+            });
+        }
+
+        // Append files if they exist
+        if (files && files.length > 0) {
+            files.forEach((file, index) => {
+                formData.append(`files[${index}]`, {
+                    uri: file.uri,
+                    type: file.type || 'application/octet-stream', // Set type if available, otherwise default to binary data
+                    name: file.name || `file_${index}`, // Set name if available, otherwise default name
+                });
+            });
+        }
+
+        // Make the API call using the axios instance with formData
+        const response = await apiClient.put(`/orders/${id}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data', // Set the content type for formData
+            },
+        });
+        console.log(response, 'put_responce________')
+
+        // Return the response data
+        return response.data;
+    } catch (error) {
+        // Handle and throw the specific error message or general error
+        const errorMessage = error.response?.data?.message || error.message;
+        console.error('Error creating order:', errorMessage);
+        throw new Error(errorMessage);
+    }
+};
 
 
 // export const getOrders2 = async (body = {}, page = 1, limit) => {
@@ -258,6 +314,24 @@ export const getOrders2 = async (body = {}, page = 1, limit = 10) => {
         throw error.response?.data || error.message; // Handle and rethrow the error
     }
 };
+
+
+export const getClientOrders2 = async (page = 1, limit = 10, status = null) => {
+    try {
+        const params = {
+            page,
+            limit,
+        };
+        if (status && status.length > 0) {
+            params.status = status.join(',');
+        }
+        const response = await apiClient.get('/client/orders', { params });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error.message;
+    }
+};
+
 
 
 export const getOrderByIdApi = async (id) => {
@@ -335,6 +409,24 @@ export const addFavoritesRequest = async (id, responseId) => {
         );
 
         console.log(id, responseId, 'id_responc_iiidiid1111')
+        // Return the response data
+        return response?.data;
+    } catch (error) {
+        // Handle and rethrow the error
+        throw error.response?.data || error.message;
+    }
+};
+export const getFavoritesList = async (id) => {
+    try {
+        // Make the request with axios
+        const response = await apiClient.post(
+            '/orders/favorites/list',
+            {
+                orderId: id,
+            }
+        );
+
+        console.log(id,  'id_responc_iiidiid1111')
         // Return the response data
         return response?.data;
     } catch (error) {

@@ -431,7 +431,6 @@ export default function OrderForClient({ id }) {
 
     const handleTabClick = (tab) => {
         setSelectedTab(tab);
-        let pageId = id;
 
         switch (tab) {
             case 'editing':
@@ -445,25 +444,22 @@ export default function OrderForClient({ id }) {
                 break;
             case 'selectedUser':
             default:
-                router.push(`/my-projects/client/${pageId}/selected-users`);
+                router.push(`/my-projects/client/${id}/selected-users`);
                 break;
         }
         setShowHiddenDropDownMenu(false);
     };
 
     const redirectToResponsesPage = () => {
-        let pageId = id;
-        router.push(`/my-projects/client/${pageId}/responses`);
+        router.push(`/my-projects/client/${id}/responses`);
     };
 
     const redirectToFeaturedFreelancersPage = () => {
-        let pageId = id;
-        router.push(`/my-projects/client/${pageId}/featured-freelancers`);
+        router.push(`/my-projects/client/${id}/featured-freelancers`);
     };
 
     const redirectToEditPage = () => {
-        let pageId = id;
-        router.push(`/my-projects/client/${pageId}/edit`);
+        router.push(`/my-projects/client/${id}/edit`);
     };
 
     return (
@@ -512,25 +508,35 @@ export default function OrderForClient({ id }) {
                             )}
                         </div>
                         <div className="order_single_page_items_wrapper">
-                            {loadingSelectedFreelancers && <p>Loading freelancers...</p>}
-                            {selectedFreelancersData && selectedFreelancersData?.freelancer && (
-                                <div className="order_single_page_item">
-                                    <div className="order_single_page_item_img_info_wrapper">
-                                        <div className="order_single_page_item_info_box">
-                                            <p className="order_single_page_item_user_name">
-                                                {selectedFreelancersData.freelancer.first_name} {selectedFreelancersData.freelancer.last_name}
-                                            </p>
+                            {selectedFreelancersData?.freelancer  ? (
+                                <div style={{width: '100%'}}>
+                                    {selectedFreelancersData?.freelancer && (
+                                        <div className="order_single_page_item">
+                                            <div className="order_single_page_item_img_info_wrapper">
+                                                <div className="order_single_page_item_info_box">
+                                                    <p className="order_single_page_item_user_name">
+                                                        {selectedFreelancersData.freelancer.first_name} {selectedFreelancersData.freelancer.last_name}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="order_single_page_item_buttons_wrapper">
+                                                {showClosingStateBtn ? (
+                                                    <button className="order_single_page_item_waiting_for_a_response_btn">Ожидание ответа от исполнителя</button>
+                                                ) : (
+                                                    <button className="order_single_page_item_chat_btn">В Чат</button>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="order_single_page_item_buttons_wrapper">
-                                        {showClosingStateBtn ? (
-                                            <button className="order_single_page_item_waiting_for_a_response_btn">Ожидание ответа от исполнителя</button>
-                                        ) : (
-                                            <button className="order_single_page_item_chat_btn">В Чат</button>
-                                        )}
-                                    </div>
+                                    )}
                                 </div>
-                            )}
+                            )
+                                : (
+
+                                    <p className='not_found_text'>Для этого заказа фрилансер не выбран.</p>
+                                )
+
+                            }
+
                         </div>
                     </div>
                 </div>

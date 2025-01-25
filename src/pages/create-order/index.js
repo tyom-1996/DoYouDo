@@ -13,6 +13,7 @@ import InsufficientFundsModal from "@/components/insufficientFundsModal";
 import { useMakeOrder } from '../../hooks/useMakeOrder';
 import { useGetCategories } from "@/hooks/useGetCategories";
 import FilterMap from "@/components/FilterMap";
+import { useRouter } from 'next/router';
 
 export default function CreateOrder() {
     const [windowHeight, setWindowHeight] = useState(0);
@@ -61,12 +62,15 @@ export default function CreateOrder() {
     const [photosError, setPhotosError] = useState('');
     const [filesError, setFilesError] = useState('');
 
+    const router = useRouter();
 
     useEffect(() => {
         if (makeOrderData) {
             console.log(makeOrderData, 'makeOrderData')
             if (makeOrderData?.message == 'Заказ успешно создан') {
                  setShowCreateOrderModal(false)
+                router.push(`/projects`);
+
             }
         }
     }, [makeOrderData]);
@@ -304,13 +308,15 @@ export default function CreateOrder() {
 
 
                                 {/* Map */}
-                                <div className='create_order_map_wrapper'>
-                                    <FilterMap onSelectAddress={handleAddressSelect} />
-                                    {addressError &&
-                                        <p className='error_text'>{addressError}</p>
-                                    }
+                                {selectedType =='Работа на месте' &&
+                                    <div className='create_order_map_wrapper'>
+                                            <FilterMap onSelectAddress={handleAddressSelect} />
+                                            {addressError &&
+                                                <p className='error_text'>{addressError}</p>
+                                            }
+                                     </div>
+                                }
 
-                                </div>
 
                                 {/* Heading Input */}
                                 <div className='heading_input_title_wrapper'>
