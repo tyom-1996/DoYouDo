@@ -371,7 +371,7 @@ const  FreelancerProfilePage  = ()  => {
                         <div className="freelancer_click_balance_info_wrapper">
                             <div className='freelancer_click_balance_info_header_wrapper'>
                                 <p className='freelancer_click_balance_info_header_title'>Баланс кликов</p>
-                                <p className='freelancer_click_balance_info_header_balance_quantity'>130</p>
+                                <p className='freelancer_click_balance_info_header_balance_quantity'>{profileInfoData?.available_responses}</p>
                             </div>
                             <div className='freelancer_click_balance_items_wrapper'>
                                 <div className='freelancer_click_balance_item1'>

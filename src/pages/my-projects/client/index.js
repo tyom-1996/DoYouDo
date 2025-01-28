@@ -912,8 +912,18 @@ export default function MyProjectsForClient() {
     const [selectedTab, setSelectedTab] = useState('myResponses'); // Default tab
     const [page, setPage] = useState(1);
     const [limit] = useState(10);
-
+    const [showHiddenDropDownMenu, setShowHiddenDropDownMenu] = useState(false);
     const { getClientOrders, loading, clientOrdersData, totalPages } = useGetClientOrders();
+    const tabOptions = [
+        { value: 'myResponses', label: 'Активные' },
+        { value: 'pending', label: 'На модерации' },
+        { value: 'waiting_freelancer_response', label: 'Отклики' },
+        { value: 'in_progress', label: 'В работе' },
+        { value: 'closed', label: 'Закрытые' },
+    ];
+    const [isMobile, setIsMobile] = useState(false);
+
+
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -960,6 +970,7 @@ export default function MyProjectsForClient() {
         return `${day}, ${month}, ${time}`;
     };
 
+
     return (
         <>
             <main className='general_page_wrapper' id='my_projects_for_client_page'>
@@ -974,7 +985,7 @@ export default function MyProjectsForClient() {
                 </div>
                 <div className="my_projects">
                     <div className="my_projects_wrapper">
-                        <div style={{ width: '100%' }}>
+                        <div style={{width: '100%'}}>
                             <div className='my_project_tabs_wrapper'>
                                 {['myResponses', 'pending', 'waiting_freelancer_response', 'in_progress', 'closed'].map((status) => (
                                     <button
@@ -990,52 +1001,101 @@ export default function MyProjectsForClient() {
                                     </button>
                                 ))}
                             </div>
+                            <div className="dropdownWrapper">
+                                <div
+                                    className="dropdownHeader"
+                                    onClick={() => setShowHiddenDropDownMenu(!showHiddenDropDownMenu)}
+                                >
+                                    <span className='dropdownHeader_title'>
+                                        {tabOptions.find((tab) => tab.value === selectedTab)?.label || 'Select Tab'}
+                                    </span>
+                                    <button
+                                        className='dropdownHeader_icon'
+                                        style={showHiddenDropDownMenu ? {transform: 'rotate(180deg)'} : {}}
+                                    >
+                                        <DropDownIcon2/>
+                                    </button>
+                                </div>
+
+                                {showHiddenDropDownMenu && (
+                                    <div className="tabsWrapper">
+                                        {tabOptions.map((tab) => (
+                                            <div
+                                                key={tab.value}
+                                                className={`mobile_tab ${
+                                                    selectedTab === tab.value ? 'active' : ''
+                                                }`}
+                                                onClick={() =>
+                                                    {
+                                                        handleTabChange(tab.value)
+                                                        setShowHiddenDropDownMenu(false)
+                                                    }
+
+                                                }
+                                            >
+                                                {tab.label}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
 
                             <div className='my_projects_items_wrapper'>
                                 {clientOrdersData.length ?
                                     (
-                                        clientOrdersData.map((item) => (
+                                        <>
                                             <button
-                                                key={item.id}
-                                                className={item.make_new_order ? 'my_projects_item2' : 'my_projects_item'}
+                                                className={'my_projects_item2'}
                                                 onClick={() => {
-                                                    item.make_new_order
-                                                        ? redirectToCreateOrderPage()
-                                                        : redirectToOrderPageForClient(item.id);
+                                                    redirectToCreateOrderPage()
                                                 }}
                                             >
-                                                {item.make_new_order ? (
-                                                    <p className='make_new_order_title'>Создать новое задание</p>
-                                                ) : (
-                                                    <div style={{ width: '100%' }}>
-                                                        <div className="my_projects_item_name_address_info_wrapper">
-                                                            <p className="my_projects_item_name">{item.category_name}</p>
-                                                            <p className="my_projects_item_address_info">{item.address}</p>
-                                                        </div>
-                                                        <p className="my_projects_item_info">{item.title}</p>
-                                                        <div className='my_projects_item_pirce_date_info_wrapper'>
-                                                            <div className='my_projects_item_pirce_wrapper'>
-                                                                <p className='my_projects_item_pirce_info'>
-                                                                    {item.price.toString().replace(/\.00$/, '')}
-                                                                </p>
-
-                                                            </div>
-                                                            <div className='my_projects_item_date_hour_wrapper'>
-                                                                <div className='my_projects_item_date_hour_title_icon_wrapper'>
-                                                                    <p className='my_projects_item_date_hour_title_icon_wrapper_title'>Начать</p>
-                                                                    <DateIcon />
-                                                                </div>
-                                                                <div className='my_projects_item_date_hour_info_wrapper'>
-                                                                    <p className='my_projects_item_date_hour_info1'>
-                                                                        {formatDate(item?.start_date)}
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )}
+                                                <p className='make_new_order_title'>Создать новое задание</p>
                                             </button>
-                                        ))
+
+
+                                            {clientOrdersData.map((item)=>{
+                                                return (
+                                                    <button
+                                                        key={item.id}
+                                                        className={'my_projects_item'}
+                                                        onClick={() => {
+                                                            redirectToOrderPageForClient(item.id);
+                                                        }}
+                                                    >
+                                                                <div
+                                                                    className="my_projects_item_name_address_info_wrapper">
+                                                                    <p className="my_projects_item_name">{item.category_name}</p>
+                                                                    <p className="my_projects_item_address_info">{item.address}</p>
+                                                                </div>
+                                                                <p className="my_projects_item_info">{item.title}</p>
+                                                                <div
+                                                                    className='my_projects_item_pirce_date_info_wrapper'>
+                                                                    <div className='my_projects_item_pirce_wrapper'>
+                                                                        <p className='my_projects_item_pirce_info'>
+                                                                            {item.price.toString().replace(/\.00$/, '')}
+                                                                        </p>
+
+                                                                    </div>
+                                                                    <div className='my_projects_item_date_hour_wrapper'>
+                                                                        <div
+                                                                            className='my_projects_item_date_hour_title_icon_wrapper'>
+                                                                            <p className='my_projects_item_date_hour_title_icon_wrapper_title'>Начать</p>
+                                                                            <DateIcon/>
+                                                                        </div>
+                                                                        <div
+                                                                            className='my_projects_item_date_hour_info_wrapper'>
+                                                                            <p className='my_projects_item_date_hour_info1'>
+                                                                                {formatDate(item?.start_date)}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                    </button>
+                                                )
+                                            })}
+                                        </>
                                     )
                                     : (
                                         <p className='not_found_text'>Нет отклик</p>

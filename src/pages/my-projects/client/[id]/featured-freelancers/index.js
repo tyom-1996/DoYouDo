@@ -3,11 +3,7 @@ import Image from "next/image";
 import '../../../../../assets/css/order_for_client.css';
 import Header from '../../../../../components/header'
 import Footer from '../../../../../components/footer'
-import ImageUploader from '../../../../includes/ImageUploader'
-import FileUploader from '../../../../includes/FileUploader'
 import Head from 'next/head';
-import { YMaps, Map, Placemark } from 'react-yandex-maps';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {DropDownIcon2} from "@/components/icons/DropDownIcon2";
 import {LikesIcon2} from "@/components/icons/LikesIcon2";
@@ -41,14 +37,16 @@ export default function OrderForClient ({id}) {
     const [selectedTab, setSelectedTab] = useState('featuredFreelancers');
     const { getFavorites,  getFavoritesData } = useGetFavorites();
     const { getSelectedFreelancers,  selectedFreelancersData } = useGetSelectedFreelancers();
-    const [showDisableSelectFreelancerButton, setShowDisableSelectFreelancerButton] = useState(false);
-    const { selectFreelancer, loadingSelectFreelancer, selectFreelancerData } = useSelectFreelancer();
-
+    const { selectFreelancer,  selectFreelancerData } = useSelectFreelancer();
+    const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
 
     useEffect(() => {
         getFavorites(id)
     }, [id]);
 
+    useEffect(() => {
+        getSelectedFreelancers(id)
+    }, [id]);
 
 
     useEffect(() => {
@@ -56,25 +54,6 @@ export default function OrderForClient ({id}) {
                setFeaturedFreelancersList(getFavoritesData?.favorites)
            }
     }, [getFavoritesData]);
-
-    useEffect(() => {
-        if (getFavoritesData && selectedFreelancersData) {
-            // Extract the freelancer ID from selectedFreelancersData
-            const selectedFreelancerId = selectedFreelancersData.freelancer?.freelancerId;
-
-
-            // Check if there is a match in responsesData for selectedFreelancer
-            const isFreelancerSelected = responsesData.responses.some(
-                response => response.freelancerId === selectedFreelancerId
-            );
-
-
-            // Set the states based on the matches
-            setShowDisableSelectFreelancerButton(isFreelancerSelected);
-        }
-    }, [ selectedFreelancersData, getFavoritesData]);
-
-
 
 
     const handleDropdownClick = () => {
@@ -84,18 +63,10 @@ export default function OrderForClient ({id}) {
     const handleTabClick = (tab, setSelectedTab, setShowForEditing, setShowForResponses, setShowForFeaturedFreelancers, setShowForSelectedUser, setShowHiddenDropDownMenu) => {
         setSelectedTab(tab);
         if (tab === 'editing') {
-            // setShowForEditing(true);
-            // setShowForResponses(false);
-            // setShowForFeaturedFreelancers(false);
-            // setShowForSelectedUser(false);
             setShowHiddenDropDownMenu(false);
             router.push(`/my-projects/client/${id}/edit`);
 
         } else if (tab === 'responses') {
-            // setShowForEditing(false);
-            // setShowForResponses(true);
-            // setShowForFeaturedFreelancers(false);
-            // setShowForSelectedUser(false);
             setShowHiddenDropDownMenu(false);
             router.push(`/my-projects/client/${id}/responses`);
         } else if (tab === 'featuredFreelancers') {
@@ -131,6 +102,60 @@ export default function OrderForClient ({id}) {
     const selectFavFreelancer = async (freelancerId) => {
         await selectFreelancer(id, freelancerId);
     };
+    const renderFreelancerButton = (item, responsesData, selectedFreelancersData, selectFavFreelancer) => {
+        if (responsesData?.hasSelectedFreelancer) {
+
+            if (item?.freelancer?.is_selected_freelancer) {
+
+                if (item?.freelancer?.orderStatus === 'waiting_freelancer_response') {
+                    return (
+                        <button
+                            className="order_single_page_item_select_user_btn3"
+                            style={{ opacity: 1, fontSize: 14 }}
+                            disabled
+                        >
+                            Ожидание ответа
+                        </button>
+                    );
+                }
+                if (item?.freelancer?.orderStatus === 'in_progress') {
+                    return (
+                        <button
+                            className="order_single_page_item_select_user_btn3"
+                            style={{ opacity: 1, fontSize: 14, background: 'green' }}
+                            disabled
+                        >
+                            Выбранный исполнитель
+                        </button>
+                    );
+                }
+            } else {
+                return (
+                    <button
+                        className="order_single_page_item_select_user_btn3"
+                        style={{ opacity: 0.5, fontSize: 14 }}
+                        disabled
+                    >
+                        Выбрать исполнителем
+                    </button>
+                );
+            }
+        }
+
+        return (
+            <button
+                className="order_single_page_item_select_user_btn3"
+                // style={{ opacity: selectedFreelancersData?.freelancer ? 0.5 : 1 }}
+                onClick={() => selectFavFreelancer(item.id)}
+            >
+                Выбрать исполнителем
+            </button>
+        );
+    };
+    const formattedNumber = (number) => {
+        return number.toString().replace(/\.00$/, '');
+    };
+
     return (
         <>
             <main className='general_page_wrapper'>
@@ -252,75 +277,55 @@ export default function OrderForClient ({id}) {
                                             <div className='order_single_page_item' key={index}>
                                                 <div className="order_single_page_item_img_info_wrapper">
                                                     <div className="order_single_page_item_img">
-                                                        {/*<Image*/}
-                                                        {/*    src={item.user_img}*/}
-                                                        {/*    alt="Example Image"*/}
-                                                        {/*    layout="fill" // Fill the parent element*/}
-                                                        {/*    objectFit="cover" // Cover the area of the parent element*/}
-                                                        {/*    quality={100} // Image quality*/}
-                                                        {/*/>*/}
+                                                        <Image
+                                                            src={item?.freelancer?.photo ? `${imagePath}${item?.freelancer?.photo}` : '/freelancers_img7.png'}
+                                                            alt="Example Image"
+                                                            layout="fill" // Fill the parent element
+                                                            objectFit="cover" // Cover the area of the parent element
+                                                            quality={100} // Image quality
+                                                        />
                                                     </div>
                                                     <div className="order_single_page_item_info_box">
-                                                        <p className="order_single_page_item_user_name">{item?.first_name} {item?.last_name}</p>
-                                                        <div className="order_single_page_item_user_country_likes_info_wrapper">
-                                                            <p className="order_single_page_item_user_country_name">
-                                                                {item.user_country_name}
-                                                            </p>
-                                                            <div className="order_single_page_item_likes_info_box">
-                                                                <div className="order_single_page_item_like_icon_info_wrapper">
-                                                                    <LikesIcon2/>
-                                                                    <p className="order_single_page_item_like_info">{item.likes}</p>
-                                                                </div>
-                                                                <div className="order_single_page_item_dislike_icon_info_wrapper">
-                                                                    <DisLikesIcon2/>
-                                                                    <p className="order_single_page_item_dislike_info">{item.dislikes}</p>
-                                                                </div>
-                                                            </div>
+                                                        <p className="order_single_page_item_user_name">{item?.freelancer?.first_name} {item?.freelancer?.last_name}</p>
+                                                        <div
+                                                            className="order_single_page_item_user_country_likes_info_wrapper">
+                                                            {/*<p className="order_single_page_item_user_country_name">*/}
+                                                            {/*</p>*/}
+                                                            {/*<div className="order_single_page_item_likes_info_box">*/}
+                                                            {/*    <div className="order_single_page_item_like_icon_info_wrapper">*/}
+                                                            {/*        <LikesIcon2/>*/}
+                                                            {/*        <p className="order_single_page_item_like_info">{likes}</p>*/}
+                                                            {/*    </div>*/}
+                                                            {/*    <div className="order_single_page_item_dislike_icon_info_wrapper">*/}
+                                                            {/*        <DisLikesIcon2/>*/}
+                                                            {/*        <p className="order_single_page_item_dislike_info">{dislikes}</p>*/}
+                                                            {/*    </div>*/}
+                                                            {/*</div>*/}
                                                         </div>
                                                         <div className='order_single_page_item_price_deadline_info'>
                                                             <p className="order_single_page_item_price">
-                                                                {item.price}
+                                                                {formattedNumber(item?.response?.price)} руб.
                                                             </p>
                                                             <p className="order_single_page_item_deadline_info">
-                                                                {item.deadline}
+                                                                Сделаю {item?.response?.days_to_complete} днем
                                                             </p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <p className="order_single_page_item_review">
-                                                    {item.review}
+                                                    {item?.response?.response_text}
                                                 </p>
 
                                                 <div className="order_single_page_item_buttons_wrapper">
-                                                    {showDisableSelectFreelancerButton ? (
-                                                            <button
-                                                                className="order_single_page_item_select_user_btn2"
-                                                                style={{ opacity: 0.5 }}
-                                                                disabled // Add disabled attribute for better UX
-                                                            >
-                                                                Выбрать исполнителем
-                                                            </button>
-
-                                                        )
-                                                        : (
-                                                            <button
-                                                                className="order_single_page_item_select_user_btn2"
-                                                                onClick={() => {
-                                                                    selectFavFreelancer(item?.freelancerId)
-                                                                }}
-                                                            >
-                                                                Выбрать исполнителем
-                                                            </button>
-
-                                                        )
-
-                                                    }
+                                                    <div className='order_single_page_item_select_user_btn_parent3'>
+                                                        {renderFreelancerButton(item, getFavoritesData, selectedFreelancersData, selectFavFreelancer)}
+                                                    </div>
                                                 </div>
                                             </div>
                                         )
                                     })}
                                 </div>
-                            )
+                                )
                                 :
                                 (
                                     <p className='not_found_text'>Для этого заказа фрилансер не выбран.</p>

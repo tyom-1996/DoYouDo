@@ -152,6 +152,7 @@ export default function CreateOrder() {
     };
 
     const handleSelectSubCategory = (subCategory) => {
+        console.log(subCategory, 'subs___')
         setSelectedSubCategory(subCategory);
         setSelectedSubCategoryId(subCategory?.id);
         setIsOpenForSubCategories(false); // Close the dropdown
@@ -160,41 +161,43 @@ export default function CreateOrder() {
     const createOrder = () => {
         let hasErrors = false;
 
-        // Error handlers as an array of objects to avoid repetition
+        // Basic field validation
         const fieldChecks = [
             { value: selectedSubCategoryId, setError: setCategoryError, message: 'Поле является обязательным.' },
             { value: selectedType, setError: setTypeError, message: 'Поле является обязательным.' },
-            { value: address, setError: setAddressError, message: 'Поле является обязательным.' },
-            { value: latitude, setError: setLatitudeError, message: 'Поле является обязательным.' },
-            { value: longitude, setError: setLongitudeError, message: 'Поле является обязательным.' },
             { value: title, setError: setTitleError, message: 'Поле является обязательным.' },
             { value: description, setError: setDescriptionError, message: 'Поле является обязательным.' },
             { value: price, setError: setPriceError, message: 'Поле является обязательным.' },
             { value: selectedStartDate, setError: setStartDateError, message: 'Поле является обязательным.' },
             { value: selectedEndDate, setError: setEndDateError, message: 'Поле является обязательным.' },
-            { value: images, setError: setPhotosError, message: 'Поле является обязательным.' },
-            { value: files, setError: setFilesError, message: 'Поле является обязательным.' }
         ];
 
-        // Loop through each field to check for empty values and set errors accordingly
-        fieldChecks.forEach(field => {
-            console.log(field, 'fiels______')
-            if (!field.value || field.value.length === 0) {
+        // Additional checks for "Работа на месте"
+        if (selectedType === 'Работа на месте') {
+            const locationChecks = [
+                { value: address, setError: setAddressError, message: 'Поле является обязательным.' },
+                { value: latitude, setError: setLatitudeError, message: 'Поле является обязательным.' },
+                { value: longitude, setError: setLongitudeError, message: 'Поле является обязательным.' },
+            ];
+            fieldChecks.push(...locationChecks);
+        }
+
+        // Validate all fields
+        fieldChecks.forEach((field) => {
+            if (!field.value || (Array.isArray(field.value) && field.value.length === 0)) {
                 field.setError(field.message);
-                console.log(field.message, 'field.message______')
                 hasErrors = true;
             } else {
                 field.setError('');
             }
         });
 
-        console.log(hasErrors, 'hasErrors______')
-
-        // If there are no errors, proceed with the order creation
+        // Proceed if no errors
         if (!hasErrors) {
-            setShowCreateOrderModal(true)
+            setShowCreateOrderModal(true);
         }
     };
+
 
     return (
         <>

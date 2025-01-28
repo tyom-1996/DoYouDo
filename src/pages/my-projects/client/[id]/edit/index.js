@@ -241,8 +241,8 @@ export default function OrderForClient ({id}) {
                     <meta charSet="UTF-8"/>
                     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
                     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-
                 </Head>
+
                 <div className="home_general_wrapper my_projects_for_client_page" id="my_projects_for_client_edit_page">
                     <Header activePage='my_projects_for_client_page'/>
                     <div className="create_order_page_wrapper">
@@ -347,75 +347,90 @@ export default function OrderForClient ({id}) {
                             )}
                         </div>
                         <div className="create_order_form_items_wrapper">
-                                <div className="create_order_form_item">
-                                    <h2 className="create_order_form_title">Что нужно сделать</h2>
-                                    {/* Category Dropdown */}
-                                    <div className="category_dropdown">
-                                        <p className='category_dropdown_title'>Категория</p>
-                                        <div className="add_category_dropdown add_category_dropdown1">
-                                            <div className="add_category_create_order_dropdownHeader" onClick={() => setIsOpenForCategories(!isOpenForCategories)}>
-                                                <p className='add_category_create_order_dropdownHeader_title'>{selectedCategory?.name || 'Категория'}</p>
-                                                <span className="arrow">
-                                                {isOpenForCategories ?
-                                                    <div style={{ transform: "rotate(-180deg)" }}>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none">
-                                                            <path stroke="#333" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
-                                                        </svg>
-                                                    </div>
-                                                    :
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none">
-                                                        <path stroke="#333" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
-                                                    </svg>
-                                                }
-                                            </span>
-                                            </div>
-                                            {isOpenForCategories && (
-                                                <div className="add_category_dropdownList add_category_dropdownList1">
-                                                    {categoriesData && categoriesData.map((category) => (
-                                                        <p key={category?.id} className="add_category_dropdownItem" onClick={() => handleSelectCategory(category)}>
-                                                            {category?.name}
-                                                        </p>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </div>
-                                        {/* Subcategory Dropdown */}
-                                        <div className="add_category_dropdown add_category_dropdown2">
-                                            <div className="add_category_create_order_dropdownHeader" onClick={() => setIsOpenForSubCategories(!isOpenForSubCategories)}>
-                                                <p className='add_category_create_order_dropdownHeader_title'>{selectedSubCategory?.name || 'Подкатегория'}</p>
-                                                <span className="arrow">
-                                                {isOpenForSubCategories ?
-                                                    <div style={{ transform: "rotate(-180deg)" }}>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none">
-                                                            <path stroke="#333" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
-                                                        </svg>
-                                                    </div>
-                                                    :
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none">
-                                                        <path stroke="#333" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
-                                                    </svg>
-                                                }
-                                            </span>
-                                            </div>
-                                            {isOpenForSubCategories && (
-                                                <div className="add_category_dropdownList add_category_dropdownList2">
-                                                    {subCategories && subCategories.map((subCategory) => (
-                                                        <p key={subCategory?.id} className="add_category_dropdownItem" onClick={() => handleSelectSubCategory(subCategory)}>
-                                                            {subCategory?.name}
-                                                        </p>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div className="place_dropdown">
-                                        <p className='category_dropdown_title'>Место</p>
-                                        <div className="create_order_dropdownHeader" onClick={() => setIsOpenForPlaces(!isOpenForPlaces)}>
-                                            <p className='create_order_dropdownHeader_title'>{selectedPlace || 'Можно выполнить удаленно'}</p>
+                            <div className="create_order_form_item">
+                                <h2 className="create_order_form_title">Что нужно сделать</h2>
+                                {/* Category Dropdown */}
+                                <div className="category_dropdown">
+                                    <p className='category_dropdown_title'>Категория</p>
+                                    <div className="add_category_dropdown add_category_dropdown1">
+                                        <div className="add_category_create_order_dropdownHeader"
+                                             onClick={() => setIsOpenForCategories(!isOpenForCategories)}>
+                                            <p className='add_category_create_order_dropdownHeader_title'>{selectedCategory?.name || 'Категория'}</p>
                                             <span className="arrow">
+                                                {isOpenForCategories ?
+                                                    <div style={{transform: "rotate(-180deg)"}}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24}
+                                                             fill="none">
+                                                            <path stroke="#333" strokeLinecap="round"
+                                                                  strokeLinejoin="round" strokeWidth={1.5}
+                                                                  d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
+                                                        </svg>
+                                                    </div>
+                                                    :
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24}
+                                                         fill="none">
+                                                        <path stroke="#333" strokeLinecap="round" strokeLinejoin="round"
+                                                              strokeWidth={1.5} d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
+                                                    </svg>
+                                                }
+                                            </span>
+                                        </div>
+                                        {isOpenForCategories && (
+                                            <div className="add_category_dropdownList add_category_dropdownList1">
+                                                {categoriesData && categoriesData.map((category) => (
+                                                    <p key={category?.id} className="add_category_dropdownItem"
+                                                       onClick={() => handleSelectCategory(category)}>
+                                                        {category?.name}
+                                                    </p>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                    {/* Subcategory Dropdown */}
+                                    <div className="add_category_dropdown add_category_dropdown2">
+                                        <div className="add_category_create_order_dropdownHeader"
+                                             onClick={() => setIsOpenForSubCategories(!isOpenForSubCategories)}>
+                                            <p className='add_category_create_order_dropdownHeader_title'>{selectedSubCategory?.name || 'Подкатегория'}</p>
+                                            <span className="arrow">
+                                                {isOpenForSubCategories ?
+                                                    <div style={{transform: "rotate(-180deg)"}}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24}
+                                                             fill="none">
+                                                            <path stroke="#333" strokeLinecap="round"
+                                                                  strokeLinejoin="round" strokeWidth={1.5}
+                                                                  d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
+                                                        </svg>
+                                                    </div>
+                                                    :
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24}
+                                                         fill="none">
+                                                        <path stroke="#333" strokeLinecap="round" strokeLinejoin="round"
+                                                              strokeWidth={1.5} d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
+                                                    </svg>
+                                                }
+                                            </span>
+                                        </div>
+                                        {isOpenForSubCategories && (
+                                            <div className="add_category_dropdownList add_category_dropdownList2">
+                                                {subCategories && subCategories.map((subCategory) => (
+                                                    <p key={subCategory?.id} className="add_category_dropdownItem"
+                                                       onClick={() => handleSelectSubCategory(subCategory)}>
+                                                        {subCategory?.name}
+                                                    </p>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="place_dropdown">
+                                    <p className='category_dropdown_title'>Место</p>
+                                    <div className="create_order_dropdownHeader"
+                                         onClick={() => setIsOpenForPlaces(!isOpenForPlaces)}>
+                                        <p className='create_order_dropdownHeader_title'>{selectedPlace || 'Можно выполнить удаленно'}</p>
+                                        <span className="arrow">
                                             {isOpenForPlaces ?
-                                                <div style={{ transform: "rotate(-180deg)" }}>
+                                                <div style={{transform: "rotate(-180deg)"}}>
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         width={24}
@@ -450,65 +465,84 @@ export default function OrderForClient ({id}) {
 
                                             }
                                         </span>
+                                    </div>
+                                    {isOpenForPlaces && (
+                                        <div className="dropdownList dropdownList2">
+                                            {places.map((place, index) => (
+                                                <p key={index} className="dropdownItem"
+                                                   onClick={() => handleSelectPlace(place)}>
+                                                    {place}
+                                                </p>
+                                            ))}
                                         </div>
-                                        {isOpenForPlaces && (
-                                            <div className="dropdownList dropdownList2">
-                                                {places.map((place, index) => (
-                                                    <p key={index} className="dropdownItem" onClick={() => handleSelectPlace(place)}>
-                                                        {place}
-                                                    </p>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                    {/* Map */}
-                                    {selectedPlace =='Работа на месте' &&
-                                        <div className='create_order_map_wrapper'>
-                                            <FilterMap onSelectAddress={handleAddressSelect} />
-                                        </div>
-                                    }
-
-
-                                    <div className='heading_input_title_wrapper'>
-                                        <p className='heading_input_title'>Заголовок</p>
-                                        <input
-                                            type="text"
-                                            value={heading}
-                                            onChange={handleHeadingChange}
-                                            className='heading_input_field'
-                                            placeholder='Заголовок'
-                                        />
-                                    </div>
-                                    {/* Image Uploader */}
-                                    <div className='upload_photo_wrapper'>
-                                        <p className='upload_photo_wrapper_title'>Добавить фото</p>
-                                        <ImageUploader onImagesUpdate={handleImagesUpdate} />
-                                    </div>
-
-                                    {/* File Uploader */}
-                                    <div className='upload_file_wrapper'>
-                                        <p className="upload_file_wrapper_title">Добавить файл</p>
-                                        <FileUploader  onFilesUpdate={handleFilesUpdate}/>
-
-                                    </div>
-                                    <div className='create_order_description_wrapper'>
-                                        <p className='create_order_description_wrapper_title'>Подробное описание</p>
-                                        <textarea
-                                            value={description}
-                                            onChange={handleDescriptionChange}
-                                            rows="5"
-                                            cols="40"
-                                            placeholder="Описание"
-                                            className='create_order_description_wrapper_input_field'
-                                        />
-                                    </div>
-
+                                    )}
                                 </div>
-                                <div className="create_order_form_item">
-                                    <h2 className="create_order_form_title">Бюджет и срок</h2>
-                                    <div className='create_order_form_price_wrapper'>
-                                        <p className='create_order_form_price_wrapper_title'>Сколько готовы заплатить за работу?</p>
-                                        <input
+                                {/* Map */}
+                                {selectedPlace == 'Работа на месте' &&
+                                    <div className='create_order_map_wrapper'>
+                                        <FilterMap onSelectAddress={handleAddressSelect}/>
+                                    </div>
+                                }
+
+
+                                <div className='heading_input_title_wrapper'>
+                                    <p className='heading_input_title'>Заголовок</p>
+                                    <input
+                                        type="text"
+                                        value={heading}
+                                        onChange={handleHeadingChange}
+                                        className='heading_input_field'
+                                        placeholder='Заголовок'
+                                    />
+                                </div>
+                                {/* Image Uploader */}
+                                <div className='upload_photo_wrapper'>
+                                    <p className='upload_photo_wrapper_title'>Добавить фото</p>
+                                    <div className='uploaded_images_preview'>
+                                        {images && images.map((image, index) => (
+                                            <div key={index} className='image_preview'>
+                                                <img src={image} alt={`uploaded-${index}`}/>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <ImageUploader onImagesUpdate={handleImagesUpdate}/>
+                                </div>
+
+
+                                {/* File Uploader */}
+                                <div className='upload_file_wrapper'>
+                                    <p className="upload_file_wrapper_title">Добавить файл</p>
+                                    <ul className='uploaded_files_list'>
+                                        {files && files.map((file, index) => (
+                                            <li key={index}>
+                                                <a href={file} target="_blank" rel="noopener noreferrer">
+                                                    {`File ${index + 1}`}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <FileUploader onFilesUpdate={handleFilesUpdate}/>
+                                </div>
+
+                                <div className='create_order_description_wrapper'>
+                                    <p className='create_order_description_wrapper_title'>Подробное описание</p>
+                                    <textarea
+                                        value={description}
+                                        onChange={handleDescriptionChange}
+                                        rows="5"
+                                        cols="40"
+                                        placeholder="Описание"
+                                        className='create_order_description_wrapper_input_field'
+                                    />
+                                </div>
+
+                            </div>
+                            <div className="create_order_form_item">
+                                <h2 className="create_order_form_title">Бюджет и срок</h2>
+                                <div className='create_order_form_price_wrapper'>
+                                    <p className='create_order_form_price_wrapper_title'>Сколько готовы заплатить за
+                                        работу?</p>
+                                    <input
                                             type="text"
                                             value={price}
                                             onChange={handlePriceChange}

@@ -8,6 +8,7 @@ export const useCreateResponse = () => {
     const [responseErrorText, setResponseErrorText] = useState('');
     const [priceErrorText, setPriceErrorText] = useState('');
     const [dateErrorText, setDateErrorText] = useState('');
+    const [balanceErrorText, setBalanceErrorText] = useState('');
 
     const validateInputs = (responseText, price, date) => {
         let isValid = true;
@@ -41,19 +42,21 @@ export const useCreateResponse = () => {
             return false;
         }
 
-
-
         try {
             const data = await createResponseRequest(id, responseText, price, date); // Call your API function
             setCreateResponseData(data);
             console.log(data, 'create_responce____');
         } catch (error) {
-            console.log(error, '------')
+            if (error.message === 'Недостаточно доступных откликов для создания') {
+                setBalanceErrorText('Недостаточно доступных откликов для создания');
+            } else {
+                 setBalanceErrorText('')
+            }
             setErrorText(error );
         } finally {
             setLoadingCreateResponse(false);
         }
     };
 
-    return { createResponse, loadingCreateResponse, createResponseData, errorText, responseErrorText, priceErrorText, dateErrorText };
+    return { createResponse, loadingCreateResponse, createResponseData,balanceErrorText, errorText, responseErrorText, priceErrorText, dateErrorText };
 };

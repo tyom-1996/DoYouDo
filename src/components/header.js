@@ -6,6 +6,7 @@ import {LogoutIcon} from "@/components/icons/LogoutIcon";
 import {MobileMenuIcon} from "@/components/icons/MobileMenuIcon";
 import {useRouter} from "next/router";
 import {useGetProfileInfo} from "@/hooks/useGetProfileInfo";
+import {useSetProfileToggleRole} from "@/hooks/useSetProfileToggleRole";
 
 export default function Header(props) {
     const [windowHeight, setWindowHeight] = useState(0);
@@ -14,7 +15,9 @@ export default function Header(props) {
     const [isLogged, setIsLogged] = useState(false);
     const [userImage, setUserImage] = useState('');
     const [activeRole, setActiveRole] = useState('');
+    const [activeRole2, setActiveRole2] = useState('');
     const { getProfileInfo, loadingUserInfo, profileInfoData } = useGetProfileInfo();
+    const { profileToggleRole,profileToggleRoleData } = useSetProfileToggleRole();
     const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
 
 
@@ -33,9 +36,44 @@ export default function Header(props) {
           if (profileInfoData) {
                 setUserImage(profileInfoData?.photo)
               console.log(``, 'profileInfoData?.photo_______')
+                if (profileInfoData?.active_role == 'client') {
+                        setActiveRole2('Войти как фрилансер')
+                } else  {
+                    setActiveRole2('Войти как заказчик')
+                }
                 setActiveRole(profileInfoData?.active_role)
           }
      }, [profileInfoData])
+    const router = useRouter();
+
+    useEffect(() => {
+        if (profileToggleRoleData) {
+            const newRoleText = profileToggleRoleData?.newRole === 'freelancer'
+                ? 'Войти как фрилансер'
+                : 'Войти как заказчик';
+
+            // Set local state
+            setActiveRole2(newRoleText);
+
+            // Persist to localStorage
+            localStorage.setItem('activeRole2', newRoleText);
+
+            // Redirect logic
+            if (router.pathname === '/') {
+                router.reload();
+            } else {
+                router.push('/');
+            }
+        }
+    }, [profileToggleRoleData]);
+    useEffect(() => {
+        const savedRole = localStorage.getItem('activeRole2');
+        if (savedRole) {
+            setActiveRole2(savedRole);
+        }
+    }, []);
+
+
 
 
     const disableBodyScroll = () => {
@@ -45,7 +83,7 @@ export default function Header(props) {
     const enableBodyScroll = () => {
         document.body.style.overflow = "auto";
     };
-    const router = useRouter();
+
 
     const handleNavigateToHome = () => {
         router.push('/');
@@ -85,28 +123,72 @@ export default function Header(props) {
                                     </a>
                                 </li>
                                 <li className="header_ul_li">
-                                    <a href="/freelancers" className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
-                                        Фрилансеры
-                                    </a>
+                                    {isLogged ? (
+                                            <a href="/freelancers" className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
+                                                Фрилансеры
+                                            </a>
+                                        ) :
+                                        (
+                                            <a
+                                               className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
+                                                Фрилансеры
+                                            </a>
+                                        )
+                                    }
+
 
                                 </li>
                                 <li className="header_ul_li">
-                                    <a href="/create-order" className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
-                                        Создать задание
-                                    </a>
+                                    {isLogged && activeRole == 'client' ? (
+                                            <a href="/create-order" className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
+                                                Создать задание
+                                            </a>
+                                        )
+                                        : (
+                                            <a
+                                               className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
+                                                Создать задание
+                                            </a>
+                                        )
+                                    }
+
                                 </li>
                                 <li className="header_ul_li">
-                                    <a
-                                        href={activeRole == 'freelancer' ? '/my-projects/freelancer' : activeRole == 'client' ? '/my-projects/client' : ''}
-                                        className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}
-                                    >
-                                        Мои Проекты {activeRole}
-                                    </a>
+                                    {isLogged ? (
+                                            <a
+                                                href={activeRole == 'freelancer' ? '/my-projects/freelancer' : activeRole == 'client' ? '/my-projects/client' : ''}
+                                                className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}
+                                            >
+                                                Мои Проекты
+                                            </a>
+                                        )
+                                        :
+                                        (
+                                            <a
+                                                className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}
+                                            >
+                                                Мои Проекты 
+                                            </a>
+                                        )
+                                    }
+
                                 </li>
                                 <li className="header_ul_li">
-                                    <a href="/chat" className={`header_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
-                                        Чат
-                                    </a>
+                                    {isLogged ? (
+                                            <a href="/chat"
+                                               className={`header_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
+                                                Чат
+                                            </a>
+                                        )
+                                        :
+                                        (
+                                            <a
+                                               className={`header_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
+                                                Чат
+                                            </a>
+                                        )
+                                    }
+
                                 </li>
 
                             </ul>
@@ -163,7 +245,13 @@ export default function Header(props) {
                                     <a href="/profile/client-profile-settings" className='profile_popup_link'>Настройки</a>
                                 }
 
-                                <a href="/profile/client-profile" className='profile_popup_link'>Войти как заказчик</a>
+                                <button className='profile_popup_link'
+                                        onClick={() => {
+                                            profileToggleRole()
+                                        }}
+                                >
+                                    {activeRole2}
+                                </button>
                                 <button
                                     className='profile_logout_btn'
                                     onClick={() => {
@@ -227,34 +315,81 @@ export default function Header(props) {
                             <nav className="header_nav">
                                 <ul className="header_ul_list">
                                     <li className="header_ul_li">
-                                        <a href="/projects" className={`header_ul_link ${props.activePage === 'job_page' ? 'active_link' : ''}`}>
+                                        <a href="/projects"
+                                           className={`header_ul_link ${props.activePage === 'job_page' ? 'active_link' : ''}`}>
                                             Работа
                                         </a>
                                     </li>
                                     <li className="header_ul_li">
-                                        <a href="/freelancers" className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
-                                            Фрилансеры
-                                        </a>
-                                    </li>
-                                    <li className="header_ul_li">
-                                        <a href="/create-order" className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
-                                            Создать задание
-                                        </a>
-                                    </li>
-                                    <li className="header_ul_li">
-                                        <a href="/my-projects/freelancer" className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}>
-                                            Мои Проекты
-                                        </a>
-                                    </li>
-                                    <li className="header_ul_li">
-                                        <a href="/chat" className={`header_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
-                                            Чат
-                                        </a>
-                                    </li>
+                                        {isLogged ? (
+                                                <a href="/freelancers"
+                                                   className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
+                                                    Фрилансеры
+                                                </a>
+                                            ) :
+                                            (
+                                                <a
+                                                    className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
+                                                    Фрилансеры
+                                                </a>
+                                            )
+                                        }
 
-                                    <a href="" className='profile_popup_link'>Настройки</a>
-                                    <a href="" className='profile_popup_link'>Войти как заказчик</a>
-                                    <a href="" className='profile_popup_link'>Выйти из аккаунта</a>
+
+                                    </li>
+                                    <li className="header_ul_li">
+                                        {isLogged && activeRole == 'client' ? (
+                                                <a href="/create-order"
+                                                   className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
+                                                    Создать задание
+                                                </a>
+                                            )
+                                            : (
+                                                <a
+                                                    className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
+                                                    Создать задание
+                                                </a>
+                                            )
+                                        }
+
+                                    </li>
+                                    <li className="header_ul_li">
+                                        {isLogged ? (
+                                                <a
+                                                    href={activeRole == 'freelancer' ? '/my-projects/freelancer' : activeRole == 'client' ? '/my-projects/client' : ''}
+                                                    className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}
+                                                >
+                                                    Мои Проекты
+                                                </a>
+                                            )
+                                            :
+                                            (
+                                                <a
+                                                    className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}
+                                                >
+                                                    Мои Проекты
+                                                </a>
+                                            )
+                                        }
+
+                                    </li>
+                                    <li className="header_ul_li">
+                                        {isLogged ? (
+                                                <a href="/chat"
+                                                   className={`header_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
+                                                    Чат
+                                                </a>
+                                            )
+                                            :
+                                            (
+                                                <a
+                                                    className={`header_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
+                                                    Чат
+                                                </a>
+                                            )
+                                        }
+
+                                    </li>
 
                                 </ul>
                             </nav>

@@ -15,6 +15,7 @@ import {PaginationRightIcon} from "@/components/icons/paginationRightIcon";
 import {useGetOrderById} from "@/hooks/useGetOrderById";
 import {useCreateResponse} from "@/hooks/useCreateResponse";
 import {useGetProfileInfo} from "@/hooks/useGetProfileInfo";
+import {useGetOrderCheckStatusInfo} from "@/hooks/useGetOrderCheckStatusInfo";
 
 
 export async function getServerSideProps({ params }) {
@@ -77,15 +78,37 @@ export default function Order ({id}) {
     const [price, setPrice] = useState('');
     const [showSuccessResponsePopup, setShowSuccessResponsePopup] = useState(false);
     const { getOrderById, orderByIdData,loading } = useGetOrderById();
-    const { createResponse, createResponseData,loadingCreateResponse,responseErrorText, dateErrorText, priceErrorText } = useCreateResponse();
+    const { createResponse, createResponseData,responseErrorText, balanceErrorText, dateErrorText, priceErrorText } = useCreateResponse();
     const [activeRole, setActiveRole] = useState('');
     const { getProfileInfo, loadingUserInfo, profileInfoData } = useGetProfileInfo();
+    const { getOrderCheckStatusInfo,  orderCheckStatusData } = useGetOrderCheckStatusInfo();
+    const [isLogged, setIsLogged] = useState(false);
+    const [responseError, setResponseError] = useState('');
 
 
     useEffect(() => {
         console.log(id, 'params______id')
         getOrderById(id)
     }, [id])
+
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            setIsLogged(true);
+        } else {
+            setIsLogged(false);
+        }
+    }, []);
+
+
+    useEffect(() => {
+        if (isLogged) {
+            getOrderCheckStatusInfo(id)
+        }
+    }, [isLogged, id])
+
 
     useEffect(() => {
          if (orderByIdData) {
@@ -112,13 +135,6 @@ export default function Order ({id}) {
     }, [createResponseData])
 
 
-    useEffect(() => {
-         if (createResponseData) {
-             if (createResponseData?.message == 'Недостаточно доступных откликов для создания') {
-                       setBalanceError('Н')
-             }
-         }
-    }, [createResponseData]);
 
     useEffect(() => {
         if (profileInfoData) {
@@ -226,68 +242,76 @@ export default function Order ({id}) {
                                 </div>
 
                                 {activeRole == 'freelancer' &&
-                                    <div className='order_review_date_info_wrapper'>
-                                        <div className="order_review_wrapper">
-                                            <div className="order_review_wrapper_header">
-                                                <p className="order_review_wrapper_header_title">Ваш отклик</p>
-                                                <p className="order_review_wrapper_header_info">
-                                                    Осталось ответов на заказы: 3
-                                                </p>
-                                            </div>
-                                            <textarea
-                                                className="order_review_textarea"
-                                                value={responseText}
-                                                onChange={(event) => {
-                                                    setResponseText(event.target.value)
-                                                }}
-                                                placeholder='- Другие фрилансеры не увидят ваш отклик и ответы на него
+                                    (!orderCheckStatusData?.isResponded &&
+                                        !orderCheckStatusData?.isExecutor &&
+                                        orderCheckStatusData?.orderStatus !== 'waiting_freelancer_response' &&
+                                        orderCheckStatusData?.orderStatus !== 'in_progress') && (
+                                        <div className='order_review_date_info_wrapper'>
+                                            <div className="order_review_wrapper">
+                                                <div className="order_review_wrapper_header">
+                                                    <p className="order_review_wrapper_header_title">Ваш отклик</p>
+                                                    <p className="order_review_wrapper_header_info">
+                                                        Осталось ответов на заказы: 3
+                                                    </p>
+                                                </div>
+                                                <textarea
+                                                    className="order_review_textarea"
+                                                    value={responseText}
+                                                    onChange={(event) => {
+                                                        setResponseText(event.target.value);
+                                                    }}
+                                                    placeholder='- Другие фрилансеры не увидят ваш отклик и ответы на него
                                                         — Опишите суть предложения и что входит в стоимость работы
                                                         - Если мало информации, напишите здесь вопросы, стоимость согласуете потом'
-                                            ></textarea>
-                                            {responseErrorText &&
-                                                <p className='error_text'>{responseErrorText}</p>
-                                            }
-                                        </div>
-                                        <div className="order_date_fee_info_wrapper">
-                                            <div className="order_date_fee_input_title_wrapper">
-                                                <p className="order_date_fee_input_title">Срок исполнения в днях</p>
-                                                <input
-                                                    type="number"
-                                                    onChange={(event) => {
-                                                        setDate(event.target.value)
-                                                    }}
-                                                    className='order_date_fee_input_field'
-                                                    placeholder='13'
-
-                                                />
-                                                {dateErrorText &&
-                                                    <p className='error_text'>{dateErrorText}</p>
-                                                }
+                                                ></textarea>
+                                                {responseErrorText && <p className='error_text'>{responseErrorText}</p>}
                                             </div>
-                                            <div className="order_date_fee_input_title_wrapper">
-                                                <p className="order_date_fee_input_title">Ваш гонорар</p>
-                                                <input
-                                                    type="number"
-                                                    onChange={(event) => {
-                                                        setPrice(event.target.value)
-                                                    }}
-                                                    className='order_date_fee_input_field'
-                                                    placeholder='13'
-                                                />
-                                                {priceErrorText &&
-                                                    <p className='error_text'>{priceErrorText}</p>
-                                                }
+                                            <div className="order_date_fee_info_wrapper">
+                                                <div className="order_date_fee_input_title_wrapper">
+                                                    <p className="order_date_fee_input_title">Срок исполнения в днях</p>
+                                                    <input
+                                                        type="number"
+                                                        onChange={(event) => {
+                                                            setDate(event.target.value);
+                                                        }}
+                                                        className='order_date_fee_input_field'
+                                                        placeholder='13'
+                                                    />
+                                                    {dateErrorText && <p className='error_text'>{dateErrorText}</p>}
+                                                </div>
+                                                <div className="order_date_fee_input_title_wrapper">
+                                                    <p className="order_date_fee_input_title">Ваш гонорар</p>
+                                                    <input
+                                                        type="number"
+                                                        onChange={(event) => {
+                                                            setPrice(event.target.value);
+                                                        }}
+                                                        className='order_date_fee_input_field'
+                                                        placeholder='13'
+                                                    />
+                                                    {priceErrorText && <p className='error_text'>{priceErrorText}</p>}
+                                                </div>
                                             </div>
+                                            {balanceErrorText && (
+                                                <p className='error_text' style={{ marginBottom: 20, fontSize: 16 }}>
+                                                    {balanceErrorText}
+                                                </p>
+                                            )}
+                                            {responseError && (
+                                                <p className='error_text' style={{ marginBottom: 20, fontSize: 16 }}>
+                                                    {responseError}
+                                                </p>
+                                            )}
+                                            <button
+                                                className='reply_to_order_btn'
+                                                onClick={() => {
+                                                    makeResponse();
+                                                }}
+                                            >
+                                                Откликнуться
+                                            </button>
                                         </div>
-                                        <button
-                                            className='reply_to_order_btn'
-                                            onClick={() => {
-                                                makeResponse()
-                                            }}
-                                        >
-                                            Откликнуться
-                                        </button>
-                                    </div>
+                                    )
                                 }
 
                             </div>

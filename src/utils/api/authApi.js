@@ -314,6 +314,18 @@ export const getOrders2 = async (body = {}, page = 1, limit = 10) => {
         throw error.response?.data || error.message; // Handle and rethrow the error
     }
 };
+export const getFilters2 = async () => {
+    try {
+        // Send POST request with filter body and GET parameters (page and limit)
+        const response = await apiClient.get(
+            '/filters/get',
+
+        );
+        return response.data; // Return the response data
+    } catch (error) {
+        throw error.response?.data || error.message; // Handle and rethrow the error
+    }
+};
 
 
 export const getClientOrders2 = async (page = 1, limit = 10, status = null) => {
@@ -338,6 +350,17 @@ export const getOrderByIdApi = async (id) => {
     try {
         // Make a GET request to fetch order by ID
         const response = await apiClient.get(`/orders/${id}`);
+        // Return the response data
+        return response.data;
+    } catch (error) {
+        // Handle and rethrow the error
+        throw error.response?.data || error.message;
+    }
+};
+export const getOrderCheckStatusInfo2 = async (id) => {
+    try {
+        // Make a GET request to fetch order by ID
+        const response = await apiClient.get(`/orders/${id}/check-status`);
         // Return the response data
         return response.data;
     } catch (error) {
@@ -409,6 +432,36 @@ export const addFavoritesRequest = async (id, responseId) => {
         );
 
         console.log(id, responseId, 'id_responc_iiidiid1111')
+        // Return the response data
+        return response?.data;
+    } catch (error) {
+        // Handle and rethrow the error
+        throw error.response?.data || error.message;
+    }
+};
+export const profileToggleRole2 = async () => {
+    try {
+        // Make the request with axios
+        const response = await apiClient.post(
+            '/profile/toggle-role',
+
+        );
+
+        // Return the response data
+        return response?.data;
+    } catch (error) {
+        // Handle and rethrow the error
+        throw error.response?.data || error.message;
+    }
+};
+export const makeFiltersSave2 = async (filterData) => {
+    try {
+        // Make the request with axios
+        const response = await apiClient.post(
+            '/filters/save',
+            filterData // Pass the filter data here
+        );
+        console.log(filterData, 'filter_payload_sent_to_server');
         // Return the response data
         return response?.data;
     } catch (error) {

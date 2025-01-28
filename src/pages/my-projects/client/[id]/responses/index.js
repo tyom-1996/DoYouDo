@@ -41,6 +41,7 @@ export default function OrderForClient({ id }) {
     const {addFavorites, loadingAddFavorites,addFavoritesData  } = useAddFavorites();
     const [showDisableSelectFreelancerButton, setShowDisableSelectFreelancerButton] = useState(false);
     const [showDisableFavoriteButton, setShowDisableFavoriteButton] = useState(false);
+    const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
 
     useEffect(() => {
          getSelectedFreelancers(id)
@@ -50,29 +51,6 @@ export default function OrderForClient({ id }) {
         getFavorites(id)
     }, [id]);
 
-
-    useEffect(() => {
-        if (responsesData && selectedFreelancersData && getFavoritesData) {
-            const selectedFreelancerId = selectedFreelancersData.freelancer?.freelancerId;
-            const favoriteFreelancerIds = getFavoritesData.favorites.map(favorite => favorite.freelancerId);
-
-            // Enrich responses data with flags
-            const updatedResponses = responsesData.responses.map(response => {
-                return {
-                    ...response,
-                    isWaiting: response.freelancer_id === selectedFreelancerId,
-                    isInFavorites: favoriteFreelancerIds.includes(response.freelancer_id),
-                };
-            });
-
-            setMyResponsesList(updatedResponses);
-
-            // Debugging
-            console.log('Updated Responses:', updatedResponses);
-            console.log('Selected Freelancer ID:', selectedFreelancerId);
-            console.log('Favorite Freelancer IDs:', favoriteFreelancerIds);
-        }
-    }, [responsesData, selectedFreelancersData, getFavoritesData]);
 
 
     useEffect(() => {
@@ -142,6 +120,57 @@ export default function OrderForClient({ id }) {
     const addToFavoritesList = async (freelancerId) => {
         alert('bbb')
         await addFavorites(id, freelancerId);
+    };
+
+    const renderFreelancerButton = (item, responsesData, selectedFreelancersData, selectFavFreelancer) => {
+        if (responsesData?.hasSelectedFreelancer) {
+
+            if (item?.freelancer?.is_selected_freelancer) {
+
+                if (item?.freelancer?.orderStatus === 'waiting_freelancer_response') {
+                    return (
+                        <button
+                            className="order_single_page_item_select_user_btn"
+                            style={{ opacity: 1, fontSize: 14 }}
+                            disabled
+                        >
+                            Ожидание ответа
+                        </button>
+                    );
+                }
+                if (item?.freelancer?.orderStatus === 'in_progress') {
+                    return (
+                        <button
+                            className="order_single_page_item_select_user_btn"
+                            style={{ opacity: 1, fontSize: 14, background: 'green' }}
+                            disabled
+                        >
+                            Выбранный исполнитель
+                        </button>
+                    );
+                }
+            } else {
+                return (
+                    <button
+                        className="order_single_page_item_select_user_btn"
+                        style={{ opacity: 0.5, fontSize: 14 }}
+                        disabled
+                    >
+                        Выбрать исполнителем
+                    </button>
+                );
+            }
+        }
+
+        return (
+            <button
+                className="order_single_page_item_select_user_btn"
+                // style={{ opacity: selectedFreelancersData?.freelancer ? 0.5 : 1 }}
+                onClick={() => selectFavFreelancer(item?.response?.id)}
+            >
+                Выбрать исполнителем
+            </button>
+        );
     };
 
     return (
@@ -263,47 +292,42 @@ export default function OrderForClient({ id }) {
                                         return (
                                             <div className='order_single_page_item' key={index}>
                                                 <div className="order_single_page_item_img_info_wrapper">
+                                                    <div className="order_single_page_item_img">
+                                                        <Image
+                                                            src={item?.freelancer?.photo ?  `${imagePath}${item?.freelancer?.photo}` : '/freelancers_img7.png'}
+                                                            alt="Example Image"
+                                                            layout="fill" // Fill the parent element
+                                                            objectFit="cover" // Cover the area of the parent element
+                                                            quality={100} // Image quality
+                                                        />
+                                                    </div>
                                                     <div className="order_single_page_item_info_box">
-                                                        <p className="order_single_page_item_user_name">{item?.first_name} {item?.last_name}</p>
+                                                        <p className="order_single_page_item_user_name">{item?.freelancer?.first_name} {item?.freelancer?.last_name}</p>
                                                         <div className='order_single_page_item_price_deadline_info'>
                                                             <p className="order_single_page_item_price">
-                                                                {formattedNumber(item?.price)}
+                                                                {formattedNumber(item?.response?.price)} руб.
                                                             </p>
                                                             <p className="order_single_page_item_deadline_info">
-                                                                {item?.days_to_complete}
+                                                                Сделаю {item?.response?.days_to_complete} днем
                                                             </p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <p className="order_single_page_item_review">
-                                                    {item?.response_text}
+                                                    {item?.response?.response_text}
                                                 </p>
                                                 <div className="order_single_page_item_buttons_wrapper">
-                                                    {/* "Select as Performer" Button */}
-                                                    {item.isWaiting ? (
-                                                        <button
-                                                            className="order_single_page_item_select_user_btn"
-                                                            style={{opacity: 1, fontSize: 14}}
-                                                            disabled
-                                                        >
-                                                            Ожидание ответа от исполнителя
-                                                        </button>
-                                                    ) : (
-                                                        <button
-                                                            className="order_single_page_item_select_user_btn"
-                                                            style={{opacity: selectedFreelancersData?.freelancer ? 0.5 : 1}}
-                                                            disabled={!!selectedFreelancersData?.freelancer}
-                                                            onClick={() => selectFavFreelancer(item.freelancer_id)}
-                                                        >
-                                                            Выбрать исполнителем
-                                                        </button>
-                                                    )}
+
+                                                    <div className='order_single_page_item_select_user_btn_parent'>
+                                                        {renderFreelancerButton(item, responsesData, selectedFreelancersData, selectFavFreelancer)}
+                                                    </div>
+
 
                                                     {/* "Add to Favorites" Button */}
-                                                    {item.isInFavorites ? (
+                                                    {item.freelancer?.is_favorite ? (
                                                         <button
                                                             className="order_single_page_item_add_to_favourites_btn"
-                                                            style={{ opacity: 1 }}
+                                                            style={{opacity: 0.5}}
                                                             disabled
                                                         >
                                                             В избранных
@@ -311,9 +335,7 @@ export default function OrderForClient({ id }) {
                                                     ) : (
                                                         <button
                                                             className="order_single_page_item_add_to_favourites_btn"
-                                                            style={{ opacity: selectedFreelancersData?.freelancer ? 0.5 : 1 }}
-                                                            disabled={!!selectedFreelancersData?.freelancer}
-                                                            onClick={() => addToFavoritesList(item.freelancer_id)}
+                                                            onClick={() => addToFavoritesList(item?.freelancer?.id)}
                                                         >
                                                             В избранные
                                                         </button>

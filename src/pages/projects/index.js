@@ -20,6 +20,8 @@ import FilterModal from "@/components/FilterModal";
 import FilterMap from "@/components/FilterMapModal";
 import {useGetOrders} from "@/hooks/useGetOrders";
 import {useGetCategories} from "@/hooks/useGetCategories";
+import {useFiltersSave} from "@/hooks/useFiltersSave";
+import {useGetFilters} from "@/hooks/useGetFilters";
 
 export default function Job () {
 
@@ -136,7 +138,9 @@ export default function Job () {
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
     const { getOrders, ordersData, totalPages, loading } = useGetOrders();
+    const { getFilters, filtersData} = useGetFilters();
     const { getCategories, categoriesData } = useGetCategories();
+    const { makeFiltersSave, filtersSaveData } = useFiltersSave();
 
     const [filterBody, setFilterBody] = useState({});
     const [showFilterMobile, setShowFilterMobile] = useState(false);
@@ -153,6 +157,43 @@ export default function Job () {
     //     }
     // };
 
+    useEffect(() => {
+        if (Object.keys(filterBody).length > 0) {
+            makeFiltersSave(filterBody);
+        }
+    }, [filterBody]);
+
+    useEffect(() => {
+        getFilters(); // Call the API to get saved filters
+    }, []);
+
+    useEffect(() => {
+        if (filtersData?.filter) {
+            const { filter } = filtersData;
+
+            // Update local states based on retrieved filters
+            setFilterBody(filter);
+            setSelectedCategories(filter.categories || []);
+            setSearch(filter.keyword || '');
+
+            // Format the address as a string or fallback to a placeholder
+            const formattedAddress = filter.latitude && filter.longitude && filter.radius
+                ? `${filter.latitude}, ${filter.longitude}, ${filter.radius}`
+                : ''; // Fallback to empty if any value is missing
+            setSelectedFilterAddress(formattedAddress);
+
+            // Fetch orders with the saved filters
+            getOrders(filter, page);
+        } else {
+            // If no saved filters, ensure default fetching
+            getOrders({}, page);
+        }
+    }, [filtersData]);
+
+
+
+
+
     const handleCategorySelection = (val) => {
         let updatedCategories;
 
@@ -164,17 +205,16 @@ export default function Job () {
 
         setSelectedCategories(updatedCategories);
 
-        // Update filter body with the new categories and fetch orders
         const updatedFilterBody = { ...filterBody, categories: updatedCategories };
         setFilterBody(updatedFilterBody);
 
-        getOrders(updatedFilterBody, page);
+        getOrders(updatedFilterBody, page); // Fetch filtered orders
     };
 
 
-    useEffect(()=>{
-        getOrders(filterBody, page)
-    }, [page]);
+
+
+
 
     useEffect(()=>{
         if (categoriesData) {
@@ -547,35 +587,47 @@ export default function Job () {
 
                 <Footer activePage={"job_page"}/>
 
-                <FilterModal
+                {showFilterMobile &&
+                    <FilterModal
+                        openMap={() => setShowFilterMap(true)} // Opens the map
+                        useFilter={(filterOptions) => {
+                            // Merge new filter options with the existing filterBody
+                            const updatedFilterBody = { ...filterBody, ...filterOptions };
+                            setFilterBody(updatedFilterBody); // Update local filter state
+                            getOrders(updatedFilterBody, 1); // Fetch orders using updated filters (reset to page 1)
+                        }}
+                        isActive={showFilterMobile} // Control modal visibility
+                        categoryData={categoriesData} // Pass categories data
+                        filterAddress={selectedFilterAddress} // Pass selected filter address
+                        filterCoordinates={selectedFilterCoordinates} // Pass selected filter coordinates
+                        selectedCategories={selectedCategories} // Pass selected categories
+                        setNewSelectedCategories={(val) => {
+                            // Toggle category selection
+                            const updatedCategories = selectedCategories.includes(val)
+                                ? selectedCategories.filter((cat) => cat !== val)
+                                : [...selectedCategories, val];
 
-                    openMap={() => {
-
-                        setShowFilterMap(true)
-                    }}
-                    useFilter={(filterOptions) => {
-                        setFilterBody(filterOptions)
-                        getOrders(filterOptions, page)
-                        // console.log(filterOptions, 'filter_options___')
-                    }}
-                    isActive={showFilterMobile}
-                    categoryData={categoriesData}
-                    selectedCategories={selectedCategories}
-                    filterAddress={selectedFilterAddress}
-                    filterCoordinates={selectedFilterCoordinates}
-                    setNewSelectedCategories={(val)=>{
-
-                        if (selectedCategories.includes(val)) {
-                            const updatedCategories = selectedCategories.filter(cat => cat !== val);
+                            // Update the state
                             setSelectedCategories(updatedCategories);
-                        } else {
-                            setSelectedCategories([...selectedCategories, val]);
-                        }
-                    }}
-                    onClose={() => {
-                        setShowFilterMobile(false)
-                    }}
-                />
+                            setFilterBody((prev) => ({
+                                ...prev,
+                                categories: updatedCategories,
+                            }));
+                        }}
+                        onClose={() => setShowFilterMobile(false)} // Handle modal close
+                        resetFilter={() => {
+                            // Reset the filter state and fetch all orders
+
+                            setSelectedCategories([]);
+                            setSelectedFilterAddress('');
+                            setSelectedFilterCoordinates(null);
+                            getOrders({}, 1); // Fetch orders without filters (reset to page 1)
+                        }}
+                    />
+                }
+
+
+
 
                 <FilterMap
                     isActive={showFilterMap}

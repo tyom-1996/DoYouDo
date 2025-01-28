@@ -626,3 +626,8 @@
     font-weight: 600;
     padding-top: 50px;
 }
+
+.my_project_dropdown {
+    width: 100%;
+    border: none;
+}

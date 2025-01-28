@@ -1,44 +1,51 @@
 // import React, { useState, useEffect } from 'react';
 // import '../../assets/css/header.css';
+// import { useRouter } from 'next/router'; // For routing
 // import { FilterCloseIcon } from '../icons/FilterCloseIcon';
 // import { PasswordShowIcon } from '../icons/PasswordShowIcon';
 // import { PasswordCloseIcon } from '../icons/PasswordCloseIcon';
 // import RegisterConfirmationAccountModal from "@/components/registerConfirmationAccountModal";
 // import LoginModal from "@/components/loginModal";
-// import {SearchIcon} from "@/components/icons/SearchIcon";
-// import {DeleteAddressIcon} from "@/components/icons/DeleteAddressIcon";
+// import { SearchIcon } from "@/components/icons/SearchIcon";
+// import { DeleteAddressIcon } from "@/components/icons/DeleteAddressIcon";
 // import Category from "@/pages/includes/Category";
 //
-// const FilterModal = ({ categoryData,isActive, onClose, selectedCategories, setNewSelectedCategories, useFilter }) => {
+// const FilterModal = ({filterAddress, filterCoordinates,categoryData, isActive, onClose, selectedCategories, setNewSelectedCategories, useFilter, openMap }) => {
+//     const router = useRouter();
 //
 //     const [IsOpenForRadius, setIsOpenForRadius] = useState(false);
-//     const [radius, setRadius] = useState([
-//         '50',
-//         '100',
-//         '200',
-//         '300',
-//         '400',
-//         '500 ',
-//     ]);
+//     const [radius, setRadius] = useState(['50', '100', '200', '300', '400', '500']);
 //     const [searchCategory, setSearchCategory] = useState('');
 //     const [isCheckedAllCategories, setIsCheckedAllCategories] = useState(false);
 //
 //     const [filters, setFilters] = useState({
 //         keyword: null,
-//         latitude: null, //34.052235,
-//         longitude: null, //-118.243683,
-//         radius: null, //100,
-//         minPrice: null, //1000,
-//
-//
-//         type: null, //"remote", // offline
-//         sortBy: null, //"start_date", //created_at
-//         noResponses: false
+//         latitude: null,
+//         longitude: null,
+//         radius: null,
+//         minPrice: null,
+//         type: null,
+//         sortBy: null,
+//         noResponses: false,
+//         categories: [],
 //     });
 //
-//     useEffect(()=> {
+//
+//     useEffect(() => {
+//         if (filterCoordinates !== null) {
+//             console.log(filterCoordinates, 'filterCoordinates___A_A_')
+//             setFilters((prev) => ({
+//                 ...prev,
+//                 latitude: filterCoordinates?.lat,
+//                 longitude: filterCoordinates?.lng,
+//             }));
+//         }
+//     }, [filterCoordinates]);
+//
+//
+//     useEffect(() => {
 //         console.log(filters, 'filters');
-//     }, [filters])
+//     }, [filters]);
 //
 //     const enableBodyScroll = () => {
 //         document.body.style.overflow = 'auto';
@@ -55,20 +62,23 @@
 //     const redirectToFilterMap = () => {
 //         router.push(`/filterMap`);
 //     };
-//     const  handleSelectRadius = (item) => {
+//
+//     const handleSelectRadius = (item) => {
 //         setIsOpenForRadius(false);
 //         setFilters((prev) => ({
 //             ...prev,
-//             ["radius"]: item,
+//             radius: item,
 //         }));
-//     }
+//     };
+//
 //     const handleTaskCostChange = (e) => {
 //         const { name, value } = e.target;
 //         setFilters((prev) => ({
 //             ...prev,
 //             [name]: value,
 //         }));
-//     }
+//     };
+//
 //     const handleFilterChange = (e) => {
 //         const { name, value } = e.target;
 //         setFilters((prev) => ({
@@ -76,9 +86,9 @@
 //             [name]: value,
 //         }));
 //     };
+//
 //     const handleFilterNoResponses = (e) => {
-//         const { name, checked, value } = e.target;
-//         console.log(checked, value, 'checked_val___')
+//         const { name, checked } = e.target;
 //         setFilters((prev) => ({
 //             ...prev,
 //             [name]: checked,
@@ -93,148 +103,124 @@
 //     };
 //
 //     const handleCheckboxChange = () => {
-//         setIsCheckedAllCategories(!isCheckedAllCategories);
+//         const newStatus = !isCheckedAllCategories;
+//         setIsCheckedAllCategories(newStatus);
+//         setFilters((prev) => ({
+//             ...prev,
+//             categories: newStatus ? categoryData.map((cat) => cat.id) : [],
+//         }));
 //     };
-//     const handleFilterMenuClick = () => {
-//         // Close the filter menu when clicking on the background
-//         setShowFilterMobile(false);
-//         enableBodyScroll();
+//
+//     // const handleSearchCategoryChange = (e) => {
+//     //     const value = e.target.value;
+//     //     setSearchCategory(value);
+//     //     setFilters((prev) => ({
+//     //         ...prev,
+//     //         searchCategory: value,
+//     //     }));
+//     // };
+//
+//     const handleCategorySelection = (newSelectedCategories) => {
+//         setNewSelectedCategories(newSelectedCategories);
+//         setFilters((prev) => ({
+//             ...prev,
+//             selectedCategories: newSelectedCategories,
+//         }));
 //     };
 //
 //     const stopPropagation = (event) => {
-//         // Prevent click event from bubbling up to the filter menu
 //         event.stopPropagation();
 //     };
 //
-//
 //     const handleUseFilter = () => {
-//
+//         if (useFilter && typeof useFilter === 'function') {
+//             useFilter(filters);
+//             onClose()
+//             enableBodyScroll()
+//         }
 //     };
 //
-//
-//
+//     const resetFilters = () => {
+//         setFilters({
+//             keyword: null,
+//             latitude: null,
+//             longitude: null,
+//             radius: null,
+//             minPrice: null,
+//             type: null,
+//             sortBy: null,
+//             noResponses: false,
+//             categories: [],
+//         });
+//         setSearchCategory('');
+//         setIsCheckedAllCategories(false);
+//     };
 //
 //     return (
 //         <div
-//             className='filter_mobile_menu'
+//             className="filter_mobile_menu"
 //             onClick={() => {
-//                 onClose()
-//                 enableBodyScroll()
+//                 onClose();
+//                 enableBodyScroll();
 //             }}
 //         >
 //             <div
-//                 className='filter_mobile_menu_wrapper'
+//                 className="filter_mobile_menu_wrapper"
 //                 onClick={(e) => {
-//                     stopPropagation(e)
+//                     stopPropagation(e);
 //                 }}
 //             >
-//                 <div className='filter_mobile_menu_title_close_icon_wrapper'>
+//                 <div className="filter_mobile_menu_title_close_icon_wrapper">
 //                     <button
-//                         className='filter_mobile_menu_close_btn'
+//                         className="filter_mobile_menu_close_btn"
 //                         onClick={() => {
-//                             onClose()
-//                             enableBodyScroll()
+//                             onClose();
+//                             enableBodyScroll();
 //                         }}
 //                     >
-//                         <FilterCloseIcon/>
+//                         <FilterCloseIcon />
 //                     </button>
-//                     <p className='filter_mobile_menu_title'>Фильтр</p>
+//                     <p className="filter_mobile_menu_title">Фильтр</p>
 //                 </div>
 //                 <div className="mobile_services_filter_items_wrapper">
-//                     <div style={{width: '100%'}}>
-//                         <div
-//                             className='filter_task_categories_header'
-//                             // onClick={() => {
-//                             //     setShowHiddenFilterCategoriesPart(!showHiddenFilterCategoriesPart)
-//                             // }}
-//                         >
-//                             <p className='filter_task_categories_header_title'>Характеристики задания</p>
-//                             {/*<button*/}
-//                             {/*    className={`filter_task_categories_header_icon${showHiddenFilterCategoriesPart ? '2' : ''}`}*/}
-//                             {/*>*/}
-//                             {/*    <DropDownIcon3/>*/}
-//                             {/*</button>*/}
-//
+//                     <div style={{ width: '100%' }}>
+//                         <div className="filter_task_categories_header">
+//                             <p className="filter_task_categories_header_title">Характеристики задания</p>
 //                         </div>
-//                         {/*{showHiddenFilterCategoriesPart &&*/}
-//                         <div className='filter_task_categories_main'>
+//                         <div className="filter_task_categories_main">
 //                             <div className="filter_task_categories_input_title_wrapper filter_task_categories_input_title_wrapper2">
 //                                 <p className="filter_task_categories_input_title">местоположения</p>
 //                                 <button
-//                                     className='filter_task_categories_input_field filter_task_categories_input_field_address'
-//                                     onClick={() => {
-//                                         redirectToFilterMap()
-//                                     }}
+//                                     className="filter_task_categories_input_field filter_task_categories_input_field_address"
+//                                     onClick={openMap}
 //                                 >
-//                                     Город, адрес, метро, район
+//                                     {filterAddress !== '' ?
+//                                         filterAddress
+//                                         :
+//                                         "Город, адрес, метро, район"
+//                                     }
+//
 //                                 </button>
-//
-//                                 {/*<input*/}
-//                                 {/*    type="text"*/}
-//                                 {/*    value={address}*/}
-//                                 {/*    onChange={handleAddressChange}*/}
-//                                 {/*    placeholder="Город, адрес, метро, район"*/}
-//                                 {/*    className='filter_task_categories_input_field filter_task_categories_input_field_address'*/}
-//                                 {/*/>*/}
-//                                 {/*{address.length > 0 &&*/}
-//                                 {/*    <button*/}
-//                                 {/*        className='delete_input_btn'*/}
-//                                 {/*        onClick={() => {*/}
-//                                 {/*            setAddress('')*/}
-//                                 {/*        }}*/}
-//                                 {/*    >*/}
-//                                 {/*        <DeleteAddressIcon/>*/}
-//                                 {/*    </button>*/}
-//                                 {/*}*/}
-//
 //                             </div>
 //
 //                             <div className="radius_dropdown">
-//                                 <p className='radius_dropdown_title'>Радиус поиска</p>
-//                                 <div className="radius_dropdownHeader" onClick={() => setIsOpenForRadius(!IsOpenForRadius)}>
-//                                     <p className='radius_dropdownHeader_title'>{filters?.radius || 'Радиус поиска'}</p>
-//                                     <span className="arrow">
-//                                     {IsOpenForRadius ?
-//                                         <div style={{ transform: "rotate(-180deg)" }}>
-//                                             <svg
-//                                                 xmlns="http://www.w3.org/2000/svg"
-//                                                 width={24}
-//                                                 height={24}
-//                                                 fill="none"
-//                                             >
-//                                                 <path
-//                                                     stroke="#333"
-//                                                     strokeLinecap="round"
-//                                                     strokeLinejoin="round"
-//                                                     strokeWidth={1.5}
-//                                                     d="m18 9-6 6-1.5-1.5M6 9l2 2"
-//                                                 />
-//                                             </svg>
-//                                         </div>
-//                                         :
-//
-//                                         <svg
-//                                             xmlns="http://www.w3.org/2000/svg"
-//                                             width={24}
-//                                             height={24}
-//                                             fill="none"
-//                                         >
-//                                             <path
-//                                                 stroke="#333"
-//                                                 strokeLinecap="round"
-//                                                 strokeLinejoin="round"
-//                                                 strokeWidth={1.5}
-//                                                 d="m18 9-6 6-1.5-1.5M6 9l2 2"
-//                                             />
-//                                         </svg>
-//
-//                                     }
-//                                 </span>
+//                                 <p className="radius_dropdown_title">Радиус поиска</p>
+//                                 <div
+//                                     className="radius_dropdownHeader"
+//                                     onClick={() => setIsOpenForRadius(!IsOpenForRadius)}
+//                                 >
+//                                     <p className="radius_dropdownHeader_title">
+//                                         {filters?.radius || 'Радиус поиска'}
+//                                     </p>
 //                                 </div>
 //                                 {IsOpenForRadius && (
 //                                     <div className="radius_dropdownList radius_dropdownList2">
 //                                         {radius.map((item, index) => (
-//                                             <p key={index} className="radius_dropdownItem" onClick={() => handleSelectRadius(item)}>
+//                                             <p
+//                                                 key={index}
+//                                                 className="radius_dropdownItem"
+//                                                 onClick={() => handleSelectRadius(item)}
+//                                             >
 //                                                 {item}
 //                                             </p>
 //                                         ))}
@@ -249,73 +235,62 @@
 //                                     name="minPrice"
 //                                     onChange={handleTaskCostChange}
 //                                     placeholder="₽"
-//                                     className='filter_task_categories_input_field'
+//                                     className="filter_task_categories_input_field"
 //                                 />
 //                             </div>
 //                         </div>
-//                         {/*}*/}
-//                     </div>
 //
-//                     <div className='filter_task_categories_wrapper'>
-//                         <div className='filter_option_checkbox_items_wrapper'>
-//                             <div className='filter_option_checkbox_item'>
+//                         <div className="filter_option_checkbox_items_wrapper">
+//                             <div className="filter_option_checkbox_item">
 //                                 <h3 className="filter_option_checkbox_items_wrapper_title">Показывать только задания со статусами</h3>
 //                                 <div className="filter-option">
-//
-//                                     {/*remote*/}
-//                                     {/*offline*/}
-//
-//                                     <label className='filter_option_label'>
+//                                     <label className="filter_option_label">
 //                                         <input
 //                                             type="checkbox"
 //                                             name="type"
-//                                             value={'remote'}
-//                                             checked={filters.type == 'remote'}
+//                                             value="remote"
+//                                             checked={filters.type === 'remote'}
 //                                             onChange={handleFilterChange}
 //                                         />
-//                                         <div className='filter_option_label_title_wrapper'>
-//                                             <span className='filter_option_label_title'>Удалённая работа</span>
-//                                             <span className='filter_option_label_title2'>Никуда не надо ехать</span>
+//                                         <div className="filter_option_label_title_wrapper">
+//                                             <span className="filter_option_label_title">Удалённая работа</span>
+//                                             <span className="filter_option_label_title2">Никуда не надо ехать</span>
 //                                         </div>
-//
 //                                     </label>
 //                                 </div>
 //                                 <div className="filter-option">
-//                                     <label className='filter_option_label'>
+//                                     <label className="filter_option_label">
 //                                         <input
 //                                             type="checkbox"
 //                                             name="type"
-//                                             value={'offline'}
-//                                             checked={filters.type == 'offline'}
+//                                             value="offline"
+//                                             checked={filters.type === 'offline'}
 //                                             onChange={handleFilterChange}
 //                                         />
-//                                         <div className='filter_option_label_title_wrapper'>
-//                                             <span className='filter_option_label_title'>Оффлайн работа</span>
-//                                             <span className='filter_option_label_title2'>Надо ехать</span>
+//                                         <div className="filter_option_label_title_wrapper">
+//                                             <span className="filter_option_label_title">Оффлайн работа</span>
+//                                             <span className="filter_option_label_title2">Надо ехать</span>
 //                                         </div>
-//
 //                                     </label>
 //                                 </div>
 //                                 <div className="filter-option">
-//                                     <label className='filter_option_label'>
+//                                     <label className="filter_option_label">
 //                                         <input
 //                                             type="checkbox"
 //                                             name="noResponses"
 //                                             checked={filters.noResponses}
 //                                             onChange={handleFilterNoResponses}
 //                                         />
-//                                         <div className='filter_option_label_title_wrapper'>
-//                                             <span className='filter_option_label_title'>Задания без откликов</span>
-//                                             <span className='filter_option_label_title2'>Откликнитесь первым</span>
+//                                         <div className="filter_option_label_title_wrapper">
+//                                             <span className="filter_option_label_title">Задания без откликов</span>
+//                                             <span className="filter_option_label_title2">Откликнитесь первым</span>
 //                                         </div>
 //                                     </label>
 //                                 </div>
 //                             </div>
-//                             <div className='filter_option_checkbox_item'>
+//                             <div className="filter_option_checkbox_item">
 //                                 <h3 className="filter_option_checkbox_items_wrapper_title">Сортировать по:</h3>
 //                                 <div className="sort-options">
-//
-//                                     {/*DONE*/}
 //                                     <label className="sort-option">
 //                                         <input
 //                                             type="radio"
@@ -324,9 +299,8 @@
 //                                             checked={filters.sortBy === 'created_at'}
 //                                             onChange={handleSortChange}
 //                                         />
-//                                         <p className='sort_option_title'> Дате публикации</p>
+//                                         <p className="sort_option_title">Дате публикации</p>
 //                                     </label>
-//
 //                                     <label className="sort-option">
 //                                         <input
 //                                             type="radio"
@@ -335,89 +309,70 @@
 //                                             checked={filters.sortBy === 'start_date'}
 //                                             onChange={handleSortChange}
 //                                         />
-//                                         <p className='sort_option_title'>Срочности</p>
+//                                         <p className="sort_option_title">Срочности</p>
 //                                     </label>
-//
 //                                 </div>
 //                             </div>
 //                         </div>
+//
+//                         {/*<div className="services_search_input_field2">*/}
+//                         {/*    <div className="services_search_input_field_icon">*/}
+//                         {/*        <SearchIcon />*/}
+//                         {/*    </div>*/}
+//                         {/*    <input*/}
+//                         {/*        type="text"*/}
+//                         {/*        placeholder="Все категории"*/}
+//                         {/*        className="services_search_input"*/}
+//                         {/*        value={searchCategory}*/}
+//                         {/*        onChange={handleSearchCategoryChange}*/}
+//                         {/*    />*/}
+//                         {/*    {searchCategory.length > 0 && (*/}
+//                         {/*        <div*/}
+//                         {/*            className="input_delete_icon"*/}
+//                         {/*            onClick={() => {*/}
+//                         {/*                setSearchCategory('');*/}
+//                         {/*                setFilters((prev) => ({*/}
+//                         {/*                    ...prev,*/}
+//                         {/*                    searchCategory: '',*/}
+//                         {/*                }));*/}
+//                         {/*            }}*/}
+//                         {/*        >*/}
+//                         {/*            <DeleteAddressIcon />*/}
+//                         {/*        </div>*/}
+//                         {/*    )}*/}
 //                         {/*</div>*/}
-//
-//                         {/*</div>*/}
-//
-//                         <div className="services_search_input_field2">
-//                             <div className='services_search_input_field_icon'>
-//                                 <SearchIcon/>
-//                             </div>
-//                             <input
-//                                 type="text"
-//                                 placeholder='Все категории'
-//                                 className='services_search_input'
-//                                 value={searchCategory}
-//                                 onChange={(e) => {
-//                                     setSearchCategory(e.target.value)
-//                                 }}
-//                             />
-//                             {searchCategory.length > 0 &&
-//                                 <div
-//                                     className='input_delete_icon'
-//                                     onClick={() => {
-//                                         setSearchCategory('')
-//                                     }}
-//
-//                                 >
-//                                     <DeleteAddressIcon/>
-//                                 </div>
-//                             }
-//
-//
-//                         </div>
-//                         <div className='services_filter_item'>
-//                             <label className='service_label'>
+//                         <div className="services_filter_item">
+//                             <label className="service_label">
 //                                 <input
 //                                     type="checkbox"
 //                                     checked={isCheckedAllCategories}
 //                                     onChange={handleCheckboxChange}
-//                                     className='service_label_checkbox_input_field checkbox'
+//                                     className="service_label_checkbox_input_field checkbox"
 //                                 />
-//                                 <span className='service_label_custom_checkbox customCheckbox'></span>
+//                                 <span className="service_label_custom_checkbox customCheckbox"></span>
 //                                 Все категории
-//
 //                             </label>
 //                         </div>
 //
-//                         {/*<City*/}
-//                         {/*    cityData={citiesList}*/}
-//                         {/*    selectedCities={selectedCities}*/}
-//                         {/*    setNewSelectedCities={(val)=>{*/}
-//                         {/*        setSelectedCities(val)*/}
-//                         {/*        console.log(val)*/}
-//                         {/*    }}*/}
-//                         {/*/>*/}
-//
-//                         <div className='service_category_items_wrapper'>
-//
-//                             {categoryData && categoryData?.map((item, index) => {
-//                                 return (
+//                         <div className="service_category_items_wrapper">
+//                             {categoryData &&
+//                                 categoryData.map((item, index) => (
 //                                     <Category
+//                                         key={index}
 //                                         categoryData={item}
 //                                         selectedCategories={selectedCategories}
-//                                         setNewSelectedCategories={setNewSelectedCategories}
+//                                         setNewSelectedCategories={handleCategorySelection}
 //                                     />
-//                                 )
-//                             })}
-//
+//                                 ))}
 //                         </div>
-//                         <div className='apply_reset_filter_btn_wrapper'>
-//                             <button
-//                                 onClick={handleUseFilter}
-//                                 className='apply_filter_btn'
-//                             >
+//                         <div className="apply_reset_filter_btn_wrapper">
+//                             <button onClick={handleUseFilter} className="apply_filter_btn">
 //                                 Применить
 //                             </button>
-//                             <button className='reset_filter_btn'>Сбросить</button>
+//                             <button className="reset_filter_btn" onClick={resetFilters}>
+//                                 Сбросить
+//                             </button>
 //                         </div>
-//
 //                     </div>
 //                 </div>
 //             </div>
@@ -426,29 +381,36 @@
 // };
 //
 // export default FilterModal;
-//
-//
 
 
 import React, { useState, useEffect } from 'react';
 import '../../assets/css/header.css';
-import { useRouter } from 'next/router'; // For routing
+import { useRouter } from 'next/router';
 import { FilterCloseIcon } from '../icons/FilterCloseIcon';
-import { PasswordShowIcon } from '../icons/PasswordShowIcon';
-import { PasswordCloseIcon } from '../icons/PasswordCloseIcon';
-import RegisterConfirmationAccountModal from "@/components/registerConfirmationAccountModal";
-import LoginModal from "@/components/loginModal";
 import { SearchIcon } from "@/components/icons/SearchIcon";
 import { DeleteAddressIcon } from "@/components/icons/DeleteAddressIcon";
 import Category from "@/pages/includes/Category";
+import {useGetFilters} from "@/hooks/useGetFilters";
 
-const FilterModal = ({filterAddress, filterCoordinates,categoryData, isActive, onClose, selectedCategories, setNewSelectedCategories, useFilter, openMap }) => {
+const FilterModal = ({
+                         filterAddress,
+                         filterCoordinates,
+                         categoryData,
+                         isActive,
+                         onClose,
+                         selectedCategories,
+                         setNewSelectedCategories,
+                         useFilter,
+                         openMap,
+                         resetFilter
+                     }) => {
     const router = useRouter();
 
     const [IsOpenForRadius, setIsOpenForRadius] = useState(false);
     const [radius, setRadius] = useState(['50', '100', '200', '300', '400', '500']);
-    const [searchCategory, setSearchCategory] = useState('');
     const [isCheckedAllCategories, setIsCheckedAllCategories] = useState(false);
+    const { getFilters, filtersData} = useGetFilters();
+
 
     const [filters, setFilters] = useState({
         keyword: null,
@@ -462,10 +424,28 @@ const FilterModal = ({filterAddress, filterCoordinates,categoryData, isActive, o
         categories: [],
     });
 
+    useEffect(() => {
+        getFilters()
+    }, []);
+    useEffect(() => {
+        if (filtersData) {
+            console.log(filtersData, 'filterjakakak')
+            setFilters({
+                keyword: filtersData?.filter?.keyword ? filtersData?.filter?.keyword :  null,
+                latitude: filtersData?.filter?.latitude ? filtersData?.filter?.latitude :  null,
+                longitude: filtersData?.filter?.longitude ? filtersData?.filter?.longitude :  null,
+                radius: filtersData?.filter?.radius ?  filtersData?.filter?.radius : null,
+                minPrice: filtersData?.filter?.minPrice ? filtersData?.filter?.minPrice : null,
+                type: filtersData?.filter?.type ? filtersData?.filter?.type : null,
+                sortBy: filtersData?.filter?.sortBy ? filtersData?.filter?.sortBy : null,
+                noResponses: filtersData?.filter?.noResponses ?  filtersData?.filter?.noResponses : false,
+                categories: filtersData?.filter?.categories.length >  0 ? filtersData?.filter?.categories : [],
+            });
+        }
+    }, [filtersData]);
 
     useEffect(() => {
         if (filterCoordinates !== null) {
-            console.log(filterCoordinates, 'filterCoordinates___A_A_')
             setFilters((prev) => ({
                 ...prev,
                 latitude: filterCoordinates?.lat,
@@ -473,11 +453,6 @@ const FilterModal = ({filterAddress, filterCoordinates,categoryData, isActive, o
             }));
         }
     }, [filterCoordinates]);
-
-
-    useEffect(() => {
-        console.log(filters, 'filters');
-    }, [filters]);
 
     const enableBodyScroll = () => {
         document.body.style.overflow = 'auto';
@@ -490,10 +465,6 @@ const FilterModal = ({filterAddress, filterCoordinates,categoryData, isActive, o
     if (!isActive) {
         return null;
     }
-
-    const redirectToFilterMap = () => {
-        router.push(`/filterMap`);
-    };
 
     const handleSelectRadius = (item) => {
         setIsOpenForRadius(false);
@@ -543,36 +514,53 @@ const FilterModal = ({filterAddress, filterCoordinates,categoryData, isActive, o
         }));
     };
 
-    // const handleSearchCategoryChange = (e) => {
-    //     const value = e.target.value;
-    //     setSearchCategory(value);
-    //     setFilters((prev) => ({
-    //         ...prev,
-    //         searchCategory: value,
-    //     }));
-    // };
-
     const handleCategorySelection = (newSelectedCategories) => {
         setNewSelectedCategories(newSelectedCategories);
         setFilters((prev) => ({
             ...prev,
-            selectedCategories: newSelectedCategories,
+            categories: newSelectedCategories,
         }));
-    };
-
-    const stopPropagation = (event) => {
-        event.stopPropagation();
     };
 
     const handleUseFilter = () => {
         if (useFilter && typeof useFilter === 'function') {
             useFilter(filters);
-            onClose()
-            enableBodyScroll()
+            onClose();
+            enableBodyScroll();
         }
     };
 
-    const resetFilters = () => {
+    // const resetFilters = () => {
+    //     resetFilter()
+    //     // // Reset the local filters
+
+    //     //
+    //     // setIsCheckedAllCategories(false); // Uncheck "Все категории"
+    //     //
+    //     // // Reset parent states through callbacks
+    //     // setNewSelectedCategories([]); // Clear categories
+    //     //
+    //     // // Clear the address
+    //     // if (typeof useFilter === 'function') {
+    //     //     useFilter({
+    //     //         keyword: null,
+    //     //         latitude: null,
+    //     //         longitude: null,
+    //     //         radius: null,
+    //     //         minPrice: null,
+    //     //         type: null,
+    //     //         sortBy: null,
+    //     //         noResponses: false,
+    //     //         categories: [],
+    //     //     });
+    //     // }
+    //
+    //
+    // };
+
+
+    const handleResetFilter = () => {
+       resetFilter()
         setFilters({
             keyword: null,
             latitude: null,
@@ -584,8 +572,13 @@ const FilterModal = ({filterAddress, filterCoordinates,categoryData, isActive, o
             noResponses: false,
             categories: [],
         });
-        setSearchCategory('');
-        setIsCheckedAllCategories(false);
+    }
+
+
+
+
+    const stopPropagation = (event) => {
+        event.stopPropagation();
     };
 
     return (
@@ -621,16 +614,14 @@ const FilterModal = ({filterAddress, filterCoordinates,categoryData, isActive, o
                         </div>
                         <div className="filter_task_categories_main">
                             <div className="filter_task_categories_input_title_wrapper filter_task_categories_input_title_wrapper2">
-                                <p className="filter_task_categories_input_title">местоположения</p>
+                                <p className="filter_task_categories_input_title">Местоположение</p>
                                 <button
                                     className="filter_task_categories_input_field filter_task_categories_input_field_address"
                                     onClick={openMap}
                                 >
-                                    {filterAddress !== '' ?
-                                        filterAddress
-                                        :
-                                        "Город, адрес, метро, район"
-                                    }
+                                    {filterAddress && filterAddress !== 'null'
+                                        ? filterAddress
+                                        : "Город, адрес, метро, район"}
 
                                 </button>
                             </div>
@@ -661,13 +652,21 @@ const FilterModal = ({filterAddress, filterCoordinates,categoryData, isActive, o
                             </div>
                             <div className="filter_task_categories_input_title_wrapper">
                                 <p className="filter_task_categories_input_title">Стоимость заданий от</p>
+                                {/*<input*/}
+                                {/*    type="text"*/}
+                                {/*    value={filters.minPrice}*/}
+                                {/*    name="minPrice"*/}
+                                {/*    onChange={handleTaskCostChange}*/}
+                                {/*    placeholder="₽"*/}
+                                {/*    className="filter_task_categories_input_field"*/}
+                                {/*/>*/}
                                 <input
-                                    type="text"
-                                    value={filters.minPrice}
-                                    name="minPrice"
-                                    onChange={handleTaskCostChange}
                                     placeholder="₽"
                                     className="filter_task_categories_input_field"
+                                    type="text"
+                                    value={filters.minPrice || ''}
+                                    name="minPrice"
+                                    onChange={(e) => setFilters({...filters, minPrice: e.target.value})}
                                 />
                             </div>
                         </div>
@@ -747,32 +746,6 @@ const FilterModal = ({filterAddress, filterCoordinates,categoryData, isActive, o
                             </div>
                         </div>
 
-                        {/*<div className="services_search_input_field2">*/}
-                        {/*    <div className="services_search_input_field_icon">*/}
-                        {/*        <SearchIcon />*/}
-                        {/*    </div>*/}
-                        {/*    <input*/}
-                        {/*        type="text"*/}
-                        {/*        placeholder="Все категории"*/}
-                        {/*        className="services_search_input"*/}
-                        {/*        value={searchCategory}*/}
-                        {/*        onChange={handleSearchCategoryChange}*/}
-                        {/*    />*/}
-                        {/*    {searchCategory.length > 0 && (*/}
-                        {/*        <div*/}
-                        {/*            className="input_delete_icon"*/}
-                        {/*            onClick={() => {*/}
-                        {/*                setSearchCategory('');*/}
-                        {/*                setFilters((prev) => ({*/}
-                        {/*                    ...prev,*/}
-                        {/*                    searchCategory: '',*/}
-                        {/*                }));*/}
-                        {/*            }}*/}
-                        {/*        >*/}
-                        {/*            <DeleteAddressIcon />*/}
-                        {/*        </div>*/}
-                        {/*    )}*/}
-                        {/*</div>*/}
                         <div className="services_filter_item">
                             <label className="service_label">
                                 <input
@@ -801,7 +774,7 @@ const FilterModal = ({filterAddress, filterCoordinates,categoryData, isActive, o
                             <button onClick={handleUseFilter} className="apply_filter_btn">
                                 Применить
                             </button>
-                            <button className="reset_filter_btn" onClick={resetFilters}>
+                            <button className="reset_filter_btn" onClick={handleResetFilter}>
                                 Сбросить
                             </button>
                         </div>
@@ -813,3 +786,4 @@ const FilterModal = ({filterAddress, filterCoordinates,categoryData, isActive, o
 };
 
 export default FilterModal;
+

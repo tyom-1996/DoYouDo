@@ -16,6 +16,7 @@ import {PaginationRightIcon} from "@/components/icons/paginationRightIcon";
 import {FilterCloseIcon} from "@/components/icons/FilterCloseIcon";
 import {DropDownIcon3} from "@/components/icons/DropDownIcon3";
 import {DeleteAddressIcon} from "@/components/icons/DeleteAddressIcon";
+import {useGetCategories} from "@/hooks/useGetCategories";
 
 export default function Freelancers () {
     const [windowHeight, setWindowHeight] = useState(0);
@@ -354,6 +355,8 @@ export default function Freelancers () {
         '500 км',
     ]);
     const [address, setAddress] = useState('');
+    const { getCategories, categoriesData } = useGetCategories();
+
     const [coordinates, setCoordinates] = useState([55.751574, 37.573856]);
     const [filters, setFilters] = useState({
         remoteWork: false,
@@ -383,6 +386,11 @@ export default function Freelancers () {
         setIsCheckedAllCategories(!isCheckedAllCategories);
     };
 
+    useEffect(()=>{
+        if (categoriesData) {
+            console.log(categoriesData, 'categoriesData___')
+        }
+    }, [categoriesData]);
 
 
     useEffect(() => {
@@ -453,6 +461,19 @@ export default function Freelancers () {
         // Prevent click event from bubbling up to the filter menu
         event.stopPropagation();
     };
+    const handleCategorySelection = (val) => {
+        let updatedCategories;
+
+        if (selectedCategories.includes(val)) {
+            updatedCategories = selectedCategories.filter((cat) => cat !== val);
+        } else {
+            updatedCategories = [...selectedCategories, val];
+        }
+
+        setSelectedCategories(updatedCategories);
+
+    };
+
     return (
         <>
             <main className='general_page_wrapper' id='freelancers_page'>
@@ -544,44 +565,55 @@ export default function Freelancers () {
                             </div>
                             <div className="services_items_filter_main_wrapper">
                                 <div className="services_filter_items_wrapper">
-
-                                    <div className='services_filter_item'>
-                                        <label className='service_label'>
-                                            <input
-                                                type="checkbox"
-                                                checked={isCheckedAllCategories2}
-                                                onChange={handleCheckboxChange2}
-                                                className='service_label_checkbox_input_field checkbox'
-                                            />
-                                            <span className='service_label_custom_checkbox customCheckbox'></span>
-                                            Все категории
-
-                                        </label>
-                                    </div>
-
-                                    <City
-                                        cityData={citiesList}
-                                        selectedCities={selectedCities}
-                                        setNewSelectedCities={(val)=>{
-                                            setSelectedCities(val)
-                                            console.log(val)
-                                        }}
-                                    />
-
-                                    <div className='service_category_items_wrapper'>
-                                        {filterCategoryList.map((item, index) => {
-                                            return (
+                                    <div className="service_category_items_wrapper">
+                                        {categoriesData &&
+                                            categoriesData.map((item) => (
                                                 <Category
+                                                    key={item.id} // Ensure a unique key
                                                     categoryData={item}
                                                     selectedCategories={selectedCategories}
-                                                    setNewSelectedCategories={(val)=>{
-                                                        setSelectedCategories(val)
-                                                        console.log(val)
-                                                    }}
+                                                    setNewSelectedCategories={handleCategorySelection}
                                                 />
-                                            )
-                                        })}
+                                            ))}
                                     </div>
+
+                                    {/*<div className='services_filter_item'>*/}
+                                    {/*    <label className='service_label'>*/}
+                                    {/*        <input*/}
+                                    {/*            type="checkbox"*/}
+                                    {/*            checked={isCheckedAllCategories2}*/}
+                                    {/*            onChange={handleCheckboxChange2}*/}
+                                    {/*            className='service_label_checkbox_input_field checkbox'*/}
+                                    {/*        />*/}
+                                    {/*        <span className='service_label_custom_checkbox customCheckbox'></span>*/}
+                                    {/*        Все категории*/}
+
+                                    {/*    </label>*/}
+                                    {/*</div>*/}
+
+                                    {/*<City*/}
+                                    {/*    cityData={citiesList}*/}
+                                    {/*    selectedCities={selectedCities}*/}
+                                    {/*    setNewSelectedCities={(val)=>{*/}
+                                    {/*        setSelectedCities(val)*/}
+                                    {/*        console.log(val)*/}
+                                    {/*    }}*/}
+                                    {/*/>*/}
+
+                                    {/*<div className='service_category_items_wrapper'>*/}
+                                    {/*    {filterCategoryList.map((item, index) => {*/}
+                                    {/*        return (*/}
+                                    {/*            <Category*/}
+                                    {/*                categoryData={item}*/}
+                                    {/*                selectedCategories={selectedCategories}*/}
+                                    {/*                setNewSelectedCategories={(val)=>{*/}
+                                    {/*                    setSelectedCategories(val)*/}
+                                    {/*                    console.log(val)*/}
+                                    {/*                }}*/}
+                                    {/*            />*/}
+                                    {/*        )*/}
+                                    {/*    })}*/}
+                                    {/*</div>*/}
                                 </div>
                                 <div className='services_items_wrapper'>
                                     <div className='services_items_wrapper_child'>

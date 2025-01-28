@@ -395,6 +395,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import {DropDownIcon2} from "@/components/icons/DropDownIcon2";
 import {useRouter} from "next/router";
 import {useGetSelectedFreelancers} from "@/hooks/useGetSelectedFreelancers";
+import Image from "next/image";
 
 export async function getServerSideProps({ params }) {
     const { id } = params;
@@ -414,6 +415,7 @@ export default function OrderForClient({ id }) {
     const [showClosingStateBtn, setShowClosingStateBtn] = useState(true);
 
     const { getSelectedFreelancers, loadingSelectedFreelancers, selectedFreelancersData } = useGetSelectedFreelancers();
+    const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
 
     const router = useRouter();
 
@@ -461,6 +463,10 @@ export default function OrderForClient({ id }) {
     const redirectToEditPage = () => {
         router.push(`/my-projects/client/${id}/edit`);
     };
+    const formattedNumber = (number) => {
+        return number.toString().replace(/\.00$/, '');
+    };
+
 
     return (
         <>
@@ -507,21 +513,46 @@ export default function OrderForClient({ id }) {
                                 </div>
                             )}
                         </div>
+
                         <div className="order_single_page_items_wrapper">
                             {selectedFreelancersData?.freelancer  ? (
                                 <div style={{width: '100%'}}>
                                     {selectedFreelancersData?.freelancer && (
                                         <div className="order_single_page_item">
                                             <div className="order_single_page_item_img_info_wrapper">
+                                                <div className="order_single_page_item_img">
+                                                    <Image
+                                                        src={selectedFreelancersData?.freelancer?.photo ? `${imagePath}${selectedFreelancersData?.freelancer?.photo}` : '/freelancers_img7.png'}
+                                                        alt="Example Image"
+                                                        layout="fill" // Fill the parent element
+                                                        objectFit="cover" // Cover the area of the parent element
+                                                        quality={100} // Image quality
+                                                    />
+                                                </div>
                                                 <div className="order_single_page_item_info_box">
                                                     <p className="order_single_page_item_user_name">
-                                                        {selectedFreelancersData.freelancer.first_name} {selectedFreelancersData.freelancer.last_name}
+                                                        {selectedFreelancersData?.freelancer?.first_name} {selectedFreelancersData?.freelancer?.last_name}
                                                     </p>
+                                                    <div className='order_single_page_item_price_deadline_info'>
+                                                        <p className="order_single_page_item_price">
+                                                            {formattedNumber(selectedFreelancersData?.response?.price)} руб.
+                                                        </p>
+                                                        <p className="order_single_page_item_deadline_info">
+                                                            Сделаю {selectedFreelancersData?.response?.days_to_complete} днем
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <p className="order_single_page_item_review">
+                                                {selectedFreelancersData?.response?.response_text}
+                                            </p>
+
+
                                             <div className="order_single_page_item_buttons_wrapper">
-                                                {showClosingStateBtn ? (
-                                                    <button className="order_single_page_item_waiting_for_a_response_btn">Ожидание ответа от исполнителя</button>
+                                                {selectedFreelancersData?.order?.status == 'waiting_freelancer_response' ? (
+                                                    <button
+                                                        className="order_single_page_item_waiting_for_a_response_btn">Ожидание
+                                                        ответа от исполнителя</button>
                                                 ) : (
                                                     <button className="order_single_page_item_chat_btn">В Чат</button>
                                                 )}
@@ -529,7 +560,7 @@ export default function OrderForClient({ id }) {
                                         </div>
                                     )}
                                 </div>
-                            )
+                                )
                                 : (
 
                                     <p className='not_found_text'>Для этого заказа фрилансер не выбран.</p>
