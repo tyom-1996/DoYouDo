@@ -15,7 +15,7 @@ export const useMakeOrder = () => {
             console.log(data, 'make_order_data___');
         } catch (error) {
             console.log(error, '------')
-            setErrorText(error );
+            setErrorText(error?.message );
         } finally {
             setLoadingMakeOrder(false);
         }

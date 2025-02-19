@@ -167,7 +167,7 @@ export default function Header(props) {
                                             <a
                                                 className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}
                                             >
-                                                Мои Проекты 
+                                                Мои Проекты
                                             </a>
                                         )
                                     }

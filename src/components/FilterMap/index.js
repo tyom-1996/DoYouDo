@@ -29,7 +29,7 @@ const FilterMap = ({onSelectAddress}) => {
     const [showAddressesList, setShowAddressesList] = useState(false);
     const router = useRouter();
 
-    const NEXT_PUBLIC_GOOGLE_MAPS_API_KEY = 'AIzaSyAvTddoHzPpejdOPc3kX6-EBvZcAmD_sFg';
+
 
 
     // const handleSave = async () => {
@@ -175,7 +175,7 @@ const FilterMap = ({onSelectAddress}) => {
                 </div>
 
                 {showAddressesList && (
-                    <div style={{ width: '97%', height: '100%', position: 'absolute', top: '121px', alignSelf: 'center', backgroundColor: '#fff', zIndex: 99 }}>
+                    <div style={{ width: '100%', height: '100%', position: 'absolute', top: '70px', alignSelf: 'center', backgroundColor: '#fff', zIndex: 99 }}>
                         <ul style={{ maxHeight: '350px', overflowY: 'scroll', backgroundColor: '#fff', borderColor: '#ccc', borderWidth: '1px', borderRadius: '4px', marginTop: '5px', padding: '8px' }}>
                             {foundAddressesBox.map((item, index) => (
                                 <li key={index} onClick={() => selectAddress(item)} style={{ padding: '10px', borderBottom: '1px solid #ddd', cursor: 'pointer' }}>
@@ -187,7 +187,7 @@ const FilterMap = ({onSelectAddress}) => {
                 )}
 
                 <div style={containerStyle}>
-                    <LoadScript googleMapsApiKey={NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
+                    <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
 
                         <GoogleMap
                             // extraMapTypes={['terrain']}

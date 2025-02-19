@@ -81,7 +81,7 @@ export default function OrderForClient ({id}) {
     useEffect(() => {
         if (orderByIdData) {
             // Set all the other data as before
-            if (orderByIdData?.order?.type === "offline") {
+            if (orderByIdData?.order?.type === "remote") {
                 setSelectedPlace('Удаленная работа');
             } else {
                 setSelectedPlace('Работа на месте');

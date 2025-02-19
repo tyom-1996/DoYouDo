@@ -6,27 +6,21 @@ import Footer from '../../components/footer'
 import ImageUploader from '../includes/ImageUploader'
 import Head from 'next/head';
 import 'react-datepicker/dist/react-datepicker.css';
+import {useGetCategories} from "@/hooks/useGetCategories";
 
 
 export default function AddProject () {
     const [windowHeight, setWindowHeight] = useState(0);
     const [isOpenForCategories, setIsOpenForCategories] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('');
-    const [categories, setCategories] = useState([
-        'Разработка андроид приложения',
-        'Дизайн',
-        'Компьютерная помощь',
-        'Разработка ПО',
-        'Красота и здоровье',
-    ]);
     const [projectName, setProjectName] = useState('');
     const [description, setDescription] = useState('');
-
-    const handleSelectCategory = (category) => {
-        setSelectedCategory(category);
-        setIsOpenForCategories(false);
-    };
-
+    const { getCategories, loadingCategoryInfo, categoriesData } = useGetCategories();
+    const [isOpenForSubCategories, setIsOpenForSubCategories] = useState(false);
+    const [selectedSubCategory, setSelectedSubCategory] = useState('');
+    const [selectedSubCategoryId, setSelectedSubCategoryId] = useState(null);
+    const [subCategories, setSubCategories] = useState([]);
+    const [categoryError, setCategoryError] = useState('');
     const handleProjectNameChange = (event) => {
         setProjectName(event.target.value);
     };
@@ -40,6 +34,19 @@ export default function AddProject () {
             setWindowHeight(window.innerHeight);
         }
     }, []);
+    const handleSelectCategory = (category) => {
+        setSelectedCategory(category); // Store the whole category object
+        setSubCategories(category?.subcategories); // Load corresponding subcategories
+        setIsOpenForCategories(false);
+        setSelectedSubCategory(null); // Reset subcategory when category changes
+    };
+
+    const handleSelectSubCategory = (subCategory) => {
+        console.log(subCategory, 'subs___')
+        setSelectedSubCategory(subCategory);
+        setSelectedSubCategoryId(subCategory?.id);
+        setIsOpenForSubCategories(false); // Close the dropdown
+    };
 
     return (
         <>
@@ -68,57 +75,81 @@ export default function AddProject () {
                                         placeholder='Название проекта'
                                     />
                                 </div>
+
                                 <div className="category_dropdown">
                                     <p className='category_dropdown_title'>Отрасль</p>
-                                    <div className="create_order_dropdownHeader" onClick={() => setIsOpenForCategories(!isOpenForCategories)}>
-                                        <p className='create_order_dropdownHeader_title'>{selectedCategory || 'Выберите категорию'}</p>
-                                        <span className="arrow">
-                                            {isOpenForCategories ?
-                                                <div style={{ transform: "rotate(-180deg)" }}>
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width={24}
-                                                        height={24}
-                                                        fill="none"
-                                                    >
-                                                        <path
-                                                            stroke="#333"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={1.5}
-                                                            d="m18 9-6 6-1.5-1.5M6 9l2 2"
-                                                        />
+                                    <div className="add_category_dropdown add_category_dropdown1">
+                                        <div className="add_category_create_order_dropdownHeader"
+                                             onClick={() => setIsOpenForCategories(!isOpenForCategories)}>
+                                            <p className='add_category_create_order_dropdownHeader_title'>{selectedCategory?.name || 'Категория'}</p>
+                                            <span className="arrow">
+                                                {isOpenForCategories ?
+                                                    <div style={{transform: "rotate(-180deg)"}}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24}
+                                                             fill="none">
+                                                            <path stroke="#333" strokeLinecap="round"
+                                                                  strokeLinejoin="round" strokeWidth={1.5}
+                                                                  d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
+                                                        </svg>
+                                                    </div>
+                                                    :
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24}
+                                                         fill="none">
+                                                        <path stroke="#333" strokeLinecap="round" strokeLinejoin="round"
+                                                              strokeWidth={1.5} d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
                                                     </svg>
-                                                </div>
-                                                :
-
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width={24}
-                                                    height={24}
-                                                    fill="none"
-                                                >
-                                                    <path
-                                                        stroke="#333"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={1.5}
-                                                        d="m18 9-6 6-1.5-1.5M6 9l2 2"
-                                                    />
-                                                </svg>
-
-                                            }
-                                        </span>
-                                    </div>
-                                    {isOpenForCategories && (
-                                        <div className="dropdownList dropdownList1">
-                                            {categories.map((category, index) => (
-                                                <p key={index} className="dropdownItem" onClick={() => handleSelectCategory(category)}>
-                                                    {category}
-                                                </p>
-                                            ))}
+                                                }
+                                            </span>
                                         </div>
-                                    )}
+                                        {isOpenForCategories && (
+                                            <div className="add_category_dropdownList add_category_dropdownList1">
+                                                {categoriesData && categoriesData.map((category) => (
+                                                    <p key={category?.id} className="add_category_dropdownItem"
+                                                       onClick={() => handleSelectCategory(category)}>
+                                                        {category?.name}
+                                                    </p>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                    {/* Subcategory Dropdown */}
+                                    <div className="add_category_dropdown add_category_dropdown2">
+                                        <div className="add_category_create_order_dropdownHeader"
+                                             onClick={() => setIsOpenForSubCategories(!isOpenForSubCategories)}>
+                                            <p className='add_category_create_order_dropdownHeader_title'>{selectedSubCategory?.name || 'Подкатегория'}</p>
+                                            <span className="arrow">
+                                                {isOpenForSubCategories ?
+                                                    <div style={{transform: "rotate(-180deg)"}}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24}
+                                                             fill="none">
+                                                            <path stroke="#333" strokeLinecap="round"
+                                                                  strokeLinejoin="round" strokeWidth={1.5}
+                                                                  d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
+                                                        </svg>
+                                                    </div>
+                                                    :
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24}
+                                                         fill="none">
+                                                        <path stroke="#333" strokeLinecap="round" strokeLinejoin="round"
+                                                              strokeWidth={1.5} d="m18 9-6 6-1.5-1.5M6 9l2 2"/>
+                                                    </svg>
+                                                }
+                                            </span>
+                                        </div>
+                                        {isOpenForSubCategories && (
+                                            <div className="add_category_dropdownList add_category_dropdownList2">
+                                                {subCategories && subCategories.map((subCategory) => (
+                                                    <p key={subCategory?.id} className="add_category_dropdownItem"
+                                                       onClick={() => handleSelectSubCategory(subCategory)}>
+                                                        {subCategory?.name}
+                                                    </p>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                    {categoryError &&
+                                        <p className='error_text'>{categoryError}</p>
+                                    }
                                 </div>
                                 <div className='upload_photo_wrapper'>
                                     <p className='upload_photo_wrapper_title'>Добавить фото</p>
@@ -144,7 +175,7 @@ export default function AddProject () {
                         </button>
                     </div>
                 </div>
-                <Footer />
+                <Footer/>
 
             </main>
         </>

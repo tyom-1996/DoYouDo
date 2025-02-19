@@ -114,13 +114,15 @@ export default function OrderForClient({ id }) {
     };
 
     const selectFavFreelancer = async (responseId) => {
-        alert('hhh')
         await selectFreelancer(id, responseId);
+        getSelectedFreelancers(id)
     };
+
     const addToFavoritesList = async (freelancerId) => {
-        alert('bbb')
         await addFavorites(id, freelancerId);
+        getFavorites(id); // Refetch the favorite list after adding
     };
+
 
     const renderFreelancerButton = (item, responsesData, selectedFreelancersData, selectFavFreelancer) => {
         if (responsesData?.hasSelectedFreelancer) {
@@ -173,6 +175,10 @@ export default function OrderForClient({ id }) {
         );
     };
 
+
+    const redirectToFreelancerSinglePage = () => {
+        router.push(`/freelancers/${id}`);
+    }
     return (
         <>
             <main className='general_page_wrapper'>
@@ -292,9 +298,14 @@ export default function OrderForClient({ id }) {
                                         return (
                                             <div className='order_single_page_item' key={index}>
                                                 <div className="order_single_page_item_img_info_wrapper">
-                                                    <div className="order_single_page_item_img">
+                                                    <div
+                                                        className="order_single_page_item_img"
+                                                        onClick={() => {
+                                                            redirectToFreelancerSinglePage(item?.id)
+                                                        }}
+                                                    >
                                                         <Image
-                                                            src={item?.freelancer?.photo ?  `${imagePath}${item?.freelancer?.photo}` : '/freelancers_img7.png'}
+                                                            src={item?.freelancer?.photo ?  `${imagePath}${item?.freelancer?.photo}` : '/upload_img1.png'}
                                                             alt="Example Image"
                                                             layout="fill" // Fill the parent element
                                                             objectFit="cover" // Cover the area of the parent element

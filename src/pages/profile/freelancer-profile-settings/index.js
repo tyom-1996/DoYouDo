@@ -15,6 +15,7 @@ export default function FreelancerProfileSettingsPage () {
     const [surname, setSurname] = useState('');
     const [aboutMe, setAboutMe] = useState('');
     const [email, setEmail] = useState('');
+    const [experience, setExperience] = useState('');
     const [selectedStartDate, setSelectedStartDate] = useState(null);
     const [selectedEndDate, setSelectedEndDate] = useState(null);
 
@@ -65,6 +66,9 @@ export default function FreelancerProfileSettingsPage () {
     };
     const handleSurnameChange = (event) => {
         setSurname(event.target.value);
+    };
+    const handleExperienceChange = (event) => {
+        setExperience(event.target.value);
     };
     const handleAboutMeChange = (event) => {
         setAboutMe(event.target.value);
@@ -147,6 +151,16 @@ export default function FreelancerProfileSettingsPage () {
                                                     className='settings_item_input_field'
                                                 />
                                             </div>
+                                            <div className='settings_item_input_title_wrapper'>
+                                                <p className='settings_item_input_title'>Опыт</p>
+                                                <input
+                                                    type="text"
+                                                    value={experience}
+                                                    onChange={handleExperienceChange}
+                                                    className='settings_item_input_field'
+                                                    placeholder='Опыт'
+                                                />
+                                            </div>
                                             <div className='settings_item_add_passport_title_btn_wrapper'>
                                                 <p className='settings_item_add_passport_title'>Пасспорт</p>
                                                 <button
@@ -171,25 +185,26 @@ export default function FreelancerProfileSettingsPage () {
                                             </div>
                                             <div className="settings_dropdown settings_dropdown1">
                                                 <p className='settings_dropdown_title'>Пол</p>
-                                                <div className="settings_dropdownHeader" onClick={() => setIsOpenForGender(!isOpenForGender)}>
+                                                <div className="settings_dropdownHeader"
+                                                     onClick={() => setIsOpenForGender(!isOpenForGender)}>
                                                     <p className='settings_dropdownHeader_title'>{selectedGender || 'Пол'}</p>
                                                     <span className="arrow">
                                                             {isOpenForGender ?
-                                                                <div style={{ transform: "rotate(-180deg)" }}>
-                                                                        <svg
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            width={24}
-                                                                            height={24}
-                                                                            fill="none"
-                                                                        >
-                                                                            <path
-                                                                                stroke="#333"
-                                                                                strokeLinecap="round"
-                                                                                strokeLinejoin="round"
-                                                                                strokeWidth={1.5}
-                                                                                d="m18 9-6 6-1.5-1.5M6 9l2 2"
-                                                                            />
-                                                                        </svg>
+                                                                <div style={{transform: "rotate(-180deg)"}}>
+                                                                    <svg
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        width={24}
+                                                                        height={24}
+                                                                        fill="none"
+                                                                    >
+                                                                        <path
+                                                                            stroke="#333"
+                                                                            strokeLinecap="round"
+                                                                            strokeLinejoin="round"
+                                                                            strokeWidth={1.5}
+                                                                            d="m18 9-6 6-1.5-1.5M6 9l2 2"
+                                                                        />
+                                                                    </svg>
                                                                 </div>
                                                                 :
                                                                 <svg
@@ -209,11 +224,12 @@ export default function FreelancerProfileSettingsPage () {
 
                                                             }
                                                     </span>
-                                                 </div>
+                                                </div>
                                                 {isOpenForGender && (
                                                     <div className="settings_dropdownList settings_dropdownList1">
                                                         {gender.map((item, index) => (
-                                                            <p key={index} className="settings_dropdownItem" onClick={() => handleSelectGender(item)}>
+                                                            <p key={index} className="settings_dropdownItem"
+                                                               onClick={() => handleSelectGender(item)}>
                                                                 {item}
                                                             </p>
                                                         ))}
@@ -222,25 +238,26 @@ export default function FreelancerProfileSettingsPage () {
                                             </div>
                                             <div className="settings_dropdown settings_dropdown2">
                                                 <p className='settings_dropdown_title'>Город</p>
-                                                <div className="settings_dropdownHeader" onClick={() => setIsOpenForCity(!isOpenForCity)}>
+                                                <div className="settings_dropdownHeader"
+                                                     onClick={() => setIsOpenForCity(!isOpenForCity)}>
                                                     <p className='settings_dropdownHeader_title'>{selectedCity || 'Город'}</p>
                                                     <span className="arrow">
                                                             {isOpenForCity ?
-                                                                <div style={{ transform: "rotate(-180deg)" }}>
-                                                                        <svg
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            width={24}
-                                                                            height={24}
-                                                                            fill="none"
-                                                                        >
-                                                                            <path
-                                                                                stroke="#333"
-                                                                                strokeLinecap="round"
-                                                                                strokeLinejoin="round"
-                                                                                strokeWidth={1.5}
-                                                                                d="m18 9-6 6-1.5-1.5M6 9l2 2"
-                                                                            />
-                                                                        </svg>
+                                                                <div style={{transform: "rotate(-180deg)"}}>
+                                                                    <svg
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        width={24}
+                                                                        height={24}
+                                                                        fill="none"
+                                                                    >
+                                                                        <path
+                                                                            stroke="#333"
+                                                                            strokeLinecap="round"
+                                                                            strokeLinejoin="round"
+                                                                            strokeWidth={1.5}
+                                                                            d="m18 9-6 6-1.5-1.5M6 9l2 2"
+                                                                        />
+                                                                    </svg>
                                                                 </div>
                                                                 :
                                                                 <svg
@@ -260,11 +277,12 @@ export default function FreelancerProfileSettingsPage () {
 
                                                             }
                                                     </span>
-                                                 </div>
+                                                </div>
                                                 {isOpenForCity && (
                                                     <div className="settings_dropdownList settings_dropdownList2">
                                                         {city.map((item, index) => (
-                                                            <p key={index} className="settings_dropdownItem" onClick={() => handleSelectCity(item)}>
+                                                            <p key={index} className="settings_dropdownItem"
+                                                               onClick={() => handleSelectCity(item)}>
                                                                 {item}
                                                             </p>
                                                         ))}

@@ -105,43 +105,13 @@ export default function Job () {
 
     ]);
     const [isCheckedAllCategories2, setIsCheckedAllCategories2] = useState(false);
-
     const [selectedCategories, setSelectedCategories] = useState([]);
-    const [citiesList, setCitiesList] = useState([
-        {
-            id: 1,
-            city_name: 'Москва'
-        },
-        {
-            id: 2,
-            city_name: 'Санкт-Петербург'
-        },
-        {
-            id: 3,
-            city_name: 'Екатеринбург'
-        },
-        {
-            id: 4,
-            city_name: 'Новосибирск'
-        },
-        {
-            id: 5,
-            city_name: 'Нижний Новгород'
-        },
-        {
-            id: 6,
-            city_name: 'Самара'
-        },
-
-    ]);
-    const [selectedCities, setSelectedCities] = useState([]);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
     const { getOrders, ordersData, totalPages, loading } = useGetOrders();
     const { getFilters, filtersData} = useGetFilters();
     const { getCategories, categoriesData } = useGetCategories();
     const { makeFiltersSave, filtersSaveData } = useFiltersSave();
-
     const [filterBody, setFilterBody] = useState({});
     const [showFilterMobile, setShowFilterMobile] = useState(false);
     const [showFilterMap, setShowFilterMap] = useState(false);
@@ -190,10 +160,6 @@ export default function Job () {
         }
     }, [filtersData]);
 
-
-
-
-
     const handleCategorySelection = (val) => {
         let updatedCategories;
 
@@ -210,10 +176,6 @@ export default function Job () {
 
         getOrders(updatedFilterBody, page); // Fetch filtered orders
     };
-
-
-
-
 
 
     useEffect(()=>{
@@ -247,7 +209,7 @@ export default function Job () {
     const navigateToMapPage = () => {
         router.push('/map');
     };
-    const redirectToOrderPageForFreelancer = (id) => {
+    const redirectToOrderSinglePage = (id) => {
         router.push(`/projects/${id}`);
     };
     const formatDate = (dateString) => {
@@ -411,7 +373,7 @@ export default function Job () {
                                                     <button
                                                         className='services_item'
                                                         key={index}
-                                                        onClick={() => redirectToOrderPageForFreelancer(item?.id)}
+                                                        onClick={() => redirectToOrderSinglePage(item?.id)}
                                                     >
                                                         <div className="services_item_name_address_info_wrapper">
                                                             <p className="services_item_name">{item?.title}</p>

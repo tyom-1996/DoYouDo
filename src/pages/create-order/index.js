@@ -69,11 +69,14 @@ export default function CreateOrder() {
             console.log(makeOrderData, 'makeOrderData')
             if (makeOrderData?.message == 'Заказ успешно создан') {
                  setShowCreateOrderModal(false)
-                router.push(`/projects`);
+                router.push(`/my-projects/client`);
 
             }
+
         }
     }, [makeOrderData]);
+
+
 
     useEffect(() => {
         // Clear fields when the modal closes
@@ -454,6 +457,7 @@ export default function CreateOrder() {
                     endDate={selectedEndDate}
                     photos={images}
                     files={files}
+                    errorText={errorText} // Pass error text here
                     onClose={() => setShowCreateOrderModal(false)}
                 />
                 <InsufficientFundsModal

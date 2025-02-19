@@ -862,6 +862,7 @@
     margin-right: 15px;
     border-radius: 10px;
     overflow: hidden;
+    cursor: pointer;
 }
 .order_single_page_item_img Image {
     width: 100%;
