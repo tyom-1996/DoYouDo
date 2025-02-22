@@ -1,9 +1,23 @@
-import React, { useState } from 'react';
-import styles from '../../../assets/css/freelancers_profile_page.css';
+import React, { useState, useEffect } from 'react';
 import Image from "next/image";
+import { useUploadPhoto } from "@/hooks/useUploadPhoto";
+import {useRouter} from "next/router";
 
-export default function PassportImageUploader() {
+export default function PassportImageUploader({setPassportImage}) {
     const [userImage, setUserImage] = useState(null);
+    const { uploadPhoto, uploadPhotoData, loadingUpload } = useUploadPhoto();
+    const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
+
+
+    const router = useRouter();
+    useEffect(() => {
+        if (uploadPhotoData?.photoUrl) {
+            setUserImage(uploadPhotoData?.photoUrl);
+            setPassportImage(uploadPhotoData?.photoUrl);
+
+        }
+    }, [uploadPhotoData]);
+
 
     const selectImage = async (event) => {
         const files = Array.from(event.target.files);
@@ -13,19 +27,17 @@ export default function PassportImageUploader() {
         });
 
         if (validImage) {
-            const newImage = await new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.readAsDataURL(validImage);
-            });
-            setUserImage(newImage); // Set the new image
+            setUserImage(URL.createObjectURL(validImage)); // Show preview while uploading
+            await uploadPhoto(validImage); // Upload image to API
         } else {
             alert('Please use correct image format (jpg, jpeg, png)');
         }
     };
 
+
     const deleteUserImg = () => {
         setUserImage(null);
+        setPassportImage(null); // Clear parent state
     };
 
     return (
@@ -34,7 +46,7 @@ export default function PassportImageUploader() {
                 {userImage && (
                     <div className="imageContainer2">
                         <img
-                            src={userImage}
+                            src={`${imagePath}${userImage}`}
                             alt="User"
                             className="userImage"
                         />
@@ -68,16 +80,22 @@ export default function PassportImageUploader() {
                 />
                 {!userImage && (
                     <label htmlFor="image-input" className={`uploadButton3`}>
-                        <span className="uploadButton_image3">
-                            <Image
-                                src="/add_passport_img.png"
-                                alt="Example Image"
-                                layout="fill" // Fill the parent element
-                                objectFit="cover" // Cover the area of the parent element
-                                quality={100} // Image quality
-                            />
-                        </span>
-                        <span className='image_upload_title3'>Фото Паспорта</span>
+                        {loadingUpload ? (
+                            <span className="image_upload_title3">Загрузка...</span>
+                        ) : (
+                            <>
+                                <span className="uploadButton_image3">
+                                    <Image
+                                        src="/add_passport_img.png"
+                                        alt="Example Image"
+                                        layout="fill"
+                                        objectFit="cover"
+                                        quality={100}
+                                    />
+                                </span>
+                                <span className='image_upload_title3'>Фото Паспорта</span>
+                            </>
+                        )}
                     </label>
                 )}
             </div>

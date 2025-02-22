@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import styles from '../../../assets/css/freelancers_profile_page.css';
+import React, { useState, useEffect } from 'react';
 import Image from "next/image";
+import { useUploadPhoto } from "@/hooks/useUploadPhoto";
 
-export default function SelfiePassportImageUploader() {
+export default function SelfiePassportImageUploader({setPassportSelfieImage}) {
     const [userImage, setUserImage] = useState(null);
+    const { uploadPhoto, uploadPhotoData, loadingUpload } = useUploadPhoto();
+    const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
 
     const selectImage = async (event) => {
         const files = Array.from(event.target.files);
@@ -13,20 +15,26 @@ export default function SelfiePassportImageUploader() {
         });
 
         if (validImage) {
-            const newImage = await new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.readAsDataURL(validImage);
-            });
-            setUserImage(newImage); // Set the new image
+            setUserImage(URL.createObjectURL(validImage)); // Превью до загрузки
+            await uploadPhoto(validImage); // Загрузка фото на сервер
         } else {
-            alert('Please use correct image format (jpg, jpeg, png)');
+            alert('Пожалуйста, используйте изображение в формате jpg, jpeg или png.');
         }
     };
 
+    // Обновляем изображение после успешной загрузки на сервер
+    useEffect(() => {
+        if (uploadPhotoData?.photoUrl) {
+            setUserImage(uploadPhotoData?.photoUrl);
+            setPassportSelfieImage(uploadPhotoData?.photoUrl); // Send URL to parent (AddPassportPage)
+        }
+    }, [uploadPhotoData, setPassportSelfieImage]);
+
     const deleteUserImg = () => {
         setUserImage(null);
+        setPassportSelfieImage(null); // Clear parent state
     };
+
 
     return (
         <div className="container">
@@ -34,7 +42,7 @@ export default function SelfiePassportImageUploader() {
                 {userImage && (
                     <div className="imageContainer2">
                         <img
-                            src={userImage}
+                            src={`${imagePath}${userImage}`}
                             alt="User"
                             className="userImage"
                         />
@@ -68,16 +76,22 @@ export default function SelfiePassportImageUploader() {
                 />
                 {!userImage && (
                     <label htmlFor="image-input2" className={`uploadButton3`}>
-                        <span className="uploadButton_image4">
-                            <Image
-                                src="/selfie_passport_img.png"
-                                alt="Example Image"
-                                layout="fill" // Fill the parent element
-                                objectFit="cover" // Cover the area of the parent element
-                                quality={100} // Image quality
-                            />
-                        </span>
-                        <span className='image_upload_title3'>Селфи с Паспортом</span>
+                        {loadingUpload ? (
+                            <span className="image_upload_title3">Загрузка...</span>
+                        ) : (
+                            <>
+                                <span className="uploadButton_image4">
+                                    <Image
+                                        src="/selfie_passport_img.png"
+                                        alt="Example Image"
+                                        layout="fill"
+                                        objectFit="cover"
+                                        quality={100}
+                                    />
+                                </span>
+                                <span className='image_upload_title3'>Селфи с Паспортом</span>
+                            </>
+                        )}
                     </label>
                 )}
             </div>

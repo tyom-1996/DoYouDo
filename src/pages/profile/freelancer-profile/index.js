@@ -17,6 +17,8 @@ import { useGetProfileInfo } from '../../../hooks/useGetProfileInfo';
 import { useGetCategories } from '../../../hooks/useGetCategories';
 import { useSetCategories } from '../../../hooks/useSetCategories';
 import { useGetProfilePackages } from '../../../hooks/useGetProfilePackages';
+import { useGetProfilePortfolio } from '../../../hooks/useGetProfilePortfolio';
+import ReactPaginate from "react-paginate";
 
 const  FreelancerProfilePage  = ()  => {
     const [windowHeight, setWindowHeight] = useState(0);
@@ -165,11 +167,12 @@ const  FreelancerProfilePage  = ()  => {
     const { getProfileInfo, loadingUserInfo, profileInfoData } = useGetProfileInfo();
     const { getCategories, loadingCategoryInfo, categoriesData } = useGetCategories();
     const { setCategories, loading, categoriesInfoData2 } = useSetCategories();
+    const { getProfilePortfolio,  profilePortfolioPData } = useGetProfilePortfolio();
     const { getProfilePackages, loadingProfilePackagesInfo, profilePackagesData } = useGetProfilePackages();
     const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
     const [selectedSubCategoryIds, setSelectedSubCategoryIds] = useState([]); // Array to hold subcategory IDs
     const [userCatsIds, setUserCatsIds] = useState([]); // Array to hold subcategory IDs
-
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         let userCatsIds_ = profileInfoData?.categories?.map(category => category.id);
@@ -178,10 +181,13 @@ const  FreelancerProfilePage  = ()  => {
     }, [profileInfoData])
 
 
+
+
     useEffect(() => {
         if (typeof window !== 'undefined') {
             setWindowHeight(window.innerHeight);
         }
+        getProfilePortfolio(page)
     }, []);
 
     useEffect(() => {
@@ -234,6 +240,12 @@ const  FreelancerProfilePage  = ()  => {
         await setCategories(newUserCatsIds);
 
     };
+
+    const handlePageClick = (data) => {
+        const selectedPage = data.selected + 1; // ReactPaginate uses a 0-based index
+        setPage(selectedPage);
+    };
+
 
 
     return (
@@ -487,73 +499,66 @@ const  FreelancerProfilePage  = ()  => {
                             </div>
                             <div className="portfolio">
                                 <div className='portfolio_items_wrapper'>
-                                    {portfolioList.map((item, index) => {
-                                        return (
-                                            <button
-                                                className={item?.add_project ? 'portfolio_item2' : 'portfolio_item'}
-                                                onClick={() => {
-                                                    {item?.add_project ?
-                                                        redirectToAddProjectPage()
-                                                        :
-                                                        redirectFromPortfolioSinglePage(item?.id)
-                                                    }
+                                    {/* First item: Add Project button */}
+                                    <button className="portfolio_item2" onClick={redirectToAddProjectPage}>
+                                        <div className='add_project_icon_title_wrapper'>
+                                            <AddProjectIcon/>
+                                            <p className='add_project_icon_title'>Добавить проект</p>
+                                        </div>
+                                    </button>
 
-                                                }}
-                                            >
-                                                {item?.add_project  ?
-                                                    <div className='add_project_icon_title_wrapper'>
-                                                        <AddProjectIcon/>
-                                                        <p className='add_project_icon_title'>Добавить проект</p>
-                                                    </div>
-
-                                                    :
-                                                    <div style={{width: '100%'}}>
-                                                        <div className="portfolio_item_img">
-                                                            <Image
-                                                                src={item.portfolio_img}
-                                                                alt="Example Image"
-                                                                layout="fill" // Fill the parent element
-                                                                objectFit="cover" // Cover the area of the parent element
-                                                                quality={100} // Image quality
-                                                            />
-                                                        </div>
-                                                        <div className='portfolio_item_info_box'>
-                                                            <p className='portfolio_item_title'>{item.portfolio_project_name}</p>
-                                                            <p className='portfolio_item_info1'>{item.portfolio_field_name}</p>
-                                                            <div className="portfolio_item_line"></div>
-                                                            <p className='portfolio_item_info2'>{item.portfolio_info}</p>
-                                                        </div>
-                                                    </div>
-                                                }
-
-                                            </button>
-
-                                        )
-                                    })}
+                                    {/* Mapping remaining portfolio items */}
+                                    {profilePortfolioPData?.data.map((item, index) => (
+                                        <button
+                                            key={item.id || index}
+                                            className="portfolio_item"
+                                            onClick={() => redirectFromPortfolioSinglePage(item?.id)}
+                                        >
+                                            <div style={{width: '100%'}}>
+                                                <div className="portfolio_item_img">
+                                                    <Image
+                                                        src={item?.image_url[0] ? item?.image_url[0] :  '/portfolio_img1.png'}
+                                                        alt="Example Image"
+                                                        layout="fill"
+                                                        objectFit="cover"
+                                                        quality={100}
+                                                    />
+                                                </div>
+                                                <div className='portfolio_item_info_box'>
+                                                    <p className='portfolio_item_title'>{item?.project_name}</p>
+                                                    {/*<p className='portfolio_item_info1'>{item.portfolio_field_name}</p>*/}
+                                                    <div className="portfolio_item_line"></div>
+                                                    <p className='portfolio_item_info2'>{item?.description}</p>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    ))}
                                 </div>
-                                <div className="pagination_links_wrapper">
-                                    <button className="pagination_link_btn">
-                                        <PaginationLeftIcon/>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">1</p>
-                                    </button>
-                                    <button className="pagination_link active">
-                                        <p className="pagination_link_title">2</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">3</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">4</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">....</p>
-                                    </button>
-                                    <button className="pagination_link_btn">
-                                        <PaginationRightIcon/>
-                                    </button>
-                                </div>
+
+                                {profilePortfolioPData?.page == 2 &&
+
+                                    <div className="pagination_links_wrapper">
+                                        <ReactPaginate
+                                            previousLabel={<PaginationLeftIcon/>}
+                                            nextLabel={<PaginationRightIcon/>}
+                                            breakLabel={'...'}
+                                            breakClassName={'pagination_break'}
+                                            pageCount={profilePortfolioPData?.page} // Total number of pages from the API
+                                            marginPagesDisplayed={2}
+                                            pageRangeDisplayed={3}
+                                            onPageChange={handlePageClick}
+                                            containerClassName={'pagination_links_wrapper'}
+                                            activeClassName={'active'}
+                                            previousClassName={'pagination_link_btn'}
+                                            nextClassName={'pagination_link_btn'}
+                                            pageClassName={'pagination_link'}
+                                            pageLinkClassName={'pagination_link_title'}
+                                            disabledClassName={'disabled'}
+                                        />
+                                    </div>
+
+                                }
+
                             </div>
                         </div>
 
@@ -571,13 +576,14 @@ const  FreelancerProfilePage  = ()  => {
                                         enableBodyScroll();
                                     }}
                                 >
-                                    <FilterCloseIcon />
+                                    <FilterCloseIcon/>
                                 </button>
                                 <h1 className="add_category_modal_title">Добавление категории</h1>
                                 {/* Category Dropdown */}
                                 <div className="add_category_dropdown add_category_dropdown1">
-                                    <div className="add_category_create_order_dropdownHeader" onClick={() => setIsOpenForCategories(!isOpenForCategories)}>
-                                        <p className='add_category_create_order_dropdownHeader_title'>{selectedCategory?.name || 'Категория'}</p>
+                                    <div className="add_category_create_order_dropdownHeader"
+                                         onClick={() => setIsOpenForCategories(!isOpenForCategories)}>
+                                    <p className='add_category_create_order_dropdownHeader_title'>{selectedCategory?.name || 'Категория'}</p>
                                         <span className="arrow">
                                             {isOpenForCategories ?
                                                 <div style={{ transform: "rotate(-180deg)" }}>

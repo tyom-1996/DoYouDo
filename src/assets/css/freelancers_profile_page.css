@@ -29,9 +29,35 @@
         padding: 0 20px;
     }
 }
+.create_order_map_input_field_address {
+    background: #F7F7F7;
+    border-radius: 10px;
+    padding: 10px 15px;
+    width: 100%;
+    color: #333333;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    position: relative;
+}
+.create_order_map_input_field_address::placeholder {
+    color: #333333;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
 
 
-
+.create_order_map_input_box_title {
+    color: #333333;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 6px;
+}
 
 
 @media (min-width: 580px) and (max-width: 769px) {
@@ -200,7 +226,7 @@
     margin-bottom: 100px;
 }
 #freelancer_single_page_wrapper_settings {
-    padding-bottom: 400px;
+    padding-bottom: 500px;
 }
 #freelancer_profile_settings .freelancer_single_page_user_info_wrapper {
     width: 100%;
@@ -554,21 +580,35 @@
     width: 100%;
 }
 #freelancer_profile .portfolio_items_wrapper {
-    display: flex;
-    justify-content: space-between;
-    /*align-items: center;*/
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Spacing between items */
+    align-items: start; /* Align items at the top */
     width: 100%;
 }
 #freelancer_profile .portfolio_item {
     box-shadow: 0px 4px 20px 0px #33333326;
-    width: 24%;
+    width: 100%;
     background: #FFFFFF;
     border-radius: 10px;
     margin-bottom: 30px;
     border: none;
     cursor: pointer;
     outline: none;
+}
+#freelancer_profile .portfolio_item2 {
+    box-shadow: 0px 4px 20px 0px #33333326;
+    width: 100%;
+    background: #FFFFFF;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /*height: 434px;*/
 }
 .portfolio_item2 {
     box-shadow: 0px 4px 20px 0px #33333326;
@@ -2175,7 +2215,7 @@
     border: none;
     cursor: pointer;
     outline: none;
-    color: #9B9B9B;
+    color: #333333;
     font-weight: 400;
     font-size: 16px;
     font-family: "Inter", sans-serif;
@@ -2286,7 +2326,7 @@
 
 .settings_save_btn {
     background: #FF6C00;
-    max-width: 283px;
+    max-width: 320px;
     width: 100%;
     height: 45px;
     border-radius: 5px;
@@ -2300,6 +2340,8 @@
     font-size: 16px;
     font-weight: 700;
     font-family: "Inter", sans-serif;
+    margin-bottom: 40px;
+
 }
 .react-datepicker-wrapper {
     width: 100%;
@@ -2312,6 +2354,7 @@
     width: 100%;
     display: flex;
     align-items: center;
+    margin-bottom: 50px;
 
 }
 
@@ -2925,4 +2968,60 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.imageGallery_settings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.imageContainer_settings {
+    position: relative;
+    display: inline-block;
+    width: 283px;
+    height: 386px;
+}
+.imageContainer_settings img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.userImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.deleteButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+.upload_btn {
+    width: 100%;
+}
+
+.container_settings {
+    width: 100%;
+}
+
+.settings_profile_img {
+    width: 283px;
+    height: 386px;
+}
+.settings_profile_img Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
 }

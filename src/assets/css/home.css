@@ -2008,7 +2008,13 @@
     outline: none;
     padding: 10px 15px;
     font-family: "Inter", sans-serif;
-    color: #B1B1B1;
+    color: #333333;
+    font-size: 16px;
+    font-weight: 400;
+}
+.filter_task_categories_input_field::placeholder {
+    font-family: "Inter", sans-serif;
+    color: #33333350;
     font-size: 16px;
     font-weight: 400;
 }

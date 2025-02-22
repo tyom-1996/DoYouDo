@@ -38,11 +38,11 @@ const Login = (props) => {
     }, [loginData])
 
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        await login(email, phone, passwordEmail, passwordPhone, type);
-    };
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //
+    //     await login(email, phone, passwordEmail, passwordPhone, type);
+    // };
 
     const formatPhoneNumber = (input) => {
         let onlyDigits = input.replace(/\D/g, '');
@@ -73,89 +73,71 @@ const Login = (props) => {
     const handleNavigateToGeneral = () => {
         router.push('/');
     };
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Prevent page reload
+        if (loading) return; // Prevent multiple submissions
+
+        await login(email, phone, passwordEmail, passwordPhone, type);
+    };
+
 
 
     return (
-            <div className='login_modal'>
-                <div className='login_modal_wrapper'>
+        <div className='login_modal'>
+            <div className='login_modal_wrapper'>
+                <button className='login_modal_close_btn' onClick={handleNavigateToGeneral}>
+                    <FilterCloseIcon />
+                </button>
+
+                <h1 className='login_modal_title'>Вход</h1>
+                <div className='login_modal_tabs_wrapper'>
                     <button
-                        className='login_modal_close_btn'
-                        onClick={() => {
-                            handleNavigateToGeneral()
-                        }}
+                        className={`login_modal_tab ${type === 'phone' ? 'login_modal_tab_active' : ''}`}
+                        onClick={() => setType('phone')}
                     >
-                        <FilterCloseIcon />
+                        Номер телефона
                     </button>
+                    <button
+                        className={`login_modal_tab ${type === 'email' ? 'login_modal_tab_active' : ''}`}
+                        onClick={() => setType('email')}
+                    >
+                        Электронная почта
+                    </button>
+                </div>
 
-                    <h1 className='login_modal_title'>Вход</h1>
-                    <div className='login_modal_tabs_wrapper'>
-                        <button
-                            className={`login_modal_tab ${type == 'phone' ? 'login_modal_tab_active' : ''}`}
-                            onClick={() => {
-                                setType('phone')
-                            }}
-                        >
-                            Номер телефона
-                        </button>
-                        <button
-                            className={`login_modal_tab ${type == 'email'  ? 'login_modal_tab_active' : ''}`}
-                            onClick={() => {
-                               setType('email')
-                            }}
-                        >
-                            Электронная почта
-                        </button>
-                    </div>
-
-                    {type == 'phone' && (
+                {/* ✅ Wrapping inputs inside a <form> */}
+                <form onSubmit={handleSubmit}>
+                    {type === 'phone' && (
                         <div className='login_modal_item'>
                             <div className='login_modal_item_input_wrapper'>
                                 <input
                                     type='text'
                                     value={phone}
-                                    onChange={(e) => {
-                                        setPhone(formatPhoneNumber(e.target.value))
-                                    }}
+                                    onChange={(e) => setPhone(formatPhoneNumber(e.target.value))}
                                     placeholder='Номер телефона'
                                     className='login_modal_item_input_field'
                                 />
-                                {phoneNumberErrorText &&
-                                    <p className='error_text'>{phoneNumberErrorText}</p>
-                                }
+                                {phoneNumberErrorText && <p className='error_text'>{phoneNumberErrorText}</p>}
                             </div>
                             <div className='login_modal_item_input_wrapper' id='login_modal_item_input_field_password'>
                                 <input
                                     type={isPasswordVisible ? 'text' : 'password'}
                                     value={passwordPhone}
-                                    onChange={(event) => {
-                                        setPasswordPhone(event.target.value)
-                                    }}
+                                    onChange={(event) => setPasswordPhone(event.target.value)}
                                     placeholder='Пароль'
                                     className='login_modal_item_input_field'
                                 />
-                                {passwordPhoneErrorText &&
-                                    <p className='error_text'>{passwordPhoneErrorText}</p>
-                                }
-                                <button className='password_icon_btn' onClick={togglePasswordVisibility}>
+                                {passwordPhoneErrorText && <p className='error_text'>{passwordPhoneErrorText}</p>}
+                                <button className='password_icon_btn' type="button" onClick={togglePasswordVisibility}>
                                     {isPasswordVisible ? <PasswordShowIcon /> : <PasswordCloseIcon />}
                                 </button>
                             </div>
                             <div className='forget_password_btn_wrapper'>
-                                <button
-                                    className='forget_password_btn'
-                                    onClick={() => {
-                                        handleNavigateToRecoveryAccount()
-                                    }}
-                                >
+                                <button type="button" className='forget_password_btn' onClick={handleNavigateToRecoveryAccount}>
                                     Забыли пароль?
                                 </button>
                             </div>
-                            <button
-                                className='login_modal_button'
-                                onClick={(e) => {
-                                    handleSubmit(e)
-                                }}
-                            >
+                            <button className='login_modal_button' type="submit">
                                 Войти
                             </button>
                             <div className='login_modal_line'></div>
@@ -175,66 +157,44 @@ const Login = (props) => {
                             </div>
                             <div className='login_modal_register_info_btn_wrapper'>
                                 <p className='login_modal_register_info'>У вас нет аккаунта?</p>
-                                <button
-                                    className='login_modal_register_btn'
-                                    onClick={() => {
-                                       handleNavigateToRegister()
-                                    }}
-                                >
+                                <button className='login_modal_register_btn' onClick={handleNavigateToRegister} type="button">
                                     Зарегистрироваться
                                 </button>
                             </div>
                         </div>
                     )}
-                    {type == 'email' && (
+
+                    {type === 'email' && (
                         <div className='login_modal_item'>
                             <div className='login_modal_item_input_wrapper'>
                                 <input
                                     type='text'
                                     value={email}
-                                    onChange={(event) => {
-                                        setEmail(event.target.value)
-                                    }}
+                                    onChange={(event) => setEmail(event.target.value)}
                                     placeholder='Email'
                                     className='login_modal_item_input_field'
                                 />
-                                {emailErrorText &&
-                                    <p className='error_text'>{emailErrorText}</p>
-                                }
+                                {emailErrorText && <p className='error_text'>{emailErrorText}</p>}
                             </div>
                             <div className='login_modal_item_input_wrapper' id='login_modal_item_input_field_password'>
                                 <input
                                     type={isPasswordVisible ? 'text' : 'password'}
                                     value={passwordEmail}
-                                    onChange={(event) => {
-                                        setPasswordEmail(event.target.value)
-                                    }}
+                                    onChange={(event) => setPasswordEmail(event.target.value)}
                                     placeholder='Пароль'
                                     className='login_modal_item_input_field'
                                 />
-                                {passwordEmailErrorText &&
-                                    <p className='error_text'>{passwordEmailErrorText}</p>
-                                }
-                                <button className='password_icon_btn' onClick={togglePasswordVisibility}>
+                                {passwordEmailErrorText && <p className='error_text'>{passwordEmailErrorText}</p>}
+                                <button className='password_icon_btn' type="button" onClick={togglePasswordVisibility}>
                                     {isPasswordVisible ? <PasswordShowIcon /> : <PasswordCloseIcon />}
                                 </button>
                             </div>
                             <div className='forget_password_btn_wrapper'>
-                                <button
-                                    className='forget_password_btn'
-                                    onClick={() => {
-                                        handleNavigateToRecoveryAccount()
-                                    }}
-                                >
+                                <button type="button" className='forget_password_btn' onClick={handleNavigateToRecoveryAccount}>
                                     Забыли пароль?
                                 </button>
                             </div>
-                            <button
-                                className='login_modal_button'
-                                onClick={(e) => {
-                                    handleSubmit(e)
-                                }}
-                            >
+                            <button className='login_modal_button' type="submit">
                                 Войти
                             </button>
                             <div className='login_modal_line'></div>
@@ -254,20 +214,17 @@ const Login = (props) => {
                             </div>
                             <div className='login_modal_register_info_btn_wrapper'>
                                 <p className='login_modal_register_info'>У вас нет аккаунта?</p>
-                                <button
-                                    className='login_modal_register_btn'
-                                    onClick={() => {
-                                        handleNavigateToRegister()
-                                    }}
-                                >
+                                <button className='login_modal_register_btn' onClick={handleNavigateToRegister} type="button">
                                     Зарегистрироваться
                                 </button>
                             </div>
                         </div>
                     )}
-                </div>
+                </form>
             </div>
+        </div>
     );
+
 };
 
 

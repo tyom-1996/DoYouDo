@@ -10,7 +10,7 @@ const DeleteAccountModal = ({}) => {
 
 
     const redirectToSettings = () => {
-        router.push(`/freelancer-profile-settings`);
+        router.back()
     };
 
 
@@ -34,9 +34,9 @@ const DeleteAccountModal = ({}) => {
 
                     <button
                         className='add_phone_modal_button'
-                        onClick={() => {
-                            redirectToSettings()
-                        }}
+                        // onClick={() => {
+                        //     redirectToSettings()
+                        // }}
                     >
                         Удалить
                     </button>

@@ -3,10 +3,12 @@ import Image from "next/image";
 import '../../assets/css/create_order.css';
 import Header from '../../components/header'
 import Footer from '../../components/footer'
-import ImageUploader from '../includes/ImageUploader'
+import ImageUploader2 from '../includes/ImageUploader2'
 import Head from 'next/head';
 import 'react-datepicker/dist/react-datepicker.css';
 import {useGetCategories} from "@/hooks/useGetCategories";
+import {useCreateProfilePortfolio} from "@/hooks/useCreateProfilePortfolio";
+import {SuccessIcon} from "@/components/icons/SuccessIcon";
 
 
 export default function AddProject () {
@@ -21,6 +23,25 @@ export default function AddProject () {
     const [selectedSubCategoryId, setSelectedSubCategoryId] = useState(null);
     const [subCategories, setSubCategories] = useState([]);
     const [categoryError, setCategoryError] = useState('');
+    const [images, setImages] = useState([]);
+    const [showCreatePortfolioSuccessPopup, setShowCreatePortfolioSuccessPopup] = useState(false);
+    const { createProfilePortfolio,  createProfilePortfolioData, imagesErrorText, categoryErrorText, descriptionErrorText, nameErrorText } = useCreateProfilePortfolio();
+
+
+    useEffect(() => {
+        if (createProfilePortfolioData) {
+            console.log(createProfilePortfolioData, 'fffff')
+            if (createProfilePortfolioData?.message == "Портфолио успешно создано") {
+                    setProjectName('');
+                    setImages([]);
+                    setDescription('');
+                    setSelectedCategory('')
+                    setSelectedSubCategory('');
+                    setShowCreatePortfolioSuccessPopup(true)
+            }
+        }
+    }, [createProfilePortfolioData]);
+
     const handleProjectNameChange = (event) => {
         setProjectName(event.target.value);
     };
@@ -30,6 +51,7 @@ export default function AddProject () {
 
 
     useEffect(() => {
+
         if (typeof window !== 'undefined') {
             setWindowHeight(window.innerHeight);
         }
@@ -40,6 +62,24 @@ export default function AddProject () {
         setIsOpenForCategories(false);
         setSelectedSubCategory(null); // Reset subcategory when category changes
     };
+    const makePortfolio = async () => {
+        const formattedImages = images.map((image, index) => ({
+            uri: image,  // Image URL
+            type: "image/jpeg",  // Ensure correct type
+            name: `image_${index}.jpg`
+        }));
+        await createProfilePortfolio(projectName, description, selectedSubCategoryId, formattedImages);
+
+        setProjectName('');
+        setImages([]);
+        setDescription('');
+        setSelectedCategory('')
+        setSelectedSubCategory('');
+    }
+    const handleImagesUpdate = (uploadedImages) => {
+        setImages(uploadedImages); // Update images state with final user images
+
+    };
 
     const handleSelectSubCategory = (subCategory) => {
         console.log(subCategory, 'subs___')
@@ -47,6 +87,7 @@ export default function AddProject () {
         setSelectedSubCategoryId(subCategory?.id);
         setIsOpenForSubCategories(false); // Close the dropdown
     };
+
 
     return (
         <>
@@ -74,6 +115,9 @@ export default function AddProject () {
                                         className='heading_input_field'
                                         placeholder='Название проекта'
                                     />
+                                    {nameErrorText &&
+                                        <p className='error_text'>{nameErrorText}</p>
+                                    }
                                 </div>
 
                                 <div className="category_dropdown">
@@ -147,14 +191,18 @@ export default function AddProject () {
                                             </div>
                                         )}
                                     </div>
-                                    {categoryError &&
-                                        <p className='error_text'>{categoryError}</p>
+                                    {categoryErrorText &&
+                                        <p className='error_text'>{categoryErrorText}</p>
                                     }
                                 </div>
                                 <div className='upload_photo_wrapper'>
                                     <p className='upload_photo_wrapper_title'>Добавить фото</p>
-                                    <ImageUploader/>
+                                    <ImageUploader2 images={images} onImagesUpdate={handleImagesUpdate} />
+                                    {imagesErrorText &&
+                                        <p className='error_text'>{imagesErrorText}</p>
+                                    }
                                 </div>
+
                                 <div className='create_order_description_wrapper'>
                                     <p className='create_order_description_wrapper_title'>Описание</p>
                                     <textarea
@@ -165,17 +213,50 @@ export default function AddProject () {
                                         placeholder="Описание"
                                         className='create_order_description_wrapper_input_field'
                                     />
+                                    {descriptionErrorText &&
+                                        <p className='error_text'>{descriptionErrorText}</p>
+                                    }
                                 </div>
 
                             </div>
                         </div>
                         <button
-                            className="post_an_order_button">
+                            className="post_an_order_button"
+                            onClick={() => {
+                                makePortfolio()
+                            }}
+                        >
                             Добавить
                         </button>
                     </div>
                 </div>
                 <Footer/>
+
+                {showCreatePortfolioSuccessPopup &&
+                    <div className='add_phone_modal'>
+                        <div className='add_phone_modal_wrapper'>
+                            <div className='add_phone_modal_icon'>
+                                <SuccessIcon/>
+                            </div>
+
+                            <h1 className='add_phone_modal_title add_phone_modal_title2'>
+                                Портфолио успешно создано
+                            </h1>
+
+                            <button
+                                className='add_phone_modal_button'
+                                onClick={() => {
+                                  setShowCreatePortfolioSuccessPopup(false)
+                                }}
+                            >
+                                Закрыть
+                            </button>
+
+
+                        </div>
+
+                    </div>
+                }
 
             </main>
         </>

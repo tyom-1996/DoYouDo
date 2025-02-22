@@ -76,6 +76,66 @@ export const setProfileInfo = async () => {
         throw error.response?.data?.message || error.message;
     }
 };
+export const updateProfile2 = async (name, surname, experience, aboutMe, email, address, latitude, longitude, selectedGender, selectedBirthDate, profileImage) => {
+    try {
+        // No need to manually get token; it will be handled by axios interceptors
+        console.log(profileImage, 'profileimfmmfmfmmf')
+        const response = await apiClient.put(
+            '/profile/update',
+            {
+                first_name: name,
+                experience: experience,
+                photo: profileImage,
+                last_name: surname,
+                about_me: aboutMe,
+                email: email,
+                phone: "",
+                birth_date: selectedBirthDate,
+                address: address,
+                latitude: latitude,
+                longitude: longitude,
+                gender: selectedGender
+            }
+        );
+        return response.data;
+    } catch (error) {
+        // Throw a detailed error message
+        throw error.response?.data?.message || error.message;
+    }
+};
+export const uploadPhoto2 = async (file) => {
+    try {
+        const formData = new FormData();
+        formData.append('user_photo', file); // Ensure key matches API requirement
+
+        const response = await apiClient.post('/upload/photo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        return response.data;  // API should return `image_url`
+    } catch (error) {
+        throw error.response?.data?.message || error.message;
+    }
+};
+export const uploadPassportPhoto2 = async (passportImage, passportSelfieImage) => {
+    const body = {
+        passport_photo: passportImage,
+        selfie_with_passport: passportSelfieImage
+    };
+
+
+    try {
+        // Выполняем запрос с помощью axios
+        const response = await apiClient.post('/profile/pasport/upload', body);
+        return response.data; // Возвращаем данные от сервера
+    } catch (error) {
+        console.error('Login error:', error.response?.data || error.message);
+        throw error.response?.data || error;
+    }
+};
+
 export const setProfilePackages = async () => {
     try {
         // Make the request with the pre-configured apiClient
@@ -211,6 +271,37 @@ export const makeOrderRequest = async (categoryId, type, address, latitude, long
         throw new Error(errorMessage);
     }
 };
+export const createProfilePortfolio2 = async (projectName, description, selectedSubCategoryId, formattedImages) => {
+    try {
+        // Ensure images is an array of URLs
+        const imageUrls = formattedImages.map(photo => photo.uri); // Assuming each image object has a `uri` field with the URL
+
+        console.log(imageUrls, 'image_url')
+        // Construct the request payload
+        const requestData = {
+            project_name: projectName,
+            category_id: selectedSubCategoryId,
+            image_url: imageUrls,
+            description: description,
+        };
+
+        console.log(requestData, 'request---------/')
+        // Make the API call
+        const response = await apiClient.post('/profile/portfolio', requestData, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        // Return the response data
+        return response.data;
+    } catch (error) {
+        // Handle and throw the specific error message or general error
+        const errorMessage = error.response?.data?.message || error.message;
+        console.error('Error creating portfolio:', errorMessage);
+        throw new Error(errorMessage);
+    }
+};
 export const editOrderRequest = async (id, categoryId, type, address, latitude, longitude, title, description, price, startDate, endDate, photos, files) => {
     try {
         // Create a new FormData object
@@ -314,6 +405,21 @@ export const getOrders2 = async (body = {}, page = 1, limit = 10) => {
         throw error.response?.data || error.message; // Handle and rethrow the error
     }
 };
+export const getProfilePortfolio2 = async (page = 1, limit = 10) => {
+    try {
+        // Send GET request with query parameters including filters, page, and limit
+        const response = await apiClient.get('/profile/portfolio', {
+            params: {
+                page,
+                limit,
+            },
+        });
+        return response.data; // Return the response data
+    } catch (error) {
+        throw error.response?.data || error.message; // Handle and rethrow the error
+    }
+};
+
 export const getFilters2 = async () => {
     try {
         // Send POST request with filter body and GET parameters (page and limit)
