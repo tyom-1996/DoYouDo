@@ -38,6 +38,14 @@
     justify-content: space-between;
     align-items: center;
 }
+.my_project_tabs_wrapper2 {
+    width: 100%;
+    margin-bottom: 30px;
+    max-width: 750px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .my_project_tab {
     border: 2px solid #FF6C00;
     border-radius: 6px;
@@ -428,6 +436,9 @@
     .my_project_tabs_wrapper {
         display: none!important;
     }
+    .my_project_tabs_wrapper2 {
+        display: none!important;
+    }
     .dropdownWrapper {
         display: block!important;
     }
@@ -608,6 +619,9 @@
     .my_project_tabs_wrapper {
         max-width: 695px!important;
     }
+    .my_project_tabs_wrapper2 {
+        max-width: 600px!important;
+    }
 }
 @media (max-width: 730px) {
     .my_project_tab {
@@ -616,6 +630,9 @@
     }
     .my_project_tabs_wrapper {
         max-width: 600px!important;
+    }
+    .my_project_tabs_wrapper2 {
+        max-width: 500px!important;
     }
 }
 

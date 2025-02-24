@@ -193,7 +193,7 @@ export default function ClientProfilePage () {
                                 <div className="freelancer_single_page_user_info_wrapper_item1">
                                     <div className="freelancer_single_page_user_info_wrapper_item1_image">
                                         <Image
-                                            src={profileInfoData?.photo ? `${imagePath}${profileInfoData?.photo}` : '/freelancer_single_page_img.png'}
+                                            src={profileInfoData?.photo ? `${imagePath}${profileInfoData?.photo}` : '/upload_img1.png'}
                                             alt="Example Image"
                                             layout="fill" // Fill the parent element
                                             objectFit="cover" // Cover the area of the parent element
@@ -226,7 +226,7 @@ export default function ClientProfilePage () {
                                             <p className='freelancer_single_page_user_name'>
                                                 {profileInfoData?.first_name} {profileInfoData?.last_name}
                                             </p>
-                                            <p className='freelancer_single_page_user_age_country_info'>24 года, Москва</p>
+                                            <p className='freelancer_single_page_user_age_country_info'>{profileInfoData?.birth_date}</p>
                                         </div>
                                         <div className="freelancer_single_page_user_rating_icon_info_wrapper">
                                             <div className="freelancer_single_page_user_rating_icon">

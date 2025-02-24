@@ -293,13 +293,14 @@ export default function Map () {
                                                         position={{ lat: parseFloat(order.latitude), lng: parseFloat(order.longitude) }}
                                                         icon={{
                                                             url: "/map_icon.png",
-                                                            scaledSize: window.google
+                                                            scaledSize: window.google && window.google.maps
                                                                 ? new google.maps.Size(40, 40)
-                                                                : undefined, // Ensure Google Maps API is loaded
+                                                                : null, // Prevent incorrect size if Google Maps isn't loaded
                                                         }}
                                                         title={order.title}
-                                                        onClick={() => redirectToOrderSinglePage(order.id)} // Handle click event
+                                                        onClick={() => redirectToOrderSinglePage(order.id)}
                                                     />
+
                                                 ))}
                                     </GoogleMap>
 

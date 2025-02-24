@@ -500,7 +500,7 @@ const  FreelancerProfilePage  = ()  => {
                             <div className="portfolio">
                                 <div className='portfolio_items_wrapper'>
                                     {/* First item: Add Project button */}
-                                    <button className="portfolio_item2" onClick={redirectToAddProjectPage}>
+                                    <button className="portfolio_item" onClick={redirectToAddProjectPage}>
                                         <div className='add_project_icon_title_wrapper'>
                                             <AddProjectIcon/>
                                             <p className='add_project_icon_title'>Добавить проект</p>

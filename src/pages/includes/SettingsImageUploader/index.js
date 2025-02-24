@@ -31,7 +31,7 @@ export default function SettingsImageUploader({ changeImage, profileImage }) {
         if (profileImage) {
             return profileImage.startsWith('http') ? profileImage : `${imagePath}${profileImage}`;
         }
-        return '/default-avatar.png'; // Fallback image
+        return '/upload_img1.png'; // Fallback image
     };
 
 

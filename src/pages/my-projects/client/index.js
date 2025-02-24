@@ -917,7 +917,7 @@ export default function MyProjectsForClient() {
     const tabOptions = [
         { value: 'myResponses', label: 'Активные' },
         { value: 'pending', label: 'На модерации' },
-        { value: 'waiting_freelancer_response', label: 'Отклики' },
+        // { value: 'waiting_freelancer_response', label: 'Отклики' },
         { value: 'in_progress', label: 'В работе' },
         { value: 'closed', label: 'Закрытые' },
     ];
@@ -986,8 +986,8 @@ export default function MyProjectsForClient() {
                 <div className="my_projects">
                     <div className="my_projects_wrapper">
                         <div style={{width: '100%'}}>
-                            <div className='my_project_tabs_wrapper'>
-                                {['myResponses', 'pending', 'waiting_freelancer_response', 'in_progress', 'closed'].map((status) => (
+                            <div className='my_project_tabs_wrapper2'>
+                                {['myResponses', 'pending', 'in_progress', 'closed'].map((status) => (
                                     <button
                                         key={status}
                                         className={`my_project_tab ${selectedTab === status ? 'active_tab' : ''}`}
@@ -995,7 +995,6 @@ export default function MyProjectsForClient() {
                                     >
                                         {status === 'myResponses' && 'Активные'}
                                         {status === 'pending' && 'На модерации'}
-                                        {status === 'waiting_freelancer_response' && 'Отклики'}
                                         {status === 'in_progress' && 'В работе'}
                                         {status === 'closed' && 'Закрытые'}
                                     </button>

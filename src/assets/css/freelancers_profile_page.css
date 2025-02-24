@@ -228,6 +228,9 @@
 #freelancer_single_page_wrapper_settings {
     padding-bottom: 500px;
 }
+#client_single_page_wrapper_settings {
+    padding-bottom: 300px;
+}
 #freelancer_profile_settings .freelancer_single_page_user_info_wrapper {
     width: 100%;
     margin-bottom: 880px;
@@ -588,13 +591,18 @@
 }
 #freelancer_profile .portfolio_item {
     box-shadow: 0px 4px 20px 0px #33333326;
-    width: 100%;
+    width: 100% !important;
     background: #FFFFFF;
     border-radius: 10px;
     margin-bottom: 30px;
     border: none;
     cursor: pointer;
     outline: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
 }
 #freelancer_profile .portfolio_item2 {
     box-shadow: 0px 4px 20px 0px #33333326;
@@ -610,6 +618,15 @@
     align-items: center;
     /*height: 434px;*/
 }
+.add_project_icon_title_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 60px 0 30px 0;
+}
+
 .portfolio_item2 {
     box-shadow: 0px 4px 20px 0px #33333326;
     width: 24%;
@@ -2430,6 +2447,9 @@
         margin: 0 auto;
     }
     #freelancer_single_page_wrapper_settings {
+        padding-bottom: unset!important;
+    }
+    #client_single_page_wrapper_settings {
         padding-bottom: unset!important;
     }
     .settings_change_password_delete_profile_btns_wrapper {

@@ -231,7 +231,7 @@ export default function FreelancerProfileSettingsPage () {
                 </Head>
                 <div className="home_general_wrapper" id='freelancer_profile_settings'>
                     <Header activePage={"client_profile_settings"}/>
-                    <div className="freelancer_single_page_wrapper" id='freelancer_single_page_wrapper_settings'>
+                    <div className="freelancer_single_page_wrapper" id='client_single_page_wrapper_settings'>
                         <div className="freelancer_single_page_user_info_wrapper">
                             <div className="freelancer_single_page_user_info_wrapper_child"></div>
                             <div className="freelancer_single_page_user_info_wrapper_items_wrapper">
