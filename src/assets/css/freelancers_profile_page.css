@@ -768,9 +768,7 @@
     }
 }
 @media (min-width: 911px) and (max-width: 938px) {
-    .portfolio_items_wrapper {
-        flex-wrap: wrap;
-    }
+
     .portfolio_item {
         width: 49% !important;
         margin-bottom: 20px;
@@ -798,9 +796,6 @@
     }
 }
 @media (min-width: 800px) and (max-width: 911px) {
-    .portfolio_items_wrapper {
-        flex-wrap: wrap;
-    }
     .portfolio_item {
         width: 49% !important;
         margin-bottom: 20px;
@@ -895,9 +890,7 @@
     }
 }
 @media (min-width: 769px) and  (max-width: 800px) {
-    .portfolio_items_wrapper {
-        flex-wrap: wrap;
-    }
+
     .portfolio_item {
         width: 48% !important;
         margin-bottom: 20px;
@@ -994,9 +987,7 @@
     .reviews_item {
         width: 100% !important;
     }
-    .portfolio_items_wrapper {
-        flex-wrap: wrap;
-    }
+
 
     .freelancer_single_page_user_info_wrapper_item2_img {
         max-width: 340px!important;

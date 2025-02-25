@@ -561,7 +561,7 @@
 @media (min-width: 350px) and (max-width: 425px) {
     .pagination_links_wrapper {
         width: 100%;
-        max-width: 320px!important;
+        /*max-width: 320px!important;*/
     }
 
     .pagination_link_title {
@@ -584,7 +584,7 @@
 @media (max-width: 350px) {
     .pagination_links_wrapper {
         width: 100%;
-        max-width: 270px!important;
+        /*max-width: 270px!important;*/
     }
 
     .pagination_link_title {
@@ -854,11 +854,11 @@
 
 .pagination_links_wrapper {
     width: 100%;
-    max-width: 398px;
+    /*max-width: 398px;*/
     margin: 0 auto;
     margin-top: 25px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -873,6 +873,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 100%;
+    margin: 0 15px;
 }
 .pagination_link_btn {
     width: 40px;
@@ -927,12 +928,16 @@
 .freelancers_item {
     border-radius: 10px;
     cursor: pointer;
-    width: 32%;
+    width: 100%;
     box-shadow: 0px 4px 20px 0px #33333326;
     background: #ffffff;
     margin-bottom: 25px;
     border: none;
     outline: none;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-between;*/
+    height: 100%;
 }
 .freelancers_item_user_img {
     position: relative;
@@ -1023,17 +1028,17 @@
     line-height: 17px;
     text-align: left;
 }
-@media (min-width: 591px) and (max-width: 1145px) {
-    .freelancers_item {
-        width: 49% !important;
-    }
-}
-@media (max-width: 591px) {
-    .freelancers_item {
-        width: 100% !important;
-        margin-bottom: 20px!important;
-    }
-}
+/*@media (min-width: 591px) and (max-width: 1145px) {*/
+/*    .freelancers_item {*/
+/*        width: 49% !important;*/
+/*    }*/
+/*}*/
+/*@media (max-width: 591px) {*/
+/*    .freelancers_item {*/
+/*        width: 100% !important;*/
+/*        margin-bottom: 20px!important;*/
+/*    }*/
+/*}*/
 
 .services_items_wrapper_child {
     width: 100%;
@@ -1062,4 +1067,12 @@
     font-weight: 400;
 
 
+}
+
+.freelancers_items_wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Spacing between items */
+    align-items: start; /* Align items at the top */
+    width: 100%;
 }

@@ -17,6 +17,7 @@ import {DislikeIcon} from "@/components/icons/DisLikeIcon";
 import SuggestTaskModal from "../../../components/SuggestTaskModal";
 import {SearchIcon} from "@/components/icons/SearchIcon";
 import {DeleteAddressIcon} from "@/components/icons/DeleteAddressIcon";
+import {useGetFreelancerById} from "@/hooks/useGetFreelancerById";
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -327,14 +328,20 @@ export default function FreelancerSinglePage ({id}) {
     const [showForClient, setShowForClient] = useState(false);
     const [showSuggestModal, setShowSuggestModal] = useState(false);
     const [searchCategory, setSearchCategory] = useState('');
+    const { getFreelancerById, freelancerByIdData,  loading } = useGetFreelancerById();
+    const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
 
-
+    const router = useRouter();
 
     const handleCheckboxChange = () => {
         setIsCheckedAllCategories(!isCheckedAllCategories);
     };
 
-
+    useEffect(() => {
+        if (id) {
+            getFreelancerById(id); // Fetch the order when the component mounts or id changes
+        }
+    }, [id]);
 
     useEffect(() => {
         handleUseFilter()
@@ -360,11 +367,22 @@ export default function FreelancerSinglePage ({id}) {
         document.body.style.overflow = "auto";
     };
 
-    const router = useRouter();
+    const formatDateToRussian = (dateString) => {
+        const timestamp = Date.parse(dateString); // Ensure valid timestamp
+        if (isNaN(timestamp)) return "Invalid date"; // Handle invalid cases
+
+        const date = new Date(timestamp);
+        return new Intl.DateTimeFormat('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        }).format(date);
+    };
 
     const redirectFromPortfolioSinglePage = (id) => {
         router.push(`/portfolio/${id}`);
     };
+
 
     return (
         <>
@@ -388,7 +406,7 @@ export default function FreelancerSinglePage ({id}) {
                                     <div className="freelancer_single_page_user_info_wrapper_item1">
                                         <div className="freelancer_single_page_user_info_wrapper_item1_image">
                                             <Image
-                                                src="/freelancer_single_page_img.png"
+                                                src={freelancerByIdData?.user?.photo ? `${imagePath}${freelancerByIdData?.user?.photo}` : '/upload_img1.png'}
                                                 alt="Example Image"
                                                 layout="fill" // Fill the parent element
                                                 objectFit="cover" // Cover the area of the parent element
@@ -420,23 +438,23 @@ export default function FreelancerSinglePage ({id}) {
                                         </div>
                                         <div className='freelancer_single_page_user_info_wrapper_item2_details'>
                                             <div className='freelancer_single_page_user_name_age_country_info_wrapper'>
-                                                <p className='freelancer_single_page_user_name'>Анастасия Кодаш</p>
-                                                <p className='freelancer_single_page_user_age_country_info'>34 года, Москва</p>
+                                                <p className='freelancer_single_page_user_name'>{freelancerByIdData?.user?.first_name} {freelancerByIdData?.user?.last_name}</p>
+                                                <p className='freelancer_single_page_user_age_country_info'>{freelancerByIdData?.user?.birth_date}</p>
                                             </div>
-                                            <div className="freelancer_single_page_user_rating_icon_info_wrapper">
-                                                <div className="freelancer_single_page_user_rating_icon">
-                                                    <Image
-                                                        src="/star_img2.png"
-                                                        alt="Example Image"
-                                                        layout="fill" // Fill the parent element
-                                                        objectFit="cover" // Cover the area of the parent element
-                                                        quality={100} // Image quality
-                                                    />
-                                                </div>
-                                                <p className="freelancer_single_page_user_rating_info">
-                                                    5/5
-                                                </p>
-                                            </div>
+                                            {/*<div className="freelancer_single_page_user_rating_icon_info_wrapper">*/}
+                                            {/*    <div className="freelancer_single_page_user_rating_icon">*/}
+                                            {/*        <Image*/}
+                                            {/*            src="/star_img2.png"*/}
+                                            {/*            alt="Example Image"*/}
+                                            {/*            layout="fill" // Fill the parent element*/}
+                                            {/*            objectFit="cover" // Cover the area of the parent element*/}
+                                            {/*            quality={100} // Image quality*/}
+                                            {/*        />*/}
+                                            {/*    </div>*/}
+                                            {/*    <p className="freelancer_single_page_user_rating_info">*/}
+                                            {/*        5/5*/}
+                                            {/*    </p>*/}
+                                            {/*</div>*/}
                                             <div className='mobile_buttons_wrapper'>
                                                 <button className='suggest_task_btn'>
                                                     Предложить задание
@@ -456,43 +474,38 @@ export default function FreelancerSinglePage ({id}) {
                                                     <p className="freelancer_single_page_user_info_professional_information_item_title">
                                                         Выполнила:
                                                     </p>
-                                                    <p className="freelancer_single_page_user_info_professional_information_item_info">57 заданий</p>
+                                                    {freelancerByIdData?.orders.length > 0 ? (
+                                                        <p className="freelancer_single_page_user_info_professional_information_item_info">
+                                                            {freelancerByIdData?.orders ? freelancerByIdData?.orders?.length : null}
+                                                        </p>
+                                                    )
+                                                        :
+                                                        (
+                                                            <p className="freelancer_single_page_user_info_professional_information_item_info">
+                                                                Нет выполненных проектов
+                                                            </p>
+                                                        )
+                                                    }
+
                                                 </div>
                                                 <div className="freelancer_single_page_user_info_professional_information_item">
                                                     <p className="freelancer_single_page_user_info_professional_information_item_title">
                                                         На DoYouDo:
                                                     </p>
-                                                    <p className="freelancer_single_page_user_info_professional_information_item_info"> с 6 сентября 2019</p>
-                                                </div>
-                                                <div className="freelancer_single_page_user_info_professional_information_item">
-                                                    <p className="freelancer_single_page_user_info_professional_information_item_title">
-                                                        Cоздала:
-                                                    </p>
-                                                    <p className="freelancer_single_page_user_info_professional_information_item_info">2 задания</p>
+                                                    <p className="freelancer_single_page_user_info_professional_information_item_info">{formatDateToRussian(freelancerByIdData?.user?.created_at)}</p>
                                                 </div>
                                             </div>
                                             <p className='freelancer_single_page_about_user_info'>
-                                                Действующий школьный учитель. Опыт работы в школе 9 лет. Проведение индивидуальных занятий со школьниками  5–11 классов. Профессиональное устранение любых пробелов в знаниях, доходчивое объяснение учебного материала, подготовка к успешной сдаче экзамена.
+                                                {freelancerByIdData?.user?.about_me}
                                             </p>
                                             <div className="freelancer_single_page_user_hobbies_items_wrapper">
-                                                <div className="freelancer_single_page_user_hobbies_item">
-                                                    <p className="freelancer_single_page_user_hobbies_item_info">Дизайн</p>
-                                                </div>
-                                                <div className="freelancer_single_page_user_hobbies_item">
-                                                    <p className="freelancer_single_page_user_hobbies_item_info">Разработка ПО</p>
-                                                </div>
-                                                <div className="freelancer_single_page_user_hobbies_item">
-                                                    <p className="freelancer_single_page_user_hobbies_item_info">Фото, видео и аудио</p>
-                                                </div>
-                                                <div className="freelancer_single_page_user_hobbies_item">
-                                                    <p className="freelancer_single_page_user_hobbies_item_info">Красота и здоровье</p>
-                                                </div>
-                                                <div className="freelancer_single_page_user_hobbies_item">
-                                                    <p className="freelancer_single_page_user_hobbies_item_info">Установка и ремонт техники</p>
-                                                </div>
-                                                <div className="freelancer_single_page_user_hobbies_item">
-                                                    <p className="freelancer_single_page_user_hobbies_item_info">Репетиторы и обучение</p>
-                                                </div>
+                                                {freelancerByIdData?.categories && freelancerByIdData?.categories.map((item, index) => {
+                                                    return (
+                                                        <div className="freelancer_single_page_user_hobbies_item" key={index}>
+                                                            <p className="freelancer_single_page_user_hobbies_item_info">{item?.name}</p>
+                                                        </div>
+                                                    )
+                                                })}
                                             </div>
                                         </div>
                                     </div>
@@ -581,57 +594,71 @@ export default function FreelancerSinglePage ({id}) {
                                 </div>
                                 <div className="portfolio">
                                     <div className='portfolio_items_wrapper'>
-                                        {portfolioList.map((item, index) => {
+                                        {freelancerByIdData?.portfolios && freelancerByIdData?.portfolios.map((item, index) => {
+                                            let imageArray = [];
+
+                                            try {
+                                                if (item?.image_url && typeof item.image_url === 'string' && item.image_url !== "null") {
+                                                    imageArray = JSON.parse(item.image_url);
+                                                }
+                                            } catch (error) {
+                                                console.error("Error parsing image_url:", error);
+                                            }
+
+                                            // Get the first image or fallback
+                                            let firstImage = imageArray.length > 0 && imageArray[0]
+                                                ? imageArray[0]
+                                                : '/upload_img1.png'; // Fallback image if null or empty
+
+                                            console.log("Final Image URL:", firstImage); // Debugging output
+
                                             return (
                                                 <div
                                                     className='portfolio_item'
                                                     key={index}
-                                                    onClick={() => {
-                                                        redirectFromPortfolioSinglePage(item?.id)
-                                                    }}
+                                                    onClick={() => redirectFromPortfolioSinglePage(item?.id)}
                                                 >
                                                     <div className="portfolio_item_img">
                                                         <Image
-                                                            src={item.portfolio_img}
-                                                            alt="Example Image"
-                                                            layout="fill" // Fill the parent element
-                                                            objectFit="cover" // Cover the area of the parent element
-                                                            quality={100} // Image quality
+                                                            src={firstImage}
+                                                            alt="Portfolio Image"
+                                                            layout="fill"
+                                                            objectFit="cover"
+                                                            quality={100}
                                                         />
                                                     </div>
                                                     <div className='portfolio_item_info_box'>
-                                                        <p className='portfolio_item_title'>{item.portfolio_project_name}</p>
-                                                        <p className='portfolio_item_info1'>{item.portfolio_field_name}</p>
+                                                        <p className='portfolio_item_title'>{item?.project_name}</p>
                                                         <div className="portfolio_item_line"></div>
-                                                        <p className='portfolio_item_info2'>{item.portfolio_info}</p>
+                                                        <p className='portfolio_item_info2'>{item?.description}</p>
                                                     </div>
                                                 </div>
-                                            )
+                                            );
                                         })}
                                     </div>
-                                    <div className="pagination_links_wrapper">
-                                        <button className="pagination_link_btn">
-                                            <PaginationLeftIcon/>
-                                        </button>
-                                        <button className="pagination_link">
-                                            <p className="pagination_link_title">1</p>
-                                        </button>
-                                        <button className="pagination_link active">
-                                            <p className="pagination_link_title">2</p>
-                                        </button>
-                                        <button className="pagination_link">
-                                            <p className="pagination_link_title">3</p>
-                                        </button>
-                                        <button className="pagination_link">
-                                            <p className="pagination_link_title">4</p>
-                                        </button>
-                                        <button className="pagination_link">
-                                            <p className="pagination_link_title">....</p>
-                                        </button>
-                                        <button className="pagination_link_btn">
-                                            <PaginationRightIcon/>
-                                        </button>
-                                    </div>
+                                    {/*<div className="pagination_links_wrapper">*/}
+                                    {/*    <button className="pagination_link_btn">*/}
+                                    {/*        <PaginationLeftIcon/>*/}
+                                    {/*    </button>*/}
+                                    {/*    <button className="pagination_link">*/}
+                                    {/*        <p className="pagination_link_title">1</p>*/}
+                                    {/*    </button>*/}
+                                    {/*    <button className="pagination_link active">*/}
+                                    {/*        <p className="pagination_link_title">2</p>*/}
+                                    {/*    </button>*/}
+                                    {/*    <button className="pagination_link">*/}
+                                    {/*        <p className="pagination_link_title">3</p>*/}
+                                    {/*    </button>*/}
+                                    {/*    <button className="pagination_link">*/}
+                                    {/*        <p className="pagination_link_title">4</p>*/}
+                                    {/*    </button>*/}
+                                    {/*    <button className="pagination_link">*/}
+                                    {/*        <p className="pagination_link_title">....</p>*/}
+                                    {/*    </button>*/}
+                                    {/*    <button className="pagination_link_btn">*/}
+                                    {/*        <PaginationRightIcon/>*/}
+                                    {/*    </button>*/}
+                                    {/*</div>*/}
                                 </div>
                             </div>
 
@@ -790,288 +817,6 @@ export default function FreelancerSinglePage ({id}) {
 
 
                     <Footer activePage={"freelancers_page"}/>
-                    {showFilterMobile &&
-                        <div
-                            className='filter_mobile_menu'
-                            onClick={() => {
-                                handleFilterMenuClick()
-                            }}
-                        >
-                            <div
-                                className='filter_mobile_menu_wrapper'
-                                onClick={(e) => {
-                                    stopPropagation(e)
-                                }}
-                            >
-                                <div className='filter_mobile_menu_title_close_icon_wrapper'>
-                                    <button
-                                        className='filter_mobile_menu_close_btn'
-                                        onClick={() => {
-                                            setShowFilterMobile(false)
-                                            enableBodyScroll()
-                                        }}
-                                    >
-                                        <FilterCloseIcon/>
-                                    </button>
-                                    <p className='filter_mobile_menu_title'>Фильтр</p>
-                                </div>
-                                <div className="mobile_services_filter_items_wrapper">
-                                    <div style={{width: '100%'}}>
-                                        <div
-                                            className='filter_task_categories_header'
-                                            // onClick={() => {
-                                            //     setShowHiddenFilterCategoriesPart(!showHiddenFilterCategoriesPart)
-                                            // }}
-                                        >
-                                            <p className='filter_task_categories_header_title'>Характеристики задания</p>
-                                            {/*<button*/}
-                                            {/*    className={`filter_task_categories_header_icon${showHiddenFilterCategoriesPart ? '2' : ''}`}*/}
-                                            {/*>*/}
-                                            {/*    <DropDownIcon3/>*/}
-                                            {/*</button>*/}
-
-                                        </div>
-                                        {/*{showHiddenFilterCategoriesPart &&*/}
-                                        <div className='filter_task_categories_main'>
-                                            <div className="filter_task_categories_input_title_wrapper filter_task_categories_input_title_wrapper2">
-                                                <p className="filter_task_categories_input_title">Город, адрес, метро, район</p>
-                                                <input
-                                                    type="text"
-                                                    value={address}
-                                                    onChange={handleAddressChange}
-                                                    placeholder="Город, адрес, метро, район"
-                                                    className='filter_task_categories_input_field filter_task_categories_input_field_address'
-                                                />
-                                                {address.length > 0 &&
-                                                    <button
-                                                        className='delete_input_btn'
-                                                        onClick={() => {
-                                                            setAddress('')
-                                                        }}
-                                                    >
-                                                        <DeleteAddressIcon/>
-                                                    </button>
-                                                }
-
-                                            </div>
-
-                                            <div className="radius_dropdown">
-                                                <p className='radius_dropdown_title'>Радиус поиска</p>
-                                                <div className="radius_dropdownHeader" onClick={() => setIsOpenForRadius(!IsOpenForRadius)}>
-                                                    <p className='radius_dropdownHeader_title'>{selectedRadius || 'Радиус поиска'}</p>
-                                                    <span className="arrow">
-                                {IsOpenForRadius ?
-                                    <div style={{ transform: "rotate(-180deg)" }}>
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width={24}
-                                            height={24}
-                                            fill="none"
-                                        >
-                                            <path
-                                                stroke="#333"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={1.5}
-                                                d="m18 9-6 6-1.5-1.5M6 9l2 2"
-                                            />
-                                        </svg>
-                                    </div>
-                                    :
-
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width={24}
-                                        height={24}
-                                        fill="none"
-                                    >
-                                        <path
-                                            stroke="#333"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={1.5}
-                                            d="m18 9-6 6-1.5-1.5M6 9l2 2"
-                                        />
-                                    </svg>
-
-                                }
-                            </span>
-                                                </div>
-                                                {IsOpenForRadius && (
-                                                    <div className="radius_dropdownList radius_dropdownList2">
-                                                        {radius.map((item, index) => (
-                                                            <p key={index} className="radius_dropdownItem" onClick={() => handleSelectRadius(item)}>
-                                                                {item}
-                                                            </p>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </div>
-                                            <div className="filter_task_categories_input_title_wrapper">
-                                                <p className="filter_task_categories_input_title">Стоимость заданий от</p>
-                                                <input
-                                                    type="text"
-                                                    value={taskCost}
-                                                    onChange={handleTaskCostChange}
-                                                    placeholder="₽"
-                                                    className='filter_task_categories_input_field'
-                                                />
-                                            </div>
-                                        </div>
-                                        {/*}*/}
-                                    </div>
-
-                                    <div className='filter_task_categories_wrapper'>
-                                        <div className='filter_option_checkbox_items_wrapper'>
-                                            <div className='filter_option_checkbox_item'>
-                                                <h3 className="filter_option_checkbox_items_wrapper_title">Показывать только задания со статусами</h3>
-                                                <div className="filter-option">
-                                                    <label className='filter_option_label'>
-                                                        <input
-                                                            type="checkbox"
-                                                            name="remoteWork"
-                                                            checked={filters.remoteWork}
-                                                            onChange={handleFilterChange}
-                                                        />
-                                                        <div className='filter_option_label_title_wrapper'>
-                                                            <span className='filter_option_label_title'>Удалённая работа</span>
-                                                            <span className='filter_option_label_title2'>Никуда не надо ехать</span>
-                                                        </div>
-
-                                                    </label>
-                                                </div>
-                                                <div className="filter-option">
-                                                    <label className='filter_option_label'>
-                                                        <input
-                                                            type="checkbox"
-                                                            name="noResponses"
-                                                            checked={filters.noResponses}
-                                                            onChange={handleFilterChange}
-                                                        />
-                                                        <div className='filter_option_label_title_wrapper'>
-                                                            <span className='filter_option_label_title'>Задания без откликов</span>
-                                                            <span className='filter_option_label_title2'>Откликнитесь первым</span>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div className='filter_option_checkbox_item'>
-                                                <h3 className="filter_option_checkbox_items_wrapper_title">Сортировать по:</h3>
-                                                <div className="sort-options">
-                                                    <label className="sort-option">
-                                                        <input
-                                                            type="radio"
-                                                            name="sortBy"
-                                                            value="date"
-                                                            checked={filters.sortBy === 'date'}
-                                                            onChange={handleSortChange}
-                                                        />
-                                                        <p className='sort_option_title'> Дате публикации</p>
-
-                                                    </label>
-                                                    <label className="sort-option">
-                                                        <input
-                                                            type="radio"
-                                                            name="sortBy"
-                                                            value="urgency"
-                                                            checked={filters.sortBy === 'urgency'}
-                                                            onChange={handleSortChange}
-                                                        />
-                                                        <p className='sort_option_title'>Срочности</p>
-
-                                                    </label>
-                                                    <label className="sort-option">
-                                                        <input
-                                                            type="radio"
-                                                            name="sortBy"
-                                                            value="distance"
-                                                            checked={filters.sortBy === 'distance'}
-                                                            onChange={handleSortChange}
-                                                        />
-                                                        <p className='sort_option_title'>Удалённости</p>
-
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {/*</div>*/}
-
-                                        {/*</div>*/}
-
-                                        <div className="services_search_input_field2">
-                                            <div className='services_search_input_field_icon'>
-                                                <SearchIcon/>
-                                            </div>
-                                            <input
-                                                type="text"
-                                                placeholder='Все категории'
-                                                className='services_search_input'
-                                                value={searchCategory}
-                                                onChange={(e) => {
-                                                    setSearchCategory(e.target.value)
-                                                }}
-                                            />
-                                            {searchCategory.length > 0 &&
-                                                <div
-                                                    className='input_delete_icon'
-                                                    onClick={() => {
-                                                        setSearchCategory('')
-                                                    }}
-
-                                                >
-                                                    <DeleteAddressIcon/>
-                                                </div>
-                                            }
-
-
-                                        </div>
-                                        <div className='services_filter_item'>
-                                            <label className='service_label'>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={isCheckedAllCategories}
-                                                    onChange={handleCheckboxChange}
-                                                    className='service_label_checkbox_input_field checkbox'
-                                                />
-                                                <span className='service_label_custom_checkbox customCheckbox'></span>
-                                                Все категории
-
-                                            </label>
-                                        </div>
-
-                                        {/*<City*/}
-                                        {/*    cityData={citiesList}*/}
-                                        {/*    selectedCities={selectedCities}*/}
-                                        {/*    setNewSelectedCities={(val)=>{*/}
-                                        {/*        setSelectedCities(val)*/}
-                                        {/*        console.log(val)*/}
-                                        {/*    }}*/}
-                                        {/*/>*/}
-
-                                        <div className='service_category_items_wrapper'>
-                                            {filterCategoryList.map((item, index) => {
-                                                return (
-                                                    <Category
-                                                        categoryData={item}
-                                                        selectedCategories={selectedCategories}
-                                                        setNewSelectedCategories={(val)=>{
-                                                            setSelectedCategories(val)
-                                                            console.log(val)
-                                                        }}
-                                                    />
-                                                )
-                                            })}
-                                        </div>
-                                        <div className='apply_reset_filter_btn_wrapper'>
-                                            <button className='apply_filter_btn'>Применить</button>
-                                            <button className='reset_filter_btn'>Сбросить</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
                     <SuggestTaskModal
                         isActive={showSuggestModal}
                         onClose={() => {

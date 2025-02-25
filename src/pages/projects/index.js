@@ -524,7 +524,7 @@ export default function Job () {
                         <div className="pagination_links_wrapper">
                             <button className="pagination_link_btn">
                                 <PaginationLeftIcon/>
-                            </button>
+                            </button>x
                             <button className="pagination_link">
                                 <p className="pagination_link_title">1</p>
                             </button>

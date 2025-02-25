@@ -405,6 +405,23 @@ export const getOrders2 = async (body = {}, page = 1, limit = 10) => {
         throw error.response?.data || error.message; // Handle and rethrow the error
     }
 };
+export const getFreelancers2 = async (filters = {}, page = 1, limit = 10) => {
+    try {
+        const response = await apiClient.get('/freelancers', {
+            params: {
+                page,
+                limit,
+                ...(filters.lat && filters.lng ? { lat: filters.lat, lng: filters.lng } : {}),
+                ...filters,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error.message;
+    }
+};
+
+
 export const getProfilePortfolio2 = async (page = 1, limit = 10) => {
     try {
         // Send GET request with query parameters including filters, page, and limit
@@ -456,6 +473,17 @@ export const getOrderByIdApi = async (id) => {
     try {
         // Make a GET request to fetch order by ID
         const response = await apiClient.get(`/orders/${id}`);
+        // Return the response data
+        return response.data;
+    } catch (error) {
+        // Handle and rethrow the error
+        throw error.response?.data || error.message;
+    }
+};
+export const getFreelancerById2 = async (id) => {
+    try {
+        // Make a GET request to fetch order by ID
+        const response = await apiClient.get(`/freelancer/${id}`);
         // Return the response data
         return response.data;
     } catch (error) {

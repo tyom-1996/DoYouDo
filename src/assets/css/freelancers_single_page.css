@@ -513,14 +513,15 @@
     width: 100%;
 }
 .portfolio_items_wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Spacing between items */
+    align-items: start; /* Align items at the top */
     width: 100%;
 }
 .portfolio_item {
     box-shadow: 0px 4px 20px 0px #33333326;
-    width: 24%;
+    width: 100%;
     background: #FFFFFF;
     border-radius: 10px;
 }
@@ -649,9 +650,6 @@
     }
 }
 @media (min-width: 911px) and (max-width: 938px) {
-    .portfolio_items_wrapper {
-        flex-wrap: wrap;
-    }
     .portfolio_item {
         width: 49% !important;
         margin-bottom: 20px;
@@ -675,9 +673,6 @@
     }
 }
 @media (min-width: 800px) and (max-width: 911px) {
-    .portfolio_items_wrapper {
-        flex-wrap: wrap;
-    }
     .portfolio_item {
         width: 49% !important;
         margin-bottom: 20px;
@@ -768,9 +763,6 @@
     }
 }
 @media (min-width: 769px) and  (max-width: 800px) {
-    .portfolio_items_wrapper {
-        flex-wrap: wrap;
-    }
     .portfolio_item {
         width: 48% !important;
         margin-bottom: 20px;
@@ -857,10 +849,6 @@
     .reviews_item {
         width: 100% !important;
     }
-    .portfolio_items_wrapper {
-        flex-wrap: wrap;
-    }
-
     .freelancer_single_page_user_info_wrapper_item2_img {
         max-width: 340px!important;
         height: 130px!important;

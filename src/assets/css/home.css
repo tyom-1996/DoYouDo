@@ -355,11 +355,11 @@
 
 .pagination_links_wrapper {
     width: 100%;
-    max-width: 398px;
+    /*max-width: 398px;*/
     margin: 0 auto;
     margin-top: 25px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -374,6 +374,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 100%;
+    margin: 0 15px;
 }
 .pagination_link_btn {
     width: 40px;

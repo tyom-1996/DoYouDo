@@ -4,135 +4,24 @@ import '../../assets/css/freelancers.css';
 import Header from '../../components/header'
 import Footer from '../../components/footer'
 import Category from '../includes/Category'
-import City from '../includes/CityComponent'
 import Head from 'next/head';
 import {SearchIcon} from "@/components/icons/SearchIcon";
 import {SearchMobileIcon} from "@/components/icons/SearchMobileIcon";
-import {DateIcon} from "@/components/icons/DateIcon";
 import {FilterIcon} from "@/components/icons/FilterIcon";
 import { useRouter } from 'next/router';
 import {PaginationLeftIcon} from "@/components/icons/paginationLeftIcon";
 import {PaginationRightIcon} from "@/components/icons/paginationRightIcon";
 import {FilterCloseIcon} from "@/components/icons/FilterCloseIcon";
-import {DropDownIcon3} from "@/components/icons/DropDownIcon3";
 import {DeleteAddressIcon} from "@/components/icons/DeleteAddressIcon";
 import {useGetCategories} from "@/hooks/useGetCategories";
+import {useGetFreelancers} from "@/hooks/useGetFreelancers";
+import ReactPaginate from "react-paginate";
+import FreelancerFilterModal from "@/components/FreelancerFilterModal";
+import FilterModal from "@/components/FilterModal";
 
 export default function Freelancers () {
     const [windowHeight, setWindowHeight] = useState(0);
-    const [freelancersList, setFreelancersList] = useState([
-        {
-            id: 1,
-            freelancer_img: '/freelancers_img1.png',
-            freelancer_name: 'Daniela Gallego',
-            freelancer_profession: 'Дизайн',
-            distance: '466 метров от вас',
-            freelancer_rating: '4.8/5',
-            freelancer_reviews_quantity: '53',
-            freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
-                '\n 💰 Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) \n' +
-                '\n 🛠 Техническая поддержка и вык ... '
-        },
-        {
-            id: 2,
-            freelancer_img: '/freelancers_img2.png',
-            freelancer_name: 'Daniela Gallego',
-            freelancer_profession: 'Дизайн',
-            distance: '466 метров от вас',
-            freelancer_rating: '4.8/5',
-            freelancer_reviews_quantity: '53',
-            freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
-                '💰 Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) \n ' +
-                '🛠 Техническая поддержка и вык...'
-        },
-        {
-            id: 3,
-            freelancer_img: '/freelancers_img3.png',
-            freelancer_name: 'Daniela Gallego',
-            freelancer_profession: 'Дизайн',
-            distance: '466 метров от вас',
-            freelancer_rating: '4.8/5',
-            freelancer_reviews_quantity: '53',
-            freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
-                '💰 Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) \n ' +
-                '🛠 Техническая поддержка и вык...'
-        },
-        {
-            id: 4,
-            freelancer_img: '/freelancers_img4.png',
-            freelancer_name: 'Daniela Gallego',
-            freelancer_profession: 'Дизайн',
-            distance: '466 метров от вас',
-            freelancer_rating: '4.8/5',
-            freelancer_reviews_quantity: '53',
-            freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
-                '💰 Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) \n ' +
-                '🛠 Техническая поддержка и вык...'
-        },
-        {
-            id: 5,
-            freelancer_img: '/freelancers_img5.png',
-            freelancer_name: 'Daniela Gallego',
-            freelancer_profession: 'Дизайн',
-            distance: '466 метров от вас',
-            freelancer_rating: '4.8/5',
-            freelancer_reviews_quantity: '53',
-            freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
-                '💰 Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) \n ' +
-                '🛠 Техническая поддержка и вык...'
-        },
-        {
-            id: 6,
-            freelancer_img: '/freelancers_img6.png',
-            freelancer_name: 'Daniela Gallego',
-            freelancer_profession: 'Дизайн',
-            distance: '466 метров от вас',
-            freelancer_rating: '4.8/5',
-            freelancer_reviews_quantity: '53',
-            freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
-                '💰 Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) \n ' +
-                '🛠 Техническая поддержка и вык...'
-        },
-        {
-            id: 7,
-            freelancer_img: '/freelancers_img7.png',
-            freelancer_name: 'Daniela Gallego',
-            freelancer_profession: 'Дизайн',
-            distance: '466 метров от вас',
-            freelancer_rating: '4.8/5',
-            freelancer_reviews_quantity: '53',
-            freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
-                '💰 Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) \n ' +
-                '🛠 Техническая поддержка и вык...'
-        },
-        {
-            id: 8,
-            freelancer_img: '/freelancers_img8.png',
-            freelancer_name: 'Daniela Gallego',
-            freelancer_profession: 'Дизайн',
-            distance: '466 метров от вас',
-            freelancer_rating: '4.8/5',
-            freelancer_reviews_quantity: '53',
-            freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
-                '💰 Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) \n ' +
-                '🛠 Техническая поддержка и вык...'
-        },
-        {
-            id: 9,
-            freelancer_img: '/freelancers_img9.png',
-            freelancer_name: 'Daniela Gallego',
-            freelancer_profession: 'Дизайн',
-            distance: '466 метров от вас',
-            freelancer_rating: '4.8/5',
-            freelancer_reviews_quantity: '53',
-            freelancer_service_advantages: '📌 Разработка кроссплатформенных приложений "под ключ" \n' +
-                '💰 Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) \n ' +
-                '🛠 Техническая поддержка и вык...'
-        },
-
-    ]);
     const [isCheckedAllCategories, setIsCheckedAllCategories] = useState(false);
-    const [isCheckedAllCategories2, setIsCheckedAllCategories2] = useState(false);
     const [showFilterMobile, setShowFilterMobile] = useState(false);
     const [filterCategoryList, setFilterCategoryList] = useState([
         {
@@ -312,40 +201,11 @@ export default function Freelancers () {
 
     ]);
     const [selectedCategories, setSelectedCategories] = useState([]);
-
-    const [citiesList, setCitiesList] = useState([
-        {
-            id: 1,
-            city_name: 'Москва'
-        },
-        {
-            id: 2,
-            city_name: 'Санкт-Петербург'
-        },
-        {
-            id: 3,
-            city_name: 'Екатеринбург'
-        },
-        {
-            id: 4,
-            city_name: 'Новосибирск'
-        },
-        {
-            id: 5,
-            city_name: 'Нижний Новгород'
-        },
-        {
-            id: 6,
-            city_name: 'Самара'
-        },
-
-    ]);
     const [selectedCities, setSelectedCities] = useState([]);
-    const [showHiddenFilterCategoriesPart, setShowHiddenFilterCategoriesPart] = useState(false);
+    const { getFreelancers, freelancersData, totalPages, loading } = useGetFreelancers();
 
     const [IsOpenForRadius, setIsOpenForRadius] = useState(false);
     const [selectedRadius, setSelectedRadius] = useState('');
-    const [taskCost, setTaskCost] = useState('');
     const [radius, setRadius] = useState([
         '50 км',
         '100 км',
@@ -358,28 +218,48 @@ export default function Freelancers () {
     const { getCategories, categoriesData } = useGetCategories();
 
     const [coordinates, setCoordinates] = useState([55.751574, 37.573856]);
-    const [filters, setFilters] = useState({
-        remoteWork: false,
-        noResponses: true,
-        sortBy: 'urgency',
-    });
     const [searchCategory, setSearchCategory] = useState('');
+    const [filterBody, setFilterBody] = useState({});
+    const [page, setPage] = useState(1);
+    const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
+    const [isCheckedAllCategories2, setIsCheckedAllCategories2] = useState(false);
 
-    const handleFilterChange = (e) => {
-        const { name, checked } = e.target;
-        setFilters((prev) => ({
-            ...prev,
-            [name]: checked,
-        }));
+    const handleCheckboxChange2 = () => {
+        setIsCheckedAllCategories2(!isCheckedAllCategories2);
     };
 
-    const handleSortChange = (e) => {
-        setFilters((prev) => ({
-            ...prev,
-            sortBy: e.target.value,
-        }));
+
+    const handleCategorySelection = (val) => {
+        let updatedCategories;
+
+        if (selectedCategories.includes(val)) {
+            updatedCategories = selectedCategories.filter((cat) => cat !== val);
+        } else {
+            updatedCategories = [...selectedCategories, val];
+        }
+
+        setSelectedCategories(updatedCategories);
+
+        const updatedFilterBody = { ...filterBody };
+        if (updatedCategories.length > 0) {
+            updatedFilterBody.categories = updatedCategories.join(','); // Ensure categories are comma-separated
+        } else {
+            delete updatedFilterBody.categories;
+        }
+
+        setFilterBody(updatedFilterBody);
+        getFreelancers(updatedFilterBody, page);
     };
 
+    const handlePageClick = (data) => {
+        const selectedPage = data.selected + 1;
+        setPage(selectedPage);
+        getFreelancers(filterBody, selectedPage);
+    };
+
+    useEffect(() => {
+        getFreelancers(filterBody, page);
+    }, []);
 
 
     const handleCheckboxChange = () => {
@@ -425,9 +305,7 @@ export default function Freelancers () {
         setSelectedRadius(item);
         setIsOpenForRadius(false);
     }
-    const handleTaskCostChange = (e) => {
-        setTaskCost(e.target.value);
-    }
+
     const handleAddressChange = async (e) => {
         const newAddress = e.target.value;
         setAddress(newAddress);
@@ -453,26 +331,13 @@ export default function Freelancers () {
         enableBodyScroll();
     };
 
-    const handleCheckboxChange2 = () => {
-        setIsCheckedAllCategories2(!isCheckedAllCategories2);
-    };
 
     const stopPropagation = (event) => {
         // Prevent click event from bubbling up to the filter menu
         event.stopPropagation();
     };
-    const handleCategorySelection = (val) => {
-        let updatedCategories;
 
-        if (selectedCategories.includes(val)) {
-            updatedCategories = selectedCategories.filter((cat) => cat !== val);
-        } else {
-            updatedCategories = [...selectedCategories, val];
-        }
 
-        setSelectedCategories(updatedCategories);
-
-    };
 
     return (
         <>
@@ -565,132 +430,95 @@ export default function Freelancers () {
                             </div>
                             <div className="services_items_filter_main_wrapper">
                                 <div className="services_filter_items_wrapper">
+                                    <div className='services_filter_item'>
+                                        <label className='service_label'>
+                                            <input
+                                                type="checkbox"
+                                                checked={isCheckedAllCategories2}
+                                                onChange={handleCheckboxChange2}
+                                                className='service_label_checkbox_input_field checkbox'
+                                            />
+                                            <span className='service_label_custom_checkbox customCheckbox'></span>
+                                            Все категории
+
+                                        </label>
+                                    </div>
                                     <div className="service_category_items_wrapper">
                                         {categoriesData &&
                                             categoriesData.map((item) => (
                                                 <Category
-                                                    key={item.id} // Ensure a unique key
+                                                    key={item.id}
                                                     categoryData={item}
                                                     selectedCategories={selectedCategories}
                                                     setNewSelectedCategories={handleCategorySelection}
                                                 />
                                             ))}
                                     </div>
-
-                                    {/*<div className='services_filter_item'>*/}
-                                    {/*    <label className='service_label'>*/}
-                                    {/*        <input*/}
-                                    {/*            type="checkbox"*/}
-                                    {/*            checked={isCheckedAllCategories2}*/}
-                                    {/*            onChange={handleCheckboxChange2}*/}
-                                    {/*            className='service_label_checkbox_input_field checkbox'*/}
-                                    {/*        />*/}
-                                    {/*        <span className='service_label_custom_checkbox customCheckbox'></span>*/}
-                                    {/*        Все категории*/}
-
-                                    {/*    </label>*/}
-                                    {/*</div>*/}
-
-                                    {/*<City*/}
-                                    {/*    cityData={citiesList}*/}
-                                    {/*    selectedCities={selectedCities}*/}
-                                    {/*    setNewSelectedCities={(val)=>{*/}
-                                    {/*        setSelectedCities(val)*/}
-                                    {/*        console.log(val)*/}
-                                    {/*    }}*/}
-                                    {/*/>*/}
-
-                                    {/*<div className='service_category_items_wrapper'>*/}
-                                    {/*    {filterCategoryList.map((item, index) => {*/}
-                                    {/*        return (*/}
-                                    {/*            <Category*/}
-                                    {/*                categoryData={item}*/}
-                                    {/*                selectedCategories={selectedCategories}*/}
-                                    {/*                setNewSelectedCategories={(val)=>{*/}
-                                    {/*                    setSelectedCategories(val)*/}
-                                    {/*                    console.log(val)*/}
-                                    {/*                }}*/}
-                                    {/*            />*/}
-                                    {/*        )*/}
-                                    {/*    })}*/}
-                                    {/*</div>*/}
                                 </div>
-                                <div className='services_items_wrapper'>
-                                    <div className='services_items_wrapper_child'>
-                                        {freelancersList.map((item, index) => {
-                                            return (
-                                                <button
-                                                    className="freelancers_item" key={index}
-                                                    onClick={() => {
-                                                        redirectToFreelancerSinglePage(item?.id)
-                                                    }}
-                                                >
-                                                    <div className="freelancers_item_user_img">
-                                                        <Image
-                                                            src={item.freelancer_img}
-                                                            alt="Example Image"
-                                                            layout="fill" // Fill the parent element
-                                                            objectFit="cover" // Cover the area of the parent element
-                                                            quality={100} // Image quality
-                                                        />
-                                                    </div>
-                                                    <div className='freelancers_item_info_box'>
-                                                        <p className="freelancers_item_user_name">{item.freelancer_name}</p>
-                                                        <div className='freelancers_item_user_header_item'>
-                                                            <p className="freelancers_item_user_profession">{item.freelancer_profession}</p>
-                                                            <p className="freelancers_item_user_distance_info">{item.distance}</p>
-                                                        </div>
 
-                                                        <div className="freelancers_item_user_rating_icon_reviews_info_wrapper">
-                                                            <div className="freelancers_item_user_rating_info_wrapper">
-                                                                <div className="freelancers_item_user_rating_icon">
-                                                                    <Image
-                                                                        src={'/stars.png'}
-                                                                        alt="Example Image"
-                                                                        layout="fill" // Fill the parent element
-                                                                        objectFit="cover" // Cover the area of the parent element
-                                                                        quality={100} // Image quality
-                                                                    />
-                                                                </div>
-                                                                <p className='freelancers_item_user_rating_info'>{item.freelancer_rating}</p>
+                                <div className="services_items_wrapper">
+                                    {loading ? (
+                                        <p></p>
+                                    ) : freelancersData && freelancersData?.data.length > 0 ? (
+                                        <>
+                                            <div className="freelancers_items_wrapper">
+                                                {freelancersData?.data.map((item, index) => (
+                                                    <button
+                                                        className="freelancers_item"
+                                                        key={index}
+                                                        onClick={() => redirectToFreelancerSinglePage(item?.id)}
+                                                    >
+                                                        <div className="freelancers_item_user_img">
+                                                            <Image
+                                                                src={item?.photo ? `${imagePath}${item?.photo}` : '/upload_img1.png'}
+                                                                alt="Freelancer Image"
+                                                                layout="fill"
+                                                                objectFit="cover"
+                                                                quality={100}
+                                                            />
+                                                        </div>
+                                                        <div className="freelancers_item_info_box">
+                                                            <p className="freelancers_item_user_name">
+                                                                {item?.first_name} {item?.last_name}
+                                                            </p>
+                                                            <div className="freelancers_item_user_header_item">
+                                                                <p className="freelancers_item_user_profession">{item?.about_me}</p>
+                                                                <p className="freelancers_item_user_distance_info">{item?.distance}</p>
                                                             </div>
-                                                            <p className='freelancers_item_reviews_info'>{item.freelancer_reviews_quantity} отзыва</p>
+
+                                                            <div className="freelancers_item_line"></div>
+                                                            {item?.categories &&
+                                                                item?.categories.map((item2, idx) => (
+                                                                    <p className="freelancers_item_user_service_info" key={idx}>
+                                                                        {item2?.name}
+                                                                    </p>
+                                                                ))}
                                                         </div>
-                                                        <div className="freelancers_item_line"></div>
-                                                        <p className='freelancers_item_user_service_info'>
-                                                            {item.freelancer_service_advantages}
-                                                        </p>
-                                                    </div>
+                                                    </button>
+                                                ))}
+                                            </div>
 
-                                                </button>
-                                            )
-                                        })}
-
-                                    </div>
-
-                                    <div className="pagination_links_wrapper">
-                                        <button className="pagination_link_btn">
-                                            <PaginationLeftIcon/>
-                                        </button>
-                                        <button className="pagination_link">
-                                            <p className="pagination_link_title">1</p>
-                                        </button>
-                                        <button className="pagination_link active">
-                                            <p className="pagination_link_title">2</p>
-                                        </button>
-                                        <button className="pagination_link">
-                                            <p className="pagination_link_title">3</p>
-                                        </button>
-                                        <button className="pagination_link">
-                                            <p className="pagination_link_title">4</p>
-                                        </button>
-                                        <button className="pagination_link">
-                                            <p className="pagination_link_title">....</p>
-                                        </button>
-                                        <button className="pagination_link_btn">
-                                            <PaginationRightIcon/>
-                                        </button>
-                                    </div>
+                                            <ReactPaginate
+                                                previousLabel={<PaginationLeftIcon />}
+                                                nextLabel={<PaginationRightIcon />}
+                                                breakLabel={'...'}
+                                                breakClassName={'pagination_break'}
+                                                pageCount={totalPages} // Correct total pages calculation
+                                                marginPagesDisplayed={2}
+                                                pageRangeDisplayed={3}
+                                                onPageChange={handlePageClick}
+                                                containerClassName={'pagination_links_wrapper'}
+                                                activeClassName={'active'}
+                                                previousClassName={'pagination_link_btn'}
+                                                nextClassName={'pagination_link_btn'}
+                                                pageClassName={'pagination_link'}
+                                                pageLinkClassName={'pagination_link_title'}
+                                                disabledClassName={'disabled'}
+                                            />
+                                        </>
+                                    ) : (
+                                        <p className="services_items_wrapper_not_found">Ничего не найдено</p>
+                                    )}
                                 </div>
                             </div>
 
@@ -699,291 +527,35 @@ export default function Freelancers () {
 
                     <Footer activePage={"freelancers_page"}/>
                     {showFilterMobile &&
-                        <div
-                            className='filter_mobile_menu'
-                            onClick={() => {
-                                handleFilterMenuClick()
+                        <FreelancerFilterModal
+                            useFilter={(filterOptions) => {
+                                const updatedFilterBody = { ...filterBody, ...filterOptions };
+                                setFilterBody(updatedFilterBody); // Update local filter state
+                                getFreelancers(updatedFilterBody, 1); // Fetch orders using updated filters (reset to page 1)
                             }}
-                        >
-                            <div
-                                className='filter_mobile_menu_wrapper'
-                                onClick={(e) => {
-                                    stopPropagation(e)
-                                }}
-                            >
-                                <div className='filter_mobile_menu_title_close_icon_wrapper'>
-                                    <button
-                                        className='filter_mobile_menu_close_btn'
-                                        onClick={() => {
-                                            setShowFilterMobile(false)
-                                            enableBodyScroll()
-                                        }}
-                                    >
-                                        <FilterCloseIcon/>
-                                    </button>
-                                    <p className='filter_mobile_menu_title'>Фильтр</p>
-                                </div>
-                                <div className="mobile_services_filter_items_wrapper">
-                                    <div style={{width: '100%'}}>
-                                        <div
-                                            className='filter_task_categories_header'
-                                            // onClick={() => {
-                                            //     setShowHiddenFilterCategoriesPart(!showHiddenFilterCategoriesPart)
-                                            // }}
-                                        >
-                                            <p className='filter_task_categories_header_title'>Характеристики задания</p>
-                                            {/*<button*/}
-                                            {/*    className={`filter_task_categories_header_icon${showHiddenFilterCategoriesPart ? '2' : ''}`}*/}
-                                            {/*>*/}
-                                            {/*    <DropDownIcon3/>*/}
-                                            {/*</button>*/}
+                            isActive={showFilterMobile}
+                            categoryData={categoriesData}
+                            selectedCategories={selectedCategories}
+                            setNewSelectedCategories={(val) => {
+                                // Toggle category selection
+                                const updatedCategories = selectedCategories.includes(val)
+                                    ? selectedCategories.filter((cat) => cat !== val)
+                                    : [...selectedCategories, val];
 
-                                        </div>
-                                        {/*{showHiddenFilterCategoriesPart &&*/}
-                                        <div className='filter_task_categories_main'>
-                                            <div className="filter_task_categories_input_title_wrapper filter_task_categories_input_title_wrapper2">
-                                                <p className="filter_task_categories_input_title">Город, адрес, метро, район</p>
-                                                <input
-                                                    type="text"
-                                                    value={address}
-                                                    onChange={handleAddressChange}
-                                                    placeholder="Город, адрес, метро, район"
-                                                    className='filter_task_categories_input_field filter_task_categories_input_field_address'
-                                                />
-                                                {address.length > 0 &&
-                                                    <button
-                                                        className='delete_input_btn'
-                                                        onClick={() => {
-                                                            setAddress('')
-                                                        }}
-                                                    >
-                                                        <DeleteAddressIcon/>
-                                                    </button>
-                                                }
-
-                                            </div>
-
-                                            <div className="radius_dropdown">
-                                                <p className='radius_dropdown_title'>Радиус поиска</p>
-                                                <div className="radius_dropdownHeader" onClick={() => setIsOpenForRadius(!IsOpenForRadius)}>
-                                                    <p className='radius_dropdownHeader_title'>{selectedRadius || 'Радиус поиска'}</p>
-                                                    <span className="arrow">
-                                {IsOpenForRadius ?
-                                    <div style={{ transform: "rotate(-180deg)" }}>
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width={24}
-                                            height={24}
-                                            fill="none"
-                                        >
-                                            <path
-                                                stroke="#333"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={1.5}
-                                                d="m18 9-6 6-1.5-1.5M6 9l2 2"
-                                            />
-                                        </svg>
-                                    </div>
-                                    :
-
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width={24}
-                                        height={24}
-                                        fill="none"
-                                    >
-                                        <path
-                                            stroke="#333"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={1.5}
-                                            d="m18 9-6 6-1.5-1.5M6 9l2 2"
-                                        />
-                                    </svg>
-
-                                }
-                            </span>
-                                                </div>
-                                                {IsOpenForRadius && (
-                                                    <div className="radius_dropdownList radius_dropdownList2">
-                                                        {radius.map((item, index) => (
-                                                            <p key={index} className="radius_dropdownItem" onClick={() => handleSelectRadius(item)}>
-                                                                {item}
-                                                            </p>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </div>
-                                            {/*<div className="filter_task_categories_input_title_wrapper">*/}
-                                            {/*    <p className="filter_task_categories_input_title">Стоимость заданий от</p>*/}
-                                            {/*    <input*/}
-                                            {/*        type="text"*/}
-                                            {/*        value={taskCost}*/}
-                                            {/*        onChange={handleTaskCostChange}*/}
-                                            {/*        placeholder="₽"*/}
-                                            {/*        className='filter_task_categories_input_field'*/}
-                                            {/*    />*/}
-                                            {/*</div>*/}
-                                        </div>
-                                        {/*}*/}
-                                    </div>
-
-                                    <div className='filter_task_categories_wrapper'>
-                                        {/*<div className='filter_option_checkbox_items_wrapper'>*/}
-
-                                            {/*<div className='filter_option_checkbox_item'>*/}
-                                            {/*    <h3 className="filter_option_checkbox_items_wrapper_title">Показывать только задания со статусами</h3>*/}
-                                            {/*    <div className="filter-option">*/}
-                                            {/*        <label className='filter_option_label'>*/}
-                                            {/*            <input*/}
-                                            {/*                type="checkbox"*/}
-                                            {/*                name="remoteWork"*/}
-                                            {/*                checked={filters.remoteWork}*/}
-                                            {/*                onChange={handleFilterChange}*/}
-                                            {/*            />*/}
-                                            {/*            <div className='filter_option_label_title_wrapper'>*/}
-                                            {/*                <span className='filter_option_label_title'>Удалённая работа</span>*/}
-                                            {/*                <span className='filter_option_label_title2'>Никуда не надо ехать</span>*/}
-                                            {/*            </div>*/}
-
-                                            {/*        </label>*/}
-                                            {/*    </div>*/}
-                                            {/*    <div className="filter-option">*/}
-                                            {/*        <label className='filter_option_label'>*/}
-                                            {/*            <input*/}
-                                            {/*                type="checkbox"*/}
-                                            {/*                name="noResponses"*/}
-                                            {/*                checked={filters.noResponses}*/}
-                                            {/*                onChange={handleFilterChange}*/}
-                                            {/*            />*/}
-                                            {/*            <div className='filter_option_label_title_wrapper'>*/}
-                                            {/*                <span className='filter_option_label_title'>Задания без откликов</span>*/}
-                                            {/*                <span className='filter_option_label_title2'>Откликнитесь первым</span>*/}
-                                            {/*            </div>*/}
-                                            {/*        </label>*/}
-                                            {/*    </div>*/}
-                                            {/*</div>*/}
-
-                                            {/*<div className='filter_option_checkbox_item'>*/}
-                                            {/*    <h3 className="filter_option_checkbox_items_wrapper_title">Сортировать по:</h3>*/}
-                                            {/*    <div className="sort-options">*/}
-                                            {/*        <label className="sort-option">*/}
-                                            {/*            <input*/}
-                                            {/*                type="radio"*/}
-                                            {/*                name="sortBy"*/}
-                                            {/*                value="date"*/}
-                                            {/*                checked={filters.sortBy === 'date'}*/}
-                                            {/*                onChange={handleSortChange}*/}
-                                            {/*            />*/}
-                                            {/*            <p className='sort_option_title'> Дате публикации</p>*/}
-
-                                            {/*        </label>*/}
-                                            {/*        <label className="sort-option">*/}
-                                            {/*            <input*/}
-                                            {/*                type="radio"*/}
-                                            {/*                name="sortBy"*/}
-                                            {/*                value="urgency"*/}
-                                            {/*                checked={filters.sortBy === 'urgency'}*/}
-                                            {/*                onChange={handleSortChange}*/}
-                                            {/*            />*/}
-                                            {/*            <p className='sort_option_title'>Срочности</p>*/}
-
-                                            {/*        </label>*/}
-                                            {/*        <label className="sort-option">*/}
-                                            {/*            <input*/}
-                                            {/*                type="radio"*/}
-                                            {/*                name="sortBy"*/}
-                                            {/*                value="distance"*/}
-                                            {/*                checked={filters.sortBy === 'distance'}*/}
-                                            {/*                onChange={handleSortChange}*/}
-                                            {/*            />*/}
-                                            {/*            <p className='sort_option_title'>Удалённости</p>*/}
-
-                                            {/*        </label>*/}
-                                            {/*    </div>*/}
-                                            {/*</div>*/}
-
-                                        {/*</div>*/}
-                                        {/*</div>*/}
-
-                                        {/*</div>*/}
-
-                                        <div className="services_search_input_field2">
-                                            <div className='services_search_input_field_icon'>
-                                                <SearchIcon/>
-                                            </div>
-                                            <input
-                                                type="text"
-                                                placeholder='Все категории'
-                                                className='services_search_input'
-                                                value={searchCategory}
-                                                onChange={(e) => {
-                                                    setSearchCategory(e.target.value)
-                                                }}
-                                            />
-                                            {searchCategory.length > 0 &&
-                                                <div
-                                                    className='input_delete_icon'
-                                                    onClick={() => {
-                                                        setSearchCategory('')
-                                                    }}
-
-                                                >
-                                                    <DeleteAddressIcon/>
-                                                </div>
-                                            }
-
-
-                                        </div>
-                                        <div className='services_filter_item'>
-                                            <label className='service_label'>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={isCheckedAllCategories}
-                                                    onChange={handleCheckboxChange}
-                                                    className='service_label_checkbox_input_field checkbox'
-                                                />
-                                                <span className='service_label_custom_checkbox customCheckbox'></span>
-                                                Все категории
-
-                                            </label>
-                                        </div>
-
-                                        {/*<City*/}
-                                        {/*    cityData={citiesList}*/}
-                                        {/*    selectedCities={selectedCities}*/}
-                                        {/*    setNewSelectedCities={(val)=>{*/}
-                                        {/*        setSelectedCities(val)*/}
-                                        {/*        console.log(val)*/}
-                                        {/*    }}*/}
-                                        {/*/>*/}
-
-                                        <div className='service_category_items_wrapper'>
-                                            {filterCategoryList.map((item, index) => {
-                                                return (
-                                                    <Category
-                                                        categoryData={item}
-                                                        selectedCategories={selectedCategories}
-                                                        setNewSelectedCategories={(val)=>{
-                                                            setSelectedCategories(val)
-                                                            console.log(val)
-                                                        }}
-                                                    />
-                                                )
-                                            })}
-                                        </div>
-                                        <div className='apply_reset_filter_btn_wrapper'>
-                                            <button className='apply_filter_btn'>Применить</button>
-                                            <button className='reset_filter_btn'>Сбросить</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                // Update the state
+                                setSelectedCategories(updatedCategories);
+                                setFilterBody((prev) => ({
+                                    ...prev,
+                                    categories: updatedCategories,
+                                }));
+                            }}
+                            onClose={() => setShowFilterMobile(false)}
+                            resetFilter={() => {
+                                setSelectedCategories([]);
+                                getFreelancers({}, 1);
+                            }}
+                        />
                     }
-
                 </div>
 
             </main>
