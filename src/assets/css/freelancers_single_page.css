@@ -87,6 +87,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 100%;
+    margin-right: 10px;
 }
 .pagination_link_btn {
     width: 40px;
@@ -100,6 +101,9 @@
     align-items: center;
     border-radius: 100%;
     position: relative;
+}
+.pagination_link_btn:first-of-type {
+    margin-right: 10px;
 }
 .pagination_links_wrapper .pagination_link_btn:last-child svg {
     position: absolute;
@@ -524,6 +528,7 @@
     width: 100%;
     background: #FFFFFF;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .portfolio_item_img {
@@ -533,6 +538,7 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     overflow: hidden;
+    position: relative;
 }
 .portfolio_item_img Image {
     object-fit: cover;
@@ -540,6 +546,22 @@
     height: 100%;
 }
 
+.portfolio_item_edit_icon {
+    position: absolute;
+    z-index: 9;
+    right: 12px;
+    top: 12px;
+    border: none;
+    width: 30px;
+    height: 30px;
+    background: hsla(0, 0%, 100%, .8);
+    padding: 3px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
 .portfolio_item_info_box {
     width: 100%;
     padding: 20px;

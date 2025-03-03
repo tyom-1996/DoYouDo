@@ -103,6 +103,54 @@ export const updateProfile2 = async (name, surname, experience, aboutMe, email, 
         throw error.response?.data?.message || error.message;
     }
 };
+
+export const updatePortfolioById2 = async (id, projectName, categoryId, description, images) => {
+    const token = localStorage.getItem('token');
+
+    // Проверяем, есть ли токен
+    if (!token) {
+        throw new Error('No token found');
+    }
+
+    // Формируем тело запроса
+    const requestBody = {
+        project_name: projectName,
+        category_id: categoryId,
+        description: description,
+        image_url: images // Ожидаемый формат: массив строк (URL картинок)
+    };
+
+    console.log("📤 Отправка запроса в API:", {
+        id,
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        body: requestBody
+    });
+
+    try {
+        const response = await apiClient.put(
+            `/profile/portfolio/${id}`,
+            requestBody,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`, // Добавляем токен
+                    "Content-Type": "application/json" // Указываем, что отправляем JSON
+                }
+            }
+        );
+
+        console.log("✅ Успешный ответ API:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("❌ Ошибка при обновлении портфолио:", error.response?.data || error.message);
+        throw error.response?.data?.message || error.message;
+    }
+};
+
+
+
+
 export const uploadPhoto2 = async (file) => {
     try {
         const formData = new FormData();
@@ -473,6 +521,18 @@ export const getOrderByIdApi = async (id) => {
     try {
         // Make a GET request to fetch order by ID
         const response = await apiClient.get(`/orders/${id}`);
+        // Return the response data
+        return response.data;
+    } catch (error) {
+        // Handle and rethrow the error
+        throw error.response?.data || error.message;
+    }
+};
+
+export const getPortfolioByIdApi = async (id) => {
+    try {
+        // Make a GET request to fetch order by ID
+        const response = await apiClient.get(`profile/portfolio/${id}`);
         // Return the response data
         return response.data;
     } catch (error) {

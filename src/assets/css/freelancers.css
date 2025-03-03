@@ -544,7 +544,9 @@
     }
 }
 
-
+.pagination_link_btn:first-of-type {
+    margin-right: 10px;
+}
 
 @media (max-width: 622px) {
     .services_item {
@@ -873,7 +875,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 100%;
-    margin: 0 15px;
+   margin-right: 10px;
 }
 .pagination_link_btn {
     width: 40px;

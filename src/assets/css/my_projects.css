@@ -227,7 +227,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 100%;
-    margin: 0 15px;
+    margin-right: 10px;
 }
 .pagination_link_btn {
     width: 40px;
@@ -241,6 +241,9 @@
     align-items: center;
     border-radius: 100%;
     position: relative;
+}
+.pagination_link_btn:first-of-type {
+    margin-right: 10px;
 }
 .pagination_links_wrapper .pagination_link_btn:last-child svg {
     position: absolute;

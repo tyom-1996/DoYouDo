@@ -19,6 +19,7 @@ import { useSetCategories } from '../../../hooks/useSetCategories';
 import { useGetProfilePackages } from '../../../hooks/useGetProfilePackages';
 import { useGetProfilePortfolio } from '../../../hooks/useGetProfilePortfolio';
 import ReactPaginate from "react-paginate";
+import EditIcon from "@/components/icons/editIcon";
 
 const  FreelancerProfilePage  = ()  => {
     const [windowHeight, setWindowHeight] = useState(0);
@@ -73,84 +74,6 @@ const  FreelancerProfilePage  = ()  => {
             star_icon: '/star_img3.png',
             review_info: 'Спасибо большое, Анастасия Викторовна быстро откликнулась, назначила время созвона и очень доступно всё объяснила ребёнку. Будем обращаться снова при необходимости! 👏👏👏'
         },
-
-    ]);
-    const [portfolioList, setPortfolioList] = useState([
-
-        {
-            id: 1,
-            portfolio_img: '',
-            portfolio_project_name: '',
-            portfolio_field_name: '',
-            portfolio_info: '',
-            add_project: true,
-        },
-        {
-            id: 2,
-            add_project: false,
-            portfolio_img: '/portfolio_img1.png',
-            portfolio_project_name: 'Passimpay',
-            portfolio_field_name: 'Дизайн',
-            portfolio_info: 'Разработка кроссплатформенных приложений "под ключ"  Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) ка в сторы  Договор + Поэтапная оплата'
-        },
-        {
-            id: 3,
-            add_project: false,
-            portfolio_img: '/portfolio_img2.png',
-            portfolio_project_name: 'Passimpay',
-            portfolio_field_name: 'Дизайн',
-            portfolio_info: 'Разработка кроссплатформенных приложений "под ключ"  Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) ка в сторы  Договор + Поэтапная оплата'
-        },
-        {
-            id: 4,
-            add_project: false,
-            portfolio_img: '/portfolio_img3.png',
-            portfolio_project_name: 'Passimpay',
-            portfolio_field_name: 'Дизайн',
-            portfolio_info: 'Разработка кроссплатформенных приложений "под ключ"  Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) ка в сторы  Договор + Поэтапная оплата'
-        },
-        {
-            id: 5,
-            add_project: false,
-            portfolio_img: '/portfolio_img4.png',
-            portfolio_project_name: 'Passimpay',
-            portfolio_field_name: 'Дизайн',
-            portfolio_info: 'Разработка кроссплатформенных приложений "под ключ"  Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) ка в сторы  Договор + Поэтапная оплата'
-        },
-
-        {
-            id: 6,
-            add_project: false,
-            portfolio_img: '/portfolio_img1.png',
-            portfolio_project_name: 'Passimpay',
-            portfolio_field_name: 'Дизайн',
-            portfolio_info: 'Разработка кроссплатформенных приложений "под ключ"  Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) ка в сторы  Договор + Поэтапная оплата'
-        },
-        {
-            id: 7,
-            add_project: false,
-            portfolio_img: '/portfolio_img2.png',
-            portfolio_project_name: 'Passimpay',
-            portfolio_field_name: 'Дизайн',
-            portfolio_info: 'Разработка кроссплатформенных приложений "под ключ"  Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) ка в сторы  Договор + Поэтапная оплата'
-        },
-        {
-            id: 8,
-            add_project: false,
-            portfolio_img: '/portfolio_img3.png',
-            portfolio_project_name: 'Passimpay',
-            portfolio_field_name: 'Дизайн',
-            portfolio_info: 'Разработка кроссплатформенных приложений "под ключ"  Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) ка в сторы  Договор + Поэтапная оплата'
-        },
-        {
-            id: 9,
-            add_project: false,
-            portfolio_img: '/portfolio_img4.png',
-            portfolio_project_name: 'Passimpay',
-            portfolio_field_name: 'Дизайн',
-            portfolio_info: 'Разработка кроссплатформенных приложений "под ключ"  Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) ка в сторы  Договор + Поэтапная оплата'
-        },
-
 
     ]);
     const [isOpenForCategories, setIsOpenForCategories] = useState(false);
@@ -244,6 +167,11 @@ const  FreelancerProfilePage  = ()  => {
     const handlePageClick = (data) => {
         const selectedPage = data.selected + 1; // ReactPaginate uses a 0-based index
         setPage(selectedPage);
+    };
+    const redirectToEditPortfolio = (e, portfolioId) => {
+        e.stopPropagation(); // Останавливаем всплытие события
+        e.preventDefault();
+        router.push(`/edit-portfolio/${portfolioId}`);
     };
 
 
@@ -523,6 +451,12 @@ const  FreelancerProfilePage  = ()  => {
                                                         objectFit="cover"
                                                         quality={100}
                                                     />
+                                                    <button
+                                                        className='portfolio_item_edit_icon'
+                                                        onClick={(e) => redirectToEditPortfolio(e,item?.id)}
+                                                    >
+                                                        <EditIcon/>
+                                                    </button>
                                                 </div>
                                                 <div className='portfolio_item_info_box'>
                                                     <p className='portfolio_item_title'>{item?.project_name}</p>

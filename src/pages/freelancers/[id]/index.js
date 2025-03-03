@@ -3,20 +3,14 @@ import Image from "next/image";
 import '../../../assets/css/freelancers_single_page.css';
 import Header from '../../../components/header'
 import Footer from '../../../components/footer'
-import Category from '../../includes/Category'
-import City from '../../includes/CityComponent'
 import Head from 'next/head';
-import {DateIcon2} from "@/components/icons/DateIcon2";
-import {FilterCloseIcon} from "@/components/icons/FilterCloseIcon";
 import { useRouter } from 'next/router';
-import {DateIcon} from "@/components/icons/DateIcon";
 import {PaginationLeftIcon} from "@/components/icons/paginationLeftIcon";
 import {PaginationRightIcon} from "@/components/icons/paginationRightIcon";
 import {LikeIcon} from "@/components/icons/LikeIcon";
+import EditIcon from "@/components/icons/editIcon";
 import {DislikeIcon} from "@/components/icons/DisLikeIcon";
 import SuggestTaskModal from "../../../components/SuggestTaskModal";
-import {SearchIcon} from "@/components/icons/SearchIcon";
-import {DeleteAddressIcon} from "@/components/icons/DeleteAddressIcon";
 import {useGetFreelancerById} from "@/hooks/useGetFreelancerById";
 
 export async function getServerSideProps({ params }) {
@@ -33,212 +27,7 @@ export async function getServerSideProps({ params }) {
 export default function FreelancerSinglePage ({id}) {
     const [windowHeight, setWindowHeight] = useState(0);
     const [isCheckedAllCategories, setIsCheckedAllCategories] = useState(false);
-    const [showFilterMobile, setShowFilterMobile] = useState(false);
-    const [filterCategoryList, setFilterCategoryList] = useState([
-        {
-            id: 1,
-            filter_category_title: 'Дизайн',
-            filter_item_subcategories: [
-                {
-                    id: 2,
-                    subcategory_name: 'Фирменный стиль',
-                },
-                {
-                    id: 3,
-                    subcategory_name: 'Логотипы',
-                },
-                {
-                    id: 4,
-                    subcategory_name: 'Визитки',
-                },
-                {
-                    id: 5,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 6,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 7,
-                    subcategory_name: 'Анимация',
-                },
-            ]
-        },
-        {
-            id: 8,
-            filter_category_title: 'Дизайн',
-            filter_item_subcategories: [
-                {
-                    id: 9,
-                    subcategory_name: 'Фирменный стиль',
-                },
-                {
-                    id: 10,
-                    subcategory_name: 'Логотипы',
-                },
-                {
-                    id: 11,
-                    subcategory_name: 'Визитки',
-                },
-                {
-                    id: 12,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 13,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 14,
-                    subcategory_name: 'Анимация',
-                },
-            ]
-        },
-        {
-            id: 15,
-            filter_category_title: 'Компьютерная помощь',
-            filter_item_subcategories: [
-                {
-                    id: 16,
-                    subcategory_name: 'Ремонт компьютеров',
-                },
-                {
-                    id: 17,
-                    subcategory_name: 'Установка и настройка',
-                },
-                {
-                    id: 18,
-                    subcategory_name: 'Удаление вирусов',
-                },
-                {
-                    id: 19,
-                    subcategory_name: '3d-Настройка интернета',
-                },
-                {
-                    id: 20,
-                    subcategory_name: 'Консультация и обучение',
-                },
-
-            ]
-        },
-        {
-            id: 21,
-            filter_category_title: 'Разработка ПО',
-            filter_item_subcategories: [
-                {
-                    id: 22,
-                    subcategory_name: 'Ремонт компьютеров',
-                },
-                {
-                    id: 23,
-                    subcategory_name: 'Установка и настройка',
-                },
-                {
-                    id: 24,
-                    subcategory_name: 'Удаление вирусов',
-                },
-                {
-                    id: 25,
-                    subcategory_name: '3d-Настройка интернета',
-                },
-                {
-                    id: 26,
-                    subcategory_name: 'Консультация и обучение',
-                },
-
-            ]
-        },
-        {
-            id: 27,
-            filter_category_title: 'Фото, видео и аудио',
-            filter_item_subcategories: [
-                {
-                    id: 28,
-                    subcategory_name: 'Фирменный стиль',
-                },
-                {
-                    id: 29,
-                    subcategory_name: 'Логотипы',
-                },
-                {
-                    id: 30,
-                    subcategory_name: 'Визитки',
-                },
-                {
-                    id: 31,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 32,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 33,
-                    subcategory_name: 'Анимация',
-                },
-            ]
-        },
-        {
-            id: 34,
-            filter_category_title: 'Красота и здоровье',
-            filter_item_subcategories: [
-                {
-                    id: 35,
-                    subcategory_name: 'Фирменный стиль',
-                },
-                {
-                    id: 36,
-                    subcategory_name: 'Логотипы',
-                },
-                {
-                    id: 37,
-                    subcategory_name: 'Визитки',
-                },
-                {
-                    id: 38,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 39,
-                    subcategory_name: '3d-графика',
-                },
-                {
-                    id: 40,
-                    subcategory_name: 'Анимация',
-                },
-            ]
-        },
-
-    ]);
     const [selectedCategories, setSelectedCategories] = useState([]);
-    const [citiesList, setCitiesList] = useState([
-        {
-            id: 1,
-            city_name: 'Москва'
-        },
-        {
-            id: 2,
-            city_name: 'Санкт-Петербург'
-        },
-        {
-            id: 3,
-            city_name: 'Екатеринбург'
-        },
-        {
-            id: 4,
-            city_name: 'Новосибирск'
-        },
-        {
-            id: 5,
-            city_name: 'Нижний Новгород'
-        },
-        {
-            id: 6,
-            city_name: 'Самара'
-        },
-
-    ]);
     const [selectedCities, setSelectedCities] = useState([]);
     const [reviewsList, setReviewsList] = useState([
         {
@@ -292,50 +81,14 @@ export default function FreelancerSinglePage ({id}) {
         },
 
     ]);
-    const [portfolioList, setPortfolioList] = useState([
-        {
-            id: 1,
-            portfolio_img: '/portfolio_img1.png',
-            portfolio_project_name: 'Passimpay',
-            portfolio_field_name: 'Дизайн',
-            portfolio_info: 'Разработка кроссплатформенных приложений "под ключ"  Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) ка в сторы  Договор + Поэтапная оплата'
-        },
-        {
-            id: 2,
-            portfolio_img: '/portfolio_img2.png',
-            portfolio_project_name: 'Passimpay',
-            portfolio_field_name: 'Дизайн',
-            portfolio_info: 'Разработка кроссплатформенных приложений "под ключ"  Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) ка в сторы  Договор + Поэтапная оплата'
-        },
-        {
-            id: 3,
-            portfolio_img: '/portfolio_img3.png',
-            portfolio_project_name: 'Passimpay',
-            portfolio_field_name: 'Дизайн',
-            portfolio_info: 'Разработка кроссплатформенных приложений "под ключ"  Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) ка в сторы  Договор + Поэтапная оплата'
-        },
-        {
-            id: 4,
-            portfolio_img: '/portfolio_img4.png',
-            portfolio_project_name: 'Passimpay',
-            portfolio_field_name: 'Дизайн',
-            portfolio_info: 'Разработка кроссплатформенных приложений "под ключ"  Экономим $$ и время заказчика (пишем 1 код сразу под iOS, Android и Web) ка в сторы  Договор + Поэтапная оплата'
-        },
-
-
-    ]);
     const [showForFreelancer, setShowForFreelancer] = useState(true);
     const [showForClient, setShowForClient] = useState(false);
     const [showSuggestModal, setShowSuggestModal] = useState(false);
-    const [searchCategory, setSearchCategory] = useState('');
     const { getFreelancerById, freelancerByIdData,  loading } = useGetFreelancerById();
     const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
 
     const router = useRouter();
 
-    const handleCheckboxChange = () => {
-        setIsCheckedAllCategories(!isCheckedAllCategories);
-    };
 
     useEffect(() => {
         if (id) {
@@ -379,8 +132,8 @@ export default function FreelancerSinglePage ({id}) {
         }).format(date);
     };
 
-    const redirectFromPortfolioSinglePage = (id) => {
-        router.push(`/portfolio/${id}`);
+    const redirectFromPortfolioSinglePage = (portfolioId) => {
+        router.push(`/portfolio/${portfolioId}`);
     };
 
 
@@ -814,7 +567,6 @@ export default function FreelancerSinglePage ({id}) {
                             </div>
                         </div>
                     }
-
 
                     <Footer activePage={"freelancers_page"}/>
                     <SuggestTaskModal
