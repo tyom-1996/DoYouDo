@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from "next/image";
 import '../assets/css/header.css';
 import {CloseIcon} from "@/components/icons/CloseIcon";
@@ -19,7 +19,7 @@ export default function Header(props) {
     const { getProfileInfo, loadingUserInfo, profileInfoData } = useGetProfileInfo();
     const { profileToggleRole,profileToggleRoleData } = useSetProfileToggleRole();
     const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
-
+    const popupRef = useRef(null);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -30,6 +30,25 @@ export default function Header(props) {
             setIsLogged(false);
         }
     }, []);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            // If popupRef is set and the clicked target is not inside the popup container, close the popup
+            if (popupRef.current && !popupRef.current.contains(event.target)) {
+                setShowProfilePopup(false);
+            }
+        };
+
+        if (showProfilePopup) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showProfilePopup]);
 
     useEffect(() => {
 
@@ -226,7 +245,7 @@ export default function Header(props) {
                         </button>
                     }
                     {showProfilePopup &&
-                        <div className='profile_popup'>
+                        <div className='profile_popup'  ref={popupRef}>
                             <div className='profile_popup_wrapper'>
 
                                 {activeRole == 'freelancer' &&

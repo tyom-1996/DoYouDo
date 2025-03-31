@@ -155,6 +155,16 @@ export default function OrderForClient ({id}) {
     const formattedNumber = (number) => {
         return number.toString().replace(/\.00$/, '');
     };
+    // Helper function to get the correct declension of "день"
+    const getDayDeclension = (days) => {
+        const lastTwoDigits = days % 100;
+        if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return 'дней';
+        const lastDigit = days % 10;
+        if (lastDigit === 1) return 'день';
+        if (lastDigit >= 2 && lastDigit <= 4) return 'дня';
+        return 'дней';
+    };
+
 
     return (
         <>
@@ -278,7 +288,7 @@ export default function OrderForClient ({id}) {
                                                 <div className="order_single_page_item_img_info_wrapper">
                                                     <div className="order_single_page_item_img">
                                                         <Image
-                                                            src={item?.freelancer?.photo ? `${imagePath}${item?.freelancer?.photo}` : '/freelancers_img7.png'}
+                                                            src={item?.freelancer?.photo ? `${imagePath}${item?.freelancer?.photo}` : '/upload_img1.png'}
                                                             alt="Example Image"
                                                             layout="fill" // Fill the parent element
                                                             objectFit="cover" // Cover the area of the parent element
@@ -307,8 +317,9 @@ export default function OrderForClient ({id}) {
                                                                 {formattedNumber(item?.response?.price)} руб.
                                                             </p>
                                                             <p className="order_single_page_item_deadline_info">
-                                                                Сделаю {item?.response?.days_to_complete} днем
+                                                                Сделаю {item?.response?.days_to_complete} {getDayDeclension(item?.response?.days_to_complete)}
                                                             </p>
+
                                                         </div>
                                                     </div>
                                                 </div>

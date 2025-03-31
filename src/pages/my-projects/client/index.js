@@ -909,21 +909,19 @@ import { useGetClientOrders } from '@/hooks/useGetOrdersForClient';
 
 export default function MyProjectsForClient() {
     const [windowHeight, setWindowHeight] = useState(0);
-    const [selectedTab, setSelectedTab] = useState('myResponses'); // Default tab
+    const [selectedTab, setSelectedTab] = useState('active'); // Default tab
     const [page, setPage] = useState(1);
     const [limit] = useState(10);
     const [showHiddenDropDownMenu, setShowHiddenDropDownMenu] = useState(false);
     const { getClientOrders, loading, clientOrdersData, totalPages } = useGetClientOrders();
     const tabOptions = [
-        { value: 'myResponses', label: 'Активные' },
+        { value: 'active', label: 'Активные' },
         { value: 'pending', label: 'На модерации' },
         // { value: 'waiting_freelancer_response', label: 'Отклики' },
         { value: 'in_progress', label: 'В работе' },
         { value: 'closed', label: 'Закрытые' },
     ];
     const [isMobile, setIsMobile] = useState(false);
-
-
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -932,9 +930,11 @@ export default function MyProjectsForClient() {
     }, []);
 
     useEffect(() => {
-        if (selectedTab === 'myResponses') {
-            getClientOrders(page, limit); // No status passed for "Мои отклики"
+        if (selectedTab === 'active') {
+            // For the 'active' tab, explicitly pass the desired status (e.g., ['active'])
+            getClientOrders(page, limit, ['published']);
         } else {
+            // For other tabs, retrieve the corresponding status array from the map
             const statusMap = {
                 pending: ['pending'],
                 waiting_freelancer_response: ['waiting_freelancer_response'],
@@ -944,6 +944,7 @@ export default function MyProjectsForClient() {
             getClientOrders(page, limit, statusMap[selectedTab]);
         }
     }, [page, selectedTab]);
+
 
     const router = useRouter();
 
@@ -959,6 +960,7 @@ export default function MyProjectsForClient() {
         setSelectedTab(tab);
         setPage(1); // Reset to first page on tab change
     };
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
 
@@ -969,7 +971,6 @@ export default function MyProjectsForClient() {
 
         return `${day}, ${month}, ${time}`;
     };
-
 
     return (
         <>
@@ -987,13 +988,13 @@ export default function MyProjectsForClient() {
                     <div className="my_projects_wrapper">
                         <div style={{width: '100%'}}>
                             <div className='my_project_tabs_wrapper2'>
-                                {['myResponses', 'pending', 'in_progress', 'closed'].map((status) => (
+                                {['active', 'pending', 'in_progress', 'closed'].map((status) => (
                                     <button
                                         key={status}
                                         className={`my_project_tab ${selectedTab === status ? 'active_tab' : ''}`}
                                         onClick={() => handleTabChange(status)}
                                     >
-                                        {status === 'myResponses' && 'Активные'}
+                                        {status === 'active' && 'Активные'}
                                         {status === 'pending' && 'На модерации'}
                                         {status === 'in_progress' && 'В работе'}
                                         {status === 'closed' && 'Закрытые'}

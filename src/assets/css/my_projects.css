@@ -33,7 +33,7 @@
 .my_project_tabs_wrapper {
     width: 100%;
     margin-bottom: 30px;
-    max-width: 850px;
+    max-width: 750px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -621,7 +621,7 @@
         padding: 15px 20px!important;
     }
     .my_project_tabs_wrapper {
-        max-width: 695px!important;
+        max-width: 620px!important;
     }
     .my_project_tabs_wrapper2 {
         max-width: 600px!important;
@@ -633,7 +633,7 @@
         font-size: 14px!important;
     }
     .my_project_tabs_wrapper {
-        max-width: 600px!important;
+        max-width: 520px!important;
     }
     .my_project_tabs_wrapper2 {
         max-width: 500px!important;

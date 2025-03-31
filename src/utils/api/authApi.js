@@ -350,59 +350,89 @@ export const createProfilePortfolio2 = async (projectName, description, selected
         throw new Error(errorMessage);
     }
 };
-export const editOrderRequest = async (id, categoryId, type, address, latitude, longitude, title, description, price, startDate, endDate, photos, files) => {
+
+// Helper to format a JS Date as YYYY-MM-DD
+const formatDate = (dateObj) => {
+    if (!dateObj) return '';
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`; // e.g. 2024-01-01
+};
+
+// In your authApi.js (or where editOrderRequest is defined)
+export const editOrderRequest = async (
+    id,
+    categoryId,
+    selectedSubCategoryId,
+    selectedPlace2,
+    address,
+    latitude,
+    longitude,
+    heading,
+    description,
+    price,
+    selectedStartDate,
+    selectedEndDate,
+    images,
+    files
+) => {
     try {
-        // Create a new FormData object
+        // Helper function to convert date to MySQL format
+        const formatDateForMySQL = (date) => {
+            if (!date) return ""; // If no date, return empty string
+            const d = date instanceof Date ? date : new Date(date);
+            if (isNaN(d.getTime())) return "";
+            return d.toISOString().slice(0, 19).replace("T", " "); // Convert to 'YYYY-MM-DD HH:MM:SS'
+        };
+
         const formData = new FormData();
 
-        // Append fields to formData
         formData.append('category_id', categoryId);
-        formData.append('type', type);
+        formData.append('type', selectedPlace2);
         formData.append('address', address);
         formData.append('latitude', latitude);
         formData.append('longitude', longitude);
-        formData.append('title', title);
+        formData.append('title', heading);
         formData.append('description', description);
         formData.append('price', price);
-        formData.append('start_date', startDate);
-        formData.append('end_date', endDate);
+        formData.append('start_date', formatDateForMySQL(selectedStartDate)); // Format properly
+        formData.append('end_date', formatDateForMySQL(selectedEndDate)); // Format properly
 
-        // Append photos if they exist
-        if (photos && photos.length > 0) {
-            photos.forEach((photo, index) => {
+        console.log(formData, 'formdata____________');
+
+        if (images && images.length > 0) {
+            images.forEach((photo, index) => {
                 formData.append(`photos[${index}]`, {
                     uri: photo.uri,
-                    type: photo.type || 'image/jpeg', // Set type if available, otherwise default to image/jpeg
-                    name: photo.name || `photo_${index}.jpg`, // Set name if available, otherwise default name
+                    type: photo.type || 'image/jpeg',
+                    name: photo.name || `photo_${index}.jpg`,
                 });
             });
         }
 
-        // Append files if they exist
         if (files && files.length > 0) {
             files.forEach((file, index) => {
                 formData.append(`files[${index}]`, {
                     uri: file.uri,
-                    type: file.type || 'application/octet-stream', // Set type if available, otherwise default to binary data
-                    name: file.name || `file_${index}`, // Set name if available, otherwise default name
+                    type: file.type || 'application/octet-stream',
+                    name: file.name || `file_${index}`,
                 });
             });
         }
 
-        // Make the API call using the axios instance with formData
         const response = await apiClient.put(`/orders/${id}`, formData, {
             headers: {
-                'Content-Type': 'multipart/form-data', // Set the content type for formData
+                'Content-Type': 'multipart/form-data',
             },
         });
-        console.log(response, 'put_responce________')
 
-        // Return the response data
+        console.log(response, 'put_response________');
+
         return response.data;
     } catch (error) {
-        // Handle and throw the specific error message or general error
         const errorMessage = error.response?.data?.message || error.message;
-        console.error('Error creating order:', errorMessage);
+        console.error('Error editing order:', errorMessage);
         throw new Error(errorMessage);
     }
 };
@@ -514,6 +544,21 @@ export const getClientOrders2 = async (page = 1, limit = 10, status = null) => {
         throw error.response?.data || error.message;
     }
 };
+export const getFreelancerResponses2 = async (page = 1, limit = 10, status = null) => {
+    try {
+        const params = {
+            page,
+            limit,
+        };
+        if (status && status.length > 0) {
+            params.status = status.join(',');
+        }
+        const response = await apiClient.get('/freelancer/responses/list', { params });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error.message;
+    }
+};
 
 
 
@@ -528,11 +573,44 @@ export const getOrderByIdApi = async (id) => {
         throw error.response?.data || error.message;
     }
 };
+export const getUserReviewsById2 = async (id) => {
+    try {
+        // Make a GET request to fetch order by ID
+        const response = await apiClient.get(`/reviews/user/${id}`);
+        // Return the response data
+        return response.data;
+    } catch (error) {
+        // Handle and rethrow the error
+        throw error.response?.data || error.message;
+    }
+};
+export const checkReviews2 = async (id) => {
+    try {
+        // Make a GET request to fetch order by ID
+        const response = await apiClient.get(`/reviews/order/${id}`);
+        // Return the response data
+        return response.data;
+    } catch (error) {
+        // Handle and rethrow the error
+        throw error.response?.data || error.message;
+    }
+};
 
 export const getPortfolioByIdApi = async (id) => {
     try {
         // Make a GET request to fetch order by ID
         const response = await apiClient.get(`profile/portfolio/${id}`);
+        // Return the response data
+        return response.data;
+    } catch (error) {
+        // Handle and rethrow the error
+        throw error.response?.data || error.message;
+    }
+};
+export const getFreelancerOrderById2 = async (id) => {
+    try {
+        // Make a GET request to fetch order by ID
+        const response = await apiClient.get(`freelancer/responses/${id}`);
         // Return the response data
         return response.data;
     } catch (error) {
@@ -594,6 +672,29 @@ export const createResponseRequest = async (id, responseText, price, date) => {
         throw error.response?.data || error.message;
     }
 };
+
+export const createReviewRequest = async (clientId, id, rating, reviewType, reviewText) => {
+    try {
+        // Make the request with axios
+        const response = await apiClient.post(
+            '/reviews',
+            {
+                order_id: id,
+                to_id: clientId,
+                rating: rating,
+                review_type: reviewType,
+                text: reviewText,
+            }
+        );
+
+        // Return the response data
+        return response?.data;
+    } catch (error) {
+        // Handle and rethrow the error
+        throw error.response?.data || error.message;
+    }
+};
+
 export const selectFreelancerRequest = async (id, responseId) => {
     try {
         // Make the request with axios

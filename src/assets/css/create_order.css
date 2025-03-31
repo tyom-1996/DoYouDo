@@ -934,7 +934,7 @@
     padding: 10px 15px;
     width: 100%;
     position: absolute;
-    z-index: 999;
+    z-index: 99999;
     bottom: -103px;
 }
 

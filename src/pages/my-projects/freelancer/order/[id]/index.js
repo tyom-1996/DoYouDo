@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Image from "next/image";
-import '../../../../assets/css/order_page.css';
-import Header from '../../../../components/header'
-import Footer from '../../../../components/footer'
-import Category from '../../../includes/Category'
-import City from '../../../includes/CityComponent'
+import '../../../../../assets/css/order_page.css';
+import '../../../../../assets/css/leave_feedback.css';
+import Header from '../../../../../components/header'
+import Footer from '../../../../../components/footer'
+import Category from '../../../../includes/Category'
+import City from '../../../../includes/CityComponent'
 import Head from 'next/head';
 import {DateIcon2} from "@/components/icons/DateIcon2";
 import {FilterCloseIcon} from "@/components/icons/FilterCloseIcon";
@@ -12,6 +13,12 @@ import { useRouter } from 'next/router';
 import {DateIcon} from "@/components/icons/DateIcon";
 import {PaginationLeftIcon} from "@/components/icons/paginationLeftIcon";
 import {PaginationRightIcon} from "@/components/icons/paginationRightIcon";
+import {useGetFreelancerResponses} from "@/hooks/useGetFreelancerResponses";
+import {useGetFreelancerOrderById} from "@/hooks/useGetFreelancerOrderById";
+import StarRatingComponent from "react-star-rating-component";
+import {useCreateReviews} from "@/hooks/useCreateReviews";
+import FeedBackSuccess from "@/components/feedbackSuccessModal";
+import {useCheckReviews} from "@/hooks/useCheckReviews";
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -71,11 +78,52 @@ export default function Order ({id}) {
     const [showForInProgress, setShowForInProgress] = useState(false);
     const [showForApproval, setShowForApproval] = useState(false);
     const [showForClosing, setShowForClosing] = useState(true);
+    const [showReviewPopup, setShowReviewPopup] = useState(false);
+    const { getFreelancerOrderById, freelancerOrderByIddData } = useGetFreelancerOrderById();
+    const { createReview, createReviewData } = useCreateReviews();
+    const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}`);
+    const [rating, setRating] = useState(1);
+    const [reviewText, setReviewText] = useState('');
+    const [showFeedbackSuccessModal, setShowFeedbackSuccessModal] = useState(false);
+    const [reviewType, setReviewType] = useState('positive');
+    const { checkReviews, checkReviewsData} = useCheckReviews();
+    const [showCheckReviewsState, setShowCheckReviewsState] = useState(false);
 
+    const onStarClick = (nextValue, prevValue, name) => {
+        setRating(nextValue);
+    };
 
     useEffect(() => {
-        console.log(id, 'params______id')
-    }, [])
+        if (id) {
+            checkReviews(id);
+        }
+    }, [id]);
+
+    useEffect(() => {
+        if (checkReviewsData) {
+            if (checkReviewsData?.message == 'Отзыв найден') {
+                setShowCheckReviewsState(true)
+            }
+        }
+    }, [checkReviewsData]);
+
+    useEffect(() => {
+        if (createReviewData) {
+            if (createReviewData?.message == 'Отзыв успешно добавлен') {
+                setReviewType('');
+                setRating(1);
+                setReviewText('');
+                setShowReviewPopup(false);
+                setShowFeedbackSuccessModal(true)
+            }
+        }
+
+    }, [createReviewData])
+
+    useEffect(() => {
+         getFreelancerOrderById(id)
+    }, [id])
+
     useEffect(() => {
         if (typeof window !== 'undefined') {
             setWindowHeight(window.innerHeight);
@@ -93,6 +141,23 @@ export default function Order ({id}) {
     const redirectToLeaveFeedbackPage = () => {
         router.push('/leave-feedback');
     }
+
+    const formatDateRussian = (isoDateStr) => {
+        const date = new Date(isoDateStr);
+        return date.toLocaleDateString("ru-RU", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        });
+    };
+
+    console.log(formatDateRussian("2023-01-15T00:00:00.000Z")); // Outputs: "15 января 2023"
+
+    const makeReview = async () => {
+        let clientId = freelancerOrderByIddData?.data[0]?.client_id;
+        await createReview(clientId, id, rating, reviewType, reviewText)
+    }
+
 
     return (
         <>
@@ -114,7 +179,7 @@ export default function Order ({id}) {
                             <div className="order_page_item1_child">
                                 <div className="order_page_user_img">
                                     <Image
-                                        src="/freelancers_img1.png"
+                                        src={freelancerOrderByIddData?.data[0]?.client_photo ? `${imagePath}${freelancerOrderByIddData?.data[0]?.client_photo}` : '/upload_img1.png'}
                                         alt="Example Image"
                                         layout="fill" // Fill the parent element
                                         objectFit="cover" // Cover the area of the parent element
@@ -122,8 +187,8 @@ export default function Order ({id}) {
                                     />
                                 </div>
                                 <div className='order_page_item1_child_info_wrapper'>
-                                    <p className='order_page_user_name'>Daniela Gallego</p>
-                                    <p className='order_page_user_country'>Москва</p>
+                                    <p className='order_page_user_name'>{freelancerOrderByIddData?.data[0]?.client_first_name} {freelancerOrderByIddData?.data[0]?.client_last_name}</p>
+                                    <p className='order_page_user_country'>{freelancerOrderByIddData?.data[0]?.client_address}</p>
                                     <div className="order_page_user_rating_info_wrapper_main">
                                         <div className='order_page_user_rating_icon_info_wrapper'>
                                             <div className="order_page_user_rating_icon">
@@ -152,29 +217,29 @@ export default function Order ({id}) {
                                 <div className="order_page_date_icon">
                                     <DateIcon2/>
                                 </div>
-                                <p className='order_page_date_info'>January 15, 2023</p>
+                                <p className='order_page_date_info'>{formatDateRussian(freelancerOrderByIddData?.data[0]?.end_date)}</p>
                             </div>
                             <div className="order_details_items_wrapper">
                                 <div className="order_detail_item">
                                     <p className="order_detail_item_title">Адрес</p>
-                                    <p className="order_detail_item_info">Виртуальное задание</p>
+                                    <p className="order_detail_item_info">{freelancerOrderByIddData?.data[0]?.address}</p>
                                 </div>
                                 <div className="order_detail_item">
                                     <p className="order_detail_item_title">Начать</p>
-                                    <p className="order_detail_item_info">Виртуальное задание</p>
+                                    <p className="order_detail_item_info">{formatDateRussian(freelancerOrderByIddData?.data[0]?.start_date)}</p>
                                 </div>
                                 <div className="order_detail_item">
                                     <p className="order_detail_item_title">Бюджет</p>
-                                    <p className="order_detail_item_info">Крупный — до 10000 000 ₽</p>
+                                    <p className="order_detail_item_info">{freelancerOrderByIddData?.data[0]?.order_price.toString().replace(/\.00$/, '')}</p>
                                 </div>
-                                <div className="order_detail_item">
-                                    <p className="order_detail_item_title">Оплата задания</p>
-                                    <p className="order_detail_item_info">По договорённости с бизнес-исполнителем</p>
-                                </div>
+                                {/*<div className="order_detail_item">*/}
+                                {/*    <p className="order_detail_item_title">Оплата задания</p>*/}
+                                {/*    <p className="order_detail_item_info">По договорённости с бизнес-исполнителем</p>*/}
+                                {/*</div>*/}
                                 <div className="order_detail_item">
                                     <p className="order_detail_item_title">Нужно</p>
                                     <p className="order_detail_item_info">
-                                        В производственной организации из 200 человек используется 1С ERP (последняя версия). Аналитики и программисты должны проанализировать текущие процессы в 1С ERP, описать их, а также реализовать заявки пользователей (решение инциндентов и развитие системы). Проект долгий, постоянный, оплата почасовая, возможно по 100% предоплате. В предложении прошу указать: - аккредитованния ли ИТ компания или нет: да или нет - количество: аналитиков 1С, разработчиков 1С, всего сотрудников в компании (3 цифры) - возможность аналитикам 1С и разработчикам 1С работать полную занятость (проект интенсивный):
+                                        {freelancerOrderByIddData?.data[0]?.description}
                                     </p>
                                 </div>
                             </div>
@@ -197,11 +262,12 @@ export default function Order ({id}) {
                                     <button className='discuss_btn'>Обсудить</button>
                                 </div>
                             }
-                            {showForClosing &&
+                            {showForClosing && showCheckReviewsState !== true &&
                                 <button
                                     className='leave_feedback_btn'
                                      onClick={() => {
-                                         redirectToLeaveFeedbackPage()
+                                         setShowReviewPopup(true)
+                                         disableBodyScroll()
                                      }}
                                 >
                                     Оставить отзыв
@@ -280,6 +346,101 @@ export default function Order ({id}) {
                 </div>
                 <Footer activePage={"my_projects_for_freelancer_page"}/>
 
+                {showReviewPopup &&
+                    <div className="leave_feedback_popup">
+                        <div className="leave_feedback_main_wrapper">
+                            <button
+                                className='leave_feedback_popup_close_icon'
+                                onClick={() => {
+                                    setShowReviewPopup(false)
+                                    enableBodyScroll()
+                                }}
+                            >
+                                <FilterCloseIcon/>
+                            </button>
+                            <h1 className='leave_feedback_title'>Оставить отзыв</h1>
+                            <div className="leave_feedback_textarea_title_main_wrapper">
+                                <p className='leave_feedback_textarea_title'>Оценка</p>
+                                <div className='leave_feedback_rating_info_stars_wrapper'>
+                                    <StarRatingComponent
+                                        name="rate1"
+                                        starCount={5}
+                                        value={rating}
+                                        onStarClick={onStarClick}
+                                        renderStarIcon={(index, value) => {
+                                            return (
+                                                <span>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width={28}
+                                                height={27}
+                                                fill={index <= value ? "#FFC107" : "#D9D9D9"}
+                                            >
+                                                <path
+                                                    d="M27.536 11.082 21.5 17.265l1.42 8.751c.125.698-.633 1.21-1.24.879l-7.421-4.111V0c.315 0 .63.146.766.45l3.728 7.94 8.3 1.262c.694.124.95.94.484 1.43ZM14.258 0v22.784l-7.422 4.11c-.595.335-1.365-.172-1.238-.878l1.419-8.75L.98 11.081a.853.853 0 0 1 .484-1.43l8.3-1.262L13.494.45c.135-.304.45-.45.765-.45Z"
+                                                />
+                                            </svg>
+                                        </span>
+                                            );
+                                        }}
+                                    />
+                                    <p className='leave_feedback_rating_info'>3.5/5</p>
+                                </div>
+
+                            </div>
+                            <div className="radioGroup">
+                                <label className="radioLabel">
+                                    <input
+                                        type="radio"
+                                        name="choice"
+                                        value="positive"
+                                        checked={reviewType === 'positive'}
+                                        onChange={(e) => setReviewType(e.target.value)}
+                                    />
+                                    <span className="radioCustom"></span>
+                                    Положительный
+                                </label>
+                                <label className="radioLabel">
+                                    <input
+                                        type="radio"
+                                        name="choice"
+                                        value="negative"
+                                        checked={reviewType === 'negative'}
+                                        onChange={(e) => setReviewType(e.target.value)}
+                                    />
+                                    <span className="radioCustom"></span>
+                                    Отрицательный
+                                </label>
+                            </div>
+                            <div className="leave_feedback_textarea_title_main_wrapper">
+                                <p className='leave_feedback_textarea_title'>Отзыв</p>
+                                <textarea
+                                    placeholder='Текст'
+                                    className='leave_feedback_textarea_field'
+                                    value={reviewText}
+                                    onChange={(e) => setReviewText(e.target.value)}
+                                ></textarea>
+                            </div>
+                            <button
+                                className='leave_feedback_page_btn'
+                                onClick={() => {
+                                    makeReview()
+                                }}
+                            >
+                                Отправить
+                            </button>
+
+                        </div>
+                    </div>
+
+                }
+
+                <FeedBackSuccess
+                    isActive={showFeedbackSuccessModal}
+                    onClose={() => {
+                        setShowFeedbackSuccessModal(false)
+                    }}
+                />
             </main>
         </>
     );

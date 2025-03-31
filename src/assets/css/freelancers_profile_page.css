@@ -2101,7 +2101,7 @@
     padding: 10px 15px;
     width: 100%;
     position: absolute;
-    z-index: 999;
+    z-index: 99999;
     top: 43px;
 }
 .add_category_dropdown1 {

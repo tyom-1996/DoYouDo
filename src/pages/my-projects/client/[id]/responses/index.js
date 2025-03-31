@@ -42,6 +42,8 @@ export default function OrderForClient({ id }) {
     const [showDisableSelectFreelancerButton, setShowDisableSelectFreelancerButton] = useState(false);
     const [showDisableFavoriteButton, setShowDisableFavoriteButton] = useState(false);
     const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
+    const [favoritedIds, setFavoritedIds] = useState({});
+
 
     useEffect(() => {
          getSelectedFreelancers(id)
@@ -113,22 +115,47 @@ export default function OrderForClient({ id }) {
         return number.toString().replace(/\.00$/, '');
     };
 
-    const selectFavFreelancer = async (responseId) => {
+    const selectFavFreelancer = async (responseId, freelancerId) => {
+        // Immediately update the state for optimistic UI update
+        setSelectedFreelancerId(freelancerId);
+
+        // Then call the API
         await selectFreelancer(id, responseId);
-        getSelectedFreelancers(id)
+
+        // Optionally refetch selected freelancers
+        getSelectedFreelancers(id);
     };
+
 
     const addToFavoritesList = async (freelancerId) => {
+        // Immediately update the local state to reflect the favorite status
+        setFavoritedIds(prev => ({ ...prev, [freelancerId]: true }));
+
+        // Then call your API to add to favorites (you can handle errors if needed)
         await addFavorites(id, freelancerId);
-        getFavorites(id); // Refetch the favorite list after adding
+
+        // Optionally, refetch the favorites if needed
+        getFavorites(id);
     };
 
 
-    const renderFreelancerButton = (item, responsesData, selectedFreelancersData, selectFavFreelancer) => {
+    const renderFreelancerButton = (item, responsesData, selectedFreelancersData) => {
+        // Check if this freelancer was optimistically selected
+        if (selectedFreelancerId === item?.freelancer?.id) {
+            return (
+                <button
+                    className="order_single_page_item_select_user_btn"
+                    style={{ opacity: 1, fontSize: 14 }}
+                    disabled
+                >
+                    Ожидание ответа
+                </button>
+            );
+        }
+
+        // Existing logic if a selection has already been made
         if (responsesData?.hasSelectedFreelancer) {
-
             if (item?.freelancer?.is_selected_freelancer) {
-
                 if (item?.freelancer?.orderStatus === 'waiting_freelancer_response') {
                     return (
                         <button
@@ -164,15 +191,25 @@ export default function OrderForClient({ id }) {
             }
         }
 
+        // If no selection is made, show the button that can be clicked
         return (
             <button
                 className="order_single_page_item_select_user_btn"
-                // style={{ opacity: selectedFreelancersData?.freelancer ? 0.5 : 1 }}
-                onClick={() => selectFavFreelancer(item?.response?.id)}
+                onClick={() => selectFavFreelancer(item?.response?.id, item?.freelancer?.id)}
             >
                 Выбрать исполнителем
             </button>
         );
+    };
+
+
+    const getDayDeclension = (days) => {
+        const lastTwoDigits = days % 100;
+        if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return 'дней';
+        const lastDigit = days % 10;
+        if (lastDigit === 1) return 'день';
+        if (lastDigit >= 2 && lastDigit <= 4) return 'дня';
+        return 'дней';
     };
 
 
@@ -319,8 +356,9 @@ export default function OrderForClient({ id }) {
                                                                 {formattedNumber(item?.response?.price)} руб.
                                                             </p>
                                                             <p className="order_single_page_item_deadline_info">
-                                                                Сделаю {item?.response?.days_to_complete} днем
+                                                                Сделаю {item?.response?.days_to_complete} {getDayDeclension(item?.response?.days_to_complete)}
                                                             </p>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -330,15 +368,16 @@ export default function OrderForClient({ id }) {
                                                 <div className="order_single_page_item_buttons_wrapper">
 
                                                     <div className='order_single_page_item_select_user_btn_parent'>
-                                                        {renderFreelancerButton(item, responsesData, selectedFreelancersData, selectFavFreelancer)}
+                                                        {renderFreelancerButton(item, responsesData, selectedFreelancersData)}
                                                     </div>
 
 
+
                                                     {/* "Add to Favorites" Button */}
-                                                    {item.freelancer?.is_favorite ? (
+                                                    { (item.freelancer?.is_favorite || favoritedIds[item?.freelancer?.id]) ? (
                                                         <button
                                                             className="order_single_page_item_add_to_favourites_btn"
-                                                            style={{opacity: 0.5}}
+                                                            style={{ opacity: 0.5 }}
                                                             disabled
                                                         >
                                                             В избранных
@@ -351,6 +390,7 @@ export default function OrderForClient({ id }) {
                                                             В избранные
                                                         </button>
                                                     )}
+
                                                 </div>
                                             </div>
                                         );

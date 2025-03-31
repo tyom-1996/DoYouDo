@@ -12,6 +12,8 @@ import EditIcon from "@/components/icons/editIcon";
 import {DislikeIcon} from "@/components/icons/DisLikeIcon";
 import SuggestTaskModal from "../../../components/SuggestTaskModal";
 import {useGetFreelancerById} from "@/hooks/useGetFreelancerById";
+import {useGetUserReviewsById} from "@/hooks/useGetUserReviewsById";
+import StarRatingComponent from "react-star-rating-component";
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -85,6 +87,7 @@ export default function FreelancerSinglePage ({id}) {
     const [showForClient, setShowForClient] = useState(false);
     const [showSuggestModal, setShowSuggestModal] = useState(false);
     const { getFreelancerById, freelancerByIdData,  loading } = useGetFreelancerById();
+    const { getUserReviewsById, userReviewsByIdData } = useGetUserReviewsById();
     const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
 
     const router = useRouter();
@@ -101,8 +104,9 @@ export default function FreelancerSinglePage ({id}) {
     }, [selectedCategories, selectedCities]);
 
     useEffect(() => {
-        console.log(id, 'params______id')
-    }, [])
+            getUserReviewsById(id)
+    }, [id])
+
     useEffect(() => {
         if (typeof window !== 'undefined') {
             setWindowHeight(window.innerHeight);
@@ -146,8 +150,8 @@ export default function FreelancerSinglePage ({id}) {
                     <meta charSet="UTF-8"/>
                     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
                     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-
                 </Head>
+
                 <div className="home_general_wrapper" id='freelancer_single_page'>
                     <Header activePage={"freelancers_page"}/>
 
@@ -192,8 +196,9 @@ export default function FreelancerSinglePage ({id}) {
                                         <div className='freelancer_single_page_user_info_wrapper_item2_details'>
                                             <div className='freelancer_single_page_user_name_age_country_info_wrapper'>
                                                 <p className='freelancer_single_page_user_name'>{freelancerByIdData?.user?.first_name} {freelancerByIdData?.user?.last_name}</p>
-                                                <p className='freelancer_single_page_user_age_country_info'>{freelancerByIdData?.user?.birth_date}</p>
+                                                <p className='freelancer_single_page_user_age_country_info'>{freelancerByIdData?.user?.birth_date} {freelancerByIdData?.user?.address} </p>
                                             </div>
+
                                             {/*<div className="freelancer_single_page_user_rating_icon_info_wrapper">*/}
                                             {/*    <div className="freelancer_single_page_user_rating_icon">*/}
                                             {/*        <Image*/}
@@ -208,6 +213,7 @@ export default function FreelancerSinglePage ({id}) {
                                             {/*        5/5*/}
                                             {/*    </p>*/}
                                             {/*</div>*/}
+
                                             <div className='mobile_buttons_wrapper'>
                                                 <button className='suggest_task_btn'>
                                                     Предложить задание
@@ -221,7 +227,9 @@ export default function FreelancerSinglePage ({id}) {
                                                     <p className="freelancer_single_page_user_info_professional_information_item_title">
                                                         Опыт:
                                                     </p>
-                                                    <p className="freelancer_single_page_user_info_professional_information_item_info">12 лет</p>
+                                                    {freelancerByIdData?.user?.experience &&
+                                                        <p className="freelancer_single_page_user_info_professional_information_item_info">{freelancerByIdData?.user?.experience } лет</p>
+                                                    }
                                                 </div>
                                                 <div className="freelancer_single_page_user_info_professional_information_item">
                                                     <p className="freelancer_single_page_user_info_professional_information_item_title">
@@ -286,30 +294,44 @@ export default function FreelancerSinglePage ({id}) {
                                 </div>
                                 <div className="reviews">
                                     <div className='reviews_items_wrapper'>
-                                        {reviewsList.map((item, index) => {
+                                        {userReviewsByIdData && userReviewsByIdData?.data.map((item, index) => {
                                             return (
                                                 <div className='reviews_item'>
                                                     <div className="reviews_item_header">
                                                         <div className="reviews_item_header_item">
-                                                            <p className="reviews_item_header_date_info">{item.review_date}</p>
+                                                            <p className="reviews_item_header_date_info">{formatDateToRussian(item?.created_at)}</p>
                                                             <p className="reviews_item_header_project_name mobile_reviews_item_header_item">{item.project_name}</p>
-                                                            <p className="reviews_item_header_client_name_info">{item.client_name}</p>
-                                                            <div className='reviews_item_img'>
-                                                                <Image
-                                                                    src={item.star_icon}
-                                                                    alt="Example Image"
-                                                                    layout="fill" // Fill the parent element
-                                                                    objectFit="cover" // Cover the area of the parent element
-                                                                    quality={100} // Image quality
-                                                                />
-                                                            </div>
+                                                            <p className="reviews_item_header_client_name_info">{item?.reviewer_first_name} {item?.reviewer_last_name}</p>
+                                                            {/*<div className='reviews_item_img'>*/}
+                                                            <StarRatingComponent
+                                                                name="rate1"
+                                                                starCount={5}
+                                                                value={item?.rating}
+                                                                editing={false}
+                                                                renderStarIcon={(index, value) => (
+                                                                    <span>
+                                                                          <svg
+                                                                              xmlns="http://www.w3.org/2000/svg"
+                                                                              width={28}
+                                                                              height={27}
+                                                                              fill={index <= value ? "#FFC107" : "#D9D9D9"}
+                                                                          >
+                                                                            <path
+                                                                                d="M27.536 11.082 21.5 17.265l1.42 8.751c.125.698-.633 1.21-1.24.879l-7.421-4.111V0c.315 0 .63.146.766.45l3.728 7.94 8.3 1.262c.694.124.95.94.484 1.43ZM14.258 0v22.784l-7.422 4.11c-.595.335-1.365-.172-1.238-.878l1.419-8.75L.98 11.081a.853.853 0 0 1 .484-1.43l8.3-1.262L13.494.45c.135-.304.45-.45.765-.45Z"
+                                                                            />
+                                                                          </svg>
+                                                                     </span>
+                                                                )}
+                                                            />
+
+                                                            {/*</div>*/}
                                                         </div>
                                                         <div className="reviews_item_header_item desktop_reviews_item_header_item">
                                                             <p className="reviews_item_header_project_name">{item.project_name}</p>
                                                         </div>
                                                     </div>
                                                     <p className='reviews_info'>
-                                                        {item.review_info}
+                                                        {item?.text}
                                                     </p>
                                                 </div>
                                             )
