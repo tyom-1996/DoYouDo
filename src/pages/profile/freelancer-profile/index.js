@@ -151,6 +151,25 @@ const  FreelancerProfilePage  = ()  => {
         }).format(date);
     };
 
+    const totalReviews = userReviewsByIdData?.data?.length || 0;
+    const averageRatingValue =
+        totalReviews > 0
+            ? userReviewsByIdData.data.reduce((sum, review) => sum + review.rating, 0) / totalReviews
+            : 0;
+    const averageRating = Number.isInteger(averageRatingValue)
+        ? averageRatingValue
+        : averageRatingValue.toFixed(1);
+
+    const goodReviews =
+        userReviewsByIdData?.data?.filter(
+            (review) => review.review_type === 'positive'
+        ).length || 0;
+
+    const badReviews =
+        userReviewsByIdData?.data?.filter(
+            (review) => review.review_type === 'negative'
+        ).length || 0;
+
 
 
     return (
@@ -324,25 +343,28 @@ const  FreelancerProfilePage  = ()  => {
                             </div>
                         </div>
                         <div className="freelancer_single_page_ratings_reviews_wrapper">
-                            <div className="freelancer_single_page_ratings_reviews_wrapper_header">
-                                <div className="freelancer_single_page_rating_info_wrapper">
-                                    <p className='freelancer_single_page_rating_info_wrapper_title'>
-                                        Средняя оценка
-                                    </p>
-                                    <p className='freelancer_single_page_rating_info_wrapper_info'>4.9</p>
-                                </div>
-                                <div className='freelancer_single_page_likes_reviews_info_wrapper'>
-                                    <div className='freelancer_single_page_likes_info_icon_wrapper'>
-                                        <LikeIcon/>
-                                        <p className='freelancer_single_page_likes_info'>43</p>
+                            {userReviewsByIdData?.data.length > 0 &&
+                                <div className="freelancer_single_page_ratings_reviews_wrapper_header">
+                                    <div className="freelancer_single_page_rating_info_wrapper">
+                                        <p className='freelancer_single_page_rating_info_wrapper_title'>
+                                            Средняя оценка
+                                        </p>
+                                        <p className='freelancer_single_page_rating_info_wrapper_info'>{averageRating}</p>
                                     </div>
-                                    <div className='freelancer_single_page_dislikes_info_icon_wrapper'>
-                                        <DislikeIcon/>
-                                        <p className='freelancer_single_page_dislikes_info'>10</p>
+                                    <div className='freelancer_single_page_likes_reviews_info_wrapper'>
+                                        <div className='freelancer_single_page_likes_info_icon_wrapper'>
+                                            <LikeIcon/>
+                                            <p className='freelancer_single_page_likes_info'>{goodReviews}</p>
+                                        </div>
+                                        <div className='freelancer_single_page_dislikes_info_icon_wrapper'>
+                                            <DislikeIcon/>
+                                            <p className='freelancer_single_page_dislikes_info'>{badReviews}</p>
+                                        </div>
+                                        <p className='freelancer_single_page_reviews_info'>{totalReviews} отзыва</p>
                                     </div>
-                                    <p className='freelancer_single_page_reviews_info'>53 отзыва</p>
                                 </div>
-                            </div>
+                            }
+
                             <div className="reviews">
                                 <div className='reviews_items_wrapper'>
                                     {userReviewsByIdData && userReviewsByIdData?.data.map((item, index) => {
@@ -388,29 +410,29 @@ const  FreelancerProfilePage  = ()  => {
                                         )
                                     })}
                                 </div>
-                                <div className="pagination_links_wrapper">
-                                    <button className="pagination_link_btn">
-                                        <PaginationLeftIcon/>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">1</p>
-                                    </button>
-                                    <button className="pagination_link active">
-                                        <p className="pagination_link_title">2</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">3</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">4</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">....</p>
-                                    </button>
-                                    <button className="pagination_link_btn">
-                                        <PaginationRightIcon/>
-                                    </button>
-                                </div>
+                                {/*<div className="pagination_links_wrapper">*/}
+                                {/*    <button className="pagination_link_btn">*/}
+                                {/*        <PaginationLeftIcon/>*/}
+                                {/*    </button>*/}
+                                {/*    <button className="pagination_link">*/}
+                                {/*        <p className="pagination_link_title">1</p>*/}
+                                {/*    </button>*/}
+                                {/*    <button className="pagination_link active">*/}
+                                {/*        <p className="pagination_link_title">2</p>*/}
+                                {/*    </button>*/}
+                                {/*    <button className="pagination_link">*/}
+                                {/*        <p className="pagination_link_title">3</p>*/}
+                                {/*    </button>*/}
+                                {/*    <button className="pagination_link">*/}
+                                {/*        <p className="pagination_link_title">4</p>*/}
+                                {/*    </button>*/}
+                                {/*    <button className="pagination_link">*/}
+                                {/*        <p className="pagination_link_title">....</p>*/}
+                                {/*    </button>*/}
+                                {/*    <button className="pagination_link_btn">*/}
+                                {/*        <PaginationRightIcon/>*/}
+                                {/*    </button>*/}
+                                {/*</div>*/}
                             </div>
                         </div>
                         <div className='freelancer_single_page_portfolio_wrapper'>

@@ -14,6 +14,7 @@ import StarRatingComponent from "react-star-rating-component";
 import FeedBackSuccess from "@/components/feedbackSuccessModal";
 import {useCreateReviews} from "@/hooks/useCreateReviews";
 import {useGetProfileInfo} from "@/hooks/useGetProfileInfo";
+import {useChangeStatusOfOrder} from "@/hooks/useChangeStatusOfOrder";
 
 export async function getServerSideProps({ params }) {
     const { id } = params;
@@ -36,6 +37,7 @@ export default function OrderForClient({ id }) {
     const { checkReviews, checkReviewsData} = useCheckReviews();
     const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
     const { createReview, createReviewData } = useCreateReviews();
+    const { changeStatusOfOrderData, changeStatusOfOrder } = useChangeStatusOfOrder();
     const [rating, setRating] = useState(1);
     const [reviewText, setReviewText] = useState('');
     const [showFeedbackSuccessModal, setShowFeedbackSuccessModal] = useState(false);
@@ -47,12 +49,27 @@ export default function OrderForClient({ id }) {
         setRating(nextValue);
     };
 
+    useEffect(() => {
+        if (createReviewData) {
+            if (createReviewData?.message == 'Отзыв успешно добавлен') {
+                    getSelectedFreelancers(id)
+            }
+        }
+    }, []);
+
 
     useEffect(() => {
         if (id) {
             getSelectedFreelancers(id);
         }
     }, [id]);
+    useEffect(() => {
+        if (changeStatusOfOrderData) {
+              if(changeStatusOfOrderData?.message == 'Статус заказа успешно изменён') {
+                  getSelectedFreelancers(id)
+              }
+        }
+    }, [changeStatusOfOrderData]);
 
     useEffect(() => {
         if (createReviewData) {
@@ -146,9 +163,16 @@ export default function OrderForClient({ id }) {
         let clientId = selectedFreelancersData?.freelancer?.id;
         await createReview(clientId, id, rating, reviewType, reviewText)
     }
+    const changeStatusOfOrderFunction = async () => {
+        await changeStatusOfOrder(id, 'closed')
+    }
+
+
+
 
 
     return (
+
         <>
             <main className="general_page_wrapper">
                 <Head>
@@ -239,6 +263,7 @@ export default function OrderForClient({ id }) {
                                                         <button className="order_single_page_item_chat_btn">В Чат</button>
                                                     )}
                                                 </div>
+
                                                 {selectedFreelancersData?.order?.status == 'closed' && showCheckReviewsState !== true &&
                                                     <button
                                                         className='leave_feedback_btn2'
@@ -248,6 +273,16 @@ export default function OrderForClient({ id }) {
                                                         }}
                                                     >
                                                         Оставить отзыв
+                                                    </button>
+                                                }
+                                                {selectedFreelancersData?.order?.status != 'closed' &&
+                                                    <button
+                                                        className='leave_feedback_btn2'
+                                                        onClick={async () => {
+                                                          await  changeStatusOfOrderFunction()
+                                                        }}
+                                                    >
+                                                        Закрыть проект
                                                     </button>
                                                 }
                                             </div>

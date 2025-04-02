@@ -715,6 +715,25 @@ export const selectFreelancerRequest = async (id, responseId) => {
     }
 };
 
+export const changeStatusOfOrder2 = async (orderId, status) => {
+    try {
+        // Make the request with axios
+        const response = await apiClient.put(
+            `/orders/${orderId}/status`,
+            {
+                newStatus: status
+            }
+        );
+        // Return the response data
+        return response?.data;
+    } catch (error) {
+        // Handle and rethrow the error
+        throw error.response?.data || error.message;
+    }
+};
+
+
+
 export const addFavoritesRequest = async (id, responseId) => {
     try {
         // Make the request with axios
