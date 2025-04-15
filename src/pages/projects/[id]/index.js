@@ -155,6 +155,22 @@ export default function Order ({id}) {
     const makeResponse  = async () => {
          await createResponse(id, responseText, price, date )
     }
+    const openNavigatorToMoscow = () => {
+        // if (!coords?.lat || !coords?.lng) {
+        //     console.warn('Сначала получите координаты пользователя!');
+        //     return;
+        // }
+
+        // Статичные координаты Москвы
+        const moscowLat = 55.755826;
+        const moscowLng = 37.6172999;
+
+        // Формируем ссылку для Google Maps
+        const url = "https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&origin=${coords.lat},${coords.lng}&destination=${moscowLat},${moscowLng}";
+
+        // Открываем в новой вкладке/окне (на мобильном — в приложении)
+        window.open(url, '_blank');
+    };
 
     return (
         <>
@@ -206,7 +222,9 @@ export default function Order ({id}) {
                                 </div>
 
                             </div>
-                            <button className='get_direction_button'>
+                            <button className='get_direction_button' onClick={() => {
+                                openNavigatorToMoscow()
+                            }}>
                                 Проложить маршрут
                             </button>
                         </div>
@@ -330,64 +348,64 @@ export default function Order ({id}) {
                 {/*    />*/}
                 {/*</div>*/}
 
-                <div className="recommendations">
-                    <div className="recommendations_wrapper">
-                        <h1 className='recommendations_title'>Похожие работы</h1>
-                        <div className='recommendations_items_wrapper'>
-                            {similarWorksList.map((item, index) => {
-                                return (
-                                    <div className='services_item' key={index}>
-                                        <div className="services_item_name_address_info_wrapper">
-                                            <p className="services_item_name">{item?.service_name}</p>
-                                            <p className="services_item_address_info">{item?.service_address}</p>
-                                        </div>
+                {/*<div className="recommendations">*/}
+                {/*    <div className="recommendations_wrapper">*/}
+                {/*        <h1 className='recommendations_title'>Похожие работы</h1>*/}
+                {/*        <div className='recommendations_items_wrapper'>*/}
+                {/*            {similarWorksList.map((item, index) => {*/}
+                {/*                return (*/}
+                {/*                    <div className='services_item' key={index}>*/}
+                {/*                        <div className="services_item_name_address_info_wrapper">*/}
+                {/*                            <p className="services_item_name">{item?.service_name}</p>*/}
+                {/*                            <p className="services_item_address_info">{item?.service_address}</p>*/}
+                {/*                        </div>*/}
 
-                                        <p className="services_item_info">{item?.service_type_info}</p>
-                                        <div className='services_item_pirce_date_info_wrapper'>
-                                            <div className='services_item_pirce_wrapper'>
-                                                <p className='services_item_pirce_info'>{item?.service_price}</p>
-                                            </div>
-                                            <div className='services_item_date_hour_wrapper'>
-                                                <div className='services_item_date_hour_title_icon_wrapper'>
-                                                    <p className='services_item_date_hour_title_icon_wrapper_title'>Начать</p>
-                                                    <DateIcon/>
-                                                </div>
-                                                <div className='services_item_date_hour_info_wrapper'>
-                                                    <p className='services_item_date_hour_info1'>{item.service_date},</p>
-                                                    <p className='services_item_date_hour_info2'>{item.service_hour}</p>
-                                                </div>
+                {/*                        <p className="services_item_info">{item?.service_type_info}</p>*/}
+                {/*                        <div className='services_item_pirce_date_info_wrapper'>*/}
+                {/*                            <div className='services_item_pirce_wrapper'>*/}
+                {/*                                <p className='services_item_pirce_info'>{item?.service_price}</p>*/}
+                {/*                            </div>*/}
+                {/*                            <div className='services_item_date_hour_wrapper'>*/}
+                {/*                                <div className='services_item_date_hour_title_icon_wrapper'>*/}
+                {/*                                    <p className='services_item_date_hour_title_icon_wrapper_title'>Начать</p>*/}
+                {/*                                    <DateIcon/>*/}
+                {/*                                </div>*/}
+                {/*                                <div className='services_item_date_hour_info_wrapper'>*/}
+                {/*                                    <p className='services_item_date_hour_info1'>{item.service_date},</p>*/}
+                {/*                                    <p className='services_item_date_hour_info2'>{item.service_hour}</p>*/}
+                {/*                                </div>*/}
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div className="pagination_links_wrapper">
-                            <button className="pagination_link_btn">
-                                <PaginationLeftIcon/>
-                            </button>
-                            <button className="pagination_link">
-                                <p className="pagination_link_title">1</p>
-                            </button>
-                            <button className="pagination_link active">
-                                <p className="pagination_link_title">2</p>
-                            </button>
-                            <button className="pagination_link">
-                                <p className="pagination_link_title">3</p>
-                            </button>
-                            <button className="pagination_link">
-                                <p className="pagination_link_title">4</p>
-                            </button>
-                            <button className="pagination_link">
-                                <p className="pagination_link_title">....</p>
-                            </button>
-                            <button className="pagination_link_btn">
-                                <PaginationRightIcon/>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                {/*                            </div>*/}
+                {/*                        </div>*/}
+                {/*                    </div>*/}
+                {/*                )*/}
+                {/*            })}*/}
+                {/*        </div>*/}
+                {/*        <div className="pagination_links_wrapper">*/}
+                {/*            <button className="pagination_link_btn">*/}
+                {/*                <PaginationLeftIcon/>*/}
+                {/*            </button>*/}
+                {/*            <button className="pagination_link">*/}
+                {/*                <p className="pagination_link_title">1</p>*/}
+                {/*            </button>*/}
+                {/*            <button className="pagination_link active">*/}
+                {/*                <p className="pagination_link_title">2</p>*/}
+                {/*            </button>*/}
+                {/*            <button className="pagination_link">*/}
+                {/*                <p className="pagination_link_title">3</p>*/}
+                {/*            </button>*/}
+                {/*            <button className="pagination_link">*/}
+                {/*                <p className="pagination_link_title">4</p>*/}
+                {/*            </button>*/}
+                {/*            <button className="pagination_link">*/}
+                {/*                <p className="pagination_link_title">....</p>*/}
+                {/*            </button>*/}
+                {/*            <button className="pagination_link_btn">*/}
+                {/*                <PaginationRightIcon/>*/}
+                {/*            </button>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
                 <Footer activePage={"job_page"}/>
 
 

@@ -54,6 +54,8 @@ export default function Map () {
     const [selectedFilterCoordinates, setSelectedFilterCoordinates] = useState(null);
     const [coordinates, setCoordinates] = useState(defaultCenter);
     const mapRef = useRef(null);
+    const [isMapReady, setIsMapReady] = useState(false);
+
 
 
     useEffect(() => {
@@ -65,29 +67,59 @@ export default function Map () {
     useEffect(() => {
         getFilters(); // Call the API to get saved filters
     }, []);
+    useEffect(() => {
+        if (
+            !isMapReady ||
+            !mapRef.current ||
+            !ordersData?.orders?.length ||
+            !window.google?.maps
+        ) return;
+
+        const bounds = new window.google.maps.LatLngBounds();
+
+        ordersData.orders.forEach(order => {
+            if (order.latitude && order.longitude) {
+                bounds.extend({
+                    lat: parseFloat(order.latitude),
+                    lng: parseFloat(order.longitude)
+                });
+            }
+        });
+
+        if (!bounds.isEmpty()) {
+            mapRef.current.fitBounds(bounds);
+        }
+
+    }, [ordersData, isMapReady]);
+
+
 
     useEffect(() => {
         if (filtersData?.filter) {
             const { filter } = filtersData;
 
-            // Update local states based on retrieved filters
             setFilterBody(filter);
             setSelectedCategories(filter.categories || []);
             setSearch(filter.keyword || '');
 
-            // Format the address as a string or fallback to a placeholder
             const formattedAddress = filter.latitude && filter.longitude && filter.radius
                 ? `${filter.latitude}, ${filter.longitude}, ${filter.radius}`
-                : ''; // Fallback to empty if any value is missing
+                : '';
             setSelectedFilterAddress(formattedAddress);
 
-            // Fetch orders with the saved filters
-            getOrders(filter, page);
+            // ✅ Update map center if lat/lng are present
+            if (filter.latitude && filter.longitude) {
+                setCoordinates({
+                    lat: parseFloat(filter.latitude),
+                    lng: parseFloat(filter.longitude)
+                });
+            }
         } else {
-            // If no saved filters, ensure default fetching
             getOrders({}, page);
         }
     }, [filtersData]);
+
+
 
     const handleCategorySelection = (val) => {
         let updatedCategories;
@@ -277,26 +309,32 @@ export default function Map () {
 
                                     <GoogleMap
                                         mapContainerStyle={containerStyle}
-                                        center={coordinates}
+                                        center={coordinates} // не важно, т.к. потом fitBounds
                                         zoom={12}
                                         onClick={handleMapClick}
                                         onLoad={(map) => {
                                             mapRef.current = map;
+                                            setIsMapReady(true); // 🔥 теперь знаем, что карта готова
                                         }}
                                     >
                                         {ordersData?.orders &&
                                             ordersData.orders
-                                                .filter(order => order.latitude && order.longitude)
+                                                .filter(order =>
+                                                    !isNaN(parseFloat(order.latitude)) && !isNaN(parseFloat(order.longitude))
+                                                )
                                                 .map(order => (
                                                     <Marker
                                                         key={order.id}
                                                         position={{ lat: parseFloat(order.latitude), lng: parseFloat(order.longitude) }}
                                                         icon={{
                                                             url: "/map_icon.png",
-                                                            scaledSize: window.google && window.google.maps
-                                                                ? new google.maps.Size(40, 40)
-                                                                : null, // Prevent incorrect size if Google Maps isn't loaded
+                                                            scaledSize: typeof window !== "undefined" &&
+                                                            window.google &&
+                                                            window.google.maps
+                                                                ? new window.google.maps.Size(40, 40)
+                                                                : undefined
                                                         }}
+
                                                         title={order.title}
                                                         onClick={() => redirectToOrderSinglePage(order.id)}
                                                     />
