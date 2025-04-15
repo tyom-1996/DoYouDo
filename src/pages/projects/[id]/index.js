@@ -155,22 +155,23 @@ export default function Order ({id}) {
     const makeResponse  = async () => {
          await createResponse(id, responseText, price, date )
     }
-    const openNavigatorToMoscow = () => {
-        // if (!coords?.lat || !coords?.lng) {
-        //     console.warn('Сначала получите координаты пользователя!');
-        //     return;
-        // }
+    const openNavigatorToMoscow = (coords) => {
+        if (!coords?.latitude || !coords?.longitude) {
+            console.warn('Сначала получите координаты пользователя!');
+            return;
+        }
 
-        // Статичные координаты Москвы
+        // Координаты Москвы
         const moscowLat = 55.755826;
         const moscowLng = 37.6172999;
 
-        // Формируем ссылку для Google Maps
-        const url = "https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&origin=${coords.lat},${coords.lng}&destination=${moscowLat},${moscowLng}";
+        // Формируем ссылку для Яндекс.Карт
+        const url = `https://yandex.ru/maps/?rtext=${coords?.latitude},${coords?.longitude}~${moscowLat},${moscowLng}&rtt=auto`;
 
-        // Открываем в новой вкладке/окне (на мобильном — в приложении)
+        // Открываем
         window.open(url, '_blank');
     };
+
 
     return (
         <>
@@ -222,11 +223,14 @@ export default function Order ({id}) {
                                 </div>
 
                             </div>
-                            <button className='get_direction_button' onClick={() => {
-                                openNavigatorToMoscow()
-                            }}>
-                                Проложить маршрут
-                            </button>
+                            {order?.type == "offline"  &&
+                                <button className='get_direction_button' onClick={() => {
+                                    openNavigatorToMoscow(order)
+                                }}>
+                                    Проложить маршрут
+                                </button>
+                            }
+
                         </div>
                         <div className="order_page_item2">
                             <div className="order_page_date_info_icon_wrapper">
