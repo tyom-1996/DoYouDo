@@ -210,66 +210,75 @@ export default function MyProjectsForFreelancer () {
                                     </div>
                                 )}
                             </div>
-                            <div className='my_projects_items_wrapper'>
-                                {freelancerResponsesData && freelancerResponsesData.map((item, index) => {
-                                    return (
-                                        <button
-                                            className='my_projects_item'
-                                            key={index}
-                                            onClick={() => {
-                                                redirectToOrderPageForFreelancer(item?.order_id);
-                                            }}
-                                        >
-                                            <div className="my_projects_item_name_address_info_wrapper">
-                                                <p className="my_projects_item_name">{item?.title}</p>
-                                                {item?.type !== 'remote' &&
-                                                    <p className="my_projects_item_address_info">{item?.address}</p>
-                                                }
-                                            </div>
-                                            <p className="my_projects_item_info">{item?.description}</p>
-                                            <div className='my_projects_item_pirce_date_info_wrapper'>
-                                                <div className='my_projects_item_pirce_wrapper'>
-                                                    <p className='my_projects_item_pirce_info'> {item?.order_price.toString().replace(/\.00$/, '')}</p>
+                            <div className='my_projects_items_wrapper2'>
+                                {freelancerResponsesData.length > 0 ? (
+                                    <div className='my_projects_items_wrapper'>
+                                        { freelancerResponsesData.map((item, index) => {
+                                            return (
+                                                <button
+                                                    className='my_projects_item'
+                                                    key={index}
+                                                    onClick={() => {
+                                                        redirectToOrderPageForFreelancer(item?.order_id);
+                                                    }}
+                                                >
+                                                    <div className="my_projects_item_name_address_info_wrapper">
+                                                        <p className="my_projects_item_name">{item?.title}</p>
+                                                        {item?.type !== 'remote' &&
+                                                            <p className="my_projects_item_address_info">{item?.address}</p>
+                                                        }
+                                                    </div>
+                                                    <p className="my_projects_item_info">{item?.description}</p>
+                                                    <div className='my_projects_item_pirce_date_info_wrapper'>
+                                                        <div className='my_projects_item_pirce_wrapper'>
+                                                            <p className='my_projects_item_pirce_info'> {item?.order_price.toString().replace(/\.00$/, '')}</p>
 
 
-                                                </div>
-                                                <div className='my_projects_item_date_hour_wrapper'>
-                                                    <div className='my_projects_item_date_hour_title_icon_wrapper'>
-                                                        <p className='my_projects_item_date_hour_title_icon_wrapper_title'>Начать</p>
-                                                        <DateIcon/>
+                                                        </div>
+                                                        <div className='my_projects_item_date_hour_wrapper'>
+                                                            <div className='my_projects_item_date_hour_title_icon_wrapper'>
+                                                                <p className='my_projects_item_date_hour_title_icon_wrapper_title'>Начать</p>
+                                                                <DateIcon/>
+                                                            </div>
+                                                            <div className='my_projects_item_date_hour_info_wrapper'>
+                                                                <p className='my_projects_item_date_hour_info1'>{formatDate(item?.start_date)}</p>
+                                                                {/*<p className='my_projects_item_date_hour_info2'>{item.service_hour}</p>*/}
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div className='my_projects_item_date_hour_info_wrapper'>
-                                                        <p className='my_projects_item_date_hour_info1'>{formatDate(item?.start_date)}</p>
-                                                        {/*<p className='my_projects_item_date_hour_info2'>{item.service_hour}</p>*/}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </button>
-                                    );
-                                })}
-                                <div className="pagination_links_wrapper">
-                                    <button className="pagination_link_btn">
-                                        <PaginationLeftIcon/>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">1</p>
-                                    </button>
-                                    <button className="pagination_link active">
-                                        <p className="pagination_link_title">2</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">3</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">4</p>
-                                    </button>
-                                    <button className="pagination_link">
-                                        <p className="pagination_link_title">....</p>
-                                    </button>
-                                    <button className="pagination_link_btn">
-                                        <PaginationRightIcon/>
-                                    </button>
-                                </div>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                ) : (
+                                    <p className='not_found_text'>Нет проекта</p>
+                                )
+
+                                }
+
+                                {/*<div className="pagination_links_wrapper">*/}
+                                {/*    <button className="pagination_link_btn">*/}
+                                {/*        <PaginationLeftIcon/>*/}
+                                {/*    </button>*/}
+                                {/*    <button className="pagination_link">*/}
+                                {/*        <p className="pagination_link_title">1</p>*/}
+                                {/*    </button>*/}
+                                {/*    <button className="pagination_link active">*/}
+                                {/*        <p className="pagination_link_title">2</p>*/}
+                                {/*    </button>*/}
+                                {/*    <button className="pagination_link">*/}
+                                {/*        <p className="pagination_link_title">3</p>*/}
+                                {/*    </button>*/}
+                                {/*    <button className="pagination_link">*/}
+                                {/*        <p className="pagination_link_title">4</p>*/}
+                                {/*    </button>*/}
+                                {/*    <button className="pagination_link">*/}
+                                {/*        <p className="pagination_link_title">....</p>*/}
+                                {/*    </button>*/}
+                                {/*    <button className="pagination_link_btn">*/}
+                                {/*        <PaginationRightIcon/>*/}
+                                {/*    </button>*/}
+                                {/*</div>*/}
                             </div>
                         </div>
                     </div>

@@ -3,11 +3,9 @@ import Image from "next/image";
 import '../../../assets/css/portfolio_single_page.css';
 import Header from '../../../components/header'
 import Footer from '../../../components/footer'
-import Swiper from '../../includes/Swiper'
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import {useGetPortfolioById} from "@/hooks/useGetPortfolioById";
-
+import PortfolioSwiper from '../../includes/Swiper';
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -18,7 +16,6 @@ export async function getServerSideProps({ params }) {
         }
     };
 }
-
 
 export default function Portfolio ({id}) {
     const [windowHeight, setWindowHeight] = useState(0);
@@ -43,10 +40,14 @@ export default function Portfolio ({id}) {
         document.body.style.overflow = "auto";
     };
 
-    const portfolioImages = portfolioByIdData?.data?.image_url
-        ? JSON.parse(portfolioByIdData.data.image_url)  // Parse JSON string into an array
-        : [];
+    let portfolioImages = [];
 
+    try {
+        portfolioImages = JSON.parse(portfolioByIdData?.data?.image_url || '[]').filter(Boolean);
+    } catch (e) {
+        console.warn('Ошибка парсинга image_url', e);
+        portfolioImages = [];
+    }
 
 
     return (
@@ -70,7 +71,7 @@ export default function Portfolio ({id}) {
                             </p>
                         </div>
                         <div className="portfolio_swiper_wrapper">
-                            <Swiper portfolioImages={portfolioImages}/>
+                            <PortfolioSwiper portfolioImages={portfolioImages}/>
                         </div>
                         <div className='portfolio_infos_wrapper'>
 
@@ -81,7 +82,6 @@ export default function Portfolio ({id}) {
                     </div>
                 </div>
                 <Footer activePage='freelancers_page'/>
-
             </main>
         </>
     );

@@ -43,6 +43,11 @@
     max-width: 588px;
     /*margin: 0 auto;*/
 }
+.header_nav2 {
+    width: 100%;
+    max-width: 450px;
+    /*margin: 0 auto;*/
+}
 
 .header_ul_list {
     display: flex;

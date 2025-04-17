@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Image from "next/image";
 import '../../../../../assets/css/order_page.css';
 import '../../../../../assets/css/leave_feedback.css';
@@ -19,6 +19,7 @@ import StarRatingComponent from "react-star-rating-component";
 import {useCreateReviews} from "@/hooks/useCreateReviews";
 import FeedBackSuccess from "@/components/feedbackSuccessModal";
 import {useCheckReviews} from "@/hooks/useCheckReviews";
+import {GoogleMap, Marker, useJsApiLoader} from "@react-google-maps/api";
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -31,6 +32,17 @@ export async function getServerSideProps({ params }) {
 }
 
 
+const containerStyle = {
+    width: '100%',
+    height: '518px',
+    borderRadius: '15px',
+    overflow: 'hidden',
+};
+
+const defaultCenter = {
+    lat: 55.7558,
+    lng: 37.6176,
+};
 
 
 export default function Order ({id}) {
@@ -88,7 +100,13 @@ export default function Order ({id}) {
     const [reviewType, setReviewType] = useState('positive');
     const { checkReviews, checkReviewsData} = useCheckReviews();
     const [showCheckReviewsState, setShowCheckReviewsState] = useState(false);
+    const [coordinates, setCoordinates] = useState(defaultCenter);
+    const mapRef = useRef(null);
+    const [isMapReady, setIsMapReady] = useState(false);
 
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+    });
     const onStarClick = (nextValue, prevValue, name) => {
         setRating(nextValue);
     };
@@ -157,6 +175,30 @@ export default function Order ({id}) {
         let clientId = freelancerOrderByIddData?.data[0]?.client_id;
         await createReview(clientId, id, rating, reviewType, reviewText)
     }
+    useEffect(() => {
+        if (freelancerOrderByIddData?.data?.[0]?.latitude && freelancerOrderByIddData?.data?.[0]?.longitude) {
+            setCoordinates({
+                lat: parseFloat(freelancerOrderByIddData.data[0].latitude),
+                lng: parseFloat(freelancerOrderByIddData.data[0].longitude),
+            });
+        }
+    }, [freelancerOrderByIddData]);
+    const openNavigatorToMoscow = (coords) => {
+        if (!coords?.latitude || !coords?.longitude) {
+            console.warn('Сначала получите координаты пользователя!');
+            return;
+        }
+
+        // Координаты Москвы
+        const moscowLat = 55.755826;
+        const moscowLng = 37.6172999;
+
+        // Формируем ссылку для Яндекс.Карт
+        const url = `https://yandex.ru/maps/?rtext=${coords?.latitude},${coords?.longitude}~${moscowLat},${moscowLng}&rtt=auto`;
+
+        // Открываем
+        window.open(url, '_blank');
+    };
 
 
     return (
@@ -208,9 +250,21 @@ export default function Order ({id}) {
                                 </div>
 
                             </div>
-                            <button className='get_direction_button'>
-                                Проложить маршрут
-                            </button>
+                            {freelancerOrderByIddData?.data?.[0]?.latitude && freelancerOrderByIddData?.data?.[0]?.longitude && (
+                                <button
+                                    className='get_direction_button'
+                                    onClick={() => {
+                                        openNavigatorToMoscow({
+                                            latitude: freelancerOrderByIddData.data[0].latitude,
+                                            longitude: freelancerOrderByIddData.data[0].longitude,
+                                        });
+                                    }}
+                                >
+                                    Проложить маршрут
+                                </button>
+                            )}
+
+
                         </div>
                         <div className="order_page_item2">
                             <div className="order_page_date_info_icon_wrapper">
@@ -277,73 +331,85 @@ export default function Order ({id}) {
                         </div>
                     </div>
                 </div>
-                <div className="map_img2">
-                    <Image
-                        src="/map_img.png"
-                        alt="Example Image"
-                        layout="fill" // Fill the parent element
-                        objectFit="cover" // Cover the area of the parent element
-                        quality={100} // Image quality
-                    />
-                </div>
-                <div className="recommendations">
-                    <div className="recommendations_wrapper">
-                        <h1 className='recommendations_title'>Похожие работы</h1>
-                        <div className='recommendations_items_wrapper'>
-                            {similarWorksList.map((item, index) => {
-                                return (
-                                    <div className='services_item' key={index}>
-                                        <div className="services_item_name_address_info_wrapper">
-                                            <p className="services_item_name">{item?.service_name}</p>
-                                            <p className="services_item_address_info">{item?.service_address}</p>
-                                        </div>
+                {freelancerOrderByIddData?.data?.[0]?.latitude && freelancerOrderByIddData?.data?.[0]?.longitude &&
 
-                                        <p className="services_item_info">{item?.service_type_info}</p>
-                                        <div className='services_item_pirce_date_info_wrapper'>
-                                            <div className='services_item_pirce_wrapper'>
-                                                <p className='services_item_pirce_info'>{item?.service_price}</p>
-                                            </div>
-                                            <div className='services_item_date_hour_wrapper'>
-                                                <div className='services_item_date_hour_title_icon_wrapper'>
-                                                    <p className='services_item_date_hour_title_icon_wrapper_title'>Начать</p>
-                                                    <DateIcon/>
-                                                </div>
-                                                <div className='services_item_date_hour_info_wrapper'>
-                                                    <p className='services_item_date_hour_info1'>{item.service_date},</p>
-                                                    <p className='services_item_date_hour_info2'>{item.service_hour}</p>
-                                                </div>
+                    <div className="map_img2">
+                        {/*latitude": null,*/}
+                        {/*"longitude*/}
+                        {isLoaded && coordinates?.lat && coordinates?.lng && !isNaN(coordinates.lat) && !isNaN(coordinates.lng) && (
+                            <GoogleMap
+                                mapContainerStyle={containerStyle}
+                                center={coordinates}
+                                zoom={12}
+                                onLoad={(map) => {
+                                    mapRef.current = map;
+                                    setIsMapReady(true);
+                                }}
+                            >
+                                <Marker position={coordinates} />
+                            </GoogleMap>
+                        )}
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div className="pagination_links_wrapper">
-                            <button className="pagination_link_btn">
-                                <PaginationLeftIcon/>
-                            </button>
-                            <button className="pagination_link">
-                                <p className="pagination_link_title">1</p>
-                            </button>
-                            <button className="pagination_link active">
-                                <p className="pagination_link_title">2</p>
-                            </button>
-                            <button className="pagination_link">
-                                <p className="pagination_link_title">3</p>
-                            </button>
-                            <button className="pagination_link">
-                                <p className="pagination_link_title">4</p>
-                            </button>
-                            <button className="pagination_link">
-                                <p className="pagination_link_title">....</p>
-                            </button>
-                            <button className="pagination_link_btn">
-                                <PaginationRightIcon/>
-                            </button>
-                        </div>
                     </div>
-                </div>
+                }
+                {/*<div className="recommendations">*/}
+                {/*    <div className="recommendations_wrapper">*/}
+                {/*        <h1 className='recommendations_title'>Похожие работы</h1>*/}
+                {/*        <div className='recommendations_items_wrapper'>*/}
+                {/*            {similarWorksList.map((item, index) => {*/}
+                {/*                return (*/}
+                {/*                    <div className='services_item' key={index}>*/}
+                {/*                        <div className="services_item_name_address_info_wrapper">*/}
+                {/*                            <p className="services_item_name">{item?.service_name}</p>*/}
+                {/*                            <p className="services_item_address_info">{item?.service_address}</p>*/}
+                {/*                        </div>*/}
+
+                {/*                        <p className="services_item_info">{item?.service_type_info}</p>*/}
+                {/*                        <div className='services_item_pirce_date_info_wrapper'>*/}
+                {/*                            <div className='services_item_pirce_wrapper'>*/}
+                {/*                                <p className='services_item_pirce_info'>{item?.service_price}</p>*/}
+                {/*                            </div>*/}
+                {/*                            <div className='services_item_date_hour_wrapper'>*/}
+                {/*                                <div className='services_item_date_hour_title_icon_wrapper'>*/}
+                {/*                                    <p className='services_item_date_hour_title_icon_wrapper_title'>Начать</p>*/}
+                {/*                                    <DateIcon/>*/}
+                {/*                                </div>*/}
+                {/*                                <div className='services_item_date_hour_info_wrapper'>*/}
+                {/*                                    <p className='services_item_date_hour_info1'>{item.service_date},</p>*/}
+                {/*                                    <p className='services_item_date_hour_info2'>{item.service_hour}</p>*/}
+                {/*                                </div>*/}
+
+                {/*                            </div>*/}
+                {/*                        </div>*/}
+                {/*                    </div>*/}
+                {/*                )*/}
+                {/*            })}*/}
+                {/*        </div>*/}
+                {/*        <div className="pagination_links_wrapper">*/}
+                {/*            <button className="pagination_link_btn">*/}
+                {/*                <PaginationLeftIcon/>*/}
+                {/*            </button>*/}
+                {/*            <button className="pagination_link">*/}
+                {/*                <p className="pagination_link_title">1</p>*/}
+                {/*            </button>*/}
+                {/*            <button className="pagination_link active">*/}
+                {/*                <p className="pagination_link_title">2</p>*/}
+                {/*            </button>*/}
+                {/*            <button className="pagination_link">*/}
+                {/*                <p className="pagination_link_title">3</p>*/}
+                {/*            </button>*/}
+                {/*            <button className="pagination_link">*/}
+                {/*                <p className="pagination_link_title">4</p>*/}
+                {/*            </button>*/}
+                {/*            <button className="pagination_link">*/}
+                {/*                <p className="pagination_link_title">....</p>*/}
+                {/*            </button>*/}
+                {/*            <button className="pagination_link_btn">*/}
+                {/*                <PaginationRightIcon/>*/}
+                {/*            </button>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
                 <Footer activePage={"my_projects_for_freelancer_page"}/>
 
                 {showReviewPopup &&

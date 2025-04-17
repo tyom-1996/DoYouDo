@@ -134,7 +134,7 @@ export default function Header(props) {
                                 quality={100} // Image quality
                             />
                         </button>
-                        <nav className="header_nav">
+                        <nav className={activeRole == 'freelancer' ? "header_nav2" : "header_nav"}>
                             <ul className="header_ul_list">
                                 <li className="header_ul_li">
                                     <a href="/projects" className={`header_ul_link ${props.activePage === 'job_page' ? 'active_link' : ''}`}>
@@ -157,21 +157,14 @@ export default function Header(props) {
 
 
                                 </li>
-                                <li className="header_ul_li">
-                                    {isLogged && activeRole == 'client' ? (
-                                            <a href="/create-order" className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
-                                                Создать задание
-                                            </a>
-                                        )
-                                        : (
-                                            <a
-                                               className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
-                                                Создать задание
-                                            </a>
-                                        )
-                                    }
+                                {isLogged && activeRole == 'client' &&
+                                    <li className="header_ul_li">
 
-                                </li>
+                                                <a href="/create-order" className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
+                                                    Создать задание
+                                                </a>
+                                    </li>
+                                }
                                 <li className="header_ul_li">
                                     {isLogged ? (
                                             <a

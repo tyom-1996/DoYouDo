@@ -5,17 +5,14 @@ import '../../assets/css/home.css';
 import Header from '../../components/header'
 import Footer from '../../components/footer'
 import Category from '../includes/Category'
-import City from '../includes/CityComponent'
 import Head from 'next/head';
 import {SearchIcon} from "@/components/icons/SearchIcon";
 import {SearchMobileIcon} from "@/components/icons/SearchMobileIcon";
 import {DateIcon} from "@/components/icons/DateIcon";
 import {PaginationLeftIcon} from "@/components/icons/paginationLeftIcon";
 import {PaginationRightIcon} from "@/components/icons/paginationRightIcon";
-import {FilterCloseIcon} from "@/components/icons/FilterCloseIcon";
 import {FilterIcon} from "@/components/icons/FilterIcon";
 import { useRouter } from 'next/router';
-import {DeleteAddressIcon} from "@/components/icons/DeleteAddressIcon";
 import FilterModal from "@/components/FilterModal";
 import FilterMap from "@/components/FilterMapModal";
 import {useGetOrders} from "@/hooks/useGetOrders";
@@ -117,7 +114,8 @@ export default function Job () {
     const [showFilterMap, setShowFilterMap] = useState(false);
     const [selectedFilterAddress, setSelectedFilterAddress] = useState('');
     const [selectedFilterCoordinates, setSelectedFilterCoordinates] = useState(null);
-
+    const [mapShouldMove, setMapShouldMove] = useState(false);
+    const [tempCoordinates, setTempCoordinates] = useState(null);
     // const handleCategorySelection = (val) => {
     //     if (selectedCategories.includes(val)) {
     //         const updatedCategories = selectedCategories.filter(cat => cat !== val);
@@ -554,11 +552,15 @@ export default function Job () {
                     <FilterModal
                         openMap={() => setShowFilterMap(true)} // Opens the map
                         useFilter={(filterOptions) => {
-                            // Merge new filter options with the existing filterBody
-                            const updatedFilterBody = { ...filterBody, ...filterOptions };
-                            setFilterBody(updatedFilterBody); // Update local filter state
-                            getOrders(updatedFilterBody, 1); // Fetch orders using updated filters (reset to page 1)
+                            const cleanFilters = Object.fromEntries(
+                                Object.entries(filterOptions).filter(([_, v]) => v !== null && v !== '')
+                            );
+
+                            setFilterBody(cleanFilters);     // сохранить "очищенные" фильтры
+                            getOrders(cleanFilters, 1);      // отправить их в API
                         }}
+
+                        setMapShouldMove={setMapShouldMove}
                         isActive={showFilterMobile} // Control modal visibility
                         categoryData={categoriesData} // Pass categories data
                         filterAddress={selectedFilterAddress} // Pass selected filter address
@@ -586,6 +588,7 @@ export default function Job () {
                             setSelectedFilterCoordinates(null);
                             getOrders({}, 1); // Fetch orders without filters (reset to page 1)
                         }}
+
                     />
                 }
 
@@ -599,11 +602,13 @@ export default function Job () {
                     onClose={() => {
                         setShowFilterMap(false)
                     }}
+                    // setTempCoordinates={setTempCoordinates}
                     onChange={(address, coordinates) => {
                         console.log(address, 'selected_address____')
                         console.log(address, 'selected_address____')
                         setSelectedFilterAddress(address)
                         setSelectedFilterCoordinates(coordinates)
+                        setTempCoordinates(coordinates)
                     }}
                 />
 

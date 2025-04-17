@@ -240,11 +240,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { FilterCloseIcon } from "@/components/icons/FilterCloseIcon";
 import '../../assets/css/create_order.css';
+import { LoadScript, GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+
 
 // Dynamically load Google Maps API components to avoid SSR issues
-const GoogleMap = dynamic(() => import('@react-google-maps/api').then((mod) => mod.GoogleMap), { ssr: false });
-const Marker = dynamic(() => import('@react-google-maps/api').then((mod) => mod.Marker), { ssr: false });
-const LoadScript = dynamic(() => import('@react-google-maps/api').then((mod) => mod.LoadScript), { ssr: false });
+// const GoogleMap = dynamic(() => import('@react-google-maps/api').then((mod) => mod.GoogleMap), { ssr: false });
+// const Marker = dynamic(() => import('@react-google-maps/api').then((mod) => mod.Marker), { ssr: false });
+// const LoadScript = dynamic(() => import('@react-google-maps/api').then((mod) => mod.LoadScript), { ssr: false });
 
 const containerStyle = {
     width: '100%',
@@ -274,6 +276,10 @@ const FilterMap = ({ isActive, filterAddress, filterCoordinates, onClose, onChan
             await setAddressYandex(newAddress);
         }
     };
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+    });
+
 
     // Fetch possible addresses using Yandex Geocoding API
     const setAddressYandex = async (newAddress) => {
@@ -310,10 +316,12 @@ const FilterMap = ({ isActive, filterAddress, filterCoordinates, onClose, onChan
 
     // Handle address selection from the list
     const selectAddress = (selectedAddress) => {
-        setCoordinates({
+        const coords = {
             lat: selectedAddress.latitude,
             lng: selectedAddress.longitude,
-        });
+        };
+        setCoordinates(coords);
+        // setTempCoordinates(coords); // 👈 сохраняем во временное хранилище
         setAddress(selectedAddress.address);
         setShowAddressesList(false);
         onChange(selectedAddress.address, {
@@ -429,7 +437,18 @@ const FilterMap = ({ isActive, filterAddress, filterCoordinates, onClose, onChan
                 )}
 
                 <div style={containerStyle}>
-                    <LoadScript googleMapsApiKey={NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
+                    {/*<LoadScript googleMapsApiKey={NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>*/}
+                    {/*    <GoogleMap*/}
+                    {/*        mapContainerStyle={containerStyle}*/}
+                    {/*        center={coordinates}*/}
+                    {/*        zoom={12}*/}
+                    {/*        onClick={handleMapClick}*/}
+                    {/*        onLoad={(map) => (mapRef.current = map)}*/}
+                    {/*    >*/}
+                    {/*        <Marker position={coordinates} />*/}
+                    {/*    </GoogleMap>*/}
+                    {/*</LoadScript>*/}
+                    {isLoaded && (
                         <GoogleMap
                             mapContainerStyle={containerStyle}
                             center={coordinates}
@@ -439,7 +458,8 @@ const FilterMap = ({ isActive, filterAddress, filterCoordinates, onClose, onChan
                         >
                             <Marker position={coordinates} />
                         </GoogleMap>
-                    </LoadScript>
+                    )}
+
                 </div>
 
                 {(filterAddress.length === 0 && filterCoordinates == null) || address.length === 0 ? (

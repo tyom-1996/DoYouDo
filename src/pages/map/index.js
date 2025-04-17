@@ -20,10 +20,13 @@ import {useGetFilters} from "@/hooks/useGetFilters";
 import {useGetCategories} from "@/hooks/useGetCategories";
 import {useFiltersSave} from "@/hooks/useFiltersSave";
 import dynamic from "next/dynamic";
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 
-const GoogleMap = dynamic(() => import('@react-google-maps/api').then((mod) => mod.GoogleMap), { ssr: false });
-const Marker = dynamic(() => import('@react-google-maps/api').then((mod) => mod.Marker), { ssr: false });
-const LoadScript = dynamic(() => import('@react-google-maps/api').then((mod) => mod.LoadScript), { ssr: false });
+
+//
+// const GoogleMap = dynamic(() => import('@react-google-maps/api').then((mod) => mod.GoogleMap), { ssr: false });
+// const Marker = dynamic(() => import('@react-google-maps/api').then((mod) => mod.Marker), { ssr: false });
+// const LoadScript = dynamic(() => import('@react-google-maps/api').then((mod) => mod.LoadScript), { ssr: false });
 
 const containerStyle = {
     width: '100%',
@@ -55,6 +58,33 @@ export default function Map () {
     const [coordinates, setCoordinates] = useState(defaultCenter);
     const mapRef = useRef(null);
     const [isMapReady, setIsMapReady] = useState(false);
+    const [tempCoordinates, setTempCoordinates] = useState(null);
+    const [mapShouldMove, setMapShouldMove] = useState(false);
+
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+    });
+    useEffect(() => {
+        if (mapShouldMove && mapRef.current && tempCoordinates) {
+            const lat = parseFloat(tempCoordinates.lat);
+            const lng = parseFloat(tempCoordinates.lng);
+
+            console.log("📍 Запускаем panTo с задержкой");
+            setTimeout(() => {
+                try {
+                    mapRef.current.panTo({ lat, lng });
+                    mapRef.current.setZoom(15);
+                    setMapShouldMove(false);
+                } catch (err) {
+                    console.error("Ошибка при перемещении:", err);
+                }
+            }, 100);
+        }
+    }, [mapShouldMove, tempCoordinates]);
+
+
+
+
 
 
 
@@ -305,12 +335,14 @@ export default function Map () {
                                 </div>
                             </div>
                             <div className="map_img_filter_main_wrapper">
-                                <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
+                                {/*<LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>*/}
+
+                                {isLoaded && coordinates?.lat && coordinates?.lng && !isNaN(coordinates.lat) && !isNaN(coordinates.lng) && (
 
                                     <GoogleMap
                                         mapContainerStyle={containerStyle}
                                         center={coordinates} // не важно, т.к. потом fitBounds
-                                        zoom={12}
+                                        zoom={10}
                                         onClick={handleMapClick}
                                         onLoad={(map) => {
                                             mapRef.current = map;
@@ -341,8 +373,9 @@ export default function Map () {
 
                                                 ))}
                                     </GoogleMap>
+                                )}
 
-                                </LoadScript>
+                                {/*</LoadScript>*/}
                                 {/*<div className='map_filter_wrapper'>*/}
                                 {/*    <div className="services_filter_items_wrapper">*/}
 
@@ -400,7 +433,11 @@ export default function Map () {
                                 const updatedFilterBody = { ...filterBody, ...filterOptions };
                                 setFilterBody(updatedFilterBody); // Update local filter state
                                 getOrders(updatedFilterBody, 1); // Fetch orders using updated filters (reset to page 1)
+                                if (tempCoordinates) {
+                                    setCoordinates(tempCoordinates);  // только теперь
+                                }
                             }}
+                            setMapShouldMove={setMapShouldMove}
                             isActive={showFilterMobile} // Control modal visibility
                             categoryData={categoriesData} // Pass categories data
                             filterAddress={selectedFilterAddress} // Pass selected filter address
@@ -441,14 +478,15 @@ export default function Map () {
                         onClose={() => {
                             setShowFilterMap(false)
                         }}
+                        // setTempCoordinates={setTempCoordinates}
                         onChange={(address, coordinates) => {
                             console.log(address, 'selected_address____')
                             console.log(address, 'selected_address____')
                             setSelectedFilterAddress(address)
                             setSelectedFilterCoordinates(coordinates)
+                            setTempCoordinates(coordinates);
                         }}
                     />
-
                 </div>
 
             </main>

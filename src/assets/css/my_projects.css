@@ -199,7 +199,9 @@
     width: 100%;
     flex-wrap: wrap;
 }
-
+.my_projects_items_wrapper2 {
+    width: 100%;
+}
 .active_tab {
     background: #FF6C00;
     color: #FFFFFF;

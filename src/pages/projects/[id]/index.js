@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Image from "next/image";
 import '../../../assets/css/order_page.css';
 import Header from '../../../components/header'
@@ -16,6 +16,7 @@ import {useGetOrderById} from "@/hooks/useGetOrderById";
 import {useCreateResponse} from "@/hooks/useCreateResponse";
 import {useGetProfileInfo} from "@/hooks/useGetProfileInfo";
 import {useGetOrderCheckStatusInfo} from "@/hooks/useGetOrderCheckStatusInfo";
+import {GoogleMap, Marker, useJsApiLoader} from "@react-google-maps/api";
 
 
 export async function getServerSideProps({ params }) {
@@ -27,6 +28,19 @@ export async function getServerSideProps({ params }) {
         }
     };
 }
+
+
+const containerStyle = {
+    width: '100%',
+    height: '518px',
+    borderRadius: '15px',
+    overflow: 'hidden',
+};
+
+const defaultCenter = {
+    lat: 55.7558,
+    lng: 37.6176,
+};
 
 export default function Order ({id}) {
     const [windowHeight, setWindowHeight] = useState(0);
@@ -84,6 +98,13 @@ export default function Order ({id}) {
     const { getOrderCheckStatusInfo,  orderCheckStatusData } = useGetOrderCheckStatusInfo();
     const [isLogged, setIsLogged] = useState(false);
     const [responseError, setResponseError] = useState('');
+    const [coordinates, setCoordinates] = useState(defaultCenter);
+    const mapRef = useRef(null);
+    const [isMapReady, setIsMapReady] = useState(false);
+
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+    });
 
 
     useEffect(() => {
@@ -172,6 +193,14 @@ export default function Order ({id}) {
         window.open(url, '_blank');
     };
 
+    useEffect(() => {
+        if (orderByIdData?.order?.latitude && orderByIdData?.order?.longitude) {
+            setCoordinates({
+                lat: parseFloat(orderByIdData.order.latitude),
+                lng: parseFloat(orderByIdData.order.longitude),
+            });
+        }
+    }, [orderByIdData]);
 
     return (
         <>
@@ -341,16 +370,25 @@ export default function Order ({id}) {
                         </div>
                     </div>
                 </div>
+                {order?.type == "offline" &&
+                    <div className="map_img2">
+                        {isLoaded && coordinates?.lat && coordinates?.lng && !isNaN(coordinates.lat) && !isNaN(coordinates.lng) && (
+                            <GoogleMap
+                                mapContainerStyle={containerStyle}
+                                center={coordinates}
+                                zoom={12}
+                                onLoad={(map) => {
+                                    mapRef.current = map;
+                                    setIsMapReady(true);
+                                }}
+                            >
+                                <Marker position={coordinates} />
+                            </GoogleMap>
+                        )}
 
-                {/*<div className="map_img2">*/}
-                {/*    <Image*/}
-                {/*        src="/map_img.png"*/}
-                {/*        alt="Example Image"*/}
-                {/*        layout="fill" // Fill the parent element*/}
-                {/*        objectFit="cover" // Cover the area of the parent element*/}
-                {/*        quality={100} // Image quality*/}
-                {/*    />*/}
-                {/*</div>*/}
+                    </div>
+                }
+
 
                 {/*<div className="recommendations">*/}
                 {/*    <div className="recommendations_wrapper">*/}
