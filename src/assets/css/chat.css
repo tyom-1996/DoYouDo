@@ -91,6 +91,7 @@
     color: #969696;
     font-weight: 400;
     font-size: 18px;
+    margin-bottom: 5px;
 }
 
 
@@ -220,4 +221,28 @@
     .chat_title {
         display: none;
     }
+}
+
+.chat_item_unread_count_date_infos_wrapper {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.chat_item_unread_count_info_box {
+    width: 25px;
+    height: 25px;
+    background: #FF6C00;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat_item_unread_count_info {
+    font-family: "Open Sans", sans-serif;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 14px;
 }

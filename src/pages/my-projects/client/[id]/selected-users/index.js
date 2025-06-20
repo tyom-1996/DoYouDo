@@ -13,7 +13,7 @@ import {FilterCloseIcon} from "@/components/icons/FilterCloseIcon";
 import StarRatingComponent from "react-star-rating-component";
 import FeedBackSuccess from "@/components/feedbackSuccessModal";
 import {useCreateReviews} from "@/hooks/useCreateReviews";
-import {useGetProfileInfo} from "@/hooks/useGetProfileInfo";
+import {useCreateChat} from "@/hooks/useCreateChat";
 import {useChangeStatusOfOrder} from "@/hooks/useChangeStatusOfOrder";
 
 export async function getServerSideProps({ params }) {
@@ -37,6 +37,7 @@ export default function OrderForClient({ id }) {
     const { checkReviews, checkReviewsData} = useCheckReviews();
     const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
     const { createReview, createReviewData } = useCreateReviews();
+    const { createChat, createChatData } = useCreateChat();
     const { changeStatusOfOrderData, changeStatusOfOrder } = useChangeStatusOfOrder();
     const [rating, setRating] = useState(1);
     const [reviewText, setReviewText] = useState('');
@@ -48,6 +49,13 @@ export default function OrderForClient({ id }) {
     const onStarClick = (nextValue, prevValue, name) => {
         setRating(nextValue);
     };
+
+    useEffect(() => {
+        if (createChatData) {
+            router.push(`/chat/${id}`);
+        }
+    }, [createChatData]);
+
 
     useEffect(() => {
         if (createReviewData) {
@@ -254,15 +262,23 @@ export default function OrderForClient({ id }) {
 
 
                                             <div className='buttons_wrapper'>
-                                                <div className="order_single_page_item_buttons_wrapper2">
+                                                <>
                                                     {selectedFreelancersData?.order?.status == 'waiting_freelancer_response' ? (
                                                         <button
                                                             className="order_single_page_item_waiting_for_a_response_btn">Ожидание
                                                             ответа от исполнителя</button>
                                                     ) : (
-                                                        <button className="order_single_page_item_chat_btn">В Чат</button>
+                                                        <button
+                                                            className="order_single_page_item_chat_btn"
+                                                            onClick={() => {
+                                                                createChat(id, selectedFreelancersData?.freelancer?.id)
+                                                            }}
+                                                        >
+                                                            В Чат
+                                                        </button>
                                                     )}
-                                                </div>
+
+                                                </>
 
                                                 {selectedFreelancersData?.order?.status == 'closed' && showCheckReviewsState !== true &&
                                                     <button

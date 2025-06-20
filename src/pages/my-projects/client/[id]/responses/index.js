@@ -7,13 +7,14 @@ import Head from 'next/head';
 import 'react-datepicker/dist/react-datepicker.css';
 import { DropDownIcon2 } from "@/components/icons/DropDownIcon2";
 import { LikesIcon2 } from "@/components/icons/LikesIcon2";
-import { DisLikesIcon2 } from "@/components/icons/DisLikesIcon2";
+import { ChatIcon } from "@/components/icons/ChatIcon";
 import { useRouter } from "next/router";
 import { useGetResponses } from "@/hooks/useGetResponses";
 import { useSelectFreelancer } from "@/hooks/useSelectFreelancer";
 import { useAddFavorites } from "@/hooks/useAddFavorites";
 import {useGetSelectedFreelancers} from "@/hooks/useGetSelectedFreelancers";
 import {useGetFavorites} from "@/hooks/useGetFavorites";
+import {useCreateChat} from "@/hooks/useCreateChat";
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -40,10 +41,16 @@ export default function OrderForClient({ id }) {
     const { selectFreelancer, loadingSelectFreelancer, selectFreelancerData } = useSelectFreelancer();
     const {addFavorites, loadingAddFavorites,addFavoritesData  } = useAddFavorites();
     const [showDisableSelectFreelancerButton, setShowDisableSelectFreelancerButton] = useState(false);
-    const [showDisableFavoriteButton, setShowDisableFavoriteButton] = useState(false);
+    const [disableChat, setDisableChat] = useState(false);
     const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
     const [favoritedIds, setFavoritedIds] = useState({});
+    const { createChat, createChatData } = useCreateChat();
 
+    useEffect(() => {
+        if (createChatData) {
+            router.push(`/chat/${id}`);
+        }
+    }, [createChatData]);
 
     useEffect(() => {
          getSelectedFreelancers(id)
@@ -359,6 +366,15 @@ export default function OrderForClient({ id }) {
                                                                 Сделаю {item?.response?.days_to_complete} {getDayDeclension(item?.response?.days_to_complete)}
                                                             </p>
 
+
+                                                            <button
+                                                                className='chat_icon'
+                                                                onClick={() => {
+                                                                    createChat(id, selectedFreelancersData?.freelancer?.id)
+                                                                }}
+                                                            >
+                                                                <ChatIcon/>
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -370,7 +386,6 @@ export default function OrderForClient({ id }) {
                                                     <div className='order_single_page_item_select_user_btn_parent'>
                                                         {renderFreelancerButton(item, responsesData, selectedFreelancersData)}
                                                     </div>
-
 
 
                                                     {/* "Add to Favorites" Button */}

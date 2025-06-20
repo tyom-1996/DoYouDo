@@ -3,62 +3,24 @@ import Image from "next/image";
 import '../../assets/css/chat.css';
 import Header from '../../components/header'
 import Footer from '../../components/footer'
-import Category from '../includes/Category'
-import City from '../includes/CityComponent'
 import Head from 'next/head';
-import {FilterCloseIcon} from "@/components/icons/FilterCloseIcon";
 import {useRouter} from "next/router";
-
-;
-
+import {useGetChats} from "@/hooks/useGetChats";
+import { format, isToday, isThisWeek, isThisMonth, isThisYear, parseISO } from 'date-fns';
+import { ru } from 'date-fns/locale';
 
 export default function Chat () {
     const [windowHeight, setWindowHeight] = useState(0);
     const [isCheckedAllCategories, setIsCheckedAllCategories] = useState(false);
-    const [chatList, setChatList] = useState([
-        {
-            id: 1,
-            chat_person_img: '/texpadderjka_img.png',
-            chat_person_name: 'Техническая поддержка',
-            chat_date: 'Сегодня, 17:40'
-        },
-        {
-            id: 1,
-            chat_person_img: '/chat_person_img.png',
-            chat_person_name: 'Daniela Gallego',
-            chat_topic_name: 'Создание сайта DoYouDo',
-            chat_date: 'Сегодня, 17:40'
-        },
-        {
-            id: 2,
-            chat_person_img: '/chat_person_img.png',
-            chat_person_name: 'Daniela Gallego',
-            chat_topic_name: 'Создание сайта DoYouDo',
-            chat_date: 'Сегодня, 17:40'
-        },
-        {
-            id: 3,
-            chat_person_img: '/chat_person_img.png',
-            chat_person_name: 'Daniela Gallego',
-            chat_topic_name: 'Создание сайта DoYouDo',
-            chat_date: 'Сегодня, 17:40'
-        },
-        {
-            id: 4,
-            chat_person_img: '/chat_person_img.png',
-            chat_person_name: 'Daniela Gallego',
-            chat_topic_name: 'Создание сайта DoYouDo',
-            chat_date: 'Сегодня, 17:40'
-        },
-        {
-            id: 5,
-            chat_person_img: '/chat_person_img.png',
-            chat_person_name: 'Daniela Gallego',
-            chat_topic_name: 'Создание сайта DoYouDo',
-            chat_date: 'Сегодня, 17:40'
-        },
+    const { getChats, chatsData, totalPages } = useGetChats();
+    const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
 
-    ]);
+
+    useEffect(() => {
+        getChats()
+    }, [])
+
+
 
 
 
@@ -68,19 +30,33 @@ export default function Chat () {
         }
     }, []);
 
-    const disableBodyScroll = () => {
-        document.body.style.overflow = "hidden";
-    };
-
-    const enableBodyScroll = () => {
-        document.body.style.overflow = "auto";
-    };
     const router = useRouter();
     const redirectToChatSinglePage = (id) => {
         router.push(`/chat/${id}`);
     };
 
+   function formatChatDate(dateString) {
+       if (!dateString) return '';
+        const date = parseISO(dateString);
 
+        if (isToday(date)) {
+            return `Сегодня, ${format(date, 'HH:mm')}`;
+        }
+
+        if (isThisWeek(date, { weekStartsOn: 1 })) {
+            return `${format(date, 'EEEE, HH:mm', { locale: ru })}`;
+        }
+
+        if (isThisMonth(date)) {
+            return format(date, 'd MMMM', { locale: ru });
+        }
+
+        if (!isThisYear(date)) {
+            return format(date, 'd LLL yyyy', { locale: ru });
+        }
+
+        return format(date, 'd MMMM', { locale: ru });
+    }
     return (
         <>
             <main className='general_page_wrapper'>
@@ -96,31 +72,38 @@ export default function Chat () {
                     <Header activePage='chat'/>
                     <div className="chat_wrapper">
                         <h1 className="chat_title">Чаты</h1>
+
                         <div className="chat_items_wrapper">
-                            {chatList.map((item, index) => {
+
+                            {chatsData && chatsData.length > 0 && chatsData.map((item, index) => {
                                 return (
                                     <button
                                         className='chat_item' key={index}
                                         onClick={() => {
-                                            redirectToChatSinglePage(item?.id)
+                                            redirectToChatSinglePage(item?.chat_id)
                                         }}
                                     >
                                         <div className="chat_item_person_img_name_info_wrapper">
                                             <div className="chat_item_person_img">
                                                 <Image
-                                                    src={item.chat_person_img}
+                                                    src={item?.participent?.photo ?  `${imagePath}${item?.participent?.photo}` : '/upload_img1.png'}
                                                     alt="Example Image"
                                                     layout="fill" // Fill the parent element
                                                     objectFit="cover" // Cover the area of the parent element
-                                                    quality={100} // Image quality
                                                 />
                                             </div>
                                             <div className="chat_item_person_info_wrapper">
-                                                <p className="chat_item_person_name">{item.chat_person_name}</p>
-                                                <p className="chat_item_topic_name">{item.chat_topic_name}</p>
+                                                <p className="chat_item_person_name">{item?.participant?.first_name} {item?.participant?.last_name}</p>
+                                                <p className="chat_item_topic_name">{item?.last_message}</p>
                                             </div>
                                         </div>
-                                        <p className="chat_item_date_info">{item.chat_date}</p>
+
+                                        <div className='chat_item_unread_count_date_infos_wrapper'>
+                                            <p className="chat_item_date_info">{formatChatDate(item?.last_message_time)}</p>
+                                            <div className='chat_item_unread_count_info_box'>
+                                                <p className='chat_item_unread_count_info'>{item?.unread_count}</p>
+                                            </div>
+                                        </div>
                                     </button>
                                 )
                             })}

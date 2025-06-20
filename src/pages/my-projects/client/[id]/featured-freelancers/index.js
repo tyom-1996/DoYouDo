@@ -12,6 +12,7 @@ import {useRouter} from "next/router";
 import {useGetSelectedFreelancers} from "@/hooks/useGetSelectedFreelancers";
 import {useGetFavorites} from "@/hooks/useGetFavorites";
 import {useSelectFreelancer} from "@/hooks/useSelectFreelancer";
+import {useCreateChat} from "@/hooks/useCreateChat";
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -39,6 +40,13 @@ export default function OrderForClient ({id}) {
     const { getSelectedFreelancers,  selectedFreelancersData } = useGetSelectedFreelancers();
     const { selectFreelancer,  selectFreelancerData } = useSelectFreelancer();
     const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
+    const { createChat, createChatData } = useCreateChat();
+
+    useEffect(() => {
+        if (createChatData) {
+            router.push(`/chat/${id}`);
+        }
+    }, [createChatData]);
 
     useEffect(() => {
         getFavorites(id)
@@ -110,7 +118,7 @@ export default function OrderForClient ({id}) {
                 if (item?.freelancer?.orderStatus === 'waiting_freelancer_response') {
                     return (
                         <button
-                            className="order_single_page_item_select_user_btn3"
+                            className="order_single_page_item_chat_btn"
                             style={{ opacity: 1, fontSize: 14 }}
                             disabled
                         >
@@ -121,7 +129,7 @@ export default function OrderForClient ({id}) {
                 if (item?.freelancer?.orderStatus === 'in_progress') {
                     return (
                         <button
-                            className="order_single_page_item_select_user_btn3"
+                            className="order_single_page_item_chat_btn"
                             style={{ opacity: 1, fontSize: 14, background: 'green' }}
                             disabled
                         >
@@ -132,7 +140,7 @@ export default function OrderForClient ({id}) {
             } else {
                 return (
                     <button
-                        className="order_single_page_item_select_user_btn3"
+                        className="order_single_page_item_chat_btn"
                         style={{ opacity: 0.5, fontSize: 14 }}
                         disabled
                     >
@@ -144,7 +152,7 @@ export default function OrderForClient ({id}) {
 
         return (
             <button
-                className="order_single_page_item_select_user_btn3"
+                className="order_single_page_item_chat_btn"
                 // style={{ opacity: selectedFreelancersData?.freelancer ? 0.5 : 1 }}
                 onClick={() => selectFavFreelancer(item.id)}
             >
@@ -328,9 +336,18 @@ export default function OrderForClient ({id}) {
                                                 </p>
 
                                                 <div className="order_single_page_item_buttons_wrapper">
-                                                    <div className='order_single_page_item_select_user_btn_parent3'>
+                                                    <button
+                                                        className="order_single_page_item_chat_btn"
+                                                        onClick={() => {
+                                                            createChat(id, selectedFreelancersData?.freelancer?.id)
+                                                        }}
+                                                    >
+                                                        В Чат
+                                                    </button>
+                                                    <>
                                                         {renderFreelancerButton(item, getFavoritesData, selectedFreelancersData, selectFavFreelancer)}
-                                                    </div>
+                                                    </>
+
                                                 </div>
                                             </div>
                                         )

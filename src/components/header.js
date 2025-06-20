@@ -6,6 +6,7 @@ import {LogoutIcon} from "@/components/icons/LogoutIcon";
 import {MobileMenuIcon} from "@/components/icons/MobileMenuIcon";
 import {useRouter} from "next/router";
 import {useGetProfileInfo} from "@/hooks/useGetProfileInfo";
+import {useGetChatUnreadCount} from "@/hooks/useGetChatUnreadCount";
 import {useSetProfileToggleRole} from "@/hooks/useSetProfileToggleRole";
 
 export default function Header(props) {
@@ -17,6 +18,7 @@ export default function Header(props) {
     const [activeRole, setActiveRole] = useState('');
     const [activeRole2, setActiveRole2] = useState('');
     const { getProfileInfo, loadingUserInfo, profileInfoData } = useGetProfileInfo();
+    const { getChatsUnreadCountData, getChatUnreadCount } = useGetChatUnreadCount();
     const { profileToggleRole,profileToggleRoleData } = useSetProfileToggleRole();
     const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
     const popupRef = useRef(null);
@@ -115,6 +117,12 @@ export default function Header(props) {
         router.push('/auth/login');
     }
 
+
+    useEffect(() => {
+        getChatUnreadCount()
+    }, [])
+
+
     return (
         <>
             <header className="header" id='home_page'>
@@ -134,7 +142,15 @@ export default function Header(props) {
                                 quality={100} // Image quality
                             />
                         </button>
-                        <nav className={activeRole == 'freelancer' ? "header_nav2" : "header_nav"}>
+                        <nav
+                            className={
+                                !isLogged
+                                    ? "header_nav3"
+                                    : activeRole === 'freelancer'
+                                        ? "header_nav2"
+                                        : "header_nav"
+                            }
+                        >
                             <ul className="header_ul_list">
                                 <li className="header_ul_li">
                                     <a href="/projects" className={`header_ul_link ${props.activePage === 'job_page' ? 'active_link' : ''}`}>
@@ -142,20 +158,9 @@ export default function Header(props) {
                                     </a>
                                 </li>
                                 <li className="header_ul_li">
-                                    {isLogged ? (
-                                            <a href="/freelancers" className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
-                                                Фрилансеры
-                                            </a>
-                                        ) :
-                                        (
-                                            <a
-                                               className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
-                                                Фрилансеры
-                                            </a>
-                                        )
-                                    }
-
-
+                                        <a href="/freelancers" className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
+                                            Фрилансеры
+                                        </a>
                                 </li>
                                 {isLogged && activeRole == 'client' &&
                                     <li className="header_ul_li">
@@ -166,7 +171,7 @@ export default function Header(props) {
                                     </li>
                                 }
                                 <li className="header_ul_li">
-                                    {isLogged ? (
+                                    {isLogged && (
                                             <a
                                                 href={activeRole == 'freelancer' ? '/my-projects/freelancer' : activeRole == 'client' ? '/my-projects/client' : ''}
                                                 className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}
@@ -174,29 +179,28 @@ export default function Header(props) {
                                                 Мои Проекты
                                             </a>
                                         )
-                                        :
-                                        (
-                                            <a
-                                                className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}
-                                            >
-                                                Мои Проекты
-                                            </a>
-                                        )
+
                                     }
 
                                 </li>
                                 <li className="header_ul_li">
-                                    {isLogged ? (
+                                    {isLogged && (
                                             <a href="/chat"
                                                className={`header_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
                                                 Чат
-                                            </a>
-                                        )
-                                        :
-                                        (
-                                            <a
-                                               className={`header_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
-                                                Чат
+                                                {getChatsUnreadCountData && getChatsUnreadCountData?.data.length > 0 && (
+                                                   <>
+                                                       {getChatsUnreadCountData?.data.map((item, index) => {
+                                                           return (
+                                                               <div key={index} className='header_chat_unread_count_box'>
+                                                                   <p className='header_chat_unread_count_info'>{item?.unread_count}</p>
+                                                               </div>
+                                                           );
+                                                       })}
+
+                                                   </>
+                                                )}
+
                                             </a>
                                         )
                                     }
@@ -300,6 +304,8 @@ export default function Header(props) {
                     </div>
 
                 </div>
+
+
                 {showMobileMenu &&
                     <div className='mobile_menu'>
                         <div className='mobile_menu_wrapper'>
@@ -333,40 +339,23 @@ export default function Header(props) {
                                         </a>
                                     </li>
                                     <li className="header_ul_li">
-                                        {isLogged ? (
-                                                <a href="/freelancers"
-                                                   className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
-                                                    Фрилансеры
-                                                </a>
-                                            ) :
-                                            (
-                                                <a
-                                                    className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
-                                                    Фрилансеры
-                                                </a>
-                                            )
-                                        }
-
-
+                                            <a href="/freelancers"
+                                               className={`header_ul_link ${props.activePage === 'freelancers_page' ? 'active_link' : ''}`}>
+                                                Фрилансеры
+                                            </a>
                                     </li>
                                     <li className="header_ul_li">
-                                        {isLogged && activeRole == 'client' ? (
+                                        {isLogged && activeRole == 'client' && (
                                                 <a href="/create-order"
                                                    className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
                                                     Создать задание
                                                 </a>
                                             )
-                                            : (
-                                                <a
-                                                    className={`header_ul_link ${props.activePage === 'create_order' ? 'active_link' : ''}`}>
-                                                    Создать задание
-                                                </a>
-                                            )
                                         }
 
                                     </li>
                                     <li className="header_ul_li">
-                                        {isLogged ? (
+                                        {isLogged && (
                                                 <a
                                                     href={activeRole == 'freelancer' ? '/my-projects/freelancer' : activeRole == 'client' ? '/my-projects/client' : ''}
                                                     className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}
@@ -374,29 +363,26 @@ export default function Header(props) {
                                                     Мои Проекты
                                                 </a>
                                             )
-                                            :
-                                            (
-                                                <a
-                                                    className={`header_ul_link ${props.activePage === 'my_projects_for_freelancer_page' ? 'active_link' : ''}`}
-                                                >
-                                                    Мои Проекты
-                                                </a>
-                                            )
                                         }
 
                                     </li>
                                     <li className="header_ul_li">
-                                        {isLogged ? (
+                                        {isLogged && (
                                                 <a href="/chat"
                                                    className={`header_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
                                                     Чат
-                                                </a>
-                                            )
-                                            :
-                                            (
-                                                <a
-                                                    className={`header_ul_link ${props.activePage === 'chat' ? 'active_link' : ''}`}>
-                                                    Чат
+                                                    {getChatsUnreadCountData && getChatsUnreadCountData?.data.length > 0 && (
+                                                        <>
+                                                            {getChatsUnreadCountData?.data.map((item, index) => {
+                                                                return (
+                                                                    <div key={index} className='header_chat_unread_count_box'>
+                                                                        <p className='header_chat_unread_count_info'>{item?.unread_count}</p>
+                                                                    </div>
+                                                                );
+                                                            })}
+
+                                                        </>
+                                                    )}
                                                 </a>
                                             )
                                         }

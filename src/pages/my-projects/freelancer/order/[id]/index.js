@@ -4,21 +4,16 @@ import '../../../../../assets/css/order_page.css';
 import '../../../../../assets/css/leave_feedback.css';
 import Header from '../../../../../components/header'
 import Footer from '../../../../../components/footer'
-import Category from '../../../../includes/Category'
-import City from '../../../../includes/CityComponent'
 import Head from 'next/head';
 import {DateIcon2} from "@/components/icons/DateIcon2";
 import {FilterCloseIcon} from "@/components/icons/FilterCloseIcon";
 import { useRouter } from 'next/router';
-import {DateIcon} from "@/components/icons/DateIcon";
-import {PaginationLeftIcon} from "@/components/icons/paginationLeftIcon";
-import {PaginationRightIcon} from "@/components/icons/paginationRightIcon";
-import {useGetFreelancerResponses} from "@/hooks/useGetFreelancerResponses";
 import {useGetFreelancerOrderById} from "@/hooks/useGetFreelancerOrderById";
 import StarRatingComponent from "react-star-rating-component";
 import {useCreateReviews} from "@/hooks/useCreateReviews";
 import FeedBackSuccess from "@/components/feedbackSuccessModal";
 import {useCheckReviews} from "@/hooks/useCheckReviews";
+import {useCreateChat} from "@/hooks/useCreateChat";
 import {GoogleMap, Marker, useJsApiLoader} from "@react-google-maps/api";
 
 export async function getServerSideProps({ params }) {
@@ -43,7 +38,6 @@ const defaultCenter = {
     lat: 55.7558,
     lng: 37.6176,
 };
-
 
 export default function Order ({id}) {
     const [windowHeight, setWindowHeight] = useState(0);
@@ -99,17 +93,29 @@ export default function Order ({id}) {
     const [showFeedbackSuccessModal, setShowFeedbackSuccessModal] = useState(false);
     const [reviewType, setReviewType] = useState('positive');
     const { checkReviews, checkReviewsData} = useCheckReviews();
+    const {createChat, createChatData } = useCreateChat();
     const [showCheckReviewsState, setShowCheckReviewsState] = useState(false);
     const [coordinates, setCoordinates] = useState(defaultCenter);
     const mapRef = useRef(null);
     const [isMapReady, setIsMapReady] = useState(false);
-
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     });
+
+    useEffect(() => {
+        if (createChatData) {
+            router.push(`/chat/${id}`);
+        }
+    }, [createChatData]);
+
     const onStarClick = (nextValue, prevValue, name) => {
         setRating(nextValue);
     };
+    useEffect(() => {
+        if (createChatData?.message == "Чат успешно создан") {
+            router.push(`/chat/${id}`);
+        }
+    }, [createChatData]);
 
     useEffect(() => {
         if (id) {
@@ -253,6 +259,7 @@ export default function Order ({id}) {
                             {freelancerOrderByIddData?.data?.[0]?.latitude && freelancerOrderByIddData?.data?.[0]?.longitude && (
                                 <button
                                     className='get_direction_button'
+                                    style={{marginBottom: 10}}
                                     onClick={() => {
                                         openNavigatorToMoscow({
                                             latitude: freelancerOrderByIddData.data[0].latitude,
@@ -263,7 +270,14 @@ export default function Order ({id}) {
                                     Проложить маршрут
                                 </button>
                             )}
-
+                            <button
+                                className="get_direction_button"
+                                onClick={() => {
+                                    createChat(id, freelancerOrderByIddData?.data[0]?.client_id)
+                                }}
+                            >
+                                Написать сообщение
+                            </button>
 
                         </div>
                         <div className="order_page_item2">
@@ -327,6 +341,7 @@ export default function Order ({id}) {
                                     Оставить отзыв
                                 </button>
                             }
+
 
                         </div>
                     </div>

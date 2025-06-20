@@ -847,6 +847,7 @@
     border-radius: 10px;
     margin-bottom: 30px;
     padding: 20px;
+    position: relative;
 }
 .order_single_page_item_img_info_wrapper {
     width: 100%;
@@ -976,8 +977,8 @@
     background: #FF6C00;
     border: none;
     height: 45px;
-    width: 47%;
-    border-radius: 10px;
+    width: 49%;
+    border-radius: 5px;
     cursor: pointer;
     outline: none;
     display: flex;
@@ -1065,7 +1066,7 @@
 
 }
 .order_single_page_item_chat_btn {
-    width: 100%;
+    width: 49%;
     background: #FF6C00;
     border-radius: 5px;
     height: 45px;
@@ -1200,4 +1201,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.chat_icon {
+    display: flex;
+    align-items: center;
+    background: none;
+    outline: none;
+    border: none;
+    height: 30px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 9;
 }

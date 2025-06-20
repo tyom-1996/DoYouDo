@@ -483,6 +483,53 @@ export const getOrders2 = async (body = {}, page = 1, limit = 10) => {
         throw error.response?.data || error.message; // Handle and rethrow the error
     }
 };
+
+export const getChats2 = async () => {
+    try {
+        const response = await apiClient.get(
+            '/chat/list',
+        );
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error.message;
+    }
+};
+
+export const getChatUnreadCount2 = async () => {
+    try {
+        const response = await apiClient.get(
+            '/chat/unread-count',
+        );
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error.message;
+    }
+};
+
+export const getChatSinglePage2 = async (id) => {
+    const token = localStorage.getItem('token');
+
+    // Check if token exists
+    if (!token) {
+        throw new Error('No token found');
+    }
+
+    try {
+        const response = await apiClient.get(
+            `/chat/${id}/messages`, {
+                headers: {
+                    Authorization: `Bearer ${token}` // Include the token
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error.message;
+    }
+};
+
+
+
 export const getFreelancers2 = async (filters = {}, page = 1, limit = 10) => {
     try {
         const response = await apiClient.get('/freelancers', {
@@ -498,8 +545,6 @@ export const getFreelancers2 = async (filters = {}, page = 1, limit = 10) => {
         throw error.response?.data || error.message;
     }
 };
-
-
 export const getProfilePortfolio2 = async (page = 1, limit = 10) => {
     try {
         // Send GET request with query parameters including filters, page, and limit
@@ -514,7 +559,6 @@ export const getProfilePortfolio2 = async (page = 1, limit = 10) => {
         throw error.response?.data || error.message; // Handle and rethrow the error
     }
 };
-
 export const getFilters2 = async () => {
     try {
         // Send POST request with filter body and GET parameters (page and limit)
@@ -527,7 +571,6 @@ export const getFilters2 = async () => {
         throw error.response?.data || error.message; // Handle and rethrow the error
     }
 };
-
 
 export const getClientOrders2 = async (page = 1, limit = 10, status = null) => {
     try {
@@ -753,6 +796,37 @@ export const addFavoritesRequest = async (id, responseId) => {
         throw error.response?.data || error.message;
     }
 };
+export const createChat2 = async (id, responseId) => {
+    try {
+        // Make the request with axios
+        const response = await apiClient.post(
+            '/chat/create',
+            {
+                adId: id,
+                sellerId: responseId
+            }
+        );
+        // Return the response data
+        return response?.data;
+    } catch (error) {
+        // Handle and rethrow the error
+        throw error.response?.data || error.message;
+    }
+};
+export const sendChat2 = async (formData) => {
+    try {
+        const response = await apiClient.post('/chat/send', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response?.data;
+    } catch (error) {
+        throw error.response?.data || error.message;
+    }
+};
+
+
 export const profileToggleRole2 = async () => {
     try {
         // Make the request with axios

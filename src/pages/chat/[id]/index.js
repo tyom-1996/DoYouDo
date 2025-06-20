@@ -6,6 +6,10 @@ import Footer from '../../../components/footer'
 import Head from 'next/head';
 import {useRouter} from "next/router";
 import SelectFreelancerModal from "@/components/selectFreelancerModal";
+import {useSendChat} from "@/hooks/useSendChat";
+import {useGetChatSinglePage} from "@/hooks/useGetChatSinglePage";
+import {format, isThisMonth, isThisWeek, isThisYear, isToday, parseISO} from "date-fns";
+import {ru} from "date-fns/locale";
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -75,6 +79,16 @@ export default function  Chat  ({id})  {
     const [showForClient, setShowForClient] = useState(true);
     const [chatMessage, setChatMessage] = useState('');
     const [showSelectFreelancerModal, setShowSelectFreelancerModal] = useState(false);
+    const { sendChat, sendChatData, } = useSendChat();
+    const { getChatSinglePage, chatSingleData,} = useGetChatSinglePage();
+    const [chatFiles, setChatFiles] = useState([]);
+    const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
+
+
+    useEffect(() => {
+        getChatSinglePage(id)
+    }, [])
+
 
     const disableBodyScroll = () => {
         document.body.style.overflow = "hidden";
@@ -93,9 +107,68 @@ export default function  Chat  ({id})  {
     const openSelectFreelancerModal = () => {
         router.push('/select-freelancer');
     };
+
+    const sendChatHandle = () => {
+        const formData = new FormData();
+        formData.append('adId', chatSingleData?.order?.ad_id);
+        formData.append('receiverId', chatSingleData?.participant?.id);
+        formData.append('message', chatMessage);
+
+        chatFiles.forEach((file) => {
+            formData.append('chatphoto', file); // или 'files[]' если сервер ожидает массив
+        });
+
+        sendChat(formData);
+        setChatMessage('');
+        setChatFiles([]);
+    };
+
+
+    const handleFileChange = (e) => {
+        const files = e.target.files;
+
+        if (files && files.length > 0) {
+            const formData = new FormData();
+            formData.append('adId', chatSingleData?.order?.ad_id);
+            formData.append('receiverId', chatSingleData?.participant?.id);
+            formData.append('message', ''); // можно пустое сообщение
+            formData.append('chatphoto', files[0]); // если один файл
+
+            sendChat(formData);
+
+            // сброс input
+            e.target.value = '';
+        }
+    };
+
+    function formatChatDate(dateString) {
+        if (!dateString) return '';
+        const date = parseISO(dateString);
+
+        if (isToday(date)) {
+            return `Сегодня, ${format(date, 'HH:mm')}`;
+        }
+
+        if (isThisWeek(date, { weekStartsOn: 1 })) {
+            return `${format(date, 'EEEE, HH:mm', { locale: ru })}`;
+        }
+
+        if (isThisMonth(date)) {
+            return format(date, 'd MMMM', { locale: ru });
+        }
+
+        if (!isThisYear(date)) {
+            return format(date, 'd LLL yyyy', { locale: ru });
+        }
+
+        return format(date, 'd MMMM', { locale: ru });
+    }
+
+
+
     return (
         <>
-            <main className='general_page_wrapper'>
+            <main className='general_page_wrapper_chat'>
                 <Head>
                     <title>Работа</title>
                     <meta name="dwsdwdwd" content="This is the home page" />
@@ -104,92 +177,129 @@ export default function  Chat  ({id})  {
                     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
 
                 </Head>
-                <div className='home_general_wrapper' id='chat_single_page'>
-                    <Header activePage={"chat"}/>
-                    <div className='chat_single_page_box'>
-                        <div className='chat_main_wrapper'>
-                            <div className="chat_header">
-                                <div className="chat_header_user_img_info_wrapper">
-                                    <div className="chat_header_user_img">
-                                        <Image
-                                            src="/chat_user_img.png"
-                                            alt="Example Image"
-                                            layout="fill" // Fill the parent element
-                                            objectFit="cover" // Cover the area of the parent element
-                                            quality={100} // Image quality
-                                        />
-                                    </div>
-                                    <div className="chat_header_user_info_wrapper">
-                                        <p className="chat_header_user_name">
-                                            Daniela Gallego
-                                            <div className='chat_header_user_status'>
-                                                <span className='chat_header_user_status_icon'></span>
-                                                <span className='chat_header_user_status_text'>Онлайн</span>
-                                            </div>
-                                        </p>
-                                        <p className="chat_header_topic_name">Создание сайта DoYouDo</p>
-                                    </div>
-                                </div>
-                                {showForClient &&
-                                    <button
-                                        className='chat_header_select_freelancer_button  desktop_chat_header_select_freelancer_button'
-                                        onClick={() => {
-                                            setShowSelectFreelancerModal(true)
-                                            disableBodyScroll()
-                                        }}
-                                    >
-                                        Выбрать исполнителем
-                                    </button>
-                                }
+                {/*<div className='home_general_wrapper' id='chat_single_page'>*/}
+                {/*   */}
+                {/*</div>*/}
+
+                {/*<Header activePage={"chat"}/>*/}
+                <div className='chat_main_wrapper'>
+                    <div className="chat_header">
+                        <div className="chat_header_user_img_info_wrapper">
+                            <div className="chat_header_user_img">
+
+                                <Image
+                                    src={chatSingleData?.participant?.photo ?  `${imagePath}${chatSingleData?.participant?.photo}` : '/upload_img1.png'}
+                                    alt="Example Image"
+                                    layout="fill" // Fill the parent element
+                                    objectFit="cover" // Cover the area of the parent element
+                                />
 
                             </div>
-                            <div className='chat_single_page_items_wrapper'>
-                                {messages.map((item, index) => {
-                                    return (
-                                        <div key={index} className='chat_item_box'>
-                                            <p className="chat_item_box_title">{item.date}</p>
-                                            {item.messages.map((message, index) => {
-                                                return (
-                                                    <div className="chat_single_page_item" key={index}>
-                                                        <div className="chat_single_page_item_user_img_info_wrapper">
-                                                            <div className="chat_single_page_item_user_img">
-                                                                <Image
-                                                                    src={message.avatar}
-                                                                    alt="Example Image"
-                                                                    layout="fill" // Fill the parent element
-                                                                    objectFit="cover" // Cover the area of the parent element
-                                                                    quality={100} // Image quality
-                                                                />
-                                                            </div>
-                                                            <div className="chat_single_page_item_user_info_wrapper">
-                                                                <p className="chat_item_user_name">
-                                                                    {message.sender}
-                                                                </p>
-                                                                <p className="chat_item_user_message">
-                                                                    {message.text}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <p className="chat_single_page_item_date_info">
-                                                            {message.time}
-                                                        </p>
-                                                    </div>
-                                                )
-                                            })}
-                                        </div>
-                                    )
-                                })}
+                            <div className="chat_header_user_info_wrapper">
+                                <div className="chat_header_user_name">
+                                    {chatSingleData?.participant?.first_name} {chatSingleData?.participant?.last_name}
+                                    <div className='chat_header_user_status'>
+                                        <span className='chat_header_user_status_icon'></span>
+                                        <span className='chat_header_user_status_text'>Онлайн</span>
+                                    </div>
+                                </div>
+
+                                <p className="chat_header_topic_name">Создание сайта DoYouDo</p>
                             </div>
-                            <div className='chat_input_buttons_wrapper'>
-                                <div className='upload_btn'>
-                                    <input
-                                        type="file"
-                                        multiple
-                                        accept=".pdf,.doc,.docx,.xls,.xlsx,.txt" // Accept specific file types
-                                        style={{ display: 'none' }}
-                                        id="chat_file-input"
-                                    />
-                                    <label htmlFor="chat_file-input" className="file_uploadButton">
+                        </div>
+                        {showForClient &&
+                            <button
+                                className='chat_header_select_freelancer_button'
+                                onClick={() => {
+                                    setShowSelectFreelancerModal(true)
+                                    disableBodyScroll()
+                                }}
+                            >
+                                Выбрать исполнителем
+                            </button>
+                        }
+
+                    </div>
+                    <div className='chat_single_page_items_wrapper'>
+                        {chatSingleData?.data && chatSingleData?.data.map((message, index) => {
+                            return (
+                                <>
+                                    {message?.message && (
+                                        <div className={message?.isMine === false ? 'chat_single_page_item' : 'chat_single_page_item2' } key={index}>
+
+                                            <div className="chat_single_page_item_user_img_info_wrapper">
+                                                <div className="chat_single_page_item_user_img">
+                                                    <Image
+                                                        src={message?.sender_photo ?  `${imagePath}${message?.sender_photo}` : '/upload_img1.png'}
+                                                        alt="Example Image"
+                                                        layout="fill" // Fill the parent element
+                                                        objectFit="cover" // Cover the area of the parent element
+                                                    />
+                                                </div>
+                                                <div className="chat_single_page_item_user_info_wrapper">
+                                                    <p className="chat_item_user_name">
+                                                        {message?.sender_first_name}  {message?.sender_last_name}
+                                                    </p>
+                                                    <p className="chat_item_user_message">
+                                                        {message?.message}
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                            <p className="chat_single_page_item_date_info">
+                                                {formatChatDate(message?.created_at)}
+                                            </p>
+                                        </div>
+
+                                    )}
+
+                                    {message?.file_path && (
+                                        <div className={message?.isMine === false ? 'chat_single_page_item' : 'chat_single_page_item2' } key={index}>
+
+                                            <div className="chat_single_page_item_user_img_info_wrapper">
+                                                <div className="chat_single_page_item_user_img">
+                                                    <Image
+                                                        src={message?.sender_photo ?  `${imagePath}${message?.sender_photo}` : '/upload_img1.png'}
+                                                        alt="Example Image"
+                                                        layout="fill" // Fill the parent element
+                                                        objectFit="cover" // Cover the area of the parent element
+                                                    />
+                                                </div>
+                                                <div className="chat_single_page_item_user_info_wrapper">
+                                                    <p className="chat_item_user_name">
+                                                        {message?.sender_first_name}  {message?.sender_last_name}
+                                                    </p>
+                                                    <div className='chat_file'>
+                                                        <img
+                                                            src={message?.file_path ?  `${imagePath}${message?.file_path}` : '/upload_img1.png'}
+                                                            alt="Example Image"
+                                                        />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <p className="chat_single_page_item_date_info">
+                                                {formatChatDate(message?.created_at)}
+                                            </p>
+                                        </div>
+
+                                    )}
+                                </>
+                            )
+                        })}
+                    </div>
+                    <div className='chat_input_buttons_wrapper'>
+                        <div className='upload_btn_chat'>
+                            <input
+                                type="file"
+                                multiple
+                                accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.txt"
+                                style={{ display: 'none' }}
+                                id="chat_file-input"
+                                onChange={handleFileChange}
+                            />
+
+                            <label htmlFor="chat_file-input" className="file_uploadButton">
                                         <span className='file_upload_title'>
                                               <svg
                                                   xmlns="http://www.w3.org/2000/svg"
@@ -203,47 +313,49 @@ export default function  Chat  ({id})  {
                                                 />
                                             </svg>
                                         </span>
-                                    </label>
-                                </div>
-                                <input
-                                    type="text"
-                                    value={chatMessage}
-                                    onChange={handleChatMessage}
-                                    placeholder="Введите сообщение"
-                                    className='chat_input_field'
-                                />
-
-                                <button className='chat_message_send_btn'>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width={24}
-                                        height={24}
-                                        fill="none"
-                                    >
-                                        <path
-                                            fill="#FF6C00"
-                                            d="M4.4 19.425a.99.99 0 0 1-.95-.088c-.3-.192-.45-.47-.45-.837v-3.725c0-.233.067-.442.2-.625a.883.883 0 0 1 .55-.35L11 12l-7.25-1.8a.883.883 0 0 1-.55-.35 1.036 1.036 0 0 1-.2-.625V5.5c0-.367.15-.646.45-.838a.987.987 0 0 1 .95-.087l15.4 6.5c.417.183.625.492.625.925 0 .433-.208.742-.625.925l-15.4 6.5Z"
-                                        />
-                                    </svg>
-                                </button>
-                            </div>
-
+                            </label>
                         </div>
-                        {showForClient &&
-                            <button
-                                className='chat_header_select_freelancer_button  mobile_chat_header_select_freelancer_button'
-                                onClick={() => {
-                                    setShowSelectFreelancerModal(true)
-                                    disableBodyScroll()
-                                }}
-                            >
-                                Выбрать исполнителем
-                            </button>
-                        }
-                    </div>
-                    <Footer activePage={"chat"}/>
-                </div>
+                        <input
+                            type="text"
+                            value={chatMessage}
+                            onChange={handleChatMessage}
+                            placeholder="Введите сообщение"
+                            className='chat_input_field'
+                        />
 
+                        <button
+                            className='chat_message_send_btn'
+                            onClick={() => {
+                                sendChatHandle()
+                            }}
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width={24}
+                                height={24}
+                                fill="none"
+                            >
+                                <path
+                                    fill="#FF6C00"
+                                    d="M4.4 19.425a.99.99 0 0 1-.95-.088c-.3-.192-.45-.47-.45-.837v-3.725c0-.233.067-.442.2-.625a.883.883 0 0 1 .55-.35L11 12l-7.25-1.8a.883.883 0 0 1-.55-.35 1.036 1.036 0 0 1-.2-.625V5.5c0-.367.15-.646.45-.838a.987.987 0 0 1 .95-.087l15.4 6.5c.417.183.625.492.625.925 0 .433-.208.742-.625.925l-15.4 6.5Z"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+
+                </div>
+                {/*{showForClient &&*/}
+                {/*    <button*/}
+                {/*        className='chat_header_select_freelancer_button  mobile_chat_header_select_freelancer_button'*/}
+                {/*        onClick={() => {*/}
+                {/*            setShowSelectFreelancerModal(true)*/}
+                {/*            disableBodyScroll()*/}
+                {/*        }}*/}
+                {/*    >*/}
+                {/*        Выбрать исполнителем*/}
+                {/*    </button>*/}
+                {/*}*/}
+                {/*<Footer activePage={"chat"}/>*/}
 
                 <SelectFreelancerModal
                     isActive={showSelectFreelancerModal}

@@ -173,8 +173,6 @@
 //     };
 // };
 
-
-
 import { useState } from 'react';
 import { registerUser } from '../utils/api/authApi'; // Импортируем функцию из файла API
 
