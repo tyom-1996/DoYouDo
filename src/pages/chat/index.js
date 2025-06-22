@@ -15,10 +15,16 @@ export default function Chat () {
     const { getChats, chatsData, totalPages } = useGetChats();
     const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
 
-
     useEffect(() => {
-        getChats()
-    }, [])
+        getChats(); // сразу при монтировании
+
+        const interval = setInterval(() => {
+            getChats(); // опрашиваем сервер каждые 7 секунд
+        }, 7000);
+
+        return () => clearInterval(interval); // очистка при размонтировании
+    }, []);
+
 
 
 
@@ -94,7 +100,7 @@ export default function Chat () {
                                             </div>
                                             <div className="chat_item_person_info_wrapper">
                                                 <p className="chat_item_person_name">{item?.participant?.first_name} {item?.participant?.last_name}</p>
-                                                <p className="chat_item_topic_name">{item?.last_message}</p>
+                                                <p className="chat_item_topic_name">{item?.last_message == null ? "фото" : item?.last_message}</p>
                                             </div>
                                         </div>
 

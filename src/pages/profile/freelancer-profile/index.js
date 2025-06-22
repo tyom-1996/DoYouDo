@@ -192,7 +192,7 @@ const  FreelancerProfilePage  = ()  => {
                                 <div className="freelancer_single_page_user_info_wrapper_item1">
                                     <div className="freelancer_single_page_user_info_wrapper_item1_image">
                                         <Image
-                                            src={profileInfoData?.photo ? `${imagePath}${profileInfoData?.photo}` : '/freelancer_single_page_img.png'}
+                                            src={profileInfoData?.photo ? `${imagePath}${profileInfoData?.photo}` : '/upload_img1.png'}
                                             alt="Example Image"
                                             layout="fill" // Fill the parent element
                                             objectFit="cover" // Cover the area of the parent element

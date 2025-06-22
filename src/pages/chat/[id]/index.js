@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from "next/image";
 import '../../../assets/css/chat_single_page.css';
 import Header from '../../../components/header'
@@ -83,12 +83,37 @@ export default function  Chat  ({id})  {
     const { getChatSinglePage, chatSingleData,} = useGetChatSinglePage();
     const [chatFiles, setChatFiles] = useState([]);
     const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}/`);
-
+    const [chatMessages, setChatMessages] = useState([]);
+    const scrollAnchorRef = useRef(null);
 
     useEffect(() => {
-        getChatSinglePage(id)
-    }, [])
+        const interval = setInterval(() => {
+            getChatSinglePage(id);
+        }, 2000); // каждые 5 секунд
 
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        if (chatSingleData?.data) {
+            setChatMessages(chatSingleData.data);
+        }
+    }, [chatSingleData]);
+
+    const scrollToBottom = () => {
+        if (scrollAnchorRef.current) {
+            scrollAnchorRef.current.scrollTop = scrollAnchorRef.current.scrollHeight;
+        }
+    };
+
+    useEffect(() => {
+
+        if (chatSingleData?.data?.length > 0) {
+            setTimeout(() => {
+                scrollToBottom();
+            }, 10);
+        }
+    }, [chatSingleData?.data?.length]); // Watches message count
 
     const disableBodyScroll = () => {
         document.body.style.overflow = "hidden";
@@ -108,38 +133,86 @@ export default function  Chat  ({id})  {
         router.push('/select-freelancer');
     };
 
-    const sendChatHandle = () => {
+    const sendChatHandle = async () => {
+        const tempId = `temp-${Date.now()}`;
+        const newMessage = {
+            id: tempId,
+            message: chatMessage,
+            isMine: true,
+            sender_first_name: 'Вы',
+            sender_last_name: '',
+            sender_photo: null,
+            created_at: new Date().toISOString(),
+        };
+
+        setChatMessages((prev) => [...prev, newMessage]);
+
         const formData = new FormData();
         formData.append('adId', chatSingleData?.order?.ad_id);
         formData.append('receiverId', chatSingleData?.participant?.id);
         formData.append('message', chatMessage);
-
         chatFiles.forEach((file) => {
-            formData.append('chatphoto', file); // или 'files[]' если сервер ожидает массив
+            formData.append('chatphoto', file);
         });
 
-        sendChat(formData);
         setChatMessage('');
         setChatFiles([]);
+
+        try {
+            await sendChat(formData);
+            getChatSinglePage(id); // можно потом заменить конкретное сообщение по id
+        } catch (err) {
+            console.error('Ошибка отправки:', err);
+        }
     };
+
 
 
     const handleFileChange = (e) => {
         const files = e.target.files;
 
         if (files && files.length > 0) {
+            const file = files[0];
+            const tempId = `temp-file-${Date.now()}`;
+
+            // Создаём локальный превью для отображения
+            const filePreviewUrl = URL.createObjectURL(file);
+
+            const newMessage = {
+                id: tempId,
+                file_path: filePreviewUrl, // используем blob-url
+                isMine: true,
+                sender_first_name: 'Вы',
+                sender_last_name: '',
+                sender_photo: null,
+                created_at: new Date().toISOString(),
+            };
+
+            // Добавляем сообщение в чат немедленно
+            setChatMessages((prev) => [...prev, newMessage]);
+
+            // Формируем formData для отправки
             const formData = new FormData();
             formData.append('adId', chatSingleData?.order?.ad_id);
             formData.append('receiverId', chatSingleData?.participant?.id);
-            formData.append('message', ''); // можно пустое сообщение
-            formData.append('chatphoto', files[0]); // если один файл
+            formData.append('message', '');
+            formData.append('chatphoto', file);
 
-            sendChat(formData);
-
-            // сброс input
+            // Очищаем input
             e.target.value = '';
+
+            // Отправляем на сервер
+            sendChat(formData)
+                .then(() => {
+                    getChatSinglePage(id); // Перезагружаем чат, можно заменить по ID позже
+                })
+                .catch((err) => {
+                    console.error('Ошибка отправки файла:', err);
+                    // Можно убрать временное сообщение или пометить ошибкой
+                });
         }
     };
+
 
     function formatChatDate(dateString) {
         if (!dateString) return '';
@@ -194,6 +267,8 @@ export default function  Chat  ({id})  {
                                     objectFit="cover" // Cover the area of the parent element
                                 />
 
+
+
                             </div>
                             <div className="chat_header_user_info_wrapper">
                                 <div className="chat_header_user_name">
@@ -220,8 +295,8 @@ export default function  Chat  ({id})  {
                         }
 
                     </div>
-                    <div className='chat_single_page_items_wrapper'>
-                        {chatSingleData?.data && chatSingleData?.data.map((message, index) => {
+                    <div className='chat_single_page_items_wrapper' ref={scrollAnchorRef}>
+                        { chatMessages.map((message, index) => {
                             return (
                                 <>
                                     {message?.message && (
@@ -270,10 +345,19 @@ export default function  Chat  ({id})  {
                                                         {message?.sender_first_name}  {message?.sender_last_name}
                                                     </p>
                                                     <div className='chat_file'>
+                                                        {/*<img*/}
+                                                        {/*    src={message?.file_path ?  `${imagePath}${message?.file_path}` : '/upload_img1.png'}*/}
+                                                        {/*    alt="Example Image"*/}
+                                                        {/*/>*/}
                                                         <img
-                                                            src={message?.file_path ?  `${imagePath}${message?.file_path}` : '/upload_img1.png'}
-                                                            alt="Example Image"
+                                                            src={
+                                                                message?.file_path?.startsWith('blob:')
+                                                                    ? message.file_path
+                                                                    : `${imagePath}${message.file_path}`
+                                                            }
+                                                            alt="Uploaded file"
                                                         />
+
                                                     </div>
 
                                                 </div>
@@ -298,6 +382,8 @@ export default function  Chat  ({id})  {
                                 id="chat_file-input"
                                 onChange={handleFileChange}
                             />
+
+
 
                             <label htmlFor="chat_file-input" className="file_uploadButton">
                                         <span className='file_upload_title'>

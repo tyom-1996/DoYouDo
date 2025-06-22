@@ -85,6 +85,7 @@
     color: #FF6C00;
     font-weight: 700;
     font-size: 18px;
+    text-align: justify;
 }
 .chat_item_date_info {
     font-family: "Open Sans", sans-serif;

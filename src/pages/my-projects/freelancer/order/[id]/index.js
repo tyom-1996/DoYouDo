@@ -15,6 +15,7 @@ import FeedBackSuccess from "@/components/feedbackSuccessModal";
 import {useCheckReviews} from "@/hooks/useCheckReviews";
 import {useCreateChat} from "@/hooks/useCreateChat";
 import {GoogleMap, Marker, useJsApiLoader} from "@react-google-maps/api";
+import { useGetProfileInfo } from '@/hooks/useGetProfileInfo';
 
 export async function getServerSideProps({ params }) {
     const id = params.id;
@@ -83,7 +84,7 @@ export default function Order ({id}) {
     const [showForMyResponses, setShowForMyResponses] = useState(false);
     const [showForInProgress, setShowForInProgress] = useState(false);
     const [showForApproval, setShowForApproval] = useState(false);
-    const [showForClosing, setShowForClosing] = useState(true);
+    const [showForClosing, setShowForClosing] = useState(false);
     const [showReviewPopup, setShowReviewPopup] = useState(false);
     const { getFreelancerOrderById, freelancerOrderByIddData } = useGetFreelancerOrderById();
     const { createReview, createReviewData } = useCreateReviews();
@@ -92,8 +93,9 @@ export default function Order ({id}) {
     const [reviewText, setReviewText] = useState('');
     const [showFeedbackSuccessModal, setShowFeedbackSuccessModal] = useState(false);
     const [reviewType, setReviewType] = useState('positive');
-    const { checkReviews, checkReviewsData} = useCheckReviews();
+    const { checkReviews, checkReviewsData, errorText} = useCheckReviews();
     const {createChat, createChatData } = useCreateChat();
+    const {profileInfoData, getProfileInfo } = useGetProfileInfo();
     const [showCheckReviewsState, setShowCheckReviewsState] = useState(false);
     const [coordinates, setCoordinates] = useState(defaultCenter);
     const mapRef = useRef(null);
@@ -123,13 +125,19 @@ export default function Order ({id}) {
         }
     }, [id]);
 
+
+
+
     useEffect(() => {
-        if (checkReviewsData) {
-            if (checkReviewsData?.message == 'Отзыв найден') {
+        if (errorText?.message) {
+            console.log(errorText?.message, 'errorText')
+            if (errorText?.message == 'Отзыв не найден для данного заказа') {
                 setShowCheckReviewsState(true)
             }
         }
-    }, [checkReviewsData]);
+    }, [errorText]);
+
+
 
     useEffect(() => {
         if (createReviewData) {
@@ -187,6 +195,10 @@ export default function Order ({id}) {
                 lat: parseFloat(freelancerOrderByIddData.data[0].latitude),
                 lng: parseFloat(freelancerOrderByIddData.data[0].longitude),
             });
+        }
+
+        if (freelancerOrderByIddData?.data[0]?.order_status == 'closed') {
+                setShowForClosing(true)
         }
     }, [freelancerOrderByIddData]);
     const openNavigatorToMoscow = (coords) => {
@@ -273,8 +285,14 @@ export default function Order ({id}) {
                             <button
                                 className="get_direction_button"
                                 onClick={() => {
-                                    createChat(id, freelancerOrderByIddData?.data[0]?.client_id)
+                                    const isFreelancer = profileInfoData?.id === freelancerOrderByIddData?.data[0]?.freelancer_id;
+                                    const receiverId = isFreelancer
+                                        ? freelancerOrderByIddData?.data[0]?.client_id
+                                        : freelancerOrderByIddData?.data[0]?.freelancer_id;
+
+                                    createChat(id);
                                 }}
+
                             >
                                 Написать сообщение
                             </button>
@@ -330,7 +348,7 @@ export default function Order ({id}) {
                                     <button className='discuss_btn'>Обсудить</button>
                                 </div>
                             }
-                            {showForClosing && showCheckReviewsState !== true &&
+                            {showForClosing && showCheckReviewsState  &&
                                 <button
                                     className='leave_feedback_btn'
                                      onClick={() => {

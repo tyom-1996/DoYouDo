@@ -101,6 +101,7 @@ export default function Order ({id}) {
     const [coordinates, setCoordinates] = useState(defaultCenter);
     const mapRef = useRef(null);
     const [isMapReady, setIsMapReady] = useState(false);
+    const [imagePath] = useState(`${process.env.NEXT_PUBLIC_API_URL}`);
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
@@ -223,7 +224,7 @@ export default function Order ({id}) {
                             <div className="order_page_item1_child">
                                 <div className="order_page_user_img">
                                     <Image
-                                        src="/freelancers_img1.png"
+                                        src={orderByIdData?.user?.photo ? `${imagePath}${orderByIdData?.user?.photo }` : '/upload_img1.png'}
                                         alt="Example Image"
                                         layout="fill" // Fill the parent element
                                         objectFit="cover" // Cover the area of the parent element
@@ -318,8 +319,10 @@ export default function Order ({id}) {
                                                 {responseErrorText && <p className='error_text'>{responseErrorText}</p>}
                                             </div>
                                             <div className="order_date_fee_info_wrapper">
+
                                                 <div className="order_date_fee_input_title_wrapper">
                                                     <p className="order_date_fee_input_title">Срок исполнения в днях</p>
+
                                                     <input
                                                         type="number"
                                                         onChange={(event) => {
@@ -328,8 +331,11 @@ export default function Order ({id}) {
                                                         className='order_date_fee_input_field'
                                                         placeholder='13'
                                                     />
+
                                                     {dateErrorText && <p className='error_text'>{dateErrorText}</p>}
+
                                                 </div>
+
                                                 <div className="order_date_fee_input_title_wrapper">
                                                     <p className="order_date_fee_input_title">Ваш гонорар</p>
                                                     <input
@@ -342,17 +348,21 @@ export default function Order ({id}) {
                                                     />
                                                     {priceErrorText && <p className='error_text'>{priceErrorText}</p>}
                                                 </div>
+
                                             </div>
+
                                             {balanceErrorText && (
                                                 <p className='error_text' style={{ marginBottom: 20, fontSize: 16 }}>
                                                     {balanceErrorText}
                                                 </p>
                                             )}
+
                                             {responseError && (
                                                 <p className='error_text' style={{ marginBottom: 20, fontSize: 16 }}>
                                                     {responseError}
                                                 </p>
                                             )}
+
                                             <button
                                                 className='reply_to_order_btn'
                                                 onClick={() => {
@@ -361,6 +371,7 @@ export default function Order ({id}) {
                                             >
                                                 Откликнуться
                                             </button>
+
                                         </div>
                                     )
                                 }
