@@ -44,45 +44,6 @@ const defaultCenter = {
 
 export default function Order ({id}) {
     const [windowHeight, setWindowHeight] = useState(0);
-    const [similarWorksList, setSimilarWorksList] = useState([
-        {
-            id: 1,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
-        },
-        {
-            id: 2,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
-        },
-        {
-            id: 3,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
-        },
-        {
-            id: 4,
-            service_name: 'Дизайн',
-            service_type_info: 'Разработать логотип и фирменный стиль',
-            service_price: 'до 1 000 ₽',
-            service_date: '12 июня',
-            service_hour: '14:05',
-            service_address: 'Адрес: 6666 466 метров от вас'
-        },
-
-    ]);
     const [date, setDate] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -178,20 +139,52 @@ export default function Order ({id}) {
          await createResponse(id, responseText, price, date )
     }
     const openNavigatorToMoscow = (coords) => {
-        if (!coords?.latitude || !coords?.longitude) {
-            console.warn('Сначала получите координаты пользователя!');
+        const lat = parseFloat(String(coords?.latitude));
+        const lng = parseFloat(String(coords?.longitude));
+
+        if (!lat || !lng || isNaN(lat) || isNaN(lng)) {
+            console.warn('Координаты отсутствуют или некорректны:', coords);
             return;
         }
 
-        // Координаты Москвы
+        console.log(lng, lat, 'lat_long')
+
         const moscowLat = 55.755826;
         const moscowLng = 37.6172999;
+        const url = `https://yandex.ru/maps/?rtext=${lat},${lng}~${moscowLat},${moscowLng}&rtt=auto`;
 
-        // Формируем ссылку для Яндекс.Карт
-        const url = `https://yandex.ru/maps/?rtext=${coords?.latitude},${coords?.longitude}~${moscowLat},${moscowLng}&rtt=auto`;
-
-        // Открываем
         window.open(url, '_blank');
+    };
+
+
+    const openNavigatorToOrder = (order) => {
+        if (!order?.latitude || !order?.longitude) {
+            console.warn('Нет координат заказа');
+            return;
+        }
+
+        if (!navigator.geolocation) {
+            alert('Геолокация не поддерживается вашим браузером');
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const userLat = position.coords.latitude;
+                const userLng = position.coords.longitude;
+
+                const orderLat = parseFloat(order.latitude);
+                const orderLng = parseFloat(order.longitude);
+
+                const url = `https://yandex.ru/maps/?rtext=${userLat},${userLng}~${orderLat},${orderLng}&rtt=auto`;
+
+                window.open(url, '_blank');
+            },
+            (error) => {
+                console.error('Ошибка получения геопозиции', error);
+                alert('Не удалось получить вашу геопозицию. Разрешите доступ к местоположению.');
+            }
+        );
     };
 
     useEffect(() => {
@@ -255,7 +248,7 @@ export default function Order ({id}) {
                             </div>
                             {order?.type == "offline"  &&
                                 <button className='get_direction_button' onClick={() => {
-                                    openNavigatorToMoscow(order)
+                                    openNavigatorToOrder(order)
                                 }}>
                                     Проложить маршрут
                                 </button>
